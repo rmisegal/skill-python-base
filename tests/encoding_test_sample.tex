@@ -1,0 +1,40 @@
+% Test file for encoding fix comparison
+\documentclass{article}
+\begin{document}
+
+% Text context - should use LaTeX commands
+The formula is 5×10 = 50.
+Click here → to continue.
+Status: ✓ Complete
+Failed: ✗ Error
+Hello 😊 world!
+📝 Important note here.
+👤 User profile section.
+🤖 Bot response area.
+📊 Statistics dashboard.
+
+% Code context - should use ASCII equivalents
+\begin{lstlisting}
+result = 5×10
+a → b
+status = "✓"
+error = "✗"
+\end{lstlisting}
+
+% Mixed content
+Regular text with × multiplication.
+\begin{minted}{python}
+x = 5×10
+\end{minted}
+More text with → arrow.
+
+% Smart quotes (from skill.md)
+The "smart" quotes and 'single' quotes.
+Also: "double" and 'single' variants.
+
+% Dashes (from skill.md)
+Mathematical minus: 5−3=2
+En dash: 2013–2024
+Em dash: Hello—World
+
+\end{document}

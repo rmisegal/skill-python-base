@@ -1,0 +1,248 @@
+{
+  "version": "1.4.0",
+  "enabled_families": ["BiDi", "code", "table", "bib", "coverpage", "img", "typeset", "toc"],
+  "parallel_families": true,
+  "auto_fix": true,
+  "environment": {
+    "python_min_version": [3, 13],
+    "require_venv": true,
+    "venv_tool": "uv",
+    "blocking": true,
+    "error_message": "QA system requires Python 3.13+ in uv venv. Run: uv venv && .venv\\Scripts\\activate"
+  },
+  "batch_processing": {
+    "enabled": true,
+    "batch_size": 50,
+    "chunk_lines": 1000,
+    "max_workers": 4
+  },
+  "coordination": {
+    "heartbeat_interval": 30,
+    "stale_timeout": 120,
+    "lock_timeout": 60
+  },
+  "logging": {
+    "level": "INFO",
+    "json_format": true,
+    "log_dir": "qa-logs"
+  },
+  "blocking_checks": ["environment"],
+  "global_workflow": {
+    "phases": {
+      "pre_compilation": {
+        "description": "Source-level detection and file creation using Python tools",
+        "execution": "parallel",
+        "tools": ["ImageDetector", "ImageCreator", "BiDiDetector", "CodeDetector", "TableDetector", "BibDetector", "CoverpageDetector", "FancyTableDetector", "TocDetector", "EmojiFixer", "CaptionLengthDetector", "CaptionToBodyFixer", "HeaderColorFixer", "TOCComprehensiveDetector", "NakedEnglishFixer"],
+        "skills": ["qa-img-detect", "qa-img-fix-missing", "qa-img-caption-detect", "qa-img-caption-to-body", "qa-BiDi-detect", "qa-code-detect", "qa-table-detect", "qa-table-fancy-detect", "qa-bib-detect", "qa-coverpage-detect", "qa-cls-toc-detect", "qa-toc-comprehensive-detect", "qa-toc-english-text-naked-fix"]
+      },
+      "compilation": {
+        "description": "Compile LaTeX document to PDF",
+        "execution": "sequential",
+        "command": "lualatex",
+        "requires": ["pre_compilation"]
+      },
+      "post_compilation": {
+        "description": "PDF-level validation and log parsing",
+        "execution": "parallel",
+        "tools": ["TypesetDetector", "FloatFixer"],
+        "skills": ["qa-img-validate", "qa-coverpage", "qa-typeset-detect", "qa-typeset-fix-float"],
+        "requires": ["compilation"],
+        "note": "Typeset detection from .log, LLM for visual PDF inspection"
+      }
+    },
+    "order": ["pre_compilation", "compilation", "post_compilation"]
+  },
+  "families": {
+    "BiDi": {
+      "enabled": true,
+      "detectors": ["qa-BiDi-detect", "qa-cls-toc-detect", "qa-cls-footer-detect"],
+      "fixers": ["qa-BiDi-fix-text", "qa-BiDi-fix-numbers", "qa-BiDi-fix-toc-config", "qa-BiDi-fix-toc-l-at"],
+      "rules": {
+        "bidi-numbers": {"enabled": true, "auto_fix": true},
+        "bidi-year-range": {"enabled": true, "auto_fix": true, "fixer": "qa-BiDi-fix-numbers"},
+        "bidi-english": {"enabled": true, "auto_fix": true},
+        "bidi-acronym": {"enabled": true, "auto_fix": true},
+        "bidi-tikz-rtl": {"enabled": true, "auto_fix": true},
+        "bidi-tcolorbox": {"enabled": true, "auto_fix": true},
+        "bidi-cover-metadata": {"enabled": true, "auto_fix": false},
+        "bidi-section-number": {"enabled": false, "auto_fix": false},
+        "bidi-reversed-text": {"enabled": true, "auto_fix": false},
+        "bidi-toc-config": {"enabled": true, "auto_fix": true, "fixer": "qa-BiDi-fix-toc-config"},
+        "bidi-toc-l-at": {"enabled": true, "auto_fix": true, "fixer": "qa-BiDi-fix-toc-l-at"},
+        "cls-toc-missing": {"enabled": true, "auto_fix": true, "fixer": "qa-cls-toc-detect"},
+        "cls-thepage-forces-arabic": {"enabled": true, "auto_fix": false, "note": "Manual fix required - remove \\renewcommand{\\thepage}"},
+        "cls-footer-page-weak-ltr": {"enabled": true, "auto_fix": false, "note": "Use {\\textdir TLT\\thepage} instead of \\textenglish"},
+        "cls-footer-page-no-ltr": {"enabled": true, "auto_fix": false, "note": "Wrap page number with {\\textdir TLT\\thepage}"},
+        "cls-plain-style-not-defined": {"enabled": true, "auto_fix": false, "note": "Add \\fancypagestyle{plain} definition"},
+        "cls-plain-page-weak-ltr": {"enabled": true, "auto_fix": false, "note": "Fix plain style page number LTR"},
+        "cls-plain-page-no-ltr": {"enabled": true, "auto_fix": false, "note": "Fix plain style page number LTR"},
+        "cls-toc-page-weak-ltr": {"enabled": true, "auto_fix": false, "note": "TOC l@chapter/section uses textenglish - use textdir TLT"}
+      }
+    },
+    "code": {
+      "enabled": true,
+      "detectors": ["qa-code-detect"],
+      "fixers": ["qa-code-fix-background", "qa-code-fix-encoding", "qa-code-fix-direction", "qa-code-fix-emoji", "qa-code-fix-hebrew-content"],
+      "tools": ["CodeDetector", "CodeFixer", "EncodingFixer", "DirectionFixer", "EmojiFixer", "HebrewContentFixer"],
+      "rules": {
+        "code-background-overflow": {"enabled": true, "auto_fix": true, "fixer": "qa-code-fix-background"},
+        "code-fstring-brace": {"enabled": false, "auto_fix": false},
+        "code-encoding-emoji": {"enabled": true, "auto_fix": true, "fixer": "qa-code-fix-emoji"},
+        "code-direction-hebrew": {"enabled": true, "auto_fix": true, "fixer": "qa-code-fix-direction"},
+        "code-hebrew-content": {"enabled": true, "auto_fix": false, "fixer": "qa-code-fix-hebrew-content", "requires_llm": true, "note": "Hebrew in code comments/strings needs translation to English"}
+      }
+    },
+    "table": {
+      "enabled": true,
+      "detectors": ["qa-table-detect", "qa-table-fancy-detect"],
+      "fixers": ["qa-table-fix", "qa-table-fix-captions", "qa-table-fix-alignment", "qa-table-fancy-fix", "qa-table-header-color-fix"],
+      "tools": ["TableFixer", "CaptionFixer", "TableAlignmentFixer", "FancyTableDetector", "FancyTableFixer", "HeaderColorFixer"],
+      "rules": {
+        "table-plain-unstyled": {"enabled": true, "auto_fix": true},
+        "table-no-rtl-env": {"enabled": true, "auto_fix": true},
+        "table-overflow": {"enabled": true, "auto_fix": true},
+        "table-cell-hebrew": {"enabled": true, "auto_fix": true},
+        "table-missing-header-color": {"enabled": true, "auto_fix": true, "fixer": "qa-table-header-color-fix"},
+        "table-not-hebrewtable": {"enabled": true, "auto_fix": true, "fixer": "qa-table-fancy-fix"},
+        "caption-setup-raggedleft": {"enabled": true, "auto_fix": true, "fixer": "qa-table-fix-captions"},
+        "caption-flushleft-wrapped": {"enabled": true, "auto_fix": true, "fixer": "qa-table-fix-captions"},
+        "caption-table-raggedleft": {"enabled": true, "auto_fix": true, "fixer": "qa-table-fix-captions"},
+        "table-plain-fancy": {"enabled": true, "auto_fix": true, "fixer": "qa-table-fancy-fix"}
+      }
+    },
+    "bib": {
+      "enabled": true,
+      "detectors": ["qa-bib-detect"],
+      "fixers": ["qa-bib-fix"],
+      "rules": {
+        "bib-malformed-cite-key": {"enabled": true, "auto_fix": true},
+        "bib-missing-file": {"enabled": true, "auto_fix": true},
+        "bib-undefined-cite": {"enabled": true, "auto_fix": true}
+      }
+    },
+    "coverpage": {
+      "enabled": true,
+      "detectors": ["qa-coverpage-detect"],
+      "fixers": [],
+      "validators": ["qa-coverpage"],
+      "rules": {
+        "cover-hebrew-title": {"enabled": true, "auto_fix": false},
+        "cover-hebrew-subtitle": {"enabled": true, "auto_fix": false},
+        "cover-hebrew-author": {"enabled": true, "auto_fix": false},
+        "cover-english-in-hebrew": {"enabled": true, "auto_fix": true},
+        "cover-numbers-unwrapped": {"enabled": true, "auto_fix": true},
+        "cover-acronym-unwrapped": {"enabled": true, "auto_fix": true},
+        "cover-date-format": {"enabled": true, "auto_fix": false},
+        "cover-copyright-bidi": {"enabled": false, "auto_fix": false}
+      },
+      "workflow": {
+        "order": ["qa-coverpage-detect", "qa-coverpage"],
+        "note": "Run source detection first, then PDF validation"
+      }
+    },
+    "img": {
+      "enabled": true,
+      "detectors": ["qa-img-detect", "qa-img-caption-detect"],
+      "fixers": ["qa-img-fix-paths", "qa-img-fix-missing", "qa-img-caption-to-body"],
+      "creators": ["ImageCreator"],
+      "validators": ["qa-img-validate"],
+      "tools": ["ImageDetector", "ImageCreator", "CaptionLengthDetector", "CaptionToBodyFixer"],
+      "rules": {
+        "img-file-not-found": {"enabled": true, "auto_fix": true, "phase": "pre_compilation", "fixer": "qa-img-fix-missing"},
+        "img-no-graphicspath": {"enabled": true, "auto_fix": true, "phase": "pre_compilation"},
+        "img-wrong-extension": {"enabled": true, "auto_fix": true, "phase": "pre_compilation"},
+        "img-case-mismatch": {"enabled": true, "auto_fix": true, "phase": "pre_compilation"},
+        "img-placeholder-box": {"enabled": true, "auto_fix": true, "phase": "pre_compilation", "fixer": "qa-img-fix-missing"},
+        "img-empty-figure": {"enabled": true, "auto_fix": false, "phase": "pre_compilation"},
+        "img-hebrew-figure-empty": {"enabled": true, "auto_fix": false, "phase": "pre_compilation"},
+        "img-no-size-spec": {"enabled": false, "auto_fix": true, "phase": "pre_compilation"},
+        "img-not-rendered": {"enabled": true, "auto_fix": false, "phase": "post_compilation", "requires_llm": true},
+        "img-empty-box-visual": {"enabled": true, "auto_fix": false, "phase": "post_compilation", "requires_llm": true},
+        "img-lof-mismatch": {"enabled": true, "auto_fix": false, "phase": "post_compilation", "requires_llm": true},
+        "caption-too-long": {"enabled": true, "auto_fix": true, "phase": "pre_compilation", "fixer": "qa-img-caption-to-body"},
+        "caption-description-pattern": {"enabled": true, "auto_fix": true, "phase": "pre_compilation", "fixer": "qa-img-caption-to-body"},
+        "caption-multi-sentence": {"enabled": true, "auto_fix": true, "phase": "pre_compilation", "fixer": "qa-img-caption-to-body"},
+        "figure-caption-too-long": {"enabled": true, "auto_fix": true, "phase": "pre_compilation", "fixer": "qa-img-caption-to-body"}
+      },
+      "workflow": {
+        "phases": {
+          "pre_compilation": {
+            "tools": ["ImageDetector", "ImageCreator", "CaptionLengthDetector", "CaptionToBodyFixer"],
+            "skills": ["qa-img-detect", "qa-img-fix-missing", "qa-img-caption-detect", "qa-img-caption-to-body"],
+            "fixers": ["qa-img-fix-paths", "qa-img-fix-missing", "qa-img-caption-to-body"],
+            "description": "Source-level detection, file creation, and caption normalization (Python)"
+          },
+          "post_compilation": {
+            "tools": [],
+            "skills": ["qa-img-validate"],
+            "fixers": [],
+            "description": "PDF-level validation (LLM - visual verification)",
+            "requires_pdf": true
+          }
+        },
+        "order": ["pre_compilation", "post_compilation"],
+        "note": "Python creates missing files and fixes source, LLM validates PDF"
+      }
+    },
+    "typeset": {
+      "enabled": true,
+      "detectors": ["qa-typeset-detect", "TikzDetector"],
+      "fixers": ["qa-typeset-fix-float", "qa-typeset-fix-hbox", "qa-typeset-fix-vbox", "qa-typeset-fix-tikz"],
+      "tools": ["TypesetDetector", "FloatFixer", "TikzDetector", "TikzOverflowFixer"],
+      "rules": {
+        "typeset-float-too-large": {"enabled": true, "auto_fix": "hybrid", "fixer": "qa-typeset-fix-float"},
+        "typeset-overfull-hbox": {"enabled": true, "auto_fix": true, "fixer": "qa-typeset-fix-hbox"},
+        "typeset-underfull-hbox": {"enabled": true, "auto_fix": false},
+        "typeset-overfull-vbox": {"enabled": true, "auto_fix": true, "fixer": "qa-typeset-fix-vbox"},
+        "typeset-underfull-vbox": {"enabled": true, "auto_fix": false},
+        "typeset-undefined-ref": {"enabled": true, "auto_fix": false},
+        "typeset-undefined-citation": {"enabled": true, "auto_fix": false},
+        "tikz-no-width-constraint": {"enabled": true, "auto_fix": true, "fixer": "qa-typeset-fix-tikz"},
+        "tikz-large-coordinates": {"enabled": true, "auto_fix": true, "fixer": "qa-typeset-fix-tikz"}
+      },
+      "workflow": {
+        "phase": "post_compilation",
+        "requires": ["compilation"],
+        "note": "Parse .log file after compilation, apply deterministic fixes"
+      }
+    },
+    "toc": {
+      "enabled": true,
+      "detectors": ["qa-toc-comprehensive-detect"],
+      "fixers": ["qa-toc-english-text-naked-fix"],
+      "tools": ["TOCComprehensiveDetector", "TOCEntryParser", "NakedEnglishFixer"],
+      "rules": {
+        "toc-english-text-naked": {"enabled": true, "auto_fix": true, "fixer": "qa-toc-english-text-naked-fix"},
+        "toc-duplicate-title": {"enabled": true, "auto_fix": false, "note": "Requires manual review"},
+        "toc-sequential-duplicate": {"enabled": true, "auto_fix": false, "note": "Likely copy-paste error"},
+        "toc-similar-title": {"enabled": true, "auto_fix": false, "note": "May indicate typo"},
+        "toc-chapter-no-numberline": {"enabled": true, "auto_fix": false},
+        "toc-section-no-numberline": {"enabled": true, "auto_fix": false},
+        "toc-subsection-no-numberline": {"enabled": true, "auto_fix": false},
+        "toc-subsubsection-no-numberline": {"enabled": true, "auto_fix": false},
+        "toc-unnumbered-entry-expected": {"enabled": true, "auto_fix": false, "note": "INFO only"},
+        "toc-unnumbered-entry-starred": {"enabled": true, "auto_fix": false, "note": "INFO only"},
+        "toc-chapter-number-not-ltr": {"enabled": true, "auto_fix": true, "fixer": "qa-BiDi-fix-toc-config"},
+        "toc-section-number-not-ltr": {"enabled": true, "auto_fix": true, "fixer": "qa-BiDi-fix-toc-config"},
+        "toc-page-number-not-ltr": {"enabled": true, "auto_fix": true, "fixer": "qa-BiDi-fix-toc-config"},
+        "toc-numbering-discontinuous": {"enabled": true, "auto_fix": false},
+        "toc-missing-chapter": {"enabled": true, "auto_fix": false},
+        "toc-bibliography-missing": {"enabled": true, "auto_fix": false},
+        "toc-section-gap-missing": {"enabled": true, "auto_fix": false, "note": "Visual hierarchy issue - fix in CLS"},
+        "toc-page-number-jump": {"enabled": true, "auto_fix": false, "note": "May indicate copy-paste error", "threshold": 10}
+      },
+      "workflow": {
+        "phase": "pre_compilation",
+        "note": "Parse .toc file or source .tex files for TOC validation"
+      }
+    }
+  },
+  "exclude_patterns": ["*.cls", "*.sty", "*_patch.tex"],
+  "cls_commands": {
+    "number_wrapper": "\\num{}",
+    "year_wrapper": "\\hebyear{}",
+    "percent_wrapper": "\\percent{}",
+    "english_wrapper": "\\en{}",
+    "hebrew_wrapper": "\\texthebrew{}"
+  }
+}

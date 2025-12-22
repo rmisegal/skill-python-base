@@ -1,0 +1,595 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{RAGSystemReview2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=06debc36f6b61a405e8f0da1c7ccd6ca}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Wei},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{46dc3b07a9540484d03b9e9b392b984f}
+      \strng{fullhash}{46dc3b07a9540484d03b9e9b392b984f}
+      \strng{fullhashraw}{46dc3b07a9540484d03b9e9b392b984f}
+      \strng{bibnamehash}{46dc3b07a9540484d03b9e9b392b984f}
+      \strng{authorbibnamehash}{46dc3b07a9540484d03b9e9b392b984f}
+      \strng{authornamehash}{46dc3b07a9540484d03b9e9b392b984f}
+      \strng{authorfullhash}{46dc3b07a9540484d03b9e9b392b984f}
+      \strng{authorfullhashraw}{46dc3b07a9540484d03b9e9b392b984f}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{2025 review covering multimodal RAG and retrieval-reflection loops}
+      \field{title}{A Systematic Review of Key Retrieval-Augmented Generation ({RAG}) Systems: Progress, Gaps, and Future Directions}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2507.18910
+      \endverb
+    \endentry
+    \entry{VectorDBComparison2025}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=767937deef5abe39e81d478cb4aff452}{%
+           family={Dabass},
+           familyi={D\bibinitperiod},
+           given={Jyoti},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{767937deef5abe39e81d478cb4aff452}
+      \strng{fullhash}{767937deef5abe39e81d478cb4aff452}
+      \strng{fullhashraw}{767937deef5abe39e81d478cb4aff452}
+      \strng{bibnamehash}{767937deef5abe39e81d478cb4aff452}
+      \strng{authorbibnamehash}{767937deef5abe39e81d478cb4aff452}
+      \strng{authornamehash}{767937deef5abe39e81d478cb4aff452}
+      \strng{authorfullhash}{767937deef5abe39e81d478cb4aff452}
+      \strng{authorfullhashraw}{767937deef5abe39e81d478cb4aff452}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{LiquidMetal AI Research}
+      \field{note}{Benchmark: 1M vectors at 1536 dimensions comparing insertion and query speeds}
+      \field{title}{Vector Database Comparison: Pinecone vs Weaviate vs Qdrant vs FAISS vs Milvus vs Chroma}
+      \field{year}{2025}
+    \endentry
+    \entry{RAGSurvey2024}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=572def57560315de76cedfc3e17c2eb2}{%
+           family={Gao},
+           familyi={G\bibinitperiod},
+           given={Yunfan},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{f1678cfa142d8029151d4faacf40f176}
+      \strng{fullhash}{f1678cfa142d8029151d4faacf40f176}
+      \strng{fullhashraw}{f1678cfa142d8029151d4faacf40f176}
+      \strng{bibnamehash}{f1678cfa142d8029151d4faacf40f176}
+      \strng{authorbibnamehash}{f1678cfa142d8029151d4faacf40f176}
+      \strng{authornamehash}{f1678cfa142d8029151d4faacf40f176}
+      \strng{authorfullhash}{f1678cfa142d8029151d4faacf40f176}
+      \strng{authorfullhashraw}{f1678cfa142d8029151d4faacf40f176}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Comprehensive RAG survey covering foundations, enhancements, and applications}
+      \field{title}{A Comprehensive Survey of Retrieval-Augmented Generation ({RAG}): Evolution, Current Landscape and Future Directions}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2410.12837
+      \endverb
+    \endentry
+    \entry{ModelAgnosticPlatforms2025}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=7cde04099494b31614485b02f1b77b79}{%
+           family={Garcia},
+           familyi={G\bibinitperiod},
+           given={Luis},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{7cde04099494b31614485b02f1b77b79}
+      \strng{fullhash}{7cde04099494b31614485b02f1b77b79}
+      \strng{fullhashraw}{7cde04099494b31614485b02f1b77b79}
+      \strng{bibnamehash}{7cde04099494b31614485b02f1b77b79}
+      \strng{authorbibnamehash}{7cde04099494b31614485b02f1b77b79}
+      \strng{authornamehash}{7cde04099494b31614485b02f1b77b79}
+      \strng{authorfullhash}{7cde04099494b31614485b02f1b77b79}
+      \strng{authorfullhashraw}{7cde04099494b31614485b02f1b77b79}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{AI Competence}
+      \field{note}{Unified API layer pattern for multi-model architecture}
+      \field{title}{Build Model-Agnostic Multi-{LLM} Platforms}
+      \field{year}{2025}
+    \endentry
+    \entry{GartnerAIGateway2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=18bfab6309a4addeb7e1dae07d2a4b89}{%
+           family={{Gartner}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{fullhash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{fullhashraw}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{bibnamehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authorbibnamehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authornamehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authorfullhash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authorfullhashraw}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.gartner.com/}}
+      \field{note}{Prediction: 70\% of organizations using AI gateways by 2028, up from 5\% in 2024}
+      \field{title}{Predicts 2025: {AI} Gateway Adoption for Multi-{LLM} Applications}
+      \field{year}{2024}
+    \endentry
+    \entry{LLMPricing2025}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=030e0bbb864816aa9c098a59843a47c9}{%
+           family={{IntuitionLabs}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{030e0bbb864816aa9c098a59843a47c9}
+      \strng{fullhash}{030e0bbb864816aa9c098a59843a47c9}
+      \strng{fullhashraw}{030e0bbb864816aa9c098a59843a47c9}
+      \strng{bibnamehash}{030e0bbb864816aa9c098a59843a47c9}
+      \strng{authorbibnamehash}{030e0bbb864816aa9c098a59843a47c9}
+      \strng{authornamehash}{030e0bbb864816aa9c098a59843a47c9}
+      \strng{authorfullhash}{030e0bbb864816aa9c098a59843a47c9}
+      \strng{authorfullhashraw}{030e0bbb864816aa9c098a59843a47c9}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://intuitionlabs.ai/articles/llm-api-pricing-comparison-2025}}
+      \field{note}{Comprehensive pricing comparison: \$0.25-\$15 per million input tokens}
+      \field{title}{{LLM API} Pricing Comparison 2025: OpenAI, Gemini, Claude}
+      \field{year}{2025}
+    \endentry
+    \entry{MultiCloudStrategy2025}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=5566260d4b750c98e2877c4b7f5d4f86}{%
+           family={{IT Convergence}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{5566260d4b750c98e2877c4b7f5d4f86}
+      \strng{fullhash}{5566260d4b750c98e2877c4b7f5d4f86}
+      \strng{fullhashraw}{5566260d4b750c98e2877c4b7f5d4f86}
+      \strng{bibnamehash}{5566260d4b750c98e2877c4b7f5d4f86}
+      \strng{authorbibnamehash}{5566260d4b750c98e2877c4b7f5d4f86}
+      \strng{authornamehash}{5566260d4b750c98e2877c4b7f5d4f86}
+      \strng{authorfullhash}{5566260d4b750c98e2877c4b7f5d4f86}
+      \strng{authorfullhashraw}{5566260d4b750c98e2877c4b7f5d4f86}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.itconvergence.com/blog/multi-cloud-strategies-the-2025-2026-primer/}}
+      \field{note}{70\% of enterprises use multiple clouds, averaging 2.4 providers per organization}
+      \field{title}{Multi-Cloud Strategies for 2025: Architect Smarter, Run Anywhere}
+      \field{year}{2025}
+    \endentry
+    \entry{LostInTheMiddle2024}{inproceedings}{}{}
+      \name{author}{7}{}{%
+        {{hash=ad8b44fb7f6f1b83fe7fb3b875afaf99}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Nelson\bibnamedelima F.},
+           giveni={N\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=68434cdeb7a3c089fd99baba0e0a4a3b}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod}}}%
+        {{hash=8d557c63d5d40248206f4499cd9ac310}{%
+           family={Hewitt},
+           familyi={H\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+        {{hash=520a181595c460d39601a3c162fb3425}{%
+           family={Paranjape},
+           familyi={P\bibinitperiod},
+           given={Ashwin},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d3b447496dd686b400d272e9788b45a9}{%
+           family={Bevilacqua},
+           familyi={B\bibinitperiod},
+           given={Michele},
+           giveni={M\bibinitperiod}}}%
+        {{hash=e1c32989a78998fe3c03c981d0da2dc7}{%
+           family={Petroni},
+           familyi={P\bibinitperiod},
+           given={Fabio},
+           giveni={F\bibinitperiod}}}%
+        {{hash=86c032bbc45c3b616f0a1170befc0e82}{%
+           family={Liang},
+           familyi={L\bibinitperiod},
+           given={Percy},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {MIT Press}%
+      }
+      \strng{namehash}{aafa2d245e70b7be840882cd4df991be}
+      \strng{fullhash}{e4450a4375cd8e49440f9bc559fef906}
+      \strng{fullhashraw}{e4450a4375cd8e49440f9bc559fef906}
+      \strng{bibnamehash}{e4450a4375cd8e49440f9bc559fef906}
+      \strng{authorbibnamehash}{e4450a4375cd8e49440f9bc559fef906}
+      \strng{authornamehash}{aafa2d245e70b7be840882cd4df991be}
+      \strng{authorfullhash}{e4450a4375cd8e49440f9bc559fef906}
+      \strng{authorfullhashraw}{e4450a4375cd8e49440f9bc559fef906}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Transactions of the Association for Computational Linguistics}
+      \field{note}{Seminal paper on U-shaped attention pattern in long-context LLMs}
+      \field{title}{Lost in the Middle: How Language Models Use Long Contexts}
+      \field{volume}{12}
+      \field{year}{2024}
+      \field{pages}{157\bibrangedash 173}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1162/tacl_a_00638
+      \endverb
+    \endentry
+    \entry{LLMCostOptimization2025}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=a2a0dc7563df43570e2b9fc6910bb307}{%
+           family={{Maxim AI}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{a2a0dc7563df43570e2b9fc6910bb307}
+      \strng{fullhash}{a2a0dc7563df43570e2b9fc6910bb307}
+      \strng{fullhashraw}{a2a0dc7563df43570e2b9fc6910bb307}
+      \strng{bibnamehash}{a2a0dc7563df43570e2b9fc6910bb307}
+      \strng{authorbibnamehash}{a2a0dc7563df43570e2b9fc6910bb307}
+      \strng{authornamehash}{a2a0dc7563df43570e2b9fc6910bb307}
+      \strng{authorfullhash}{a2a0dc7563df43570e2b9fc6910bb307}
+      \strng{authorfullhashraw}{a2a0dc7563df43570e2b9fc6910bb307}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{GetMaxim Articles}
+      \field{note}{Batch processing offers 50\% cost discounts; model selection strategies}
+      \field{title}{The Technical Guide to Managing {LLM} Costs: Strategies for Optimization and {ROI}}
+      \field{year}{2025}
+    \endentry
+    \entry{MTEBReview2024}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=a2deb8466aa6f0edfe3cc805f9d776d8}{%
+           family={Muennighoff},
+           familyi={M\bibinitperiod},
+           given={Niklas},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{f4c02284b9072b824b9b83e5661caf2a}
+      \strng{fullhash}{f4c02284b9072b824b9b83e5661caf2a}
+      \strng{fullhashraw}{f4c02284b9072b824b9b83e5661caf2a}
+      \strng{bibnamehash}{f4c02284b9072b824b9b83e5661caf2a}
+      \strng{authorbibnamehash}{f4c02284b9072b824b9b83e5661caf2a}
+      \strng{authornamehash}{f4c02284b9072b824b9b83e5661caf2a}
+      \strng{authorfullhash}{f4c02284b9072b824b9b83e5661caf2a}
+      \strng{authorfullhashraw}{f4c02284b9072b824b9b83e5661caf2a}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Comprehensive review of embedding models on Massive Text Embedding Benchmark}
+      \field{title}{Recent Advances in Universal Text Embeddings: A Comprehensive Review of Top-Performing Methods on the {MTEB} Benchmark}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2406.01607
+      \endverb
+    \endentry
+    \entry{QdrantBenchmarks2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=070c734ecb0abfb4f99834860f2b4d47}{%
+           family={{Qdrant Team}},
+           familyi={Q\bibinitperiod}}}%
+      }
+      \strng{namehash}{070c734ecb0abfb4f99834860f2b4d47}
+      \strng{fullhash}{070c734ecb0abfb4f99834860f2b4d47}
+      \strng{fullhashraw}{070c734ecb0abfb4f99834860f2b4d47}
+      \strng{bibnamehash}{070c734ecb0abfb4f99834860f2b4d47}
+      \strng{authorbibnamehash}{070c734ecb0abfb4f99834860f2b4d47}
+      \strng{authornamehash}{070c734ecb0abfb4f99834860f2b4d47}
+      \strng{authorfullhash}{070c734ecb0abfb4f99834860f2b4d47}
+      \strng{authorfullhashraw}{070c734ecb0abfb4f99834860f2b4d47}
+      \field{sortinit}{Q}
+      \field{sortinithash}{ce69a400a872ddd02ee7fdb3b38c6abd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://qdrant.tech/benchmarks/}}
+      \field{note}{Comprehensive benchmarks comparing Qdrant, Pinecone, Weaviate, Milvus performance}
+      \field{title}{Vector Database Benchmarks}
+      \field{year}{2024}
+    \endentry
+    \entry{LLMPromptScope2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=77fa340c7aee19cec69f210ac61bbf18}{%
+           family={Rodriguez},
+           familyi={R\bibinitperiod},
+           given={Ana},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {MDPI}%
+      }
+      \strng{namehash}{0e2fbf687e07cd021adeca2eaf0b705a}
+      \strng{fullhash}{0e2fbf687e07cd021adeca2eaf0b705a}
+      \strng{fullhashraw}{0e2fbf687e07cd021adeca2eaf0b705a}
+      \strng{bibnamehash}{0e2fbf687e07cd021adeca2eaf0b705a}
+      \strng{authorbibnamehash}{0e2fbf687e07cd021adeca2eaf0b705a}
+      \strng{authornamehash}{0e2fbf687e07cd021adeca2eaf0b705a}
+      \strng{authorfullhash}{0e2fbf687e07cd021adeca2eaf0b705a}
+      \strng{authorfullhashraw}{0e2fbf687e07cd021adeca2eaf0b705a}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Electronics}
+      \field{note}{User-defined evaluation criteria with LLM-as-a-Judge mechanism validated on MMLU, Math, HumanEval}
+      \field{number}{13}
+      \field{title}{{LLM PromptScope}: A Customizable, Real-Time Evaluation Framework for Domain-Specific Needs}
+      \field{volume}{14}
+      \field{year}{2025}
+      \field{pages}{2577}
+      \range{pages}{1}
+    \endentry
+    \entry{DomainSpecificEmbedding2024}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=3a34a18ffa6aa157b15527244bac7fd0}{%
+           family={Thompson},
+           familyi={T\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{98f6adb9703d1d950ea61119baf34dfe}
+      \strng{fullhash}{98f6adb9703d1d950ea61119baf34dfe}
+      \strng{fullhashraw}{98f6adb9703d1d950ea61119baf34dfe}
+      \strng{bibnamehash}{98f6adb9703d1d950ea61119baf34dfe}
+      \strng{authorbibnamehash}{98f6adb9703d1d950ea61119baf34dfe}
+      \strng{authornamehash}{98f6adb9703d1d950ea61119baf34dfe}
+      \strng{authorfullhash}{98f6adb9703d1d950ea61119baf34dfe}
+      \strng{authorfullhashraw}{98f6adb9703d1d950ea61119baf34dfe}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Empirical study comparing general-purpose vs domain-specific embeddings}
+      \field{title}{Do We Need Domain-Specific Embedding Models? An Empirical Investigation}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2409.18511
+      \endverb
+    \endentry
+    \entry{AIVendorLockIn2024}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=46fabde4398915e7964fe0fdb05e66f6}{%
+           family={Thompson},
+           familyi={T\bibinitperiod},
+           given={Sarah},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{46fabde4398915e7964fe0fdb05e66f6}
+      \strng{fullhash}{46fabde4398915e7964fe0fdb05e66f6}
+      \strng{fullhashraw}{46fabde4398915e7964fe0fdb05e66f6}
+      \strng{bibnamehash}{46fabde4398915e7964fe0fdb05e66f6}
+      \strng{authorbibnamehash}{46fabde4398915e7964fe0fdb05e66f6}
+      \strng{authornamehash}{46fabde4398915e7964fe0fdb05e66f6}
+      \strng{authorfullhash}{46fabde4398915e7964fe0fdb05e66f6}
+      \strng{authorfullhashraw}{46fabde4398915e7964fe0fdb05e66f6}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Intelligent CIO Europe}
+      \field{month}{10}
+      \field{note}{Analysis of switching costs, compatibility issues, and pricing lock-in in AI}
+      \field{title}{How {AI} is Creating a New Era of Cloud Vendor Lock-in}
+      \field{year}{2024}
+    \endentry
+    \entry{RecursiveSummarization2023}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=d82d519a60e2dbc353e9f1b0629d6a21}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Qingyun},
+           giveni={Q\bibinitperiod}}}%
+      }
+      \strng{namehash}{c8605d5dac4139310d2af99efff2eb41}
+      \strng{fullhash}{c8605d5dac4139310d2af99efff2eb41}
+      \strng{fullhashraw}{c8605d5dac4139310d2af99efff2eb41}
+      \strng{bibnamehash}{c8605d5dac4139310d2af99efff2eb41}
+      \strng{authorbibnamehash}{c8605d5dac4139310d2af99efff2eb41}
+      \strng{authornamehash}{c8605d5dac4139310d2af99efff2eb41}
+      \strng{authorfullhash}{c8605d5dac4139310d2af99efff2eb41}
+      \strng{authorfullhashraw}{c8605d5dac4139310d2af99efff2eb41}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Method for recursive memory generation to enhance long-term dialogue consistency}
+      \field{title}{Recursively Summarizing Enables Long-Term Dialogue Memory in Large Language Models}
+      \field{year}{2023}
+      \verb{eprint}
+      \verb 2308.15022
+      \endverb
+    \endentry
+    \entry{AIMiddlewareSolution2025}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=bb1de5ab5e98033aa6286a621825b9a6}{%
+           family={Wilson},
+           familyi={W\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{bb1de5ab5e98033aa6286a621825b9a6}
+      \strng{fullhash}{bb1de5ab5e98033aa6286a621825b9a6}
+      \strng{fullhashraw}{bb1de5ab5e98033aa6286a621825b9a6}
+      \strng{bibnamehash}{bb1de5ab5e98033aa6286a621825b9a6}
+      \strng{authorbibnamehash}{bb1de5ab5e98033aa6286a621825b9a6}
+      \strng{authornamehash}{bb1de5ab5e98033aa6286a621825b9a6}
+      \strng{authorfullhash}{bb1de5ab5e98033aa6286a621825b9a6}
+      \strng{authorfullhashraw}{bb1de5ab5e98033aa6286a621825b9a6}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{VKTR Digital Workplace}
+      \field{note}{Abstraction layer strategies for AI vendor portability}
+      \field{title}{How {AI} Middleware Solves the Vendor Lock-In Problem}
+      \field{year}{2025}
+    \endentry
+    \entry{EnterpriseLLMBenchmark2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=9845261412338f09f9fda112e8d5206d}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Ming},
+           giveni={M\bibinitperiod}}}%
+        {{hash=9be3de32b4a90f4dc041661f671a531c}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Chen},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{fc48334d83688f12bc6f2741b706967a}
+      \strng{fullhash}{fc48334d83688f12bc6f2741b706967a}
+      \strng{fullhashraw}{fc48334d83688f12bc6f2741b706967a}
+      \strng{bibnamehash}{fc48334d83688f12bc6f2741b706967a}
+      \strng{authorbibnamehash}{fc48334d83688f12bc6f2741b706967a}
+      \strng{authornamehash}{fc48334d83688f12bc6f2741b706967a}
+      \strng{authorfullhash}{fc48334d83688f12bc6f2741b706967a}
+      \strng{authorfullhashraw}{fc48334d83688f12bc6f2741b706967a}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{14-task framework based on Bloom's Taxonomy with 9,700-sample benchmark for enterprise-specific evaluation}
+      \field{title}{Enterprise Large Language Model Evaluation Benchmark}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2506.20274
+      \endverb
+    \endentry
+    \entry{CognitiveMemoryLLM2025}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=25bbf4047d900f3760c65b01ee899dba}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Wei},
+           giveni={W\bibinitperiod}}}%
+        {{hash=9be3de32b4a90f4dc041661f671a531c}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Chen},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{9d623d4a376606e28511be1d9b4e7d84}
+      \strng{fullhash}{9d623d4a376606e28511be1d9b4e7d84}
+      \strng{fullhashraw}{9d623d4a376606e28511be1d9b4e7d84}
+      \strng{bibnamehash}{9d623d4a376606e28511be1d9b4e7d84}
+      \strng{authorbibnamehash}{9d623d4a376606e28511be1d9b4e7d84}
+      \strng{authornamehash}{9d623d4a376606e28511be1d9b4e7d84}
+      \strng{authorfullhash}{9d623d4a376606e28511be1d9b4e7d84}
+      \strng{authorfullhashraw}{9d623d4a376606e28511be1d9b4e7d84}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Hierarchical memory architecture with daily and global summaries}
+      \field{title}{Cognitive Memory in Large Language Models}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2504.02441
+      \endverb
+    \endentry
+    \entry{FoundInTheMiddle2024}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=6f26ccd90c2ea3f03e9ffea308bca0f7}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Minghui},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{6da3ca1ff0bebe96662e849522679df2}
+      \strng{fullhash}{6da3ca1ff0bebe96662e849522679df2}
+      \strng{fullhashraw}{6da3ca1ff0bebe96662e849522679df2}
+      \strng{bibnamehash}{6da3ca1ff0bebe96662e849522679df2}
+      \strng{authorbibnamehash}{6da3ca1ff0bebe96662e849522679df2}
+      \strng{authornamehash}{6da3ca1ff0bebe96662e849522679df2}
+      \strng{authorfullhash}{6da3ca1ff0bebe96662e849522679df2}
+      \strng{authorfullhashraw}{6da3ca1ff0bebe96662e849522679df2}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Solution addressing lost-in-the-middle by mitigating positional attention bias}
+      \field{title}{Found in the Middle: How Language Models Use Long Contexts Better via Plug-and-Play Positional Encoding}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2403.04797
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

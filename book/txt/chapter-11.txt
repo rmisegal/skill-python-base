@@ -1,0 +1,1529 @@
+% chapter-11.tex
+% פרק 11: ממשקים ואינטראקציה - מהטרמינל לחוויית משתמש
+% Authors: Dr. Yoram Segal & Prof. Eran Sheriff
+
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{ממשקים ואינטראקציה -- מהטרמינל לחוויית משתמש}
+
+%% ============================================
+%% Learning Objectives
+%% ============================================
+\section*{מטרות הלמידה}
+\addcontentsline{toc}{section}{מטרות הלמידה}
+
+בסיום פרק זה תוכלו:
+
+\begin{itemize}
+  \item להכיר את אפשרויות ה-\term{GUI} השונות לאפליקציות בינה מלאכותית
+  \item לשלב טכנולוגיות \heterm{המרת טקסט לדיבור}{Text-to-Speech} ו-\heterm{המרת דיבור לטקסט}{Speech-to-Text}
+  \item לעצב חוויית משתמש אפקטיבית לכלי AI
+  \item להעריך ולבחור Framework מתאים לצרכי הארגון
+  \item לתכנן ממשקים נגישים ומכילים
+\end{itemize}
+
+%% ============================================
+%% Introduction
+%% ============================================
+\section*{פתח דבר: ממשק הוא המסר}
+
+במשך עשרות אלפי שנים, בני האדם תקשרו עם כלי העבודה שלהם באמצעות מגע ישיר -- היד אוחזת בגרזן, הרגל דוחפת את השידה, העין מכוונת את החץ. המהפכה התעשייתית הוסיפה הילוכים ומנופים, אך העיקרון נשאר זהה: אינטראקציה פיזית, ישירה, אינטואיטיבית.
+
+המחשב שינה הכל. לראשונה בהיסטוריה, היה עלינו ללמוד שפה חדשה כדי לדבר עם הכלים שלנו. בשנות החמישים היו אלה כרטיסים מנוקבים. בשנות השישים -- שורות פקודה מסתוריות במסך שחור. בשנות השמונים הגיעה המהפכה: העכבר והחלון, הסמל והתפריט. ממשק המשתמש הגרפי (\term{GUI}) הפך את המחשב ממכונה לחנונים לכלי המונים.
+
+היום אנו עומדים בפני מהפכה נוספת. סוכני בינה מלאכותית יכולים להבין שפה טבעית, לשמוע ולדבר, לראות ולהגיב. הם יכולים להיות זמינים בצ'אט, באפליקציה, בדפדפן, או אפילו כקול בלבד. השאלה המנהלית המרכזית היא: \textbf{איך נעצב את הממשק כך שהמשתמשים שלנו יבינו את היכולות של הכלי, ירגישו בנוח איתו, וישיגו את מטרותיהם במהירות וביעילות?}
+
+בפרק זה נחקור את עולם הממשקים לכלי AI -- מהטכנולוגיות הטכניות ועד העקרונות המנחים של עיצוב חוויית משתמש.
+
+%% ============================================
+%% Section 1: GUI Frameworks
+%% ============================================
+\section{GUI Frameworks לאפליקציות AI}
+
+\subsection{מעבר השנים: מטרמינל לחלון}
+
+כאשר פיתחנו סוכן AI בפרקים הקודמים, היה לנו ממשק פשוט: טרמינל שחור עם טקסט לבן. המשתמש מקליד שאלה, הסוכן עונה, והמסך ממשיך להתמלא בשורות. זה עובד נהדר למפתחים ולאנשי IT, אך כמעט בלתי אפשרי לשאר העולם.
+
+ההיסטוריה מלמדת אותנו שכל טכנולוגיה שרוצה להפוך למיינסטרים חייבת להתלבש בממשק נוח. ה-\term{World Wide Web} לא היה מפריע לעולם אלמלא דפדפן \term{Mosaic} עם תמונות וקישורים צבעוניים. הסמארטפון לא היה מהפך את החיים שלנו אלמלא מסך המגע והאייקונים.
+
+גם סוכני AI זקוקים לממשק. אבל איזה סוג של ממשק?
+
+\subsection{שלושת העולמות: Web, Desktop, Mobile}
+
+קיימות שלוש פלטפורמות עיקריות לבניית ממשק משתמש:
+
+\begin{itemize}
+  \item \textbf{Web} -- ממשק שרץ בדפדפן, נגיש מכל מכשיר
+  \item \textbf{Desktop} -- אפליקציה מקומית שמותקנת על המחשב
+  \item \textbf{Mobile} -- אפליקציה לסמארטפון וטאבלט
+\end{itemize}
+
+כל אחת מהפלטפורמות הללו מציעה יתרונות וחסרונות, ודורשת כלי פיתוח שונים.
+
+\subsection{Qt -- המלך הוותיק של Desktop Applications}
+
+\term{Qt} (מבוטא "cute") היא ספרייה ותיקה ומכובדת לבניית אפליקציות דסקטופ. היא קיימת משנת 1995, ועמדה מאחורי אפליקציות מפורסמות כמו \term{VLC Media Player}, \term{Telegram}, ו-\term{Autodesk Maya}.
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item ממשק מקורי (\term{native}) לכל מערכת הפעלה -- Windows, macOS, Linux
+  \item ביצועים מצוינים, ללא תלות בדפדפן
+  \item כלים עשירים לבניית ממשק מורכב
+  \item גישה מלאה למשאבי המחשב
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item עקומת למידה תלולה -- דורש ידע ב-\term{C++} או \term{Python} ברמה גבוהה
+  \item דורש התקנה על מחשב המשתמש
+  \item פחות מתאים לממשקים מבוססי Web
+\end{itemize}
+
+\textbf{מתי להשתמש ב-Qt:}
+\begin{itemize}
+  \item כאשר אתם בונים כלי פנימי למחלקת IT או Analytics
+  \item כאשר דרושה ביצועים גבוהים (למשל, עיבוד תמונה בזמן אמת)
+  \item כאשר הממשק דורש גישה ישירה לחומרה (מצלמה, מיקרופון, חיישנים)
+\end{itemize}
+
+\subsection{Electron -- Web בשמלת Desktop}
+
+\term{Electron}~\cite{electron2024} היא טכנולוגיה שהפכה פופולרית ביותר בשנים האחרונות. הרעיון פשוט: לקחת אפליקציית Web (HTML, CSS, JavaScript) ולעטוף אותה בממשק דסקטופ. אפליקציות כמו \term{Visual Studio Code}, \term{Slack}, ו-\term{Discord} בנויות על Electron.
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item מפתחים ידעו טכנולוגיות Web -- אין צורך ללמוד שפה חדשה
+  \item אותו קוד רץ על Windows, macOS, Linux
+  \item אקוסיסטם עצום של ספריות (\term{npm})
+  \item מהירות פיתוח גבוהה
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item צריכת זיכרון גבוהה -- כל אפליקציה מריצה דפדפן שלם
+  \item ביצועים פחות טובים מאפליקציה native
+  \item גודל קובץ ההתקנה גדול (100-200 MB)
+\end{itemize}
+
+\textbf{מתי להשתמש ב-Electron:}
+\begin{itemize}
+  \item כאשר הצוות שלכם יודע JavaScript ו-React/Vue
+  \item כאשר דרושה אפליקציה שעובדת על כל הפלטפורמות
+  \item כאשר המהירות של פיתוח חשובה יותר מביצועים
+\end{itemize}
+
+\subsection{Flutter -- העתיד של Cross-Platform}
+
+\term{Flutter}~\cite{flutter2024} היא טכנולוגיה צעירה יותר של Google (2017), שמטרתה לאפשר בניית ממשק אחד שעובד על Web, Desktop, ו-Mobile. היא כתובה ב-\term{Dart}, שפת תכנות שפותחה על ידי Google.
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item ממשק אחד לכל הפלטפורמות -- לא רק Desktop אלא גם Android ו-iOS
+  \item ביצועים מצוינים, קרובים ל-native
+  \item עיצוב מודרני ואנימציות חלקות
+  \item \term{Hot Reload} -- רואים שינויים בממשק מיידית בזמן פיתוח
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item צריך ללמוד שפת Dart
+  \item אקוסיסטם צעיר יותר מ-JavaScript
+  \item עדיין לא בשל לחלוטין עבור Web
+\end{itemize}
+
+\textbf{מתי להשתמש ב-Flutter:}
+\begin{itemize}
+  \item כאשר אתם צריכים אפליקציה שעובדת על Desktop \textbf{וגם} על Mobile
+  \item כאשר העיצוב והחוויה חשובים מאוד
+  \item כאשר אתם מתכננים להשקיע באסטרטגיית פיתוח ארוכת טווח
+\end{itemize}
+
+\subsection{טבלת השוואה: בחירת Framework לפי צרכים}
+
+טבלה~\ref{tab:gui-frameworks} מציגה השוואה מקיפה בין ה-Frameworks השונים לפי מגוון קריטריונים.
+
+\begin{table}[H]
+\centering
+\caption{השוואת GUI Frameworks לאפליקציות AI}
+\label{tab:gui-frameworks}
+\begin{tabularx}{\textwidth}{|X|c|c|c|}
+\hline
+\textbf{קריטריון} & \textbf{Qt} & \textbf{Electron} & \textbf{Flutter} \\
+\hline
+קלות למידה & נמוכה & גבוהה & בינונית \\
+\hline
+ביצועים & מעולים & בינוניים & טובים מאוד \\
+\hline
+צריכת זיכרון & נמוכה & גבוהה & בינונית \\
+\hline
+תמיכה ב-Mobile & לא & לא & כן \\
+\hline
+תמיכה ב-Web & חלקית & לא & כן \\
+\hline
+גודל אפליקציה & קטן & גדול & בינוני \\
+\hline
+מהירות פיתוח & איטית & מהירה & מהירה \\
+\hline
+\en{Native Look} & כן & לא & כן \\
+\hline
+קהילה ותמיכה & גדולה & ענקית & גדלה \\
+\hline
+עלות רישוי & חינם/מסחרי & חינם & חינם \\
+\hline
+\end{tabularx}
+\end{table}
+
+%% ============================================
+%% Section 2: Web Interfaces for Prototyping
+%% ============================================
+\section{Web Interfaces לפרוטוטייפים מהירים}
+
+\subsection{הצורך במהירות: MVP של ממשק}
+
+במציאות העסקית, לעיתים קרובות אין לנו את הזמן או התקציב לבנות אפליקציה מלאה. אנחנו רוצים לבדוק רעיון, להראות ל-stakeholders, לקבל פידבק מהמשתמשים -- והכל במהירות האפשרית.
+
+כאן נכנסות לתמונה ספריות Python פשוטות וחזקות שמאפשרות לבנות ממשק Web תוך דקות -- ללא כל ידע ב-HTML, CSS, או JavaScript.
+
+\subsection{Streamlit -- הפשטות כערך עליון}
+
+\term{Streamlit} היא ספריה שהפכה לסטנדרט בקהילת ה-Data Science לבניית דאשבורדים ודמואים. העיקרון שלה: קוד Python טהור שהופך לממשק Web אינטראקטיבי.
+
+\begin{codebox}[דוגמה: Chatbot פשוט ב-Streamlit]
+\begin{english}
+\begin{lstlisting}[style=python]
+import streamlit as st
+from openai import OpenAI
+
+# Initialize client
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+st.title("AI Assistant")
+
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Display chat history
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# User input
+if prompt := st.chat_input("What would you like to know?"):
+    # Add user message
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    # Get AI response
+    with st.chat_message("assistant"):
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=st.session_state.messages
+        )
+        reply = response.choices[0].message.content
+        st.markdown(reply)
+
+    # Add assistant message
+    st.session_state.messages.append({"role": "assistant", "content": reply})
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+קוד זה יוצר ממשק צ'אט מלא תוך פחות מ-30 שורות. Streamlit מטפל אוטומטית בכל העיצוב, ההיסטוריה, והאינטראקטיביות.
+
+\textbf{יתרונות Streamlit:}
+\begin{itemize}
+  \item פשטות מקסימלית -- קוד Python בלבד
+  \item אידיאלי למדעני נתונים שאינם מפתחי Web
+  \item מהיר מאוד לפיתוח
+  \item תמיכה מובנית בגרפים, טבלאות, מדיה
+  \item אפשרות deployment חינמית ב-\term{Streamlit Community Cloud}
+\end{itemize}
+
+\textbf{חסרונות Streamlit:}
+\begin{itemize}
+  \item פחות גמיש מממשק Web מלא
+  \item ביצועים לא אופטימליים לאפליקציות גדולות
+  \item הממשק "רץ מחדש" בכל אינטראקציה -- עשוי להיות איטי
+\end{itemize}
+
+\subsection{Gradio -- ממשקים למודלי ML}
+
+\term{Gradio}~\cite{gradio2024} היא ספריה דומה ל-Streamlit, אך היא מתמחה בבניית ממשקים למודלי Machine Learning. היא פופולרית מאוד ב-\term{Hugging Face} לשיתוף מודלים.
+
+\begin{codebox}[דוגמה: AI Image Analyzer ב-Gradio]
+\begin{english}
+\begin{lstlisting}[style=python]
+import gradio as gr
+from openai import OpenAI
+import base64
+
+client = OpenAI()
+
+def analyze_image(image):
+    # Convert image to base64
+    with open(image, "rb") as img_file:
+        img_data = base64.b64encode(img_file.read()).decode()
+
+    # Analyze with GPT-4 Vision
+    response = client.chat.completions.create(
+        model="gpt-4-vision-preview",
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": "Analyze this image and describe what you see."},
+                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{img_data}"}}
+                ]
+            }
+        ]
+    )
+
+    return response.choices[0].message.content
+
+# Create Gradio interface
+demo = gr.Interface(
+    fn=analyze_image,
+    inputs=gr.Image(type="filepath"),
+    outputs="text",
+    title="AI Image Analyzer",
+    description="Upload an image and get AI analysis"
+)
+
+demo.launch()
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\textbf{יתרונות Gradio:}
+\begin{itemize}
+  \item פשוט ביותר -- פחות קוד מ-Streamlit
+  \item מותאם במיוחד לקלט/פלט של מודלים (תמונות, אודיו, טקסט)
+  \item אינטגרציה מצוינת עם \term{Hugging Face}
+  \item אפשרות ליצור API אוטומטית
+\end{itemize}
+
+\textbf{חסרונות Gradio:}
+\begin{itemize}
+  \item פחות גמיש מ-Streamlit לממשקים מורכבים
+  \item פחות מתאים לדאשבורדים עסקיים
+\end{itemize}
+
+\subsection{מתי להשתמש בכל אחד?}
+
+\begin{examplebox}[הנחיות לבחירה]
+\textbf{השתמש ב-Streamlit כאשר:}
+\begin{itemize}
+  \item אתה בונה דאשבורד פנימי למנהלים
+  \item יש צורך בממשק מורכב עם מספר רכיבים
+  \item המיקוד הוא הצגת נתונים ותובנות
+\end{itemize}
+
+\textbf{השתמש ב-Gradio כאשר:}
+\begin{itemize}
+  \item אתה בונה דמו למודל AI
+  \item הממשק פשוט: קלט $\rightarrow$ עיבוד $\rightarrow$ פלט
+  \item אתה רוצה לשתף את המודל בקלות
+\end{itemize}
+
+\textbf{השתמש ב-Qt/Electron/Flutter כאשר:}
+\begin{itemize}
+  \item המוצר הוא production-ready
+  \item דרוש ממשק מקצועי ומלוטש
+  \item יש צוות פיתוח ייעודי
+\end{itemize}
+\end{examplebox}
+
+%% ============================================
+%% Section 3: Text-to-Speech
+%% ============================================
+\section{Text-to-Speech -- כשהמכונה מדברת}
+
+טכנולוגיות Text-to-Speech התפתחו במהירות בשנים האחרונות, עם מעבר מסינתזה מבוססת כללים לרשתות נוירונים עמוקות~\cite{tan2021survey}.
+
+\subsection{הקול כממשק}
+
+במשך רוב ההיסטוריה האנושית, שפה פירושה קול. רק בכמה אלפי השנים האחרונות התחלנו לכתוב, ורק במאה האחרונה התחלנו להקליד. עבור רוב בני האדם, דיבור הוא הצורה הטבעית ביותר לתקשורת.
+
+מודלי שפה גדולים יודעים לכתוב, אך אם נוכל להפוך את הטקסט שלהם לקול -- נפתח עולם חדש של אפשרויות:
+\begin{itemize}
+  \item נגישות למשתמשים עיוורים או לקויי ראייה
+  \item שימוש תוך כדי נהיגה או פעילות גופנית
+  \item למידה אודיטיבית -- אנשים שמעדיפים לשמוע
+  \item אינטראקציה טבעית יותר עם AI
+\end{itemize}
+
+\subsection{pyttsx3 -- הפתרון הלא-תלוי}
+
+\term{pyttsx3} היא ספריית Python שמשתמשת במנועי TTS (\term{Text-to-Speech}) המובנים במערכת ההפעלה. ב-Windows היא משתמשת ב-\term{SAPI5}, ב-macOS ב-\term{NSSpeechSynthesizer}, וב-Linux ב-\term{eSpeak}.
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item עובד לחלוטין offline -- אין צורך באינטרנט
+  \item אין עלות -- חינמי לגמרי
+  \item הגדרה פשוטה ביותר
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item איכות הקול בסיסית ומכאנית
+  \item תמיכה מוגבלת בעברית (תלוי במערכת ההפעלה)
+  \item אין שליטה על אינטונציה ורגש
+\end{itemize}
+
+\begin{codebox}[דוגמה: AI Agent עם TTS]
+\begin{english}
+\begin{lstlisting}[style=python]
+import pyttsx3
+from openai import OpenAI
+
+client = OpenAI()
+engine = pyttsx3.init()
+
+def speak(text):
+    """Convert text to speech"""
+    engine.say(text)
+    engine.runAndWait()
+
+def chat_with_voice(user_input):
+    """Chat with AI and speak response"""
+    # Get AI response
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": user_input}]
+    )
+
+    reply = response.choices[0].message.content
+    print(f"AI: {reply}")
+
+    # Speak response
+    speak(reply)
+
+    return reply
+
+# Usage
+chat_with_voice("Tell me a short joke")
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsection{gTTS -- Google Text-to-Speech}
+
+\term{gTTS} (Google Text-to-Speech) משתמשת ב-API של Google Translate לייצור קבצי אודיו. היא מציעה איכות קול טובה משמעותית, ותמיכה במגוון רחב של שפות.
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item איכות קול טובה מאוד
+  \item תמיכה במעל 100 שפות כולל עברית
+  \item חינמי לשימוש
+  \item קל לשימוש
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item דורש חיבור אינטרנט
+  \item לא מתאים לזמן אמת -- צריך לשמור קובץ ואז להשמיע
+  \item אין תמיכה בקולות מרובים או שליטה על טון
+\end{itemize}
+
+\begin{codebox}[דוגמה: שמירת תשובת AI כקובץ אודיו]
+\begin{english}
+\begin{lstlisting}[style=python]
+from gtts import gTTS
+import os
+from openai import OpenAI
+
+client = OpenAI()
+
+def create_audio_response(user_input, language='en'):
+    """Create audio file from AI response"""
+    # Get AI response
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": user_input}]
+    )
+
+    reply = response.choices[0].message.content
+
+    # Convert to speech
+    tts = gTTS(text=reply, lang=language, slow=False)
+    tts.save("response.mp3")
+
+    # Play audio (platform-specific)
+    os.system("start response.mp3")  # Windows
+    # os.system("afplay response.mp3")  # macOS
+    # os.system("mpg123 response.mp3")  # Linux
+
+    return reply
+
+# Usage
+create_audio_response("Explain quantum computing in simple terms")
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsection{Coqui TTS -- State-of-the-Art בקוד פתוח}
+
+\term{Coqui TTS} היא ספריית TTS מתקדמת המבוססת על למידה עמוקה. היא מאפשרת יצירת קולות איכותיים במיוחד, עם יכולת שיבוט קול (\term{voice cloning}).
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item איכות קול מעולה, כמעט בלתי נבדלת מקול אנושי
+  \item יכולת ליצור קולות מותאמים אישית
+  \item שליטה מלאה על אינטונציה, מהירות, רגש
+  \item קוד פתוח ללא תלות בשירות חיצוני
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item דורש כרטיס מסך (\term{GPU}) לביצועים טובים
+  \item התקנה והגדרה מורכבות יותר
+  \item מודלים כבדים -- צריך מקום אחסון
+\end{itemize}
+
+\begin{codebox}[דוגמה: TTS איכוותי עם Coqui]
+\begin{english}
+\begin{lstlisting}[style=python]
+from TTS.api import TTS
+
+# Initialize TTS with a specific model
+tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC")
+
+def speak_high_quality(text, output_file="output.wav"):
+    """Generate high-quality speech"""
+    tts.tts_to_file(text=text, file_path=output_file)
+    print(f"Audio saved to {output_file}")
+
+# Usage
+speak_high_quality("Welcome to our AI-powered customer service.")
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsection{OpenAI TTS API -- המלך החדש}
+
+OpenAI השיקה ב-2023 שירות TTS~\cite{openaitts2024} בעל איכות יוצאת דופן, עם 6 קולות שונים ותמיכה ב-\term{streaming} (הקול מתחיל להישמע עוד לפני שהטקסט נגמר).
+
+\begin{codebox}[דוגמה: OpenAI TTS API]
+\begin{english}
+\begin{lstlisting}[style=python]
+from openai import OpenAI
+from pathlib import Path
+
+client = OpenAI()
+
+def openai_tts(text, voice="alloy", output_file="speech.mp3"):
+    """
+    Generate speech using OpenAI TTS
+    Voices: alloy, echo, fable, onyx, nova, shimmer
+    """
+    response = client.audio.speech.create(
+        model="tts-1",  # or "tts-1-hd" for higher quality
+        voice=voice,
+        input=text
+    )
+
+    response.stream_to_file(output_file)
+    print(f"Audio saved to {output_file}")
+
+# Usage
+openai_tts("Hello! I'm your AI assistant, ready to help.", voice="nova")
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsection{בחירת TTS לפי Use Case}
+
+טבלה~\ref{tab:tts-comparison} מסכמת את האפשרויות השונות ומתי כדאי להשתמש בכל אחת מהן.
+
+\begin{table}[H]
+\centering
+\caption{מתי להשתמש בכל פתרון TTS}
+\label{tab:tts-comparison}
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\hline
+\textbf{פתרון} & \textbf{מתי מתאים} & \textbf{עלות חודשית משוערת} \\
+\hline
+\term{pyttsx3} & פרוטוטייפ מהיר, שימוש פנימי בסיסי & \$0 \\
+\hline
+\term{gTTS} & אפליקציה פשוטה, תמיכה רב-לשונית & \$0 \\
+\hline
+\term{Coqui TTS} & שליטה מלאה, offline, קול מותאם & \$0 (חומרה) \\
+\hline
+\term{OpenAI TTS} & מוצר production, איכות מקסימלית & \$15/1M תווים \\
+\hline
+\end{tabularx}
+\end{table}
+
+%% ============================================
+%% Section 4: Speech-to-Text
+%% ============================================
+\section{Speech-to-Text -- כשהמכונה מקשיבה}
+
+\subsection{מאוזן אנושי למכונה}
+
+אם TTS נותן למכונה קול, \term{Speech-to-Text} (STT) נותן לה אוזניים. היכולת לתמלל דיבור לטקסט מאפשרת:
+\begin{itemize}
+  \item ממשקים קוליים לא-hands-free
+  \item תיעוד פגישות וראיונות אוטומטי
+  \item נגישות למשתמשים עם מוגבלות פיזית
+  \item חיפוש בתוכן וידאו ואודיו
+\end{itemize}
+
+\subsection{SpeechRecognition -- הספרייה הנוחה}
+
+\term{SpeechRecognition} היא ספריית Python פופולרית שמספקת ממשק אחיד למספר שירותי STT.
+
+\begin{codebox}[דוגמה: תמלול אודיו מהמיקרופון]
+\begin{english}
+\begin{lstlisting}[style=python]
+import speech_recognition as sr
+
+def listen_and_transcribe():
+    """Listen to microphone and transcribe"""
+    recognizer = sr.Recognizer()
+
+    with sr.Microphone() as source:
+        print("Listening... Speak now!")
+
+        # Adjust for ambient noise
+        recognizer.adjust_for_ambient_noise(source, duration=1)
+
+        # Listen
+        audio = recognizer.listen(source)
+
+    try:
+        # Transcribe using Google Speech Recognition
+        text = recognizer.recognize_google(audio)
+        print(f"You said: {text}")
+        return text
+    except sr.UnknownValueError:
+        print("Could not understand audio")
+        return None
+    except sr.RequestError as e:
+        print(f"Error: {e}")
+        return None
+
+# Usage
+user_input = listen_and_transcribe()
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item פשוט ביותר לשימוש
+  \item תמיכה במספר שירותים (Google, Sphinx, Wit.ai)
+  \item מתאים לפרוטוטייפים
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item דיוק בינוני
+  \item לא מתאים לקבצי אודיו ארוכים
+  \item תמיכה מוגבלת בעברית
+\end{itemize}
+
+\subsection{OpenAI Whisper -- המהפכה}
+
+\term{Whisper}~\cite{radford2023whisper} הוא מודל STT של OpenAI שהופץ כקוד פתוח ב-2022. הוא נחשב למודל הטוב ביותר לתמלול, עם דיוק יוצא דופן ותמיכה ב-99 שפות כולל עברית.
+
+\begin{codebox}[דוגמה: תמלול עם Whisper]
+\begin{english}
+\begin{lstlisting}[style=python]
+from openai import OpenAI
+
+client = OpenAI()
+
+def transcribe_audio(audio_file_path):
+    """Transcribe audio file using Whisper API"""
+    with open(audio_file_path, "rb") as audio_file:
+        transcript = client.audio.transcriptions.create(
+            model="whisper-1",
+            file=audio_file,
+            response_format="text"
+        )
+
+    return transcript
+
+# Usage
+text = transcribe_audio("meeting_recording.mp3")
+print(text)
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+ניתן גם להשתמש ב-Whisper לוקאלית (offline):
+
+\begin{codebox}[דוגמה: Whisper מקומי]
+\begin{english}
+\begin{lstlisting}[style=python]
+import whisper
+
+# Load model (tiny, base, small, medium, large)
+model = whisper.load_model("base")
+
+def transcribe_local(audio_file):
+    """Transcribe using local Whisper model"""
+    result = model.transcribe(audio_file)
+    return result["text"]
+
+# Usage
+text = transcribe_local("interview.wav")
+print(text)
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\textbf{יתרונות Whisper:}
+\begin{itemize}
+  \item דיוק מעולה -- מהטובים בשוק
+  \item תמיכה רב-לשונית מצוינת
+  \item זיהוי אוטומטי של שפה
+  \item יכולת תרגום לאנגלית
+  \item גרסה מקומית בחינם או API מהיר
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item הגרסה המקומית דורשת GPU למודלים הגדולים
+  \item ה-API עולה כסף (\$0.006 לדקה)
+\end{itemize}
+
+\subsection{AssemblyAI -- פתרון Enterprise}
+
+\term{AssemblyAI} היא חברה המתמחה ב-STT ברמת enterprise, עם תכונות מתקדמות כמו speaker diarization (זיהוי דוברים), sentiment analysis, ו-content moderation.
+
+\begin{codebox}[דוגמה: AssemblyAI עם Speaker Diarization]
+\begin{english}
+\begin{lstlisting}[style=python]
+import assemblyai as aai
+
+aai.settings.api_key = "your_api_key"
+
+def transcribe_with_speakers(audio_url):
+    """Transcribe and identify different speakers"""
+    config = aai.TranscriptionConfig(speaker_labels=True)
+
+    transcriber = aai.Transcriber()
+    transcript = transcriber.transcribe(audio_url, config)
+
+    # Print with speaker labels
+    for utterance in transcript.utterances:
+        print(f"Speaker {utterance.speaker}: {utterance.text}")
+
+    return transcript
+
+# Usage
+transcribe_with_speakers("https://example.com/meeting.mp3")
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\textbf{מתי להשתמש ב-AssemblyAI:}
+\begin{itemize}
+  \item כאשר צריך לזהות דוברים שונים
+  \item כאשר דרושה אנליזת סנטימנט על התמלול
+  \item כאשר יש צורך בסינון תוכן לא ראוי
+  \item כאשר העסק מוכן לשלם עבור תכונות מתקדמות
+\end{itemize}
+
+\subsection{בניית Voice Agent מלא}
+
+בואו נשלב TTS ו-STT ליצירת סוכן AI קולי מלא:
+
+\begin{codebox}[דוגמה: Voice AI Agent]
+\begin{english}
+\begin{lstlisting}[style=python]
+import speech_recognition as sr
+from openai import OpenAI
+import pyttsx3
+
+client = OpenAI()
+recognizer = sr.Recognizer()
+tts_engine = pyttsx3.init()
+
+def listen():
+    """Listen to user input"""
+    with sr.Microphone() as source:
+        print("Listening...")
+        recognizer.adjust_for_ambient_noise(source)
+        audio = recognizer.listen(source)
+
+    try:
+        text = recognizer.recognize_google(audio)
+        print(f"You: {text}")
+        return text
+    except:
+        return None
+
+def think(user_input):
+    """Get AI response"""
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": user_input}]
+    )
+    return response.choices[0].message.content
+
+def speak(text):
+    """Speak AI response"""
+    print(f"AI: {text}")
+    tts_engine.say(text)
+    tts_engine.runAndWait()
+
+def voice_agent():
+    """Main voice agent loop"""
+    speak("Hello! I'm your AI assistant. How can I help?")
+
+    while True:
+        user_input = listen()
+
+        if user_input:
+            if "goodbye" in user_input.lower():
+                speak("Goodbye! Have a great day.")
+                break
+
+            response = think(user_input)
+            speak(response)
+
+# Run the agent
+voice_agent()
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+%% ============================================
+%% Section 5: UX for AI
+%% ============================================
+\section{UX לבינה מלאכותית -- עיצוב חוויית משתמש}
+
+עיצוב חוויית משתמש הוא אחד הגורמים החשובים ביותר להצלחת מוצר~\cite{norman2013design}. כאשר מדובר בממשקי AI, יש צורך בעקרונות ייחודיים~\cite{amershi2019guidelines}.
+
+\subsection{למה AI שונה?}
+
+עיצוב ממשק לבינה מלאכותית שונה מעיצוב אפליקציה רגילה. באפליקציה מסורתית, המשתמש לוחץ על כפתור והתוצאה צפויה. בממשק AI, המשתמש שואל שאלה ולא בדיוק יודע מה יקבל.
+
+זה יוצר אתגרים ייחודיים:
+\begin{itemize}
+  \item \textbf{אי-ודאות}: המשתמש לא יודע מה ה-AI יכול ולא יכול
+  \item \textbf{אמון}: המשתמש צריך לסמוך על תשובות שהוא לא יכול לאמת
+  \item \textbf{שפה}: אין כפתורים -- הכל בשפה טבעית
+  \item \textbf{שגיאות}: ה-AI עשוי לטעות, וצריך לתכנן לכך
+\end{itemize}
+
+\subsection{עקרונות עיצוב לממשקי AI}
+
+\subsubsection{1. שקיפות -- גלה את גבולות ה-AI}
+
+אל תתן למשתמש לחשוב שה-AI יכול הכל. הבהר מה הוא יכול ולא יכול לעשות.
+
+\begin{examplebox}[דוגמה: הודעת פתיחה ברורה]
+במקום:
+\begin{quote}
+"שלום! איך אני יכול לעזור?"
+\end{quote}
+
+כתוב:
+\begin{quote}
+"שלום! אני סוכן AI שיכול לעזור לך עם:
+\begin{itemize}
+  \item מענה על שאלות לגבי המוצרים שלנו
+  \item איתור הזמנות וסטטוס משלוח
+  \item תיאום פגישות עם נציג שירות
+\end{itemize}
+
+אני לא יכול לבצע החזרים או לשנות הזמנות -- לכך תצטרך לפנות לנציג אנושי."
+\end{quote}
+\end{examplebox}
+
+\subsubsection{2. משוב מיידי -- אל תשאיר את המשתמש בתלייה}
+
+כאשר ה-AI חושב, הראה אינדיקציה. ממשק שקט הוא ממשק מתסכל.
+
+\begin{itemize}
+  \item הוסף אנימציית "typing" כמו בווטסאפ
+  \item הצג "חושב..." או "מנתח את השאלה שלך..."
+  \item אם זה לוקח זמן -- הסבר למה: "מחפש במאגר הנתונים..."
+\end{itemize}
+
+\subsubsection{3. Graceful Failures -- תכנן לטעויות}
+
+ה-AI יטעה. תכנן מראש מה קורה כשזה קורה.
+
+\begin{examplebox}[דוגמה: טיפול בכישלון]
+במקום:
+\begin{quote}
+"אני לא יודע."
+\end{quote}
+
+כתוב:
+\begin{quote}
+"אני לא בטוח שהבנתי את השאלה שלך. האם אתה מתכוון ל:
+\begin{itemize}
+  \item מדיניות ההחזרות שלנו?
+  \item סטטוס ההזמנה שלך?
+  \item משהו אחר? נסה לנסח מחדש."
+\end{itemize}
+
+אתה תמיד יכול לדבר עם נציג אנושי בלחיצה כאן."
+\end{quote}
+\end{examplebox}
+
+\subsubsection{4. Human in the Loop -- תן יד מושטת}
+
+אף AI לא מושלם. תמיד תן אפשרות לעבור לאדם.
+
+\begin{itemize}
+  \item כפתור "דבר עם נציג" תמיד גלוי
+  \item אם ה-AI לא הצליח 2-3 פעמים -- הצע אוטומטית מעבר לאדם
+  \item תן למשתמש לדרג את התשובה (אגודל למעלה/למטה)
+\end{itemize}
+
+\subsubsection{5. הקשר ורציפות -- זכור את השיחה}
+
+משתמשים מצפים שה-AI יזכור מה שאמרו לפני רגע. אל תאכזב.
+
+\begin{examplebox}[דוגמה: שימוש בהקשר]
+\textbf{משתמש:} "מה שעות הפתיחה שלכם?"
+
+\textbf{AI:} "אנחנו פתוחים א'-ה' 09:00-18:00, ו' 09:00-14:00."
+
+\textbf{משתמש:} "ומחר?"
+
+\textbf{AI טוב:} "מחר (יום שלישי) אנחנו פתוחים 09:00-18:00."
+
+\textbf{AI רע:} "מה אתה מתכוון ב'מחר'?" [שכח את ההקשר]
+\end{examplebox}
+
+\subsubsection{6. פרסונה -- תן ל-AI אישיות}
+
+AI ללא אישיות הוא משעמם ולא זכיר. תן לו טון קול ייחודי שמתאים למותג. מחקרים מראים שאישיות עקבית משפרת את חוויית המשתמש~\cite{yang2020unremarkable}.
+
+\begin{itemize}
+  \item \textbf{בנק:} פורמלי, מקצועי, מדויק
+  \item \textbf{Startup:} ידידותי, לא רשמי, שובב
+  \item \textbf{תמיכה רפואית:} חם, אמפתי, סובלני
+\end{itemize}
+
+\subsection{Wireframes לממשק AI אידיאלי}
+
+איור~\ref{fig:ai-chat-wireframe} מציג Wireframe של ממשק צ'אט AI אידיאלי, הכולל את כל העקרונות שנדונו.
+
+\begin{figure}[H]
+\centering
+\begin{english}
+\begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
+  % Phone frame
+  \draw[thick] (0,0) rectangle (8,14);
+
+  % Header
+  \fill[chaptercolor] (0,12.5) rectangle (8,14);
+  \node[white] at (4,13.25) {\Large\bfseries AI Assistant};
+
+  % Status button
+  \draw[fill=formulacolor] (6.5,13) rectangle (7.5,13.5);
+  \node at (7,13.25) {\tiny Online};
+
+  % Chat messages
+  % User message
+  \draw[fill=examplecolor, rounded corners] (0.5,10.5) rectangle (6,11.5);
+  \node[align=left, text width=5cm] at (3.25,11) {\small What are your business hours?};
+
+  % AI message
+  \draw[fill=white, rounded corners] (2,8.5) rectangle (7.5,10);
+  \node[align=left, text width=5cm] at (4.75,9.25) {\small We're open Mon-Fri 9AM-6PM, Sat 9AM-2PM.};
+
+  % Typing indicator
+  \draw[fill=white, rounded corners] (2,7.5) rectangle (4,8);
+  \node at (3,7.75) {\tiny\textit{AI is typing...}};
+
+  % Suggestions
+  \node at (4,6.5) {\small\textit{Suggested questions:}};
+  \draw[fill=exercisecolor, rounded corners] (0.5,5.5) rectangle (7.5,6);
+  \node at (4,5.75) {\small Where are you located?};
+
+  % Input area
+  \draw[fill=gray!10] (0.5,1) rectangle (6.5,2);
+  \node[align=left] at (3.5,1.5) {\small Type your message...};
+
+  % Send button
+  \draw[fill=sectioncolor] (6.8,1) rectangle (7.5,2);
+  \node[white] at (7.15,1.5) {$\rightarrow$};
+
+  % Human escalation
+  \draw[fill=orange!30, rounded corners] (0.5,0.3) rectangle (7.5,0.8);
+  \node at (4,0.55) {\small Talk to Human Agent};
+\end{tikzpicture}
+\end{english}
+\caption{Wireframe של ממשק AI צ'אט אידיאלי}
+\label{fig:ai-chat-wireframe}
+\end{figure}
+
+%% ============================================
+%% Section 6: Accessibility
+%% ============================================
+\section{נגישות -- AI לכולם}
+
+\subsection{החובה המוסרית והחוקית}
+
+נגישות אינה "נחמד שיהיה" -- היא חובה מוסרית וחוקית. בישראל, חוק שוויון זכויות לאנשים עם מוגבלות מחייב נגישות דיגיטלית.
+
+מעבר לחוק, זוהי גם הזדמנות עסקית: כ-15\% מהאוכלוסייה חיים עם מוגבלות כלשהי. ממשק נגיש = קהל גדול יותר.
+
+\subsection{עקרונות נגישות לממשקי AI}
+
+\subsubsection{1. תמיכה ב-Screen Readers}
+
+משתמשים עיוורים משתמשים בתוכנות קורא מסך. ודא ש:
+\begin{itemize}
+  \item כל רכיב יש לו תיוג \term{ARIA} נכון
+  \item הטקסט ברור ומתואר היטב
+  \item הפוקוס ברור ונגיש במקלדת בלבד
+\end{itemize}
+
+\subsubsection{2. ניגודיות צבעים}
+
+משתמשים עם לקות ראייה זקוקים לניגודיות חזקה בין טקסט לרקע.
+
+\begin{notebox}[תקן WCAG 2.1]
+\begin{itemize}
+  \item רמה AA: יחס ניגודיות של לפחות 4.5:1 לטקסט רגיל
+  \item רמה AAA: יחס ניגודיות של לפחות 7:1
+\end{itemize}
+כלים לבדיקה: WebAIM Contrast Checker
+\end{notebox}
+
+\subsubsection{3. אפשרויות קוליות}
+
+כפי שראינו, TTS ו-STT הם לא רק פיצ'רים -- הם נגישות.
+\begin{itemize}
+  \item תן אפשרות להאזין לתשובות
+  \item תמוך בקלט קולי
+  \item אפשר שליטה במהירות דיבור
+\end{itemize}
+
+\subsubsection{4. שפה פשוטה}
+
+אנשים עם לקות למידה, או דוברי שפה שאינה שפת אם, זקוקים לשפה ברורה.
+\begin{itemize}
+  \item הימנע מז'רגון טכני
+  \item השתמש במשפטים קצרים
+  \item הצע תרגום לשפות נוספות
+\end{itemize}
+
+\subsubsection{5. בקרות מקלדת}
+
+חלק מהמשתמשים אינם יכולים להשתמש בעכבר.
+\begin{itemize}
+  \item כל פעולה נגישה במקלדת (Tab, Enter, חצים)
+  \item סדר טאבים לוגי
+  \item קיצורי מקלדת לפעולות נפוצות
+\end{itemize}
+
+\subsection{Checklist נגישות למוצר AI}
+
+\begin{exercisebox}[רשימת בדיקה לנגישות]
+\begin{enumerate}
+  \item $\square$ הממשק נגיש במקלדת בלבד
+  \item $\square$ תמיכה בקוראי מסך
+  \item $\square$ ניגודיות צבעים עומדת ב-WCAG AA
+  \item $\square$ טקסט ניתן להגדלה עד 200\%
+  \item $\square$ תמיכה בקלט קולי (STT)
+  \item $\square$ אפשרות לשמוע תשובות (TTS)
+  \item $\square$ שפה פשוטה וברורה
+  \item $\square$ תמיכה במספר שפות
+  \item $\square$ תיוג ARIA מלא
+  \item $\square$ בדיקה עם משתמשים בעלי מוגבלות
+\end{enumerate}
+\end{exercisebox}
+
+%% ============================================
+%% Managerial Formulas
+%% ============================================
+\section{נוסחאות מנהליות}
+
+\subsection{User Satisfaction (CSAT)}
+
+שביעות רצון משתמשים היא המדד המרכזי להצלחת ממשק AI.
+
+\begin{formulabox}[User Satisfaction]
+\begin{equation}
+\text{CSAT} = \frac{\text{מספר משתמשים מרוצים}}{\text{סה"כ תגובות}} \times 100
+\end{equation}
+
+\textbf{דוגמה:}
+אם 850 משתמשים מתוך 1,000 דירגו את החוויה כ"מרוצה" או "מרוצה מאוד":
+\[
+\text{CSAT} = \frac{850}{1000} \times 100 = 85\%
+\]
+
+\textbf{יעד אופטימלי:} CSAT מעל 80\% נחשב מעולה לממשקי AI.
+\end{formulabox}
+
+\subsection{Task Completion Rate}
+
+אחוז המשימות שהמשתמשים הצליחו להשלים עם ה-AI.
+
+\begin{formulabox}[Task Completion Rate]
+\begin{equation}
+\text{TCR} = \frac{\text{משימות שהושלמו בהצלחה}}{\text{סה"כ משימות שהתחילו}} \times 100
+\end{equation}
+
+\textbf{דוגמה:}
+אם 720 משתמשים מתוך 900 שהתחילו תהליך הזמנה השלימו אותו:
+\[
+\text{TCR} = \frac{720}{900} \times 100 = 80\%
+\]
+
+\textbf{ניתוח:} TCR נמוך מ-70\% מצביע על בעיה בממשק או ביכולות ה-AI.
+\end{formulabox}
+
+\subsection{Cost per Interaction}
+
+עלות ממוצעת לכל אינטראקציה עם AI (כולל API, תשתית, TTS/STT).
+
+\begin{formulabox}[Cost per Interaction]
+\begin{equation}
+\text{CPI} = \frac{\text{עלות חודשית כוללת}}{\text{מספר אינטראקציות חודשיות}}
+\end{equation}
+
+\textbf{דוגמה:}
+\begin{align*}
+\text{עלויות חודשיות:} \\
+\text{OpenAI API:} &\quad \$500 \\
+\text{TTS/STT:} &\quad \$200 \\
+\text{Hosting:} &\quad \$100 \\
+\text{סה"כ:} &\quad \$800 \\
+\\
+\text{אינטראקציות:} &\quad 40,000 \\
+\\
+\text{CPI} &= \frac{800}{40,000} = \$0.02
+\end{align*}
+
+\textbf{השוואה:} תמיכת לקוח אנושית עולה ממוצע \$5-15 לאינטראקציה.
+\end{formulabox}
+
+%% ============================================
+%% Practical Examples
+%% ============================================
+\section{דוגמאות מעשיות}
+
+\subsection{דוגמה 1: Chatbot עם ממשק Streamlit}
+
+נבנה צ'אטבוט מלא עם ממשק נקי וידידותי:
+
+\begin{codebox}[Chatbot מלא עם Streamlit]
+\begin{english}
+\begin{lstlisting}[style=python]
+import streamlit as st
+from openai import OpenAI
+import time
+
+# Page config
+st.set_page_config(
+    page_title="AI Customer Support",
+    page_icon="[BOT]",
+    layout="wide"
+)
+
+# Initialize OpenAI client
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+# Custom CSS
+st.markdown("""
+<style>
+.stApp {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Title
+st.title("[BOT] AI Customer Support Assistant")
+st.markdown("---")
+
+# Sidebar with info
+with st.sidebar:
+    st.header("About")
+    st.info("""
+    This AI assistant can help you with:
+    - Product information
+    - Order tracking
+    - Return policy
+    - Technical support
+
+    For account changes, please contact a human agent.
+    """)
+
+    if st.button("Clear Chat History"):
+        st.session_state.messages = []
+        st.rerun()
+
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        {
+            "role": "assistant",
+            "content": "Hello! I'm your AI assistant. How can I help you today?"
+        }
+    ]
+
+# Display chat messages
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Chat input
+if prompt := st.chat_input("Type your question here..."):
+    # Add user message
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    # Get AI response with streaming
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+
+        # System prompt
+        system_prompt = """You are a helpful customer support assistant.
+        Be friendly, concise, and professional. If you don't know something,
+        suggest contacting a human agent."""
+
+        messages_for_api = [
+            {"role": "system", "content": system_prompt}
+        ] + st.session_state.messages
+
+        # Stream response
+        for response in client.chat.completions.create(
+            model="gpt-4",
+            messages=messages_for_api,
+            stream=True
+        ):
+            if response.choices[0].delta.content:
+                full_response += response.choices[0].delta.content
+                message_placeholder.markdown(full_response + "▌")
+
+        message_placeholder.markdown(full_response)
+
+    # Add assistant response to history
+    st.session_state.messages.append(
+        {"role": "assistant", "content": full_response}
+    )
+
+# Feedback section
+st.markdown("---")
+col1, col2, col3 = st.columns([1, 1, 4])
+with col1:
+    if st.button("[+] Helpful"):
+        st.success("Thank you for your feedback!")
+with col2:
+    if st.button("[-] Not helpful"):
+        st.info("We'll improve! Would you like to speak with a human agent?")
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsection{דוגמה 2: הוספת יכולת קול לסוכן קיים}
+
+נוסיף TTS ו-STT לסוכן קיים:
+
+\begin{codebox}[Voice-Enabled Agent]
+\begin{english}
+\begin{lstlisting}[style=python]
+import streamlit as st
+from openai import OpenAI
+import speech_recognition as sr
+from gtts import gTTS
+import os
+import tempfile
+
+client = OpenAI()
+
+def listen_to_user():
+    """Capture voice input from user"""
+    recognizer = sr.Recognizer()
+
+    with sr.Microphone() as source:
+        st.info("[MIC] Listening... Speak now!")
+        recognizer.adjust_for_ambient_noise(source, duration=1)
+
+        try:
+            audio = recognizer.listen(source, timeout=5)
+            text = recognizer.recognize_google(audio)
+            return text
+        except sr.WaitTimeoutError:
+            st.warning("No speech detected. Please try again.")
+            return None
+        except sr.UnknownValueError:
+            st.warning("Could not understand audio.")
+            return None
+
+def speak_response(text, lang='en'):
+    """Convert text to speech and play"""
+    tts = gTTS(text=text, lang=lang, slow=False)
+
+    # Save to temporary file
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as fp:
+        tts.save(fp.name)
+
+        # Play audio
+        st.audio(fp.name)
+
+        # Clean up
+        os.unlink(fp.name)
+
+st.title("[MIC] Voice AI Assistant")
+
+# Toggle for voice mode
+voice_mode = st.checkbox("Enable Voice Input")
+
+if voice_mode:
+    if st.button("[MIC] Start Recording"):
+        user_input = listen_to_user()
+
+        if user_input:
+            st.write(f"**You said:** {user_input}")
+
+            # Get AI response
+            response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[{"role": "user", "content": user_input}]
+            )
+
+            reply = response.choices[0].message.content
+            st.write(f"**AI:** {reply}")
+
+            # Speak response
+            speak_response(reply)
+else:
+    # Regular text mode
+    user_input = st.text_input("Type your message:")
+
+    if user_input:
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": user_input}]
+        )
+
+        reply = response.choices[0].message.content
+        st.write(f"**AI:** {reply}")
+
+        # Option to hear response
+        if st.button("[AUDIO] Hear Response"):
+            speak_response(reply)
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsection{דוגמה 3: אפליקציית Desktop עם Electron + LLM}
+
+מבנה פרויקט בסיסי ל-Electron:
+
+\begin{codebox}[מבנה פרויקט Electron]
+\begin{english}
+\begin{lstlisting}
+ai-desktop-app/
+├── package.json
+├── main.js          # Main process (Node.js)
+├── preload.js       # Preload script
+└── src/
+    ├── index.html   # UI
+    ├── renderer.js  # Renderer process
+    └── styles.css   # Styling
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\begin{codebox}[main.js -- Main Process]
+\begin{english}
+\begin{lstlisting}[style=python]
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+const OpenAI = require('openai');
+
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+});
+
+let mainWindow;
+
+function createWindow() {
+    mainWindow = new BrowserWindow({
+        width: 1000,
+        height: 700,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
+            contextIsolation: true
+        }
+    });
+
+    mainWindow.loadFile('src/index.html');
+}
+
+app.whenReady().then(createWindow);
+
+// Handle AI chat
+ipcMain.handle('chat', async (event, message) => {
+    try {
+        const response = await openai.chat.completions.create({
+            model: 'gpt-4',
+            messages: [{ role: 'user', content: message }]
+        });
+
+        return response.choices[0].message.content;
+    } catch (error) {
+        return `Error: ${error.message}`;
+    }
+});
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+%% ============================================
+%% Exercises
+%% ============================================
+\section{תרגילים}
+
+\subsection{תרגילים תיאורטיים}
+
+\begin{exercisebox}[תרגיל 1: בחירת Framework]
+\textbf{תרחיש:}
+אתה מנהל פיתוח ב-startup שבונה כלי AI לניתוח נתונים כספיים. המוצר יהיה מיועד ל:
+\begin{itemize}
+  \item מנהלי כספים (CFOs) בחברות בינוניות-גדולות
+  \item שימוש יומיומי במשרד (Desktop)
+  \item צריך לעבוד על Windows ו-macOS
+  \item חשיבות גבוהה לביטחון מידע -- העדפה לריצה מקומית
+\end{itemize}
+
+\textbf{משימה:}
+\begin{enumerate}
+  \item בחר Framework מתאים מבין Qt, Electron, Flutter
+  \item נמק את הבחירה שלך
+  \item פרט יתרונות וחסרונות
+  \item חשב עלות פיתוח משוערת (אדם/חודשים)
+\end{enumerate}
+\end{exercisebox}
+
+\begin{exercisebox}[תרגיל 2: תכנון User Journey]
+\textbf{תרחיש:}
+אתה מעצב ממשק לסוכן AI שעוזר לעובדי HR לנתח קורות חיים.
+
+\textbf{משימה:}
+תכנן את ה-User Journey המלא:
+\begin{enumerate}
+  \item נקודת הכניסה -- איך העובד מגיע לכלי?
+  \item Onboarding -- מה הוא רואה בפעם הראשונה?
+  \item משימה ראשונה -- מה התהליך של העלאת קו"ח וניתוח?
+  \item תוצאות -- איך מוצגים הממצאים?
+  \item שגיאות -- מה קורה אם ה-AI לא הצליח?
+  \item סיום -- מה העובד יכול לעשות עם התוצאות?
+\end{enumerate}
+
+צייר דיאגרמה או תאר בכתב.
+\end{exercisebox}
+
+\begin{exercisebox}[תרגיל 3: דרישות UX לסוכן קולי]
+\textbf{תרחיש:}
+אתה כותב מפרט למוצר: סוכן AI קולי לניווט במערכת CRM תוך כדי נהיגה (hands-free).
+
+\textbf{משימה:}
+כתוב מסמך דרישות UX הכולל:
+\begin{enumerate}
+  \item Wake Word -- איך מעירים את הסוכן?
+  \item פידבק אודיו -- איך הסוכן מאשר שהוא הבין?
+  \item טיפול ברעשי רקע
+  \item מה קורה כשהטלפון מצלצל באמצע?
+  \item בטיחות -- וידוא שהנהג לא מוסח
+  \item Privacy -- לא שומרים הקלטות רגישות
+\end{enumerate}
+\end{exercisebox}
+
+\begin{exercisebox}[תרגיל 4: תכנון בדיקות Usability]
+\textbf{תרחיש:}
+אתה צריך לבדוק את הממשק של צ'אטבוט AI לשירות לקוחות לפני השקה.
+
+\textbf{משימה:}
+תכנן מחקר Usability:
+\begin{enumerate}
+  \item כמה משתתפים? איזה פרופיל?
+  \item איזה משימות הם יבצעו?
+  \item מה המדדים שתמדוד? (זמן, שגיאות, שביעות רצון)
+  \item איך תתעד את הממצאים?
+  \item מה הקריטריונים להצלחה?
+\end{enumerate}
+\end{exercisebox}
+
+\begin{exercisebox}[תרגיל 5: מפרט נגישות]
+\textbf{תרחיש:}
+אתה צריך לוודא שממשק ה-AI שלך נגיש לכולם, כולל אנשים עם מוגבלויות.
+
+\textbf{משימה:}
+בנה Accessibility Specification:
+\begin{enumerate}
+  \item רשום 10 דרישות נגישות ספציפיות
+  \item לכל דרישה -- אופן הבדיקה
+  \item הצע כלים לבדיקת נגישות אוטומטית
+  \item תכנן בדיקה עם משתמשים בעלי מוגבלות
+  \item חשב עלות הטמעת נגישות (% מתקציב פיתוח)
+\end{enumerate}
+\end{exercisebox}
+
+\subsection{תרגילי קוד}
+
+\begin{exercisebox}[תרגיל 6 (Python): ממשק Streamlit מלא]
+\textbf{משימה:}
+בנה אפליקציית Streamlit שמשלבת:
+\begin{enumerate}
+  \item צ'אט עם LLM (GPT-4 או Claude)
+  \item שמירת היסטוריה
+  \item אפשרות ל-export של השיחה ל-PDF
+  \item סייד-בר עם הגדרות: בחירת מודל, temperature, max\_tokens
+  \item אינדיקטור "טועה" עם אזהרה על hallucinations
+\end{enumerate}
+
+\textbf{בונוס:}
+הוסף אפשרות להעלות קובץ ולנתח אותו.
+\end{exercisebox}
+
+\begin{exercisebox}[תרגיל 7 (Python): שילוב TTS ב-Agent]
+\textbf{משימה:}
+שפר את הסוכן הקיים שלך (מפרק 5) על ידי הוספת:
+\begin{enumerate}
+  \item אופציה להאזין לתשובות ב-TTS (OpenAI או gTTS)
+  \item בחירת קול (אם משתמש ב-OpenAI TTS)
+  \item בחירת מהירות דיבור
+  \item שמירת קבצי אודיו לארכיון
+  \item ממשק Streamlit או Gradio להפעלה
+\end{enumerate}
+
+\textbf{בונוס:}
+הוסף גם STT -- סוכן קולי דו-כיווני מלא.
+\end{exercisebox}
+
+%% ============================================
+%% Summary
+%% ============================================
+\section*{סיכום}
+
+בפרק זה חקרנו את עולם הממשקים והאינטראקציה עם בינה מלאכותית. ראינו כי:
+
+\begin{itemize}
+  \item \textbf{GUI Frameworks} מציעים אפשרויות מגוונות -- Qt לביצועים, Electron למהירות פיתוח, Flutter לעתיד cross-platform
+  \item \textbf{Web Interfaces} כמו Streamlit ו-Gradio מאפשרות בניית פרוטוטייפים מהירים ללא ידע ב-Web
+  \item \textbf{Text-to-Speech} והופך AI לנגיש יותר ומאפשר שימוש hands-free
+  \item \textbf{Speech-to-Text} והופך את הקול לערוץ תקשורת נוסף עם המכונה
+  \item \textbf{UX לבינה מלאכותית} דורש עקרונות ייחודיים: שקיפות, משוב, טיפול בשגיאות, ו-human-in-the-loop
+  \item \textbf{נגישות} היא חובה מוסרית וחוקית, והופכת את המוצר לרלוונטי לקהל רחב יותר
+\end{itemize}
+
+הממשק הוא הגשר בין הטכנולוגיה המתקדמת של LLM לבין המשתמש הסופי. ממשק טוב יכול להפוך כלי מבריק לפופולרי, וממשק גרוע יכול לקבור את המוצר הטוב ביותר. כמנהלים, עלינו לתת לממשק את תשומת הלב שהוא ראוי לה.
+
+בפרק הבא נעסוק באתיקה, רגולציה ואבטחה -- הגבולות של האחריות שלנו כמפתחי ומנהלי מערכות AI.
+
+\end{document}

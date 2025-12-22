@@ -1,0 +1,1970 @@
+\chapter{הפריסה -- מעבדה לייצור בעולם האמיתי}
+\label{chap:deployment}
+
+\begin{abstract}
+\he{%
+המעבר מפרויקט ניסיוני מוצלח למערכת ייצורית פעילה הוא אחד האתגרים המורכבים ביותר בהטמעת בינה מלאכותית. פרק זה בוחן את אפשרויות הפריסה השונות - מתשתיות מקומיות דרך פתרונות ענן ועד ארכיטקטורות היברידיות - ומספק למנהלים את הכלים לקבלת החלטות מושכלות. נלמד לחשב עלויות אמיתיות, לתכנן סקלביליות, ולנהל את המורכבות הטכנולוגית של מערכות AI בייצור. זהו הפרק שבו תיאוריה הופכת למעשה, והחלומות הופכים למציאות תפעולית.%
+}
+\end{abstract}
+
+\section{\he{מטרות הלמידה}}
+
+\he{בתום פרק זה תוכלו:}
+
+\begin{itemize}
+\item \he{להבין את אפשרויות הפריסה השונות: On-Premises, Cloud, Hybrid}
+\item \he{לקבל החלטות פריסה מושכלות על בסיס TCO ושיקולים עסקיים}
+\item \he{לנהל Containers ותשתיות לפריסת מערכות AI}
+\item \he{לתכנן ולהוציא לפועל מעבר מסביבת פיתוח לייצור}
+\item \he{להבין עקרונות Scaling וניהול גדילה}
+\item \he{לבנות תוכנית DR ו-Go-Live מקיפה}
+\end{itemize}
+
+\section{\he{רגע האמת: מעבדה לייצור}}
+
+\he{%
+כשאדם ראשון מכניס מפתח לדלת ביתו ברגע סמלי של מעבר דירה, רגש ההתרגשות מתמזג עם חרדת הלא־נודע. בדומה לכך, כשמנהלת טכנולוגיה מפעילה לראשונה מערכת בינה מלאכותית בסביבת ייצור, היא חווה את אותו תערובת רגשות: התרגשות מפוטנציאל הטכנולוגיה, חרדה מפני כשלים אפשריים, ותקווה שהשקעת החודשים האחרונים תניב פירות.%
+}
+
+\he{%
+בעולם הפיתוח, ההבדל בין סביבת מעבדה לבין ייצור הוא כמו ההבדל בין דגם ארכיטקטוני מושלם לבין בניין אמיתי שבו אנשים חיים~\cite{paleyes2022challenges}. במעבדה, הכל שולט ומבוקר: כמות הנתונים מוגבלת, מספר המשתמשים קטן, והטעויות הן הזדמנויות למידה. בייצור, המציאות אכזרית יותר: אלפי משתמשים בו־זמנית, נתונים לא צפויים, דרישות זמינות 24/7, וכל שגיאה עלולה לפגוע במוניטין החברה או בחוויית הלקוח.%
+}
+
+\he{%
+פרק זה עוסק במסע המורכב הזה - המעבר מפרויקט פיילוט מוצלח, שאולי רץ על המחשב הנייד של מנהל המוצר, למערכת ארגונית שמשרתת אלפי משתמשים ביום. נבחן את שלוש הדרכים העיקריות לפריסת מערכות בינה מלאכותית, נלמד לחשב את העלויות האמיתיות של כל גישה, ונבין כיצד לתכנן תשתית שתוכל לצמוח עם הצרכים העסקיים.%
+}
+
+\section{\he{שלוש דרכים לפריסה: \en{On-Prem}, \en{Cloud}, \en{Hybrid}}}
+
+\subsection{\he{\en{On-Premises}: השליטה המוחלטת}}
+
+\he{%
+דמיינו בנק גדול בתל־אביב, שחוק הבנקאות מחייב אותו לשמור את כל נתוני הלקוחות בתוך גבולות המדינה, תחת שליטה פיזית מלאה. עבור ארגון כזה, פריסה מקומית (On-Premises) אינה רק העדפה - היא הכרח. המשמעות היא שכל התשתית - שרתים, אחסון, רשת, ומודלי הבינה המלאכותית - נמצאים בחדרי השרתים של הארגון עצמו.%
+}
+
+\he{%
+היתרונות של גישה זו מרשימים: שליטה מוחלטת על הנתונים, אפשרות להתאים כל פרט לצרכים הספציפיים, אי־תלות בספקי ענן חיצוניים, ואפשרות לענות על דרישות רגולטוריות מחמירות. כשנתוני המטופלים במערכת בריאות או סודות מסחריים רגישים מעורבים, הידיעה שהמידע מעולם לא עוזב את חדר השרתים מספקת שקט נפשי לא מבוטל.%
+}
+
+\he{%
+אך יחד עם היתרונות באים אתגרים משמעותיים. הארגון צריך לרכוש ציוד חומרה יקר - כרטיסי מסך GPU לריצת מודלים גדולים עולים עשרות אלפי דולרים כל אחד. יש לשכור או להכשיר צוות טכני מיומן שיתחזק את התשתית 24/7. עלויות החשמל והקירור של שרתים חזקים יכולות להגיע לאלפי שקלים בחודש. והחשוב מכל - קשה מאוד לצמוח במהירות: רכישת שרת חדש יכולה לקחת שבועות או חודשים.%
+}
+
+\subsubsection{\he{דרישות טכניות לפריסה מקומית}}
+
+\begin{enumerate}
+\item \he{\textbf{חומרה מתקדמת:}}
+\begin{itemize}
+\item \he{שרתים עם GPU חזקים (לדוגמה: NVIDIA A100, H100)}
+\item \he{זיכרון RAM נרחב (\en{256GB-1TB} למודלים גדולים)}
+\item \he{אחסון מהיר SSD/NVMe (טרה־בייטים)}
+\item \he{רשת פנימית מהירה (\en{10Gbps} ומעלה)}
+\end{itemize}
+
+\item \he{\textbf{תשתית תומכת:}}
+\begin{itemize}
+\item \he{מערכת קירור יעילה לשרתים}
+\item \he{מקור כוח עצמאי (UPS) ומערכות גיבוי}
+\item \he{אבטחה פיזית לחדר השרתים}
+\item \he{מערכות גיבוי וניהול אסונות}
+\end{itemize}
+
+\item \he{\textbf{כוח אדם מיומן:}}
+\begin{itemize}
+\item \he{מהנדסי DevOps לניהול התשתית}
+\item \he{מנהלי מערכת Linux/Windows}
+\item \he{מומחי אבטחת מידע}
+\item \he{מהנדסי AI/ML לתחזוקה ושיפור}
+\end{itemize}
+\end{enumerate}
+
+\subsection{\he{\en{Cloud-Based}: הגמישות האינסופית}}
+
+\he{%
+בניגוד לבנק, סטארטאפ טכנולוגי בהרצליה שרוצה לבנות כלי AI לניתוח טקסט אינו רוצה להשקיע מיליוני שקלים בתשתית לפני שהוכיח את עצמו בשוק. עבורו, פתרונות הענן של Amazon Web Services, Microsoft Azure, או Google Cloud Platform מציעים דרך אחרת לחלוטין: תשלום לפי שימוש, גמישות אינסופית, והתחלה מהירה~\cite{mell2011nist}.%
+}
+
+\he{%
+מודל הענן מבוסס על רעיון פשוט אך מהפכני - במקום לקנות ולתחזק תשתית, הארגון משכיר כוח חישוב לפי הצורך. צריכים GPU חזק לשעתיים כדי לאמן מודל? משלמים רק על השעתיים. השימוש גדל פתאום פי עשרה? התשתית מתרחבת אוטומטית. הפרויקט נכשל? מפסיקים לשלם ואין הוצאות קבועות.%
+}
+
+\he{%
+השחקנים הגדולים בתחום מציעים היום שירותי AI מתוחכמים מאוד:
+}
+
+\subsubsection{\he{\en{Amazon Web Services (AWS)}}}
+
+\begin{itemize}
+\item \he{\textbf{Amazon SageMaker:} פלטפורמה מלאה לבניה, אימון ופריסה של מודלי ML}
+\item \he{\textbf{Amazon Bedrock:} גישה ל-LLMs מובילים (Claude, Llama, Titan) דרך API אחיד}
+\item \he{\textbf{Amazon Comprehend:} שירותי NLP מנוהלים לניתוח טקסט}
+\item \he{\textbf{Amazon Textract:} חילוץ טקסט ומידע ממסמכים}
+\item \he{\textbf{EC2 GPU Instances:} שרתים וירטואליים עם GPU לצרכים מותאמים}
+\end{itemize}
+
+\subsubsection{\he{\en{Microsoft Azure}}}
+
+\begin{itemize}
+\item \he{\textbf{Azure OpenAI Service:} גישה ארגונית ל-GPT-4, GPT-4o, GPT-o1 עם SLA}
+\item \he{\textbf{Azure Machine Learning:} פלטפורמה מלאה ל-MLOps}
+\item \he{\textbf{Azure Cognitive Services:} מגוון שירותי AI מוכנים (Vision, Speech, Language)}
+\item \he{\textbf{Azure AI Studio:} סביבה מאוחדת לפיתוח אפליקציות AI}
+\end{itemize}
+
+\subsubsection{\he{\en{Google Cloud Platform (GCP)}}}
+
+\begin{itemize}
+\item \he{\textbf{Vertex AI:} פלטפורמה מלאה לכל מחזור החיים של ML}
+\item \he{\textbf{Gemini API:} גישה למודלי Gemini Pro/Ultra של Google}
+\item \he{\textbf{Cloud TPU:} מעבדי Tensor מיוחדים לאימון מהיר}
+\item \he{\textbf{Natural Language AI:} כלי NLP מתקדמים}
+\end{itemize}
+
+\he{%
+אך הענן אינו ללא מחיר. עלויות יכולות לגדול במהירות - שימוש אינטנסיבי ב-GPU יכול להגיע לאלפי דולרים ביום. העברת נתונים החוצה מהענן (Egress) עולה כסף. והתלות בספק יכולה להפוך לכלא זהב - מעבר ספק מציב אתגרים טכניים ועסקיים לא פשוטים. בנוסף, שאלות של פרטיות ורגולציה יכולות להיות מורכבות יותר כשהנתונים נמצאים בשרתים זרים.%
+}
+
+\subsection{\he{\en{Hybrid}: הטוב משני העולמות}}
+
+\he{%
+ארגון פיננסי בינלעומי מצא את עצמו בדילמה: מצד אחד, נתוני לקוחות רגישים שחייבים להישאר On-Prem. מצד שני, צורך בכוח חישוב אדיר לפרויקטים ניסיוניים וזמניים. הפתרון? ארכיטקטורה היברידית - שילוב חכם של תשתית מקומית ושירותי ענן.%
+}
+
+\he{%
+בגישה היברידית, הארגון שומר את הנתונים הרגישים והמודלים המרכזיים On-Prem, אך מנצל את הענן לצרכים משתנים: סביבות פיתוח וניסוי, אימון מודלים מזדמן שדורש GPU חזק, ו-Bursting - היכולת להתרחב זמנית בעומסי שיא. זהו הניסיון להשיג גמישות ועלות־תועלת מיטביים.%
+}
+
+\he{%
+למשל, חברת סייבר ישראלית יכולה לרוץ את מודל הזיהוי העיקרי שלה על שרתים מקומיים, שם זורמים נתוני הלקוחות הרגישים, אך כשהיא רוצה לנסות ארכיטקטורת מודל חדשה או לאמן על דאטהסט ענקי, היא מעלה סביבת ענן זמנית ב-AWS, עובדת שם כמה ימים, ואז מורידה הכל - ומשלמת רק על מה שהשתמשה.%
+}
+
+\subsubsection{\he{אסטרטגיות \en{Hybrid} נפוצות}}
+
+\begin{enumerate}
+\item \he{\textbf{Data-Sensitive Hybrid:}}
+\begin{itemize}
+\item \he{נתונים רגישים נשארים On-Prem}
+\item \he{עיבודים כבדים (אימון, inference בקנה מידה גדול) בענן}
+\item \he{תקשורת מאובטחת בין הסביבות}
+\end{itemize}
+
+\item \he{\textbf{Dev-Prod Split:}}
+\begin{itemize}
+\item \he{ייצור On-Prem ליציבות ושליטה}
+\item \he{פיתוח ובדיקות בענן לגמישות}
+\item \he{תהליכי CI/CD מתואמים}
+\end{itemize}
+
+\item \he{\textbf{Bursting Strategy:}}
+\begin{itemize}
+\item \he{קיבולת בסיס On-Prem}
+\item \he{התרחבות אוטומטית לענן בעומסי שיא}
+\item \he{חזרה לתשתית מקומית כשהעומס יורד}
+\end{itemize}
+
+\item \he{\textbf{Multi-Cloud Hybrid:}}
+\begin{itemize}
+\item \he{ליבה On-Prem}
+\item \he{שימוש במספר ספקי ענן לפי יתרונות (AWS לכוח חישוב, Azure ל-OpenAI Service, GCP ל-TPU)}
+\item \he{מניעת Vendor Lock-in}
+\end{itemize}
+\end{enumerate}
+
+\section{\he{נוסחאות מנהליות: חישוב \en{TCO}}}
+
+\he{%
+מנהלים מנוסים יודעים שהעלות האמיתית של טכנולוגיה לעולם אינה רק מחיר התג~\cite{opara2014cloud}. Total Cost of Ownership (TCO) - עלות הבעלות הכוללת - היא המדד האמיתי שלוקח בחשבון את כל ההוצאות לאורך זמן. הבה נגדיר את הנוסחאות המנהליות לחישוב TCO עבור כל גישת פריסה.%
+}
+
+\subsection{\he{\en{TCO Cloud} -- עלות בעלות בענן}}
+
+\[
+\text{TCO}_{\text{Cloud}} = (\text{Compute} \times \text{Hours}) + \text{Storage} + \text{Egress} + \text{Support}
+\]
+
+\he{%
+\textbf{הסבר המרכיבים:}
+}
+
+\begin{itemize}
+\item \he{\textbf{Compute:} עלות שעתית של משאבי חישוב (CPU, GPU, RAM)}
+\item \he{\textbf{Hours:} מספר השעות שהשרתים פעילים}
+\item \he{\textbf{Storage:} עלות אחסון נתונים ומודלים}
+\item \he{\textbf{Egress:} עלות העברת נתונים החוצה מהענן}
+\item \he{\textbf{Support:} חבילות תמיכה טכנית}
+\end{itemize}
+
+\he{\textbf{דוגמה מספרית:}}
+
+\he{%
+חברת SaaS מריצה מודל AI על AWS:
+}
+
+\begin{english}
+\begin{verbatim}
+Compute: g5.2xlarge (GPU instance) = $1.21/hour
+Hours: 730 hours/month (24/7)
+Storage: 500GB at $0.10/GB = $50
+Egress: 1TB at $0.09/GB = $90
+Support: Business support = $100/month
+
+TCO_Cloud_monthly = (1.21 * 730) + 50 + 90 + 100
+                  = 883.3 + 50 + 90 + 100
+                  = $1,123.3 per month
+                  = $13,479.6 per year
+\end{verbatim}
+\end{english}
+
+\subsection{\he{\en{TCO On-Prem} -- עלות בעלות מקומית}}
+
+\[
+\text{TCO}_{\text{On-Prem}} = \frac{\text{Hardware}}{5} + \text{Electricity} + \text{Cooling} + \text{HR} + \text{Facilities}
+\]
+
+\he{%
+\textbf{הסבר המרכיבים:}
+}
+
+\begin{itemize}
+\item \he{\textbf{Hardware/5:} עלות החומרה מחולקת ב-5 שנים (הנחת פחת)}
+\item \he{\textbf{Electricity:} עלות חשמל לתפעול השרתים}
+\item \he{\textbf{Cooling:} עלות קירור חדר השרתים}
+\item \he{\textbf{HR:} עלויות כוח אדם (מנהלי מערכת, DevOps, אבטחה)}
+\item \he{\textbf{Facilities:} שכירות/תחזוקת מבנה, אבטחה פיזית}
+\end{itemize}
+
+\he{\textbf{דוגמה מספרית:}}
+
+\he{%
+אותה חברה שוקלת לעבור ל-On-Prem:
+}
+
+\begin{english}
+\begin{verbatim}
+Hardware:
+  - Server with NVIDIA A100 GPU: $15,000
+  - Storage: $5,000
+  - Network equipment: $3,000
+  Total: $23,000
+
+Hardware/5 = $23,000 / 5 = $4,600/year
+
+Electricity:
+  - Server power: 500W * 24h * 365 days = 4,380 kWh/year
+  - Cost at $0.15/kWh = $657/year
+
+Cooling: ~50% of electricity = $328/year
+
+HR:
+  - 0.25 FTE DevOps engineer at $120k/year = $30,000/year
+
+Facilities:
+  - Data center space: $200/month = $2,400/year
+
+TCO_On-Prem_yearly = 4,600 + 657 + 328 + 30,000 + 2,400
+                   = $37,985 per year
+\end{verbatim}
+\end{english}
+
+\subsection{\he{\en{Break-Even Point} -- נקודת האיזון}}
+
+\[
+\text{Break-Even} = \frac{\text{TCO}_{\text{On-Prem}}}{\text{TCO}_{\text{Cloud}}}
+\]
+
+\he{%
+נוסחה זו מראה כמה שנים ייקח עד שההשקעה ב-On-Prem תתחיל להשתלם לעומת השכרת ענן.
+}
+
+\he{\textbf{דוגמה מהדוגמאות למעלה:}}
+
+\begin{english}
+\begin{verbatim}
+Break-Even = $37,985 / $13,479.6 = 2.82 years
+
+משמעות: אם החברה מתכננת להשתמש במערכת יותר מ-2.82 שנים,
+On-Prem יהיה זול יותר. אם פחות מזה, Cloud משתלם יותר.
+\end{verbatim}
+\end{english}
+
+\he{%
+\textbf{שיקולים נוספים מעבר לנוסחאות:}
+}
+
+\begin{itemize}
+\item \he{גמישות: ענן מאפשר שינויים מהירים; On-Prem דורש תכנון מוקדם}
+\item \he{סיכון: השקעה מוקדמת ב-On-Prem לעומת תשלום שוטף בענן}
+\item \he{רגולציה: חלק מהתעשיות מחייבות On-Prem}
+\item \he{אבטחה: שליטה מלאה On-Prem לעומת תלות בספק בענן}
+\item \he{מומחיות: האם יש לנו את הכישורים לנהל On-Prem?}
+\end{itemize}
+
+\section{\he{\en{Containers}: \en{Docker} כמנוע הפריסה}}
+
+\he{%
+אם נחזור רגע לאנלוגיה של בניין, דמיינו שבמקום לבנות כל דירה מאפס, היינו יכולים להביא קופסאות סטנדרטיות שמכילות את כל מה שצריך - קירות, חשמל, אינסטלציה - ופשוט "להרכיב" אותן על המבנה. זה בדיוק מה ש-Containers עושים בעולם הפריסה הטכנולוגי.%
+}
+
+\he{%
+Docker, הכלי המוביל לניהול Containers, שינה לחלוטין את אופן הפריסה של יישומים~\cite{docker2024}. במקום להתקין את Python, את כל הספריות, את המודל, ואת כל התלויות על כל שרת בנפרד - תהליך מסובך ושגיאתי - אנחנו "אורזים" הכל לתוך Container: תמונה סטנדרטית שמכילה את כל מה שצריך. Container זה יכול לרוץ על המחשב הנייד של המפתח, על שרת בעירוב, או על מאות שרתים בענן - והוא יתנהג בדיוק אותו דבר.%
+}
+
+\subsection{\he{מדוע \en{Containers} קריטיים ל-\en{AI Deployment}?}}
+
+\begin{enumerate}
+\item \he{\textbf{עקביות סביבה:}}
+\begin{itemize}
+\item \he{מודל שעובד במעבדה יעבוד בייצור}
+\item \he{"But it works on my machine" - הבעיה נעלמת}
+\item \he{אותה גרסת Python, אותן ספריות, אותה התנהגות}
+\end{itemize}
+
+\item \he{\textbf{ניידות:}}
+\begin{itemize}
+\item \he{העברה קלה בין On-Prem לענן}
+\item \he{תמיכה בכל פלטפורמות העננים הגדולות}
+\item \he{אין Vendor Lock-in ברמת התשתית}
+\end{itemize}
+
+\item \he{\textbf{בידוד:}}
+\begin{itemize}
+\item \he{כל Container פועל במרחב מבודד}
+\item \he{אין התנגשויות בין גרסאות ספריות}
+\item \he{אבטחה משופרת - בעיה ב-Container אחד לא משפיעה על אחרים}
+\end{itemize}
+
+\item \he{\textbf{יעילות משאבים:}}
+\begin{itemize}
+\item \he{קלילים יותר ממכונות וירטואליות}
+\item \he{התחלה מהירה (שניות)}
+\item \he{ניצול טוב יותר של החומרה}
+\end{itemize}
+\end{enumerate}
+
+\subsection{\he{דוגמה: \en{Dockerfile} למערכת \en{RAG}}}
+
+\he{%
+הבה נראה איך כותבים Dockerfile - "מתכון" לבניית Container - למערכת RAG פשוטה:
+}
+
+\begin{english}
+\begin{verbatim}
+# Dockerfile for RAG System
+
+# התחל מתמונת Python רسמית
+FROM python:3.11-slim
+
+# הגדר תיקיית עבודה
+WORKDIR /app
+
+# העתק את קובץ התלויות
+COPY requirements.txt .
+
+# התקן תלויות Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# העתק את קוד האפליקציה
+COPY . .
+
+# חשוף פורט 8000 לתקשורת חיצונית
+EXPOSE 8000
+
+# הגדר משתני סביבה
+ENV MODEL_NAME="sentence-transformers/all-MiniLM-L6-v2"
+ENV VECTOR_DB_PATH="/app/data/vectordb"
+
+# פקודת הרצה
+CMD ["python", "app.py"]
+\end{verbatim}
+\end{english}
+
+\he{%
+קובץ \texttt{requirements.txt} יכלול:
+}
+
+\begin{english}
+\begin{verbatim}
+langchain==0.1.0
+chromadb==0.4.22
+sentence-transformers==2.2.2
+fastapi==0.109.0
+uvicorn==0.27.0
+python-dotenv==1.0.0
+\end{verbatim}
+\end{english}
+
+\he{\textbf{בניה והרצה:}}
+
+\begin{english}
+\begin{verbatim}
+# בניית התמונה
+docker build -t rag-system:v1 .
+
+# הרצת Container
+docker run -d \
+  --name rag-prod \
+  -p 8000:8000 \
+  -v /data/documents:/app/data/documents \
+  -e OPENAI_API_KEY=${OPENAI_API_KEY} \
+  rag-system:v1
+
+# בדיקת לוגים
+docker logs rag-prod
+
+# עצירה
+docker stop rag-prod
+\end{verbatim}
+\end{english}
+
+\subsection{\he{\en{Docker Compose}: תזמור מערכת מורכבת}}
+
+\he{%
+כשמערכת ה-AI שלנו מורכבת ממספר רכיבים - אפליקציה, בסיס נתונים וקטורי, Redis לזיכרון cache, Nginx לניתוב - ניהולם בנפרד הופך למסורבל. Docker Compose מאפשר להגדיר כל המערכת בקובץ YAML אחד ולהפעיל הכל בפקודה אחת.%
+}
+
+\he{\textbf{דוגמה: docker-compose.yml למערכת RAG מלאה:}}
+
+\begin{english}
+\begin{verbatim}
+version: '3.8'
+
+services:
+  # RAG Application
+  rag-app:
+    build: .
+    container_name: rag-application
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - VECTOR_DB_HOST=chromadb
+      - REDIS_HOST=redis
+    depends_on:
+      - chromadb
+      - redis
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  # ChromaDB Vector Database
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: vectordb
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+    restart: unless-stopped
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: gateway
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - rag-app
+    restart: unless-stopped
+
+volumes:
+  chroma-data:
+  redis-data:
+\end{verbatim}
+\end{english}
+
+\he{\textbf{הפעלה:}}
+
+\begin{english}
+\begin{verbatim}
+# הפעלת כל המערכת
+docker-compose up -d
+
+# צפייה בלוגים של כל השירותים
+docker-compose logs -f
+
+# עצירה והסרה
+docker-compose down
+
+# עצירה עם מחיקת נתונים
+docker-compose down -v
+\end{verbatim}
+\end{english}
+
+\section{\he{ניהול סביבות: \en{.env} וקונפיגורציה}}
+
+\he{%
+אחד הטעויות הנפוצות בפריסה היא "הרדקודינג" - השיבוץ של ערכים קבועים ישירות בקוד. מפתח API של OpenAI כתוב ישירות בקוד הפייתון? זהו סיכון אבטחה ענקי. כתובת בסיס הנתונים שונה בין פיתוח לייצור? הקוד צריך להשתנות בכל סביבה. הפתרון? ניהול סביבות נכון באמצעות קבצי \texttt{.env} ומשתני סביבה.%
+}
+
+\subsection{\he{קובץ \en{.env} -- ניהול קונפיגורציה}}
+
+\he{%
+קובץ \texttt{.env} הוא קובץ טקסט פשוט ששומר משתני סביבה - ערכים שמשתנים בין סביבות שונות. הוא \textbf{לעולם לא} מתווסף ל-Git (נוסיף אותו ל-\texttt{.gitignore}) כדי למנוע דליפת סודות.%
+}
+
+\he{\textbf{דוגמה: .env לפיתוח:}}
+
+\begin{english}
+\begin{verbatim}
+# .env.development
+
+# API Keys
+OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxx
+ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxx
+
+# Database Configuration
+VECTOR_DB_TYPE=chromadb
+VECTOR_DB_HOST=localhost
+VECTOR_DB_PORT=8001
+
+# Redis Cache
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_TTL=3600
+
+# Application Settings
+APP_ENV=development
+DEBUG=True
+LOG_LEVEL=DEBUG
+MAX_CONCURRENT_REQUESTS=10
+
+# Model Settings
+DEFAULT_MODEL=gpt-4o-mini
+EMBEDDING_MODEL=text-embedding-3-small
+MAX_TOKENS=4096
+TEMPERATURE=0.7
+\end{verbatim}
+\end{english}
+
+\he{\textbf{דוגמה: .env לייצור:}}
+
+\begin{english}
+\begin{verbatim}
+# .env.production
+
+# API Keys (from secrets manager)
+OPENAI_API_KEY=${SECRET_OPENAI_KEY}
+ANTHROPIC_API_KEY=${SECRET_ANTHROPIC_KEY}
+
+# Database Configuration
+VECTOR_DB_TYPE=pinecone
+VECTOR_DB_HOST=rag-prod-xyz123.pinecone.io
+VECTOR_DB_PORT=443
+VECTOR_DB_INDEX=production-embeddings
+
+# Redis Cache
+REDIS_HOST=redis-cluster.internal.company.com
+REDIS_PORT=6379
+REDIS_TTL=7200
+
+# Application Settings
+APP_ENV=production
+DEBUG=False
+LOG_LEVEL=WARNING
+MAX_CONCURRENT_REQUESTS=100
+
+# Model Settings
+DEFAULT_MODEL=gpt-4o
+EMBEDDING_MODEL=text-embedding-3-large
+MAX_TOKENS=8192
+TEMPERATURE=0.3
+\end{verbatim}
+\end{english}
+
+\subsection{\he{שימוש ב-\en{.env} בקוד \en{Python}}}
+
+\he{%
+הספרייה \texttt{python-dotenv} מאפשרת לטעון משתני סביבה מהקובץ:
+}
+
+\begin{english}
+\begin{verbatim}
+# config.py
+import os
+from dotenv import load_dotenv
+
+# טען משתנים מקובץ .env
+load_dotenv()
+
+# גישה למשתנים
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+VECTOR_DB_HOST = os.getenv("VECTOR_DB_HOST", "localhost")
+MAX_TOKENS = int(os.getenv("MAX_TOKENS", "4096"))
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+
+# ולידציה
+if not OPENAI_API_KEY:
+    raise ValueError(
+        "OPENAI_API_KEY must be set in environment"
+    )
+
+# שימוש
+from openai import OpenAI
+client = OpenAI(api_key=OPENAI_API_KEY)
+\end{verbatim}
+\end{english}
+
+\subsection{\he{\en{Best Practices} לניהול סודות}}
+
+\begin{enumerate}
+\item \he{\textbf{אף פעם לא Git:}}
+\begin{itemize}
+\item \he{הוסף \texttt{.env} ל-\texttt{.gitignore}}
+\item \he{שמור \texttt{.env.example} עם ערכים דמה בגיט}
+\end{itemize}
+
+\item \he{\textbf{ייצור - Secrets Manager:}}
+\begin{itemize}
+\item \he{AWS Secrets Manager / Azure Key Vault / GCP Secret Manager}
+\item \he{HashiCorp Vault לפתרון אגנוסטי}
+\item \he{אף פעם לא קובץ .env ישיר בייצור}
+\end{itemize}
+
+\item \he{\textbf{הפרדת סביבות:}}
+\begin{itemize}
+\item \he{\texttt{.env.development}, \texttt{.env.staging}, \texttt{.env.production}}
+\item \he{טעינה דינמית לפי \texttt{APP\_ENV}}
+\end{itemize}
+
+\item \he{\textbf{רוטציה של מפתחות:}}
+\begin{itemize}
+\item \he{החלף API keys מעת לעת}
+\item \he{אוטומציה עם ספקי Secrets}
+\end{itemize}
+\end{enumerate}
+
+\section{\he{\en{Scaling}: כשההצלחה מביאה אתגרים}}
+
+\he{%
+תארו לעצמכם: הסוכן שפיתחתם לשירות לקוחות זכה להצלחה מסחררת. במקום \num{100} משתמשים ביום, יש עכשיו \num{10,000}. תשתית שהספיקה בנוחות קורסת תחת העומס. זמני התגובה מזנקים מ-\num{2} שניות ל-\num{30} שניות. לקוחות מתלוננים. זהו רגע האמת של Scaling - היכולת של המערכת לצמוח עם הביקוש.%
+}
+
+\subsection{\he{\en{Vertical Scaling} -- גדילה אנכית}}
+
+\he{%
+Vertical Scaling, או "Scale Up", פירושו להוסיף יותר משאבים לשרת קיים: יותר CPU, יותר RAM, GPU חזק יותר. זהו הפתרון הפשוט יותר - לא צריך לשנות את הארכיטקטורה, רק להחליף החומרה או לשדרג את ה-instance בענן.%
+}
+
+\he{\textbf{יתרונות:}}
+\begin{itemize}
+\item \he{פשוט ליישום - אין צורך לשנות קוד}
+\item \he{אין מורכבות של תקשורת בין שרתים}
+\item \he{שמירה על עקביות נתונים}
+\end{itemize}
+
+\he{\textbf{חסרונות:}}
+\begin{itemize}
+\item \he{מוגבל פיזית - יש גבול למה שמכונה אחת יכולה}
+\item \he{Downtime - צריך לעצור את השרת כדי לשדרג}
+\item \he{Single Point of Failure - אם השרת נופל, הכל נופל}
+\item \he{לא חסכוני מעבר לנקודה מסוימת}
+\end{itemize}
+
+\subsection{\he{\en{Horizontal Scaling} -- גדילה אופקית}}
+
+\he{%
+Horizontal Scaling, או "Scale Out", פירושו להוסיף עוד שרתים במקום לשדרג את הקיים. במקום שרת אחד עם \en{64GB RAM}, נשתמש ב-\num{8} שרתים עם \en{8GB} כל אחד. זו הגישה המועדפת במערכות ענן ומיקרו-שירותים מודרניות.%
+}
+
+\he{\textbf{יתרונות:}}
+\begin{itemize}
+\item \he{גדילה כמעט אינסופית - פשוט מוסיפים עוד שרתים}
+\item \he{עמידות גבוהה - שרת אחד נופל, האחרים ממשיכים}
+\item \he{גמישות - ניתן להוסיף/להסיר שרתים דינמית}
+\item \he{חסכוני - משתמשים רק במה שצריך}
+\end{itemize}
+
+\he{\textbf{חסרונות:}}
+\begin{itemize}
+\item \he{מורכבות ארכיטקטונית - צריך Load Balancer, ניהול State}
+\item \he{עלויות פיתוח גבוהות יותר}
+\item \he{אתגרי סנכרון נתונים}
+\end{itemize}
+
+\subsection{\he{\en{Load Balancing} -- חלוקת העומס}}
+
+\he{%
+כשיש לנו מספר שרתים, צריך מנגנון שיחלק את הבקשות ביניהם באופן חכם. Load Balancer הוא כמו פקיד קבלה במלון שמחלק אורחים בין החדרים הפנויים. אלגוריתמים נפוצים:
+}
+
+\begin{itemize}
+\item \he{\textbf{Round Robin:} כל בקשה לשרת הבא בתור (פשוט ויעיל)}
+\item \he{\textbf{Least Connections:} לשרת עם הכי פחות חיבורים פעילים}
+\item \he{\textbf{Weighted:} שרתים חזקים יותר מקבלים יותר בקשות}
+\item \he{\textbf{IP Hash:} אותו משתמש תמיד לאותו שרת (חשוב ל-session state)}
+\end{itemize}
+
+\subsection{\he{\en{Auto-Scaling} -- התאמה דינמית}}
+
+\he{%
+בעולם האידאלי, התשתית תגדל ותקטן אוטומטית לפי הביקוש. בשעות השיא - יותר שרתים. בלילה - פחות. זה בדיוק מה ש-Auto-Scaling עושה. בענן, אפשר להגדיר כללים:
+}
+
+\begin{english}
+\begin{verbatim}
+# Scaling Policy Example (AWS Auto Scaling)
+
+Min instances: 2
+Max instances: 20
+Desired: 5
+
+Scale-out rule:
+  IF CPU > 70% for 5 minutes
+  THEN add 2 instances
+
+Scale-in rule:
+  IF CPU < 30% for 10 minutes
+  THEN remove 1 instance
+
+Scale-out rule (predictive):
+  IF day == "Monday" AND hour == 8
+  THEN set desired = 10
+\end{verbatim}
+\end{english}
+
+\subsection{\he{דוגמה מעשית: \en{Scaling} מערכת \en{RAG}}}
+
+\he{%
+חברת טכנולוגיה פרסה מערכת RAG לשירות לקוחות. בהתחלה, שרת אחד הספיק. אך כשמספר הפניות גדל, הם יישמו אסטרטגיית Scaling מתוחכמת:
+}
+
+\begin{enumerate}
+\item \he{\textbf{רמה 1 - Vertical Scaling:}}
+\begin{itemize}
+\item \he{שדרוג מ-\en{t3.medium (2 CPU, 4GB RAM)} ל-\en{t3.xlarge (4 CPU, 16GB RAM)}}
+\item \he{הספיק עד \num{1,000} בקשות ליום}
+\end{itemize}
+
+\item \he{\textbf{רמה 2 - Horizontal Scaling:}}
+\begin{itemize}
+\item \he{פיצול ל-3 instances מאחורי Application Load Balancer}
+\item \he{כל instance יכול לטפל ב-1,000 בקשות}
+\item \he{סה"כ קיבולת: 3,000 בקשות ליום}
+\end{itemize}
+
+\item \he{\textbf{רמה 3 - Auto-Scaling + Caching:}}
+\begin{itemize}
+\item \he{הוספת Redis cache לשאילתות חוזרות (\en{50\%} cache hit)}
+\item \he{Auto-Scaling: 2-10 instances לפי עומס}
+\item \he{קיבולת: 5,000-25,000 בקשות ליום}
+\end{itemize}
+
+\item \he{\textbf{רמה 4 - Multi-Region + CDN:}}
+\begin{itemize}
+\item \he{פריסה בשני אזורים (US-East, EU-West)}
+\item \he{CloudFront CDN לתוצאות סטטיות}
+\item \he{קיבולת: מעל 100,000 בקשות ליום}
+\end{itemize}
+\end{enumerate}
+
+\section{\he{מעבר לייצור: \en{Go-Live Checklist}}}
+
+\he{%
+הרגע הגדול מתקרב - העלאת המערכת לייצור. זהו רגע שמעורר התרגשות ופחד בעת ובעונה אחת. Checklist מסודר יכול להפוך את התהליך ממלחיץ ואקראי למסודר ובטוח. הנה רשימת הבדיקות המלאה שכל מנהל צריך לעבור לפני לחיצה על הכפתור.%
+}
+
+\subsection{\he{שלב א': טכני}}
+
+\begin{enumerate}
+\item \he{\textbf{בדיקות ביצועים:}}
+\begin{itemize}
+\item \he{Load Testing - האם המערכת עומדת בעומס הצפוי?}
+\item \he{Stress Testing - מה קורה כשחורגים מהצפוי?}
+\item \he{Latency Testing - זמני תגובה תחת תרחישים שונים}
+\item \he{Endurance Testing - ביצועים לאורך זמן (24-48 שעות)}
+\end{itemize}
+
+\item \he{\textbf{אבטחה:}}
+\begin{itemize}
+\item \he{Penetration Testing - חיפוש פרצות אבטחה}
+\item \he{API Keys בסודות, לא בקוד}
+\item \he{HTTPS/TLS בכל התקשורת}
+\item \he{Rate Limiting נגד Abuse}
+\item \he{Logging ללא חשיפת PII}
+\end{itemize}
+
+\item \he{\textbf{גיבויים והתאוששות:}}
+\begin{itemize}
+\item \he{תהליך גיבוי אוטומטי פעיל}
+\item \he{בדיקת Restore מגיבוי}
+\item \he{RTO (Recovery Time Objective) - כמה זמן להתאושש?}
+\item \he{RPO (Recovery Point Objective) - כמה נתונים מותר לאבד?}
+\end{itemize}
+
+\item \he{\textbf{ניטור ותצפית:}}
+\begin{itemize}
+\item \he{מערכת Logging מרכזית (ELK, Splunk, CloudWatch)}
+\item \he{Metrics - CPU, Memory, Disk, Network}
+\item \he{Application Metrics - latency, throughput, error rate}
+\item \he{Alerts - התראות על anomalies}
+\item \he{Dashboard לצוות התפעול}
+\end{itemize}
+\end{enumerate}
+
+\subsection{\he{שלב ב': תהליכי}}
+
+\begin{enumerate}
+\item \he{\textbf{תיעוד:}}
+\begin{itemize}
+\item \he{ארכיטקטורה - תרשימים מעודכנים}
+\item \he{API Documentation}
+\item \he{Runbooks - מה לעשות בתקלות}
+\item \he{הדרכות למשתמשים}
+\end{itemize}
+
+\item \he{\textbf{צוות:}}
+\begin{itemize}
+\item \he{On-Call Rotation - מי זמין מתי}
+\item \he{Escalation Path - למי להעביר בעיות}
+\item \he{הדרכה טכנית לצוות התמיכה}
+\item \he{War Room - מרחב תקשורת לחירום}
+\end{itemize}
+
+\item \he{\textbf{תקשורת:}}
+\begin{itemize}
+\item \he{הודעה למשתמשים על ההשקה}
+\item \he{Status Page - דף סטטוס זמינות}
+\item \he{ערוצי תמיכה ברורים}
+\item \he{FAQ מוכן מראש}
+\end{itemize}
+\end{enumerate}
+
+\subsection{\he{שלב ג': עסקי}}
+
+\begin{enumerate}
+\item \he{\textbf{SLA והבטחות:}}
+\begin{itemize}
+\item \he{הגדרת Uptime מחויבת (\en{99\%}? \en{99.9\%}?)}
+\item \he{זמני תגובה מקסימליים}
+\item \he{תהליך פיצוי על אי-עמידה}
+\end{itemize}
+
+\item \he{\textbf{עלויות:}}
+\begin{itemize}
+\item \he{תקציב ברור לחודשים הראשונים}
+\item \he{Alerts על חריגה מתקציב}
+\item \he{תוכנית אופטימיזציה}
+\end{itemize}
+
+\item \he{\textbf{מדידת הצלחה:}}
+\begin{itemize}
+\item \he{KPIs - מה מודדים?}
+\item \he{Baseline - מה המצב לפני ההשקה?}
+\item \he{Goals - מה ההצלחה?}
+\end{itemize}
+\end{enumerate}
+
+\subsection{\he{שלב ד': אסטרטגיה}}
+
+\begin{enumerate}
+\item \he{\textbf{Rollback Plan:}}
+\begin{itemize}
+\item \he{איך חוזרים למערכת הישנה אם משהו משתבש?}
+\item \he{בדיקת Rollback בסביבת Staging}
+\item \he{זמן מקסימלי להחלטה על Rollback}
+\end{itemize}
+
+\item \he{\textbf{Phased Rollout:}}
+\begin{itemize}
+\item \he{שבוע 1: \en{10\%} מהמשתמשים (Beta)}
+\item \he{שבוע 2: \en{50\%} אם הכל עובד}
+\item \he{שבוע 3: \en{100\%}}
+\item \he{Feature Flags לשליטה דינמית}
+\end{itemize}
+\end{enumerate}
+
+\section{תכנון אסונות: \en{Disaster Recovery}}
+
+\he{%
+"מה הדבר הגרוע ביותר שיכול לקרות?" - זו השאלה שמנהלים מעדיפים לא לשאול, אך חייבים. שריפה במרכז הנתונים. מתקפת סייבר. מחיקת בסיס נתונים בטעות. סופת שלג שמשביתה את Amazon. תכנון Disaster Recovery (DR) הוא הביטוח שלנו - תוכנית מפורטת איך להחזיר את המערכת לפעילות במקרה הגרוע ביותר.%
+}
+
+\subsection{\he{\en{RPO} ו-\en{RTO} -- שני המדדים הקריטיים}}
+
+\he{%
+\textbf{Recovery Point Objective (RPO):} כמה נתונים אנחנו מוכנים לאבד במקרה של אסון?
+}
+
+\begin{itemize}
+\item \he{RPO = 0: לא מוכנים לאבד כלום (continuous backup, expensive)}
+\item \he{RPO = 1 hour: גיבוי כל שעה (balance)}
+\item \he{RPO = 24 hours: גיבוי יומי (cheap, אבל...) }
+\end{itemize}
+
+\he{%
+\textbf{Recovery Time Objective (RTO):} תוך כמה זמן אנחנו חייבים לחזור לפעילות?
+}
+
+\begin{itemize}
+\item \he{RTO = minutes: Hot Standby, מערכת זהה תמיד פעילה (יקר מאוד)}
+\item \he{RTO = hours: Warm Standby, תשתית קיימת אך לא כל הנתונים (balance)}
+\item \he{RTO = days: Cold Standby, מתחילים מאפס (זול אך סיכון עסקי)}
+\end{itemize}
+
+\subsection{\he{אסטרטגיות \en{DR}}}
+
+\subsubsection{\he{1. \en{Backup and Restore} (זול, איטי)}}
+
+\begin{itemize}
+\item \he{גיבויים תקופתיים לאחסון זול (S3 Glacier)}
+\item \he{במקרה אסון: קנה תשתית, התקן, שחזר}
+\item \he{RPO: שעות/ימים, RTO: ימים}
+\item \he{עלות: נמוכה, סיכון: גבוה}
+\end{itemize}
+
+\subsubsection{\he{2. \en{Pilot Light} (איזון)}}
+
+\begin{itemize}
+\item \he{מרכיבים קריטיים תמיד פעילים (DB), שאר כבוי}
+\item \he{במקרה אסון: הפעל את השאר, נתב טרפיק}
+\item \he{RPO: דקות-שעות, RTO: שעות}
+\item \he{עלות: בינונית, סיכון: בינוני}
+\end{itemize}
+
+\subsubsection{\he{3. \en{Warm Standby} (מהיר יותר)}}
+
+\begin{itemize}
+\item \he{מערכת מוקטנת תמיד פעילה באזור אחר}
+\item \he{במקרה אסון: Scale up ונתב}
+\item \he{RPO: דקות, RTO: דקות-שעות}
+\item \he{עלות: גבוהה, סיכון: נמוך}
+\end{itemize}
+
+\subsubsection{\he{4. \en{Multi-Site Active/Active} (זמינות מקסימלית)}}
+
+\begin{itemize}
+\item \he{שני אתרים מלאים פעילים תמיד}
+\item \he{במקרה אסון: אתר אחד ממשיך}
+\item \he{RPO: 0, RTO: 0 (transparent failover)}
+\item \he{עלות: מאוד גבוהה, סיכון: מינימלי}
+\end{itemize}
+
+\subsection{\he{תרגיל \en{DR} -- מה הולם את הארגון שלך?}}
+
+\he{%
+טבלה~\ref{tab:dr-strategy} מסכמת את בחירת אסטרטגיית ה-DR לפי סוג הארגון:
+}
+
+\begin{table}[h]
+\centering
+\begin{english}
+\begin{tabular}{|l|c|c|l|}
+\hline
+\textbf{Scenario} & \textbf{RPO} & \textbf{RTO} & \textbf{Strategy} \\
+\hline
+Startup Blog AI Tool & 24h & 2 days & Backup \& Restore \\
+E-commerce AI Chatbot & 1h & 4h & Pilot Light \\
+Banking AI Fraud Detection & 5m & 30m & Warm Standby \\
+Healthcare Critical AI Diagnosis & 0 & 0 & Multi-Site Active/Active \\
+\hline
+\end{tabular}
+\end{english}
+\caption{\he{בחירת אסטרטגיית DR לפי תרחיש}}
+\label{tab:dr-strategy}
+\end{table}
+
+\section{\he{דוגמאות מעשיות}}
+
+\subsection{\he{דוגמה 1: פריסת \en{Ollama} לריצה מקומית של \en{Llama}}}
+
+\he{%
+Ollama הוא כלי פופולרי להרצת מודלי LLM מקומית על המחשב שלך או על שרתים פרטיים~\cite{ollama2024}. זה אידיאלי לארגונים שרוצים לרוץ Llama 3 או Mistral ללא תלות בענן.%
+}
+
+\subsubsection{\he{התקנה}}
+
+\begin{english}
+\begin{verbatim}
+# Linux/Mac
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Windows - download from https://ollama.com/download
+
+# בדיקה
+ollama --version
+\end{verbatim}
+\end{english}
+
+\subsubsection{\he{הורדת מודל והרצה}}
+
+\begin{english}
+\begin{verbatim}
+# הורדת Llama 3.2 (3B parameters)
+ollama pull llama3.2
+
+# הרצה אינטראקטיבית
+ollama run llama3.2
+
+>>> מה זה בינה מלאכותית?
+[התשובה תוצג כאן...]
+
+>>> /bye
+
+# הרצה כשרת API
+ollama serve
+
+# שימוש מ-Python
+\end{verbatim}
+\end{english}
+
+\begin{english}
+\begin{verbatim}
+import requests
+import json
+
+def query_ollama(prompt, model="llama3.2"):
+    url = "http://localhost:11434/api/generate"
+    payload = {
+        "model": model,
+        "prompt": prompt,
+        "stream": False
+    }
+    response = requests.post(url, json=payload)
+    return response.json()["response"]
+
+# שימוש
+answer = query_ollama("מהן 3 יתרונות של AI מקומי?")
+print(answer)
+\end{verbatim}
+\end{english}
+
+\subsubsection{\he{פריסת \en{Ollama} ב-\en{Docker}}}
+
+\begin{english}
+\begin{verbatim}
+# Dockerfile
+FROM ollama/ollama:latest
+
+# העתק מודלים מוכנים
+COPY models /root/.ollama/models
+
+# חשוף פורט
+EXPOSE 11434
+
+# הרצה
+CMD ["ollama", "serve"]
+\end{verbatim}
+\end{english}
+
+\begin{english}
+\begin{verbatim}
+# docker-compose.yml
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: local-llm
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+volumes:
+  ollama-data:
+\end{verbatim}
+\end{english}
+
+\he{\textbf{יתרונות Ollama מקומי:}}
+\begin{itemize}
+\item \he{פרטיות מוחלטת - נתונים לא עוזבים את הארגון}
+\item \he{אין עלויות API חוזרות}
+\item \he{Latency נמוך - אין תקשורת רשת}
+\item \he{עובד אופליין}
+\end{itemize}
+
+\he{\textbf{חסרונות:}}
+\begin{itemize}
+\item \he{דורש חומרה חזקה (GPU מומלץ)}
+\item \he{מודלים קטנים יותר מ-GPT-4 (פחות מתוחכמים)}
+\item \he{צריך לנהל ולעדכן בעצמך}
+\end{itemize}
+
+\subsection{\he{דוגמה 2: \en{Docker Compose} למערכת \en{RAG} מלאה}}
+
+\he{%
+הבה נבנה מערכת RAG שלמה עם כל הרכיבים:
+}
+
+\begin{english}
+\begin{verbatim}
+# docker-compose-rag-full.yml
+version: '3.8'
+
+services:
+  # Frontend - Streamlit UI
+  frontend:
+    build: ./frontend
+    container_name: rag-ui
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Backend - FastAPI application
+  backend:
+    build: ./backend
+    container_name: rag-api
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - VECTOR_DB_HOST=chromadb
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
+    depends_on:
+      - chromadb
+      - redis
+      - postgres
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  # ChromaDB - Vector database
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: rag-vectordb
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    restart: unless-stopped
+
+  # Redis - Caching layer
+  redis:
+    image: redis:7-alpine
+    container_name: rag-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  # PostgreSQL - Metadata storage
+  postgres:
+    image: postgres:15-alpine
+    container_name: rag-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=ragdb
+      - POSTGRES_USER=raguser
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # Nginx - Reverse proxy & load balancer
+  nginx:
+    image: nginx:alpine
+    container_name: rag-gateway
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
+  # Monitoring - Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: rag-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:\
+          /etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: unless-stopped
+
+  # Visualization - Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: rag-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+volumes:
+  chroma-data:
+  redis-data:
+  postgres-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  default:
+    name: rag-network
+\end{verbatim}
+\end{english}
+
+\he{\textbf{הרצה:}}
+
+\begin{english}
+\begin{verbatim}
+# הגדרת משתני סביבה
+export OPENAI_API_KEY="sk-..."
+export POSTGRES_PASSWORD="secure_password"
+export GRAFANA_PASSWORD="admin_password"
+
+# הפעלה
+docker-compose -f docker-compose-rag-full.yml up -d
+
+# בדיקת סטטוס
+docker-compose ps
+
+# לוגים
+docker-compose logs -f backend
+
+# עצירה
+docker-compose down
+\end{verbatim}
+\end{english}
+
+\he{%
+המערכת כוללת:
+\begin{itemize}
+\item \he{Frontend ב-http://localhost:8501}
+\item \he{Backend API ב-http://localhost:8000}
+\item \he{Grafana dashboard ב-http://localhost:3000}
+\item \he{Redis caching לשאילתות חוזרות}
+\item \he{PostgreSQL למטאדטה}
+\item \he{Nginx reverse proxy}
+\item \he{Monitoring מלא}
+\end{itemize}
+}
+
+\subsection{\he{דוגמה 3: מעבר מ-\en{Cloud POC} ל-\en{Hybrid Production}}}
+
+\he{%
+חברת ביטוח פיתחה POC של צ'טבוט AI ב-AWS. הוכחת הרעיון עבדה מצוין, אך כעת עולה שאלה: איך לעבור לייצור עם דרישות פרטיות מחמירות?%
+}
+
+\subsubsection{\he{שלב 1: \en{POC (Cloud-Only)}}}
+
+\begin{itemize}
+\item \he{פלטפורמה: AWS SageMaker + OpenAI API}
+\item \he{משתמשים: 50 עובדי פיתוח}
+\item \he{נתונים: דאטה סינטטי, ללא נתוני לקוחות אמיתיים}
+\item \he{עלות: \$500/חודש}
+\end{itemize}
+
+\subsubsection{\he{שלב 2: החלטת \en{Hybrid}}}
+
+\he{%
+\textbf{נימוקים:}
+}
+\begin{itemize}
+\item \he{רגולציה: נתוני ביטוח חייבים להישאר בארץ}
+\item \he{פרטיות: דרישות GDPR מחמירות}
+\item \he{עלות: שימוש אינטנסיבי ב-API יקר מדי (צפי: \$5,000/חודש)}
+\item \he{שליטה: רצון לשלוט במודל וב-Prompts}
+\end{itemize}
+
+\he{%
+\textbf{התוכנית:}
+}
+\begin{itemize}
+\item \he{נתונים ו-Inference: On-Prem}
+\item \he{אימון ופיתוח: Cloud}
+\item \he{Backup: Cloud (מוצפן)}
+\end{itemize}
+
+\subsubsection{\he{שלב 3: הטמעה}}
+
+\begin{enumerate}
+\item \he{\textbf{רכישת תשתית On-Prem:}}
+\begin{itemize}
+\item \he{שרת Dell PowerEdge עם NVIDIA A100 GPU}
+\item \he{אחסון NAS 20TB}
+\item \he{רשת 10Gbps פנימית}
+\item \he{עלות: \$50,000 חד־פעמי}
+\end{itemize}
+
+\item \he{\textbf{העברת המודל:}}
+\begin{itemize}
+\item \he{מעבר מ-OpenAI GPT-4 ל-Llama 3 70B מקומי}
+\item \he{Fine-tuning על נתוני החברה}
+\item \he{אימון ב-AWS, deployment On-Prem}
+\end{itemize}
+
+\item \he{\textbf{ארכיטקטורה היברידית:}}
+\begin{itemize}
+\item \he{Production: On-Prem (ישראל)}
+\item \he{Dev/Staging: AWS (EU-Central)}
+\item \he{VPN מאובטח ביניהם}
+\item \he{Backup יומי לS3 (encrypted)}
+\end{itemize}
+
+\item \he{\textbf{תהליכי CI/CD:}}
+\begin{itemize}
+\item \he{פיתוח בענן}
+\item \he{בדיקות אוטומטיות}
+\item \he{Deployment ידני ל-On-Prem אחרי אישור}
+\end{itemize}
+\end{enumerate}
+
+\subsubsection{\he{שלב 4: תוצאות אחרי שנה}}
+
+\he{טבלה~\ref{tab:cloud-vs-hybrid} מציגה את תוצאות המעבר:}
+
+\begin{table}[h]
+\centering
+\begin{english}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Metric} & \textbf{Cloud POC} & \textbf{Hybrid Prod} \\
+\hline
+Users & 50 & 2,000 \\
+Daily requests & 500 & 20,000 \\
+Latency (avg) & 800ms & 200ms \\
+Monthly cost & \$500 & \$3,000* \\
+Uptime & 99.5\% & 99.9\% \\
+Data privacy & Medium & High \\
+\hline
+\end{tabular}
+\end{english}
+\caption{\he{השוואה: Cloud POC לעומת Hybrid Production}}
+\label{tab:cloud-vs-hybrid}
+\end{table}
+
+\he{%
+*כולל פחת חומרה, חשמל, כוח אדם, ו-AWS staging. ROI מושג בשנה 2.5.
+}
+
+\section{\he{תרגילים}}
+
+\subsection{\he{תרגיל 1: חישוב \en{TCO} לשלושה תרחישים (תיאורטי)}}
+
+\he{%
+\textbf{תרחיש:} חברת משאבי אנוש מפתחת מערכת AI לסינון קורות חיים. עליך לחשב TCO ל-3 שנים עבור כל אפשרות פריסה.%
+}
+
+\he{\textbf{נתונים:}}
+
+\begin{itemize}
+\item \he{שימוש צפוי: \num{10,000} קורות חיים לחודש}
+\item \he{זמן עיבוד ממוצע: \num{30} שניות לקורות חיים}
+\item \he{סה"כ זמן חישוב לחודש: \num{10,000} $\times$ \en{30s} / \num{3600} = \num{83.3} שעות}
+\end{itemize}
+
+\he{\textbf{אופציה 1: Cloud (AWS)}}
+
+\begin{english}
+\begin{verbatim}
+Compute: c6i.xlarge @ $0.17/hour
+Hours/month: 83.3 (on-demand)
+Storage: 100GB @ $0.10/GB = $10
+Egress: 50GB @ $0.09/GB = $4.5
+Support: $0 (community)
+
+Monthly: (0.17 * 83.3) + 10 + 4.5 = $28.66
+Yearly: $28.66 * 12 = $343.92
+3-Year TCO: $343.92 * 3 = $1,031.76
+\end{verbatim}
+\end{english}
+
+\he{\textbf{אופציה 2: On-Premises}}
+
+\begin{english}
+\begin{verbatim}
+Hardware:
+  - Server: $8,000
+  - Storage: $1,000
+  - Network: $500
+  Total: $9,500
+
+Operating costs/year:
+  - Electricity: 200W * 24h * 365d * $0.15/kWh = $262.8
+  - Cooling: 50% of electricity = $131.4
+  - HR: 0.1 FTE @ $100k = $10,000
+  - Facilities: $100/month = $1,200
+  Total/year: $11,594.2
+
+3-Year TCO:
+  - Hardware (depreciated): $9,500
+  - Operating: $11,594.2 * 3 = $34,782.6
+  Total: $44,282.6
+\end{verbatim}
+\end{english}
+
+\he{\textbf{אופציה 3: Hybrid}}
+
+\begin{english}
+\begin{verbatim}
+Production: On-Prem (80% of workload)
+Development: Cloud (20% of workload)
+
+On-Prem (same as option 2): $44,282.6
+
+Cloud (20% workload):
+  - Monthly: $28.66 * 0.2 = $5.73
+  - 3-Year: $5.73 * 12 * 3 = $206.28
+
+3-Year TCO: $44,282.6 + $206.28 = $44,488.88
+\end{verbatim}
+\end{english}
+
+\he{\textbf{שאלות:}}
+
+\begin{enumerate}
+\item \he{איזו אופציה היא הזולה ביותר ל-3 שנים?}
+\item \he{באיזו נקודה On-Prem הופך משתלם יותר מ-Cloud?}
+\item \he{אילו שיקולים נוספים (מעבר לעלות) צריך לקחת בחשבון?}
+\item \he{מה יקרה אם השימוש יגדל פי 10? חשב מחדש.}
+\end{enumerate}
+
+\subsection{\he{תרגיל 2: תכנון מעבר \en{Cloud} ל-\en{Hybrid} (תיאורטי)}}
+
+\he{%
+\textbf{תרחיש:} סטארטאפ פינטק מריץ מערכת זיהוי הונאות ב-AWS. השימוש גדל, והעלויות מטפסות. הנהלה שוקלת מעבר להיברידית.%
+}
+
+\he{\textbf{מצב נוכחי:}}
+\begin{itemize}
+\item \he{AWS Bedrock (Claude 3.5 Sonnet)}
+\item \he{\num{100,000} בדיקות ליום}
+\item \he{עלות: \$\num{8,000}/חודש}
+\item \he{Latency: \num{1.2} שניות}
+\end{itemize}
+
+\he{\textbf{משימתך:}}
+
+\begin{enumerate}
+\item \he{תכנן ארכיטקטורה היברידית - מה נשאר בענן? מה עובר ל-On-Prem?}
+\item \he{תכנן את לוח הזמנים - איזה שלבים? כמה זמן כל שלב?}
+\item \he{זהה סיכונים - מה יכול להשתבש? איך למתן?}
+\item \he{הגדר מדדי הצלחה - איך נדע שהמעבר הצליח?}
+\item \he{חשב ROI - תוך כמה זמן ההשקעה תחזיר את עצמה?}
+\end{enumerate}
+
+\subsection{\he{תרגיל 3: כתיבת דרישות אבטחה (תיאורטי)}}
+
+\he{%
+\textbf{תרחיון:} בית חולים מתכנן לפרוס מערכת AI לאבחון מדיקלי. כתוב מסמך דרישות אבטחה.%
+}
+
+\he{\textbf{עליך לכלול:}}
+
+\begin{enumerate}
+\item \he{\textbf{אבטחת נתונים:}}
+\begin{itemize}
+\item \he{הצפנה (at rest, in transit)}
+\item \he{גיבויים (תדירות, מיקום)}
+\item \he{גישה (מי רשאי? authentication? authorization?)}
+\end{itemize}
+
+\item \he{\textbf{רגולציה:}}
+\begin{itemize}
+\item \he{ציות ל-HIPAA}
+\item \he{ציות ל-GDPR}
+\item \he{תיעוד Audit Trail}
+\end{itemize}
+
+\item \he{\textbf{תשתית:}}
+\begin{itemize}
+\item \he{Network segmentation}
+\item \he{Firewall rules}
+\item \he{Intrusion detection}
+\end{itemize}
+
+\item \he{\textbf{תהליכים:}}
+\begin{itemize}
+\item \he{Incident response plan}
+\item \he{הדרכות אבטחה לצוות}
+\item \he{Penetration testing}
+\end{itemize}
+\end{enumerate}
+
+\subsection{תרגיל 4: תכנון \en{Disaster Recovery} (תיאורטי)}
+
+\he{%
+\textbf{תרחיון:} חברת SaaS עם 10,000 לקוחות משתמשים במערכת AI שלך 24/7. תכנן DR.%
+}
+
+\he{\textbf{שלב 1: הגדרת דרישות}}
+
+\begin{enumerate}
+\item \he{מה ה-RPO המקסימלי המותר? (כמה נתונים מותר לאבד?)}
+\item \he{מה ה-RTO המקסימלי המותר? (תוך כמה זמן חייבים לחזור?)}
+\item \he{מהי עלות השבתה לשעה? (לקוחות עוזבים, אובדן מוניטין)}
+\end{enumerate}
+
+\he{\textbf{שלב 2: בחירת אסטרטגיה}}
+
+\begin{itemize}
+\item \he{Backup \& Restore}
+\item \he{Pilot Light}
+\item \he{Warm Standby}
+\item \he{Multi-Site Active/Active}
+\end{itemize}
+
+\he{הצדק את הבחירה על בסיס עלות/תועלת.}
+
+\he{\textbf{שלב 3: תכנון מפורט}}
+
+\begin{enumerate}
+\item \he{איזה רכיבים יש לגבות? (databases, models, configs, logs)}
+\item \he{היכן לאחסן גיבויים? (אזור גאוגרפי אחר, ספק אחר?)}
+\item \he{איך לבדק את הגיבויים? (תרגילי DR תקופתיים)}
+\item \he{מה תהליך ההתאוששות? (Runbook שלב-אחר-שלב)}
+\end{enumerate}
+
+\he{\textbf{שלב 4: תרגיל DR}}
+
+\he{כתוב Runbook מפורט: "שרת הייצור נפל בשעה 14:00. מה עושים?"}
+
+\subsection{\he{תרגיל 5: בניית \en{Go-Live Checklist} (תיאורטי)}}
+
+\he{%
+\textbf{תרחיון:} אתה מנהל הפרויקט של מערכת AI חדשה שתשוחרר לייצור בעוד שבועיים. בנה Checklist מקיף.%
+}
+
+\he{\textbf{צור רשימת משימות תחת הקטגוריות הבאות:}}
+
+\begin{enumerate}
+\item \he{\textbf{טכני:}}
+\begin{itemize}
+\item \he{ביצועים (Load testing? Stress testing?)}
+\item \he{אבטחה (Pen testing? Secrets management?)}
+\item \he{גיבויים (Backup tested? DR plan ready?)}
+\item \he{ניטור (Logs? Metrics? Alerts?)}
+\end{itemize}
+
+\item \he{\textbf{תהליכי:}}
+\begin{itemize}
+\item \he{תיעוד (Architecture docs? API docs? Runbooks?)}
+\item \he{צוות (On-call rotation? Training?)}
+\item \he{תקשורת (User communication? Status page?)}
+\end{itemize}
+
+\item \he{\textbf{עסקי:}}
+\begin{itemize}
+\item \he{SLA (Defined? Approved?)}
+\item \he{עלויות (Budget? Cost alerts?)}
+\item \he{מדידה (KPIs defined? Baseline measured?)}
+\end{itemize}
+
+\item \he{\textbf{אסטרטגי:}}
+\begin{itemize}
+\item \he{Rollback plan (Tested? Decision criteria?)}
+\item \he{Phased rollout (\en{10\%} $\rightarrow$ \en{50\%} $\rightarrow$ \en{100\%}?)}
+\item \he{Post-launch review (When? Who?)}
+\end{itemize}
+\end{enumerate}
+
+\subsection{\he{תרגיל 6: \en{Python - Docker Compose} למערכת \en{AI} בסיסית (קוד)}}
+
+\he{%
+\textbf{משימה:} בנה מערכת AI בסיסית עם Docker Compose הכוללת:
+}
+
+\begin{enumerate}
+\item \he{FastAPI backend שמשתמש ב-OpenAI API}
+\item \he{Redis לcaching תשובות}
+\item \he{Nginx כreverse proxy}
+\end{enumerate}
+
+\he{\textbf{קובץ 1: backend/app.py}}
+
+\begin{english}
+\begin{verbatim}
+# backend/app.py
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from openai import OpenAI
+import os
+import redis
+import json
+import hashlib
+
+app = FastAPI(title="Simple AI API")
+
+# חיבור ל-OpenAI
+openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# חיבור ל-Redis
+redis_client = redis.Redis(
+    host=os.getenv("REDIS_HOST", "localhost"),
+    port=int(os.getenv("REDIS_PORT", "6379")),
+    decode_responses=True
+)
+
+class ChatRequest(BaseModel):
+    prompt: str
+    model: str = "gpt-4o-mini"
+    max_tokens: int = 500
+
+class ChatResponse(BaseModel):
+    response: str
+    cached: bool
+
+def cache_key(prompt: str, model: str) -> str:
+    """יצירת מפתח cache ייחודי"""
+    content = f"{model}:{prompt}"
+    return hashlib.md5(content.encode()).hexdigest()
+
+@app.get("/")
+def root():
+    return {
+        "message": "AI API is running",
+        "version": "1.0.0"
+    }
+
+@app.get("/health")
+def health():
+    """בדיקת בריאות"""
+    try:
+        redis_client.ping()
+        return {"status": "healthy",
+                "redis": "connected"}
+    except:
+        return {"status": "unhealthy",
+                "redis": "disconnected"}
+
+@app.post("/chat", response_model=ChatResponse)
+def chat(request: ChatRequest):
+    """שליחת prompt ל-AI עם caching"""
+
+    # בדיקת cache
+    key = cache_key(request.prompt, request.model)
+    cached_response = redis_client.get(key)
+
+    if cached_response:
+        return ChatResponse(
+            response=cached_response,
+            cached=True
+        )
+
+    # שליחה ל-OpenAI
+    try:
+        completion = openai_client.chat.completions.create(
+            model=request.model,
+            messages=[
+                {"role": "user", "content": request.prompt}
+            ],
+            max_tokens=request.max_tokens
+        )
+
+        ai_response = completion.choices[0].message.content
+
+        # שמירה ב-cache (TTL: 1 hour)
+        redis_client.setex(key, 3600, ai_response)
+
+        return ChatResponse(
+            response=ai_response,
+            cached=False
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/cache/clear")
+def clear_cache():
+    """ניקוי כל ה-cache"""
+    redis_client.flushdb()
+    return {"message": "Cache cleared"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+\end{verbatim}
+\end{english}
+
+\he{\textbf{קובץ 2: backend/requirements.txt}}
+
+\begin{english}
+\begin{verbatim}
+fastapi==0.109.0
+uvicorn==0.27.0
+openai==1.10.0
+redis==5.0.1
+pydantic==2.5.3
+python-dotenv==1.0.0
+\end{verbatim}
+\end{english}
+
+\he{\textbf{קובץ 3: backend/Dockerfile}}
+
+\begin{english}
+\begin{verbatim}
+# backend/Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "app:app", \
+     "--host", "0.0.0.0", "--port", "8000"]
+\end{verbatim}
+\end{english}
+
+\he{\textbf{קובץ 4: nginx/nginx.conf}}
+
+\begin{english}
+\begin{verbatim}
+# nginx/nginx.conf
+events {
+    worker_connections 1024;
+}
+
+http {
+    upstream backend {
+        server backend:8000;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For
+                $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+
+        location /health {
+            proxy_pass http://backend/health;
+            access_log off;
+        }
+    }
+}
+\end{verbatim}
+\end{english}
+
+\he{\textbf{קובץ 5: docker-compose.yml}}
+
+\begin{english}
+\begin{verbatim}
+# docker-compose.yml
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: ai-backend
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: ai-cache
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: ai-gateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+\end{verbatim}
+\end{english}
+
+\he{\textbf{קובץ 6: .env}}
+
+\begin{english}
+\begin{verbatim}
+# .env
+OPENAI_API_KEY=sk-proj-your-key-here
+\end{verbatim}
+\end{english}
+
+\he{\textbf{קובץ 7: test\_api.py (בדיקה)}}
+
+\begin{english}
+\begin{verbatim}
+# test_api.py
+import requests
+import time
+
+BASE_URL = "http://localhost"
+
+def test_health():
+    """בדיקת בריאות המערכת"""
+    response = requests.get(f"{BASE_URL}/health")
+    print(f"Health check: {response.json()}")
+
+def test_chat(prompt: str):
+    """בדיקת chat endpoint"""
+    payload = {
+        "prompt": prompt,
+        "model": "gpt-4o-mini",
+        "max_tokens": 200
+    }
+
+    # First call - should NOT be cached
+    start = time.time()
+    url = f"{BASE_URL}/chat"
+    response1 = requests.post(url, json=payload)
+    duration1 = time.time() - start
+    result1 = response1.json()
+
+    print(f"\nFirst call (uncached):")
+    print(f"  Time: {duration1:.2f}s")
+    print(f"  Cached: {result1['cached']}")
+    print(f"  Response: {result1['response'][:100]}...")
+
+    # Second call - SHOULD be cached
+    start = time.time()
+    response2 = requests.post(url, json=payload)
+    duration2 = time.time() - start
+    result2 = response2.json()
+
+    print(f"\nSecond call (cached):")
+    print(f"  Time: {duration2:.2f}s")
+    print(f"  Cached: {result2['cached']}")
+    print(f"  Speedup: {duration1/duration2:.1f}x faster")
+
+def test_cache_clear():
+    """בדיקת ניקוי cache"""
+    response = requests.delete(f"{BASE_URL}/cache/clear")
+    print(f"\nCache clear: {response.json()}")
+
+if __name__ == "__main__":
+    print("=== Testing AI API ===")
+
+    test_health()
+    test_chat("Explain Docker in one sentence")
+    test_cache_clear()
+
+    print("\n=== All tests completed ===")
+\end{verbatim}
+\end{english}
+
+\he{\textbf{הרצה:}}
+
+\begin{english}
+\begin{verbatim}
+# 1. בנייה והרצה
+docker-compose up --build -d
+
+# 2. בדיקת סטטוס
+docker-compose ps
+
+# 3. לוגים
+docker-compose logs -f backend
+
+# 4. בדיקה (בטרמינל אחר)
+python test_api.py
+
+# 5. בדיקה ידנית
+curl http://localhost/health
+curl -X POST http://localhost/chat \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "What is AI deployment?"}'
+
+# 6. עצירה
+docker-compose down
+\end{verbatim}
+\end{english}
+
+\he{\textbf{שאלות:}}
+
+\begin{enumerate}
+\item \he{הסבר איך ה-caching משפר ביצועים}
+\item \he{מה קורה אם Redis נופל? כתוב fallback logic}
+\item \he{הוסף health check שבודק גם את OpenAI API}
+\item \he{הוסף rate limiting (מקסימום 10 בקשות לדקה למשתמש)}
+\item \he{הוסף logging מתקדם (לקובץ ו-console)}
+\end{enumerate}
+
+\section{\he{סיכום הפרק}}
+
+\he{%
+הפרק הזה לקח אותנו למסע מעולם התיאוריה אל הפרקטיקה האמיתית של הפעלת מערכות בינה מלאכותית~\cite{sculley2015hidden}. למדנו שהפריסה אינה רק החלטה טכנית, אלא החלטה עסקית ואסטרטגית שמשפיעה על עלויות, ביצועים, אבטחה וגמישות לשנים קדימה.%
+}
+
+\he{%
+ראינו ששלוש הדרכים העיקריות לפריסה - On-Premises, Cloud, Hybrid - כל אחת עם היתרונות והחסרונות שלה, ושאין תשובה אחת נכונה. בנק שמחזיק נתוני לקוחות רגישים יבחר On-Prem; סטארטאפ שרוצה לצמוח מהר יבחר Cloud; וארגון בוגר שמחפש איזון יבחר Hybrid.%
+}
+
+\he{%
+למדנו שהעלות האמיתית אינה מה שכתוב על התג - TCO כולל גם חשמל, קירור, כוח אדם, ומאות פרטים קטנים שמצטברים. נוסחאות כמו TCO Cloud ו-TCO On-Prem מאפשרות למנהלים להשוות תפוחים לתפוחים ולקבל החלטות מושכלות.%
+}
+
+\he{%
+Containers, בפרט Docker ו-Docker Compose, הוכיחו את עצמם כמנוע הפריסה של העידן המודרני - עקביות, ניידות, ובידוד~\cite{kreuzberger2023mlops,gift2021practical}. ניהול סביבות נכון באמצעות .env ו-Secrets Managers מבטיח שלא נדליף סודות ושנוכל לנוע בין סביבות בקלות.%
+}
+
+\he{%
+Scaling - האתגר של גדילה - דורש חשיבה מראש. Vertical Scaling פשוט אך מוגבל; Horizontal Scaling מורכב אך אינסופי. Auto-Scaling והחלטות חכמות יכולות להפוך מערכת שקורסת תחת עומס למערכת שגדלה בחן ובשקט.%
+}
+
+\he{%
+ולבסוף, Disaster Recovery - התכנון לדבר הגרוע ביותר שיכול לקרות - הוא לא פסימיות, אלא אחריות מקצועית. RPO ו-RTO מגדירים כמה נתונים אנחנו מוכנים לאבד וכמה מהר אנחנו חייבים לחזור, ואלו ההחלטות שמפרידות מערכת רצינית מצעצוע.%
+}
+
+\he{%
+הפרק הבא יעסוק בשיקולים אסטרטגיים - כיצד לבחור בין מודלים, איך לנהל זיכרון, ואיך להימנע מ-Vendor Lock-in. אבל לפני שנתקדם, קחו רגע להעריך: האם אתם מוכנים להעלות את המערכת שלכם לייצור? אם התשובה היא כן - מזל טוב, עברתם את המבחן הקשה ביותר. אם לא - חזרו על ה-Checklist, תקנו מה שחסר, וניפגש בצד השני.%
+}
+
+\he{%
+הפריסה אינה סוף המסע, אלא התחלה. בייצור, הכל אמיתי - המשתמשים, הנתונים, הלחצים. זהו הרגע שבו הבינה המלאכותית שבניתם מפסיקה להיות פרויקט ונהיית מוצר. והמוצר הזה, אם תנהלו אותו נכון, יכול לשנות את העסק שלכם - ואולי את העולם.%
+}

@@ -1,0 +1,836 @@
+\chapter{תקשורת עם המכונה -- יסודות \en{REST APIs} ו-\en{JSON}}
+
+\section*{מטרות הלמידה}
+
+בפרק זה נלמד:
+\begin{itemize}
+    \item הבנת עקרונות \textenglish{REST APIs} לתקשורת עם שירותי בינה מלאכותית
+    \item שליטה ב-\textenglish{JSON} כפורמט חילופי נתונים מרכזי
+    \item יכולת לקרוא ולהבין תיעוד \textenglish{API} טכני
+    \item הכרת קודי תגובה והשלכותיהם העסקיות
+    \item ניהול מגבלות קצב (\textenglish{Rate Limiting}) ואבטחת מפתחות
+\end{itemize}
+
+\section{פרולוג: שיחה שלא הובנה}
+
+דמיינו מנהל פרויקטים בחברת סטארטאפ, יושב בפגישה עם הצוות הטכני. המפתחת הראשית מציגה תוכנית לשילוב מודל שפה במערכת תמיכת הלקוחות. היא מדברת על \textenglish{"POST requests"}, על \textenglish{"JSON payloads"}, על \textenglish{"401 errors"} ו-\textenglish{"rate limits"}. המנהל מהנהן בראשו, אך במוחו מתנהל דיאלוג פנימי שונה לגמרי: "אני מבין שזה חשוב, אבל מה זה בעצם אומר? איך זה משפיע על העלויות? על הזמן? על הסיכונים?"
+
+זהו התסכול של מנהלים רבים בעידן הבינה המלאכותית. הטכנולוגיה מבטיחה, אך השפה שבה היא מתוארת נותרת זרה. הפרק הזה בא לגשר על הפער הזה. לא נהפוך אתכם למתכנתים, אבל נעניק לכם את הכלים להבין איך המכונות מדברות זו עם זו - ומדוע זה חשוב לכל החלטה עסקית שתקבלו.
+
+\section{השפה שהמכונות מדברות: מבוא ל-\en{REST API}}
+
+כשאנו מדברים על שילוב בינה מלאכותית במערכות עסקיות, אנו מדברים למעשה על שיחה. לא שיחה בשפה האנושית הרגילה, אלא פרוטוקול תקשורת מדויק ומובנה. זהו \textenglish{REST API} - \textenglish{Representational State Transfer Application Programming Interface}.
+
+\subsection{מהו \en{API}? אנלוגיה למלצר במסעדה}
+
+דמיינו מסעדה יוקרתית. אתם, הלקוח, יושבים בשולחן. במטבח עומד שף מוכשר - זהו שירות הבינה המלאכותית, נניח \textenglish{OpenAI}. אבל אתם לא יכולים פשוט להיכנס למטבח ולבקש מהשף ישירות. בין הלקוח לשף עומד המלצר - זהו ה-\textenglish{API}.
+
+המלצר מבצע מספר תפקידים קריטיים:
+\begin{enumerate}
+    \item \textbf{מקבל את הזמנתכם} - הבקשה שלכם (\textenglish{Request})
+    \item \textbf{בודק שהזמנה תקינה} - האם אתם מורשים לשבת כאן? האם יש לכם כסף לשלם?
+    \item \textbf{מעביר למטבח} - שולח את הבקשה לשירות
+    \item \textbf{מביא את המנה} - מחזיר את התגובה (\textenglish{Response})
+    \item \textbf{מודיע אם משהו השתבש} - "המטבח עמוס", "המנה אזלה", "כרטיס האשראי נדחה"
+\end{enumerate}
+
+ב-\textenglish{REST API}, כל אינטראקציה עוקבת אחר המבנה הזה: אתם שולחים בקשה מובנית, והשירות מחזיר תגובה מובנית.
+
+\subsection{ארבעת הפעלים הבסיסיים: \en{GET}, \en{POST}, \en{PUT}, \en{DELETE}}
+
+\textenglish{REST} מבוסס על ארבעה פעלים (\textenglish{HTTP Methods}) המייצגים פעולות שונות:
+
+\begin{table}[h]
+\centering
+\begin{rtltabular}{|p{7cm}|p{4cm}|p{2.5cm}|}
+\hline
+\hebheader{דוגמה עסקית} & \hebheader{משמעות} & \textbf{\textenglish{Method}} \\
+\hline
+\hebcell{שליפת היסטוריית שיחות עם לקוח מה-\textenglish{CRM}} & \hebcell{קריאת מידע} & \textenglish{GET} \\
+\hline
+\hebcell{שליחת שאלה חדשה למודל השפה וקבלת תשובה} & \hebcell{יצירת משהו חדש} & \textenglish{POST} \\
+\hline
+\hebcell{עדכון הגדרות של סוכן \textenglish{AI} קיים} & \hebcell{עדכון משהו קיים} & \textenglish{PUT} \\
+\hline
+\hebcell{מחיקת היסטוריית שיחה רגישה} & \hebcell{מחיקת משהו} & \textenglish{DELETE} \\
+\hline
+\end{rtltabular}
+\caption{ארבעת פעלי ה-\textenglish{HTTP} ושימושיהם}
+\end{table}
+
+\textbf{דוגמה מעשית:} נניח שאתם בונים צ'אטבוט לתמיכת לקוחות. כל פעם שלקוח שולח הודעה:
+\begin{enumerate}
+    \item המערכת שלכם תבצע \textenglish{GET} לשלוף את הקשר השיחה הקודמת
+    \item תבצע \textenglish{POST} לשלוח את השאלה החדשה ל-\textenglish{OpenAI}
+    \item \textenglish{OpenAI} יחזיר תשובה
+    \item המערכת תבצע \textenglish{POST} נוסף לשמור את התשובה במאגר
+\end{enumerate}
+
+כל פעולה היא בקשה נפרדת, עם קוד תגובה, זמן ביצוע ועלות.
+
+\subsection{מבנה הבקשה: \en{Headers}, \en{Body}, \en{Authentication}}
+
+בקשת \textenglish{API} היא כמו מעטפה בדואר:
+
+\begin{itemize}
+    \item \textbf{\textenglish{URL (Endpoint)}} - הכתובת. לאן הבקשה הולכת?
+    \begin{quote}
+    \en{https://api.openai.com/v1/chat/completions}
+    \end{quote}
+
+    \item \textbf{\textenglish{Headers}} - מטא-מידע על הבקשה:
+    \begin{itemize}
+        \item \textenglish{Content-Type: application/json} - הנתונים בפורמט \textenglish{JSON}
+        \item \textenglish{Authorization: Bearer sk-...} - מפתח האימות שלכם
+        \item \textenglish{User-Agent: MyCompany/1.0} - מזהה של המערכת שלכם
+    \end{itemize}
+
+    \item \textbf{\textenglish{Body}} - הנתונים עצמם, בפורמט \textenglish{JSON}:
+\begin{english}
+\begin{verbatim}
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "מהי עלות החודשית לשירות שלכם?"
+    }
+  ],
+  "temperature": 0.7
+}
+\end{verbatim}
+\end{english}
+\end{itemize}
+
+\textbf{השלכה עסקית קריטית:} כל \textenglish{Header} יכול להשפיע על התנהגות השירות. למשל, אם תשכחו לשלוח \textenglish{Authorization}, תקבלו שגיאת \textenglish{401 Unauthorized}. אם תגדירו \textenglish{Content-Type} שגוי, השירות לא יבין את הנתונים ויחזיר \textenglish{400 Bad Request}.
+
+\section{\en{JSON} - שפת חילופי הנתונים של האינטרנט}
+
+\subsection{מהו \en{JSON} ומדוע הוא כל כך נפוץ?}
+
+\textenglish{JSON} - \textenglish{JavaScript Object Notation} - הוא פורמט טקסטואלי לייצוג נתונים מובנים. הוא נפוץ כל כך משום שהוא:
+\begin{itemize}
+    \item \textbf{קריא לבני אדם} - אפשר להבין אותו גם בלי להיות מתכנת
+    \item \textbf{קל לעיבוד מכונות} - כמעט כל שפת תכנות יודעת לקרוא ולכתוב אותו
+    \item \textbf{גמיש} - מאפשר מבני נתונים מורכבים
+    \item \textbf{קומפקטי} - לא מבזבז תווים מיותרים (בניגוד ל-\textenglish{XML})
+\end{itemize}
+
+\subsection{סוגי נתונים ב-\en{JSON}}
+
+\textenglish{JSON} תומך בשישה סוגי נתונים בסיסיים:
+
+\begin{table}[h]
+\centering
+\begin{rtltabular}{|p{6cm}|p{4cm}|p{3cm}|}
+\hline
+\hebheader{שימוש עסקי} & \hebheader{דוגמה} & \hebheader{סוג נתון} \\
+\hline
+\hebcell{שמות, טקסטים, מזהים} & \textenglish{"Hello World"} & \hebcell{\textenglish{String} (מחרוזת)} \\
+\hline
+\hebcell{עלויות, כמויות, ציונים} & \textenglish{42}, \textenglish{3.14} & \hebcell{\textenglish{Number} (מספר)} \\
+\hline
+\hebcell{דגלים, הרשאות} & \textenglish{true}, \textenglish{false} & \hebcell{\textenglish{Boolean} (בוליאני)} \\
+\hline
+\hebcell{ערך חסר, לא זמין} & \textenglish{null} & \hebcell{\textenglish{Null} (ריק)} \\
+\hline
+\hebcell{רשימות, אוספים} & \textenglish{[1, 2, 3]} & \hebcell{\textenglish{Array} (מערך)} \\
+\hline
+\hebcell{ישויות מובנות} & \textenglish{\{"key": "value"\}} & \hebcell{\textenglish{Object} (אובייקט)} \\
+\hline
+\end{rtltabular}
+\caption{סוגי הנתונים ב-\textenglish{JSON}}
+\end{table}
+
+\subsection{מבנים מקוננים: הכוח האמיתי של \en{JSON}}
+
+היכולת לקנן אובייקטים ומערכים היא מה שהופך את \textenglish{JSON} לעוצמתי. הנה דוגמה למבנה ריאלי:
+
+\begin{english}
+\begin{verbatim}
+{
+  "customer": {
+    "id": "C12345",
+    "name": "חברת טכנולוגיות בע\"מ",
+    "subscription": {
+      "plan": "Enterprise",
+      "price_per_month": 5000,
+      "currency": "ILS"
+    },
+    "usage_history": [
+      {
+        "month": "2025-01",
+        "api_calls": 150000,
+        "cost": 4823.50
+      },
+      {
+        "month": "2025-02",
+        "api_calls": 180000,
+        "cost": 5789.20
+      }
+    ],
+    "is_active": true,
+    "last_payment": "2025-02-15"
+  }
+}
+\end{verbatim}
+\end{english}
+
+שימו לב למבנה המקונן:
+\begin{itemize}
+    \item \textenglish{customer} הוא האובייקט הראשי
+    \item \textenglish{subscription} הוא אובייקט מקונן בתוך \textenglish{customer}
+    \item \textenglish{usage\_history} הוא מערך של אובייקטים, כל אחד מייצג חודש
+\end{itemize}
+
+\textbf{מבט מנהלי:} כשאתם מבקשים מצוות הפיתוח "לשלוף את נתוני השימוש של הלקוח", המערכת תצטרך לנווט דרך המבנה הזה. אם תבקשו "עלות פברואר", היא תצטרך:
+\begin{enumerate}
+    \item לגשת ל-\textenglish{customer}
+    \item לחפש במערך \textenglish{usage\_history}
+    \item למצוא את הרשומה עם \textenglish{"month": "2025-02"}
+    \item לחלץ את \textenglish{cost}
+\end{enumerate}
+
+כל שלב יכול להיכשל (אולי החודש לא קיים?), ולכן קוד איכותי צריך לטפל בכל התרחישים.
+
+\subsection{תרגול: קריאת \en{JSON} מתועד \en{API}}
+
+הנה קטע אמיתי מתיעוד \textenglish{OpenAI API} לבקשת \textenglish{chat completion}:
+
+\begin{english}
+\begin{verbatim}
+{
+  "id": "chatcmpl-abc123",
+  "object": "chat.completion",
+  "created": 1706543210,
+  "model": "gpt-4",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "העלות החודשית תלויה בשימוש בפועל..."
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 25,
+    "completion_tokens": 50,
+    "total_tokens": 75
+  }
+}
+\end{verbatim}
+\end{english}
+
+\textbf{שאלות הבנה למנהלים:}
+\begin{enumerate}
+    \item איפה נמצאת התשובה בפועל של המודל? (רמז: \textenglish{choices[0].message.content})
+    \item כמה טוקנים נצרכו בסך הכל? (\en{75})
+    \item איך תחשבו את העלות אם מחיר ה-\textenglish{input} הוא \en{\$0.01} לאלף טוקנים וה-\textenglish{output} \en{\$0.03} לאלף?
+    \begin{align*}
+    \hebmath{עלות} &= (25 \times 0.01 / 1000) + (50 \times 0.03 / 1000) \\
+                 &= 0.00025 + 0.0015 = \$0.00175
+    \end{align*}
+\end{enumerate}
+
+זו החשיבה שאתם צריכים לאמץ: כל בקשה היא עלות. כל טוקן נספר. כשאתם מתכננים מערכת עם מיליון שיחות חודשיות, הבנת המבנה הזה קריטית.
+
+\section{קודי תגובה: מה המכונה אומרת לנו?}
+
+כל בקשת \textenglish{API} מסתיימת בקוד תגובה (\textenglish{HTTP Status Code}) - מספר תלת-ספרתי שמסכם מה קרה. הבנת הקודים הללו היא הבדל בין מנהל שיודע לשאול שאלות נכונות לבין מי שמנהן בפגישות טכניות.
+
+\subsection{מפת הקודים - ומה הם אומרים עליכם}
+
+\begin{table}[h]
+\centering
+\begin{rtltabular}{|p{8cm}|p{3.5cm}|p{2cm}|}
+\hline
+\hebheader{משמעות עסקית} & \hebheader{משמעות טכנית} & \hebheader{קוד} \\
+\hline
+\hebcell{הכל עובד. זמן לשלם.} & \hebcell{הבקשה הצליחה} & \textenglish{200 OK} \\
+\hline
+\hebcell{הקוד שלכם שלח משהו לא תקין. באג בצד שלכם.} & \hebcell{הבקשה שגויה} & \textenglish{400 Bad Request} \\
+\hline
+\hebcell{מפתח ה-\textenglish{API} שגוי או פג תוקפו. בעיית אבטחה.} & \hebcell{לא מורשה} & \textenglish{401 Unauthorized} \\
+\hline
+\hebcell{עברתם את מגבלת הקצב. צריך לאט או לשדרג תוכנית.} & \hebcell{יותר מדי בקשות} & \textenglish{429 Too Many Requests} \\
+\hline
+\hebcell{הבעיה בצד השירות, לא שלכם. צור קשר עם התמיכה.} & \hebcell{שגיאה בשרת} & \textenglish{500 Internal Server Error} \\
+\hline
+\hebcell{השרתים עמוסים או בתחזוקה. נסו שוב מאוחר יותר.} & \hebcell{שירות לא זמין} & \textenglish{503 Service Unavailable} \\
+\hline
+\end{rtltabular}
+\caption{קודי תגובה נפוצים והשלכותיהם}
+\end{table}
+
+\subsection{סיפור מהשטח: מקרה 429}
+
+חברת \textenglish{SaaS} בינונית בישראל שילבה \textenglish{ChatGPT} במערכת התמיכה שלה. בהשקה ראשונה, הכל עבד מצוין. יום למחרת, בשעה 9:00 בבוקר - קריסה מוחלטת. הצ'אטבוט חזר עם הודעות שגיאה. המנהלת הטכנית התקשרה לישיבת חירום.
+
+הבעיה? קוד \textenglish{429}. התוכנית שלהם ב-\textenglish{OpenAI} הייתה מוגבלת ל-\textenglish{60 requests per minute}. בבוקר, כשכל נציגי השירות נכנסו למערכת בו-זמנית ושלחו בקשות, המערכת חצתה את המגבלה תוך שניות.
+
+\textbf{הלקח המנהלי:}
+\begin{enumerate}
+    \item \textbf{תכננו לעומס} - לא רק לשימוש ממוצע
+    \item \textbf{הבינו את התוכנית שלכם} - מה המגבלות? האם הן מתאימות לצרכים?
+    \item \textbf{בנו מנגנון נסיגה} (\textenglish{Fallback}) - מה קורה כשה-\textenglish{API} לא זמין?
+\end{enumerate}
+
+\section{\en{Rate Limiting} - מנהלים ומגבלות}
+
+\subsection{מהו \en{Rate Limiting} ומדוע הוא קיים?}
+
+\textenglish{Rate Limiting} הוא מנגנון הגנה של שירותים. הוא מגביל כמה בקשות אתם יכולים לשלוח בפרק זמן נתון. למשל:
+\begin{itemize}
+    \item \textenglish{OpenAI Free Tier}: \en{3} בקשות לדקה
+    \item \textenglish{OpenAI Pay-as-you-go}: \en{60} בקשות לדקה (תלוי בתוכנית)
+    \item \textenglish{Anthropic Claude}: \en{50} בקשות לדקה ברמה בסיסית
+\end{itemize}
+
+למה? כי אחרת:
+\begin{enumerate}
+    \item לקוח אחד יכול "לחנוק" את השרתים לכולם
+    \item עלויות החומרה יתפוצצו
+    \item קשה לחזות עומסים ולתכנן תשתית
+\end{enumerate}
+
+\subsection{חישוב \en{Throughput} מקסימלי}
+
+נניח שיש לכם מגבלה של \textenglish{60 requests per minute}, וכל בקשה לוקחת בממוצע \en{2} שניות (כולל זמן רשת ועיבוד). מהו ה-\textenglish{throughput} המקסימלי שלכם?
+
+\textbf{נוסחה:}
+\begin{equation}
+\text{Throughput \en{(requests/min)}} = \frac{60}{\text{Latency}_\text{\en{avg (sec)}}}
+\end{equation}
+
+\textbf{חישוב:}
+\begin{align*}
+\text{Throughput} &= \frac{60}{2} = 30 \text{ \en{requests/min}}
+\end{align*}
+
+אבל רגע! המגבלה שלכם היא \textenglish{60 requests/min}. אז למה אתם מוגבלים ל-\en{30}?
+
+התשובה: ה-\textenglish{Latency} (זמן התגובה) הוא הגורם המגביל האמיתי כאן, לא ה-\textenglish{Rate Limit}. אם הייתם שולחים את כל \en{60} הבקשות בפרץ בתחילת הדקה, היו נגמרות תוך שניה, ואז הייתם מחכים \en{59} שניות לדקה הבאה. לא יעיל.
+
+\textbf{אסטרטגיה נכונה:} פיזור הבקשות באופן אחיד לאורך הדקה - בקשה אחת כל שנייה. כך תנצלו את המגבלה בצורה אופטימלית.
+
+\subsection{תכנון ארכיטקטורת \en{Rate Limiting}}
+
+כשאתם מתכננים מערכת עם \textenglish{API} חיצוני, עליכם לענות על השאלות הבאות:
+
+\begin{enumerate}
+    \item \textbf{מהו נפח הבקשות הצפוי?}
+    \begin{itemize}
+        \item ממוצע יומי? שעת שיא?
+        \item דוגמה: \en{10,000} שיחות ביום = \en{6,944} שיחות ביום עסקי (\en{16} שעות) = \en{7.2} שיחות לדקה בממוצע
+    \end{itemize}
+
+    \item \textbf{האם המגבלה מספיקה?}
+    \begin{itemize}
+        \item אם התוכנית מאפשרת \textenglish{60 RPM} ואתם צריכים רק \textenglish{7.2} בממוצע - מצוין
+        \item אבל מה בשעת שיא? אולי \textenglish{30 RPM}? עדיין בטווח
+    \end{itemize}
+
+    \item \textbf{מה קורה כשחוצים את המגבלה?}
+    \begin{itemize}
+        \item \textbf{\textenglish{Queueing}} - העמדת בקשות בתור והמתנה
+        \item \textbf{\textenglish{Retry Logic}} - ניסיון חוזר אחרי עיכוב
+        \item \textbf{\textenglish{Graceful Degradation}} - הצגת הודעת "המערכת עמוסה, נסה שוב"
+    \end{itemize}
+
+    \item \textbf{מה העלות של שדרוג?}
+    \begin{itemize}
+        \item אצל \textenglish{OpenAI}, שדרוג לרמה גבוהה יותר יכול להכפיל את ה-\textenglish{Rate Limit}
+        \item צריך לשקול: האם כדאי לשדרג, או לבנות לוגיקה חכמה יותר?
+    \end{itemize}
+\end{enumerate}
+
+\section{\en{API Keys} ואבטחה - מי שומר על השומרים?}
+
+\subsection{מהו \en{API Key}?}
+
+\textenglish{API Key} הוא מפתח זיהוי ייחודי שמאפשר לשירות לדעת מי שולח את הבקשה. הוא נראה בערך כך:
+
+\begin{english}
+\begin{verbatim}
+sk-proj-abc123def456ghi789jkl012mno345pqr678stu901vwx234
+\end{verbatim}
+\end{english}
+
+מפתח זה הוא למעשה \textbf{הסיסמה} לחשבון שלכם. מי שמחזיק בו יכול:
+\begin{itemize}
+    \item לשלוח בקשות בשמכם
+    \item לצרוך את המכסה שלכם
+    \item לגרום לחיובים בכרטיס האשראי שלכם
+    \item בתרחיש הגרוע - לגשת לנתונים רגישים אם המפתח מאפשר זאת
+\end{itemize}
+
+\subsection{סיפור אימה: דליפת \en{API Key} ב-\en{GitHub}}
+
+סטודנט לתואר שני פיתח בוט \textenglish{Telegram} שמשתמש ב-\textenglish{OpenAI}. הוא דחף את הקוד ל-\textenglish{GitHub} - כולל המפתח. תוך \textbf{\en{20} דקות}, בוטים אוטומטיים שסורקים את \textenglish{GitHub} מצאו את המפתח והתחילו להשתמש בו.
+
+עד שהסטודנט שם לב למחרת בבוקר, נצרכו \textbf{\en{\$1,200}} בחשבון שלו. \textenglish{OpenAI} לא החזירו את הכסף - זו אחריותו של המשתמש לשמור על המפתח.
+
+\textbf{לקח:} \textenglish{API Keys} הם כמו כרטיסי אשראי. לעולם לא מפרסמים אותם.
+
+\subsection{מדיניות ניהול \en{API Keys} בארגון}
+
+כמנהלים, עליכם לוודא שהארגון מיישם את העקרונות הבאים:
+
+\begin{enumerate}
+    \item \textbf{ניהול סודות (\textenglish{Secrets Management})}
+    \begin{itemize}
+        \item אל תשמרו מפתחות בקוד
+        \item השתמשו בכלים כמו \textenglish{AWS Secrets Manager}, \textenglish{Azure Key Vault}, \textenglish{HashiCorp Vault}
+        \item שמרו בקבצי \en{.env} (שלא נכללים ב-\textenglish{Git})
+    \end{itemize}
+
+    \item \textbf{עקרון ההרשאה המינימלית (\textenglish{Least Privilege})}
+    \begin{itemize}
+        \item צרו מפתחות שונים למטרות שונות
+        \item דוגמה: מפתח לפיתוח (מגבלה נמוכה), מפתח לייצור (מגבלה גבוהה)
+        \item הגבילו הרשאות - מפתח לקריאה בלבד vs קריאה+כתיבה
+    \end{itemize}
+
+    \item \textbf{רוטציה תקופתית}
+    \begin{itemize}
+        \item החליפו מפתחות כל \en{90} ימים
+        \item בעת עזיבת עובד - ביטול מיידי של כל המפתחות שהיו ברשותו
+    \end{itemize}
+
+    \item \textbf{ניטור ואזעקות}
+    \begin{itemize}
+        \item התראה על שימוש חריג (פתאום \en{1,000} בקשות לדקה)
+        \item התראה על חריגה מתקציב (עלות יומית עברה סף)
+        \item לוגים מפורטים של כל שימוש
+    \end{itemize}
+
+    \item \textbf{תוכנית תגובה לאירוע (\textenglish{Incident Response Plan})}
+    \begin{itemize}
+        \item מה עושים אם מפתח דלף?
+        \item שלב \en{1}: ביטול מיידי של המפתח
+        \item שלב \en{2}: בדיקת לוגים - מה נעשה עם המפתח?
+        \item שלב \en{3}: הנפקת מפתח חדש ועדכון כל המערכות
+        \item שלב \en{4}: דיווח אם יש חובה רגולטורית
+    \end{itemize}
+\end{enumerate}
+
+\section{עלויות ומדדים עסקיים}
+
+\subsection{נוסחת עלות לבקשה}
+
+כל בקשה ל-\textenglish{API} של שירות \textenglish{LLM} עולה כסף. הנוסחה הבסיסית:
+
+\begin{equation}
+\text{Cost}_\text{request} = \left(\text{Tokens}_\text{input} \times \text{Price}_\text{input}\right) + \left(\text{Tokens}_\text{output} \times \text{Price}_\text{output}\right)
+\end{equation}
+
+אבל זו רק העלות הישירה. העלות האמיתית כוללת:
+
+\begin{equation}
+\text{Total Cost} = \text{API Cost} + \text{Infrastructure} + \text{Development} + \text{Maintenance} + \text{Support}
+\end{equation}
+
+\textbf{דוגמה מעשית:}
+
+נניח חברה עם \en{1,000} פניות תמיכה ביום. כל פנייה:
+\begin{itemize}
+    \item \textenglish{Input}: \en{200} טוקנים (הקשר + שאלת הלקוח)
+    \item \textenglish{Output}: \en{150} טוקנים (תשובת המודל)
+    \item מחירי \textenglish{GPT-4}: \en{\$0.03} ל-\en{1K input}, \en{\$0.06} ל-\en{1K output}
+\end{itemize}
+
+חישוב לפנייה אחת:
+\begin{align*}
+\text{Cost}_\text{request} &= \left(\frac{200}{1000} \times 0.03\right) + \left(\frac{150}{1000} \times 0.06\right) \\
+                            &= 0.006 + 0.009 = \$0.015
+\end{align*}
+
+לחודש (\en{30} ימים):
+\begin{align*}
+\text{Monthly API Cost} &= 0.015 \times 1000 \times 30 = \$450
+\end{align*}
+
+זה נראה סביר, נכון? אבל הוסיפו:
+\begin{itemize}
+    \item שכר מפתח (\textenglish{0.5 FTE}): \en{\$3,000}/חודש
+    \item שרת (\textenglish{AWS}): \en{\$200}/חודש
+    \item ניטור וכלים: \en{\$100}/חודש
+    \item \textbf{סה"כ:} \en{\$3,750}/חודש
+\end{itemize}
+
+פתאום העלות האמיתית פי \en{8} מהעלות הישירה של ה-\textenglish{API}.
+
+\subsection{תכנון תקציב \en{API}}
+
+כמנהלים, עליכם לשאול:
+\begin{enumerate}
+    \item \textbf{מהו נפח הבקשות הצפוי?} - הערכה ראשונית + צמיחה
+    \item \textbf{מהו אורך הטוקנים הממוצע?} - תלוי בתחום
+    \item \textbf{האם יש עונתיות?} - חודש ינואר עמוס יותר?
+    \item \textbf{מהי תוכנית החירום?} - אם התקציב נגמר באמצע החודש?
+\end{enumerate}
+
+\textbf{דוגמת מדיניות:}
+\begin{itemize}
+    \item תקציב חודשי: \en{\$1,000}
+    \item התראה ב-\en{70\%}: הודעה למנהל
+    \item התראה ב-\en{90\%}: הפסקת שירותים לא קריטיים
+    \item ב-\en{100\%}: חסימה מוחלטת (למנוע חריגה)
+\end{itemize}
+
+\section{דוגמאות מעשיות מעולם העסקים}
+
+\subsection{דוגמה 1: חיבור אפליקציה פנימית ל-\en{OpenAI API}}
+
+\textbf{תרחיש:} חברת \textenglish{SaaS} רוצה להוסיף תכונת "סיכום חכם" למערכת \textenglish{CRM} שלהם. כל פגישה עם לקוח תתועד, ובלחיצת כפתור המערכת תייצר סיכום.
+
+\textbf{שלבי האינטגרציה:}
+\begin{enumerate}
+    \item \textbf{רכישת מפתח \textenglish{API}}
+    \begin{itemize}
+        \item הרשמה ל-\textenglish{OpenAI}
+        \item הגדרת כרטיס אשראי
+        \item יצירת מפתח עם הרשאות מתאימות
+    \end{itemize}
+
+    \item \textbf{פיתוח הלוגיקה}
+    \begin{itemize}
+        \item שליפת טקסט הפגישה מהמסד נתונים
+        \item בניית \textenglish{prompt}: "סכם את הפגישה הבאה בתבליטים..."
+        \item שליחת בקשת \textenglish{POST} ל-\en{https://api.openai.com/v1/chat/completions}
+        \item קבלת התגובה והצגתה למשתמש
+    \end{itemize}
+
+    \item \textbf{טיפול בשגיאות}
+    \begin{itemize}
+        \item אם \textenglish{401} - המפתח לא תקין, הצג הודעה למנהל מערכת
+        \item אם \textenglish{429} - נסה שוב אחרי \en{60} שניות
+        \item אם \textenglish{500} - שמור את הבקשה ונסה אוטומטית אחר כך
+    \end{itemize}
+
+    \item \textbf{ניטור}
+    \begin{itemize}
+        \item לוג של כל בקשה - מתי, מי, כמה טוקנים, כמה עלה
+        \item דאשבורד חודשי: סה"כ בקשות, עלויות, זמני תגובה
+    \end{itemize}
+\end{enumerate}
+
+\textbf{תוצאה עסקית:}
+\begin{itemize}
+    \item חיסכון של \en{10} דקות לנציג מכירות לאחר כל פגישה
+    \item \en{20} פגישות ביום $\times$ \en{10} דקות = \en{200} דקות = \en{3.3} שעות
+    \item בשכר של \en{\$30}/שעה: חיסכון של \en{\$100}/יום = \en{\$3,000}/חודש
+    \item עלות \textenglish{API}: \en{\$200}/חודש
+    \item \textbf{ROI}: \en{\$(3000-200)/200 = 1400\%} תשואה חודשית!
+\end{itemize}
+
+\subsection{דוגמה 2: שליפת נתונים מ-\en{CRM} ושילוב עם \en{LLM}}
+
+\textbf{תרחיש:} צוות מכירות רוצה "עוזר חכם" שיכול לענות על שאלות כמו "מי הלקוחות שלא קנו מאיתנו \en{6} חודשים ושווים מעל \en{\$50K}?"
+
+\textbf{ארכיטקטורה:}
+\begin{enumerate}
+    \item \textbf{שלב 1: שאילתה ל-\textenglish{CRM API}}
+    \begin{itemize}
+        \item בקשת \textenglish{GET} ל-\textenglish{Salesforce/HubSpot API}
+        \item משיכת רשימת לקוחות עם שדות: תאריך רכישה אחרונה, ערך כולל
+        \item פילטור בצד הקוד: רק לקוחות שעונים לקריטריונים
+    \end{itemize}
+
+    \item \textbf{שלב 2: העברה ל-\textenglish{LLM}}
+    \begin{itemize}
+        \item הכנת \textenglish{prompt}: "הנה רשימת לקוחות. הצע אסטרטגיה לחזרה אליהם"
+        \item שליחה ל-\textenglish{OpenAI}
+        \item קבלת המלצות מותאמות אישית
+    \end{itemize}
+
+    \item \textbf{שלב 3: הצגה למשתמש}
+    \begin{itemize}
+        \item פורמט \textenglish{JSON} מוחזר כטבלה נאה
+        \item כפתורי פעולה: "שלח מייל", "קבע פגישה"
+    \end{itemize}
+\end{enumerate}
+
+\textbf{אתגרים שנתקלו בהם:}
+\begin{itemize}
+    \item \textbf{\textenglish{Rate Limiting} של \textenglish{Salesforce}}: \en{1,000} בקשות ליום. פתרון: קאש יומי של נתונים
+    \item \textbf{גודל ההקשר}: רשימה של \en{500} לקוחות = \en{50K} טוקנים. פתרון: סינון מקדים לרלוונטיים ביותר
+    \item \textbf{עלויות}: חודש ראשון עלה \en{\$800}. פתרון: מיקרו-קאש של שאלות נפוצות
+\end{itemize}
+
+\subsection{דוגמה 3: דאשבורד בזמן אמת של נתוני AI}
+
+\textbf{תרחיש:} מנהל טכנולוגי רוצה לראות "מה קורה עכשיו" במערכת ה-\textenglish{AI}.
+
+\textbf{מדדים בדאשבורד:}
+\begin{itemize}
+    \item \textbf{בקשות לדקה} - האם מתקרבים ל-\textenglish{Rate Limit}?
+    \item \textbf{עלות שעתית} - כמה הוצאנו עד עכשיו היום?
+    \item \textbf{זמני תגובה} - האם יש האטה?
+    \item \textbf{קודי שגיאה} - כמה \textenglish{429}, \textenglish{500}, וכו'
+    \item \textbf{טוקנים ממוצעים} - האם המשתמשים שולחים שאלות ארוכות מדי?
+\end{itemize}
+
+\textbf{יישום טכני:}
+\begin{itemize}
+    \item כל בקשה נשמרת ב-\textenglish{Database} עם \textenglish{timestamp}
+    \item \textenglish{Python script} מריץ אגרגציות כל \en{5} דקות
+    \item ממשק \textenglish{Streamlit} מציג את הנתונים בזמן אמת
+\end{itemize}
+
+\textbf{ערך עסקי:}
+\begin{itemize}
+    \item זיהוי בעיות לפני שהלקוחות מרגישים בהן
+    \item אופטימיזציה של עלויות - "למה ביום שלישי תמיד עולה פי \en{2}?"
+    \item תכנון קיבולת - "נראה שצריך לשדרג את התוכנית לפני סוף החודש"
+\end{itemize}
+
+\section{תרגילים}
+
+\subsection{תרגילים תיאורטיים}
+
+\begin{exercise}
+\textbf{פענוח תיעוד API ותכנון אינטגרציה}
+
+קראו את התיעוד הבא מ-\textenglish{Anthropic Claude API}:
+
+\begin{english}
+\begin{verbatim}
+POST https://api.anthropic.com/v1/messages
+
+Headers:
+  x-api-key: YOUR_API_KEY
+  content-type: application/json
+
+Body:
+{
+  "model": "claude-3-opus-20240229",
+  "max_tokens": 1024,
+  "messages": [
+    {"role": "user", "content": "Hello, Claude"}
+  ]
+}
+
+Response (200 OK):
+{
+  "id": "msg_123",
+  "type": "message",
+  "role": "assistant",
+  "content": [{
+    "type": "text",
+    "text": "Hello! How can I assist you today?"
+  }],
+  "usage": {
+    "input_tokens": 12,
+    "output_tokens": 20
+  }
+}
+\end{verbatim}
+\end{english}
+
+\textbf{משימה:}
+\begin{enumerate}
+    \item זהו את כל רכיבי הבקשה: \textenglish{URL, Method, Headers, Body}
+    \item הסבירו מה תפקיד כל שדה ב-\textenglish{Body}
+    \item חשבו את העלות אם \textenglish{Input = \$15/million tokens}, \textenglish{Output = \$75/million tokens}
+    \item תכננו: איך תטמיעו זאת באפליקציית צ'אט? אילו שגיאות אפשריות?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\textbf{ניתוח קודי שגיאה וכתיבת נהלי טיפול}
+
+הארגון שלכם מפתח צ'אטבוט פנימי. לאחר שבוע בייצור, אלו התקלות שדווחו:
+
+\begin{itemize}
+    \item \textenglish{401 Unauthorized} - \en{15} מקרים
+    \item \textenglish{429 Too Many Requests} - \en{47} מקרים (בעיקר בשעה \en{9-10} בבוקר)
+    \item \textenglish{500 Internal Server Error} - \en{3} מקרים
+    \item \textenglish{400 Bad Request} - \en{8} מקרים
+\end{itemize}
+
+\textbf{משימה:}
+\begin{enumerate}
+    \item לכל קוד שגיאה, הציעו סיבה אפשרית
+    \item כתבו נוהל טיפול לכל אחד (מה המערכת צריכה לעשות אוטומטית? מתי להתריע לאדם?)
+    \item הציעו שינוי ארכיטקטוני למניעת ה-\textenglish{429} בשעות השיא
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\textbf{תכנון ארכיטקטורת Rate Limiting}
+
+ארגון עם \en{500} עובדים רוצה להטמיע עוזר \textenglish{AI} פנימי. ההערכות:
+\begin{itemize}
+    \item \en{30\%} מהעובדים ישתמשו יום-יום
+    \item כל משתמש ישלח בממוצע \en{10} שאלות ביום
+    \item יום עבודה: \en{8} שעות
+    \item שעת שיא: \en{60\%} מהשימוש מתרכז ב-\en{2} שעות (\en{9-11})
+\end{itemize}
+
+התוכנית הנוכחית: \textenglish{60 requests/min}.
+
+\textbf{משימה:}
+\begin{enumerate}
+    \item חשבו את ממוצע הבקשות לדקה ביום רגיל
+    \item חשבו את שיא הבקשות בשעת העומס
+    \item האם התוכנית מספיקה? אם לא, מה צריך?
+    \item הציעו \en{3} אסטרטגיות להתמודדות ללא שדרוג מייד
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\textbf{כתיבת מדיניות ניהול API Keys}
+
+אתם סמנכ"ל טכנולוגיה של חברה שמשתמשת ב-\en{5} שירותי \textenglish{API} שונים: \textenglish{OpenAI, AWS, Twilio, SendGrid, Stripe}.
+
+\textbf{משימה:}
+כתבו מדיניות ארגונית בת \en{2} עמודים שמכסה:
+\begin{enumerate}
+    \item מי מורשה ליצור מפתחות?
+    \item איך מאחסנים אותם? (אסור לכתוב "בקוד")
+    \item כמה זמן מפתח תקף?
+    \item מה קורה כשעובד עוזב?
+    \item מה התהליך אם מפתח דלף?
+    \item איך מנטרים שימוש?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\textbf{חישוב עלויות API לתרחישי שימוש}
+
+חברה שוקלת \en{3} תרחישי שימוש שונים ב-\textenglish{GPT-4}:
+
+\textbf{תרחיש A: סיכום דוחות יומי}
+\begin{itemize}
+    \item \en{50} דוחות ביום
+    \item כל דוח: \en{3,000} טוקנים \textenglish{input}
+    \item כל סיכום: \en{300} טוקנים \textenglish{output}
+\end{itemize}
+
+\textbf{תרחיש B: צ'אטבוט תמיכה}
+\begin{itemize}
+    \item \en{200} שיחות ביום
+    \item כל שיחה: \en{500} טוקנים \textenglish{input}, \en{200} טוקנים \textenglish{output}
+\end{itemize}
+
+\textbf{תרחיש C: ניתוח חוזים}
+\begin{itemize}
+    \item \en{10} חוזים ביום
+    \item כל חוזה: \en{8,000} טוקנים \textenglish{input}, \en{1,000} טוקנים \textenglish{output}
+\end{itemize}
+
+מחירי \textenglish{GPT-4}: \textenglish{Input \$0.03/1K}, \textenglish{Output \$0.06/1K}
+
+\textbf{משימה:}
+\begin{enumerate}
+    \item חשבו עלות חודשית (\en{22} ימי עבודה) לכל תרחיש
+    \item דרגו מהיקר לזול
+    \item אם התקציב הוא \en{\$500}/חודש, אילו תרחישים אפשריים?
+    \item הציעו אופטימיזציה לתרחיש היקר ביותר
+\end{enumerate}
+\end{exercise}
+
+\subsection{תרגילי קוד \en{Python}}
+
+\begin{exercise}
+\textbf{שליחת בקשה ל-OpenAI API וקבלת תשובה}
+
+כתבו תוכנית \textenglish{Python} שמבצעת את הפעולות הבאות:
+\begin{enumerate}
+    \item טוענת את מפתח ה-\textenglish{API} מקובץ \en{.env} (לא מהקוד!)
+    \item שולחת בקשה ל-\textenglish{OpenAI Chat Completions API}
+    \item מקבלת תשובה ומציגה אותה
+    \item טיפול בשגיאות: \textenglish{401, 429, 500}
+    \item הצגת מספר הטוקנים שנוצלו
+\end{enumerate}
+
+\textbf{קוד בסיס:}
+\begin{english}
+\begin{verbatim}
+import os
+import requests
+from dotenv import load_dotenv
+
+# TODO: השלימו את הקוד
+\end{verbatim}
+\end{english}
+
+\textbf{דרישות:}
+\begin{itemize}
+    \item השתמשו בספריות: \textenglish{requests}, \textenglish{python-dotenv}
+    \item הקוד צריך להיות ברור וקריא
+    \item הוסיפו הערות מסבירות
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}
+\textbf{ניהול Rate Limiting עם Retry Logic}
+
+כתבו מחלקה \textenglish{APIClient} שמטפלת אוטומטית ב-\textenglish{Rate Limiting}:
+\begin{enumerate}
+    \item אם מתקבל \textenglish{429}, המתן \en{60} שניות ונסה שוב
+    \item מספר ניסיונות מקסימלי: \en{3}
+    \item תיעוד (\textenglish{logging}) של כל ניסיון
+    \item אם נכשל \en{3} פעמים, זרוק חריגה
+\end{enumerate}
+
+\textbf{קוד בסיס:}
+\begin{english}
+\begin{verbatim}
+import time
+import logging
+import requests
+
+class APIClient:
+    def __init__(self, api_key, base_url, max_retries=3):
+        self.api_key = api_key
+        self.base_url = base_url
+        self.max_retries = max_retries
+
+    def make_request(self, endpoint, data):
+        # TODO: יישום הלוגיקה
+        pass
+
+# דוגמת שימוש:
+client = APIClient(api_key="sk-...",
+                   base_url="https://api.openai.com/v1")
+response = client.make_request("/chat/completions", {...})
+\end{verbatim}
+\end{english}
+
+\textbf{בונוס:}
+\begin{itemize}
+    \item הוסיפו \textenglish{exponential backoff} (המתנה גדלה עם כל ניסיון)
+    \item שמרו סטטיסטיקות: כמה בקשות, כמה הצליחו, כמה נכשלו
+\end{itemize}
+\end{exercise}
+
+\section{סיכום}
+
+בפרק זה למדנו את הבסיס הטכני לתקשורת עם שירותי בינה מלאכותית. \textenglish{REST API} הוא לא רק מושג טכני - הוא הגשר בין החזון העסקי שלכם לבין המימוש בפועל. הבנת \textenglish{JSON}, קודי תגובה, \textenglish{Rate Limiting} ואבטחת מפתחות היא הבדל בין פרויקט שמצליח לבין כזה שקורס תחת עומס או דולף נתונים.
+
+\subsection{נקודות מפתח לזכור}
+
+\begin{itemize}
+    \item \textbf{\textenglish{REST API}} = פרוטוקול תקשורת מובנה בין מערכות
+    \item \textbf{\textenglish{JSON}} = פורמט חילופי נתונים קריא וגמיש
+    \item \textbf{קודי תגובה} = שפה משותפת להבנת מה קרה (\textenglish{200, 400, 401, 429, 500})
+    \item \textbf{\textenglish{Rate Limiting}} = מגבלות שצריך לתכנן להן מראש
+    \item \textbf{\textenglish{API Keys}} = נכסים קריטיים שצריכים ניהול ואבטחה
+    \item \textbf{עלויות} = לא רק מחיר ה-\textenglish{API}, אלא גם תשתית, פיתוח ותחזוקה
+\end{itemize}
+
+\subsection{מעבר לפרק הבא}
+
+\textenglish{REST API} הוא הסטנדרט הנפוץ, אך האקוסיסטם מתפתח. בפרק הבא נכיר את \textenglish{Model Context Protocol (MCP)} - פרוטוקול חדש שנועד במפורש להעברת הקשר עשיר למודלי שפה. נבין מתי להשתמש ב-\textenglish{MCP}, מתי ב-\textenglish{REST}, ואיך לשלב ביניהם.
+
+אבל קודם - תרגלו. בצעו את התרגילים, שחקו עם ה-\textenglish{APIs}, תעשו טעויות. זו הדרך היחידה ללמוד באמת.
+
+\vfill
+
+\begin{center}
+\rule{0.5\textwidth}{0.4pt}
+\end{center}

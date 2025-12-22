@@ -1,0 +1,893 @@
+% פרק 2: אקוסיסטם הבינה המלאכותית - מפת הכלים למנהל המודרני
+% מחברים: דר' יורם סגל ופרופסור ערן שריף
+% Compiler: LuaLaTeX
+
+\chapter{אקוסיסטם הבינה המלאכותית -- מפת הכלים למנהל המודרני}
+
+\section*{מטרות הלמידה}
+\begin{itemize}
+\item הכרת כל רכיבי האקוסיסטם: מודלי שפה, ספריות, מוטמעים, בסיסי נתונים
+\item הבנת היחסים והתלויות בין הרכיבים השונים
+\item יכולת לקבל החלטות מושכלות על בחירת טכנולוגיות
+\item הערכת עלויות וביצועים של פתרונות שונים
+\end{itemize}
+
+\section{פתח דבר: מסע בג'ונגל הטכנולוגי}
+
+דמיינו את עצמכם עומדים בפתחו של יער עצום. מכל עבר צצים שמות זרים: \en{OpenAI}, \en{LangChain}, \en{Pinecone}, \en{ChromaDB}. כל כלי מבטיח פלאים, כל ספק מציע את הפתרון המושלם. עבור מנהל שרוצה להטמיע בינה מלאכותית בארגון שלו, הבחירה הנכונה יכולה להיות מכרעת -- ההבדל בין הצלחה מסחררת לבין כישלון יקר.
+
+בפרק הקודם למדנו מהם מודלי שפה גדולים ומה הכוח שלהם. אבל מודל שפה לבדו, כמו מנוע בלי מכונית, אינו מספיק כדי לנסוע. צריך אקוסיסטם שלם: ספריות שמחברות בין רכיבים, מסדי נתונים שמאחסנים זיכרון, כלים שמנהלים תהליכים אוטומטיים, ופלטפורמות שמאפשרות לכל זה לעבוד יחד בהרמוניה.
+
+הפרק הזה הוא המפה שלכם לג'ונגל הטכנולוגי. נחלק את האקוסיסטם לרכיבים מרכזיים, נבין מה כל אחד עושה, ונלמד מתי להשתמש במה. בסוף הפרק תדעו לתכנן ארכיטקטורה שלמה, להשוות בין ספקים, ולחשב עלויות. זה לא רק ידע טכני -- זה כוח אסטרטגי.
+
+\section{שכבות האקוסיסטם: ארכיטקטורה מלמעלה למטה}
+
+כדי להבין את האקוסיסטם, נחלק אותו לחמש שכבות מרכזיות:
+
+\subsection{שכבת הליבה: מודלי השפה}
+
+זוהי השכבה הבסיסית -- המוח של המערכת. כאן יושבים מודלי השפה הגדולים עצמם. יש לנו שני מסלולים עיקריים:
+
+\textbf{ספקי ענן (\en{Cloud Providers}):} אלו חברות שמריצות מודלים ענקיים על תשתיות ענן ומאפשרות לנו לגשת אליהם דרך \en{API}. המובילים:
+
+\begin{itemize}
+\item \textbf{\en{OpenAI}} -- החלוץ והמוביל. \en{GPT-4}, \en{GPT-4 Turbo}, ו-\en{GPT-3.5} הם הסטנדרט התעשייתי. יתרון מרכזי: בשלות, תיעוד עשיר, ואקוסיסטם תומך ענק. חיסרון: עלות גבוהה יחסית, תלות בספק בודד.
+
+\item \textbf{\en{Anthropic}} -- היריבה המתקדמת. מודל \en{Claude 3.5 Sonnet} ו-\en{Claude Opus 4.5} מציעים חלון הקשר ענק (עד 200,000 טוקנים), דיוק גבוה במשימות מורכבות, ודגש על בטיחות. אידיאלי למשימות הדורשות הבנת הקשר עמוקה.
+
+\item \textbf{\en{Google}} -- \en{Gemini Pro} ו-\en{Gemini Ultra} משלבים מולטימודליות מתקדמת (טקסט, תמונה, וידאו). יתרון משמעותי: אינטגרציה חלקה עם \en{Google Workspace}.
+
+\item \textbf{\en{Meta}} -- \en{Llama 3} (בגרסאות 8B, 70B, 405B) הוא מודל קוד פתוח. למה זה משמעותי? תוכלו להוריד ולהריץ אותו על השרתים שלכם. אין תלות בספק חיצוני, אין דליפת מידע רגיש החוצה.
+
+\item \textbf{\en{DeepSeek}} -- השחקן הסיני המפתיע. \en{DeepSeek-V3} מציע ביצועים מרשימים במחיר נמוך משמעותית. בעיקר למשימות טכניות וקוד.
+\end{itemize}
+
+\textbf{מודלים מקומיים (\en{Self-Hosted}):} כאן אנחנו מורידים את המודל ומריצים אותו על החומרה שלנו:
+
+\begin{itemize}
+\item \textbf{\en{Llama 3.1 (8B/70B)}} -- מודל קוד פתוח מצוין לריצה מקומית. גרסת 8B רצה אפילו על לפטופ חזק, 70B דורש שרת עם GPU.
+
+\item \textbf{\en{Mistral 7B}} -- קטן, מהיר, יעיל. מצוין לסטארטאפים שרוצים פתרון זול ומקומי.
+
+\item \textbf{\en{Qwen 2.5}} -- מודל סיני מתקדם, מצוין לתמיכה רב-לשונית.
+\end{itemize}
+
+למה לבחור ב-\en{Self-Hosted}? שלוש סיבות עיקריות:
+\begin{enumerate}
+\item \textbf{פרטיות מוחלטת} -- נתונים רגישים לא עוזבים את הארגון.
+\item \textbf{עלות צפויה} -- שילמתם על החומרה פעם אחת, אין הפתעות בחשבון.
+\item \textbf{התאמה אישית} -- אפשר לעשות \en{Fine-tuning} ייעודי.
+\end{enumerate}
+
+\subsection{שכבת החיבור: \en{OpenRouter} -- הרכזת של מודלים}
+
+\en{OpenRouter} הוא כמו שדה תעופה שמחבר אתכם לכל היעדים. במקום לפתוח חשבון בנפרד אצל \en{OpenAI}, \en{Anthropic}, ו-\en{Google}, אתם נרשמים פעם אחת ל-\en{OpenRouter} ומקבלים גישה למעל 100 מודלים שונים דרך \en{API} אחיד.
+
+\textbf{יתרונות מנהליים:}
+\begin{itemize}
+\item גמישות -- החלפת מודל זה שורת קוד אחת
+\item השוואת עלויות -- תוכלו לנסות מודלים שונים בלי להתחייב
+\item גיבוי אוטומטי -- אם ספק אחד נופל, \en{OpenRouter} מעביר למודל חלופי
+\end{itemize}
+
+\textbf{דוגמה מעשית:} חברת תמיכה טכנית השתמשה ב-\en{GPT-4} לניתוח פניות מורכבות. אבל 70\% מהפניות היו פשוטות, ו-\en{GPT-4} יקר מדי בשבילן. עם \en{OpenRouter} הם יישמו לוגיקה: פניות פשוטות ל-\en{GPT-3.5} (זול), פניות מורכבות ל-\en{Claude Sonnet} (מדויק). חיסכו 60\% בעלויות בלי לוותר על איכות.
+
+\subsection{שכבת הפיתוח: ספריות אינטגרציה}
+
+כדי לבנות מערכת אמיתית, לא מספיק לשלוח בקשה ל-\en{API} ולקבל תשובה. צריך לנהל שיחות, לזכור הקשר, לחבר בסיסי נתונים, לטפל בשגיאות. כאן נכנסות הספריות:
+
+\subsubsection{\en{LangChain} -- הסוכן המקצועי}
+
+\en{LangChain} היא הספרייה הפופולרית ביותר לבניית אפליקציות \en{LLM}. היא מציעה:
+
+\begin{itemize}
+\item \textbf{Chains} -- שרשור פעולות. לדוגמה: קח שאלה $\rightarrow$ חפש במסד נתונים $\rightarrow$ שלח ל-LLM $\rightarrow$ עצב תשובה.
+
+\item \textbf{Agents} -- סוכנים אוטונומיים שיודעים לבחור כלים. "איזה טיסות זולות לברלין?" $\rightarrow$ הסוכן מבין שצריך לקרוא ל-API של טיסות, מנתח תוצאות, ומחזיר תשובה.
+
+\item \textbf{Memory} -- זיכרון שיחה. ה-LLM זוכר מה דיברתם לפני 10 הודעות.
+
+\item \textbf{Retrievers} -- חיבור לבסיסי נתונים וקטוריים (נדבר עליהם בהמשך).
+\end{itemize}
+
+\textbf{מתי להשתמש ב-LangChain?} כשאתם בונים משהו מורכב -- סוכן שירות, מערכת \en{RAG}, אוטומציה רב-שלבית.
+
+\subsubsection{\en{LangGraph} -- תזמור תהליכים}
+
+\en{LangGraph} הוא ההמשך של \en{LangChain}, ממוקד בניהול תהליכים מורכבים עם מעברים ותנאים.
+
+דמיינו תהליך אישור הזמנה:
+\begin{enumerate}
+\item בדיקת מלאי
+\item אישור מנהל (אם מעל 10,000 ש"ח)
+\item שליחה ללוגיסטיקה
+\item עדכון לקוח
+\end{enumerate}
+
+\en{LangGraph} מאפשר לכם לתכנן את התהליך כגרף זרימה, עם צמתים (פעולות) וקשתות (תנאים). כל צומת יכול להיות \en{LLM}, שאילתת מסד נתונים, או קריאה חיצונית.
+
+\subsubsection{\en{Pydantic AI} -- המובנה והמסודר}
+
+אם \en{LangChain} הוא הסוכן הגמיש, \en{Pydantic AI} הוא הבנקאי המדויק. הספרייה מתמחה במבנה ובולידציה:
+
+\begin{itemize}
+\item הגדרת מבני נתונים נוקשים
+\item ולידציה אוטומטית של תשובות \en{LLM}
+\item אכיפת פורמטים (\en{JSON Schema})
+\end{itemize}
+
+\textbf{דוגמה:} אתם רוצים ש-\en{LLM} יחלץ מפניית לקוח: שם, מייל, נושא, רמת דחיפות. \en{Pydantic AI} מגדיר מבנה קפדני, ואם ה-\en{LLM} מחזיר משהו שלא תואם -- יש שגיאה מיידית.
+
+\subsection{שכבת ההטמעה: \en{Embeddings} ומסדי נתונים וקטוריים}
+
+אחת התובנות המרכזיות בעולם ה-\en{AI} המודרני היא שמילים הן לא רק תווים -- יש להן משמעות גיאומטרית. טכנולוגיית \en{Embeddings} הופכת טקסט למספרים (וקטורים), כך שמחשב יכול "להבין" דמיון סמנטי.
+
+\subsubsection{מהם \en{Embeddings}?}
+
+תארו לעצמכם מרחב של מאות או אלפי ממדים. כל מילה או משפט הוא נקודה במרחב הזה. משפטים דומים במשמעות קרובים גיאומטרית; משפטים שונים רחוקים.
+
+לדוגמה:
+\begin{itemize}
+\item "כלב" ו-"גור" -- קרובים מאוד
+\item "כלב" ו-"מכונית" -- רחוקים
+\end{itemize}
+
+\textbf{למה זה חשוב?} כי ככה בונים חיפוש סמנטי. במקום לחפש מילת מפתח מדויקת (כמו \en{Google} פעם), אפשר לחפש לפי כוונה.
+
+\textbf{שאלה:} "איך מגישים תביעת ביטוח?"
+\textbf{מסמך במערכת:} "הליך הגשת דרישה לפיצוי"
+
+חיפוש רגיל לא ימצא את זה -- אין מילים משותפות. חיפוש וקטורי כן.
+
+\subsubsection{מודלי \en{Embedding} מובילים}
+
+\begin{itemize}
+\item \textbf{\en{OpenAI Text-Embedding-3}} -- הסטנדרט. קל לשימוש, איכות מצוינת. גרסת \en{small} (זולה) וגרסת \en{large} (מדויקת).
+
+\item \textbf{\en{NV-Embed-v2}} -- מודל מתקדם מבית \en{NVIDIA}. מצוין לטקסטים טכניים ומדעיים.
+
+\item \textbf{\en{BGE-M3}} -- מודל סיני רב-לשוני. תומך במעל 100 שפות, כולל עברית. קוד פתוח.
+\end{itemize}
+
+\subsubsection{מסדי נתונים וקטוריים}
+
+אחרי שהפכנו טקסט לוקטורים, איפה נאחסן אותם? מסד נתונים רגיל (\en{MySQL}, \en{PostgreSQL}) לא יודע לעבוד עם חיפוש וקטורי. צריך מסד נתונים וקטורי (\en{Vector Database}).
+
+\textbf{\en{Pinecone} -- הענן המנוהל:}
+\begin{itemize}
+\item \textbf{יתרונות:} לא צריך להתקין כלום. שירות ענן מנוהל, סקיילבילי, מהיר.
+\item \textbf{חסרונות:} עלות חודשית, תלות בספק.
+\item \textbf{מתי להשתמש:} כשאתם רוצים לעלות מהר, בלי להתעסק בתשתיות.
+\end{itemize}
+
+\textbf{\en{Chroma} -- הפתרון המקומי:}
+\begin{itemize}
+\item \textbf{יתרונות:} קוד פתוח, חינמי, רץ על השרת שלכם.
+\item \textbf{חסרונות:} אתם צריכים לנהל: גיבויים, ביצועים, סקייל.
+\item \textbf{מתי להשתמש:} כשאתם בשלב \en{POC}, או כשאתם רוצים שליטה מלאה.
+\end{itemize}
+
+\textbf{\en{Weaviate} -- הכלי ההיברידי:}
+\begin{itemize}
+\item \textbf{יתרונות:} תומך גם בחיפוש וקטורי וגם בחיפוש טקסט רגיל. אינטגרציות עשירות.
+\item \textbf{חסרונות:} מורכב יותר להקמה.
+\item \textbf{מתי להשתמש:} כשאתם צריכים גמישות מקסימלית.
+\end{itemize}
+
+\textbf{\en{Qdrant} -- המהיר:}
+\begin{itemize}
+\item \textbf{יתרונות:} ביצועים מצוינים, נכתב ב-\en{Rust} (מהיר ויעיל).
+\item \textbf{חסרונות:} קהילה קטנה יותר.
+\item \textbf{מתי להשתמש:} כשמהירות היא קריטית.
+\end{itemize}
+
+\subsection{שכבת האוטומציה: כלים אגנטיים}
+
+השכבה העליונה היא שכבת התזמור -- הכלים שגורמים לכל המערכת לעבוד יחד ולהריץ תהליכים אוטומטיים.
+
+\subsubsection{\en{LangGraph} (שוב, אבל בהקשר אחר)}
+
+כבר דיברנו עליו כספרייה, אבל הוא גם כלי תזמור. \en{LangGraph} מאפשר לכם לבנות תהליכים רב-שלביים שבהם סוכנים שונים מתקשרים זה עם זה, מעבירים מידע, ומקבלים החלטות.
+
+\subsubsection{\en{AutoGen} -- צוותי סוכנים}
+
+\en{AutoGen} (מבית \en{Microsoft}) הוא פריימוורק לבניית מערכות רב-סוכן. דמיינו שאתם בונים מערכת לניהול פרויקטים:
+
+\begin{itemize}
+\item \textbf{סוכן תכנון} -- מנתח דרישות ובונה תוכנית עבודה
+\item \textbf{סוכן ביצוע} -- מקצה משימות לאנשי צוות
+\item \textbf{סוכן בקרה} -- עוקב אחרי התקדמות ומתריע על עיכובים
+\end{itemize}
+
+כל סוכן הוא \en{LLM} עם הנחיות (\en{System Prompt}) ייעודיות. \en{AutoGen} מנהל את התקשורת ביניהם.
+
+\subsubsection{\en{n8n} -- אוטומציה חזותית}
+
+\en{n8n} הוא כלי \en{No-Code / Low-Code} לאוטומציה. במקום לכתוב קוד, אתם גוררים בלוקים ומחברים אותם.
+
+\textbf{דוגמה:}
+\begin{enumerate}
+\item כל פניית לקוח במייל $\rightarrow$
+\item \en{LLM} מנתח ומקטלג $\rightarrow$
+\item אם דחוף: שולח SMS למנהל $\rightarrow$
+\item אם רגיל: פותח כרטיס ב-\en{Jira}
+\end{enumerate}
+
+הכל בלי לכתוב שורת קוד אחת.
+
+\subsubsection{\en{Zapier} -- השחקן הוותיק}
+
+\en{Zapier} קיים הרבה לפני \en{AI}, אבל הוא השתלב מצוין. תומך באלפי אינטגרציות (Gmail, Slack, Salesforce, Notion...). לאחרונה הוסיף תמיכה ב-\en{OpenAI} ו-\en{Anthropic}.
+
+\textbf{מתי \en{n8n} ומתי \en{Zapier}?}
+\begin{itemize}
+\item \en{Zapier} -- אם אתם רוצים פשטות ותמיכה ענקית בשירותים חיצוניים
+\item \en{n8n} -- אם אתם רוצים שליטה, תמחור טוב יותר, ואפשרות ל-\en{Self-Hosted}
+\end{itemize}
+
+\section{מתי להשתמש במה: מטריצת החלטות}
+
+עכשיו שאנחנו מכירים את כל השחקנים, איך בוחרים? הנה מטריצה מנהלית:
+
+\subsection{בחירת ספק \en{LLM}}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{קריטריון} & \textbf{בחירה} & \textbf{הסבר} \\
+\hline
+דיוק גבוה, משימות מורכבות & \en{Claude Opus} או \en{GPT-4} & הטובים ביותר לחשיבה מורכבת \\
+\hline
+עלות נמוכה, נפח גבוה & \en{GPT-3.5} או \en{DeepSeek} & יחס מחיר-ביצועים מעולה \\
+\hline
+פרטיות, נתונים רגישים & \en{Llama 3} (\en{Self-Hosted}) & שום דבר לא עוזב את הארגון \\
+\hline
+מולטימודליות & \en{Gemini Pro} או \en{GPT-4 Vision} & תמיכה בתמונות ווידאו \\
+\hline
+חלון הקשר ענק & \en{Claude 3.5 Sonnet} & עד 200K טוקנים \\
+\hline
+\end{tabular}
+\caption{מטריצת בחירת מודל שפה}
+\end{table}
+
+\subsection{בחירת מסד נתונים וקטורי}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{תרחיש} & \textbf{בחירה} & \textbf{הסבר} \\
+\hline
+\en{POC} / אב טיפוס & \en{Chroma} & חינמי, פשוט, מקומי \\
+\hline
+ייצור, סטארטאפ & \en{Pinecone} & מנוהל, אמין, לא צריך \en{DevOps} \\
+\hline
+ארגון גדול, \en{On-Prem} & \en{Weaviate} או \en{Qdrant} & שליטה מלאה, גמישות \\
+\hline
+צורך במהירות מקסימלית & \en{Qdrant} & אופטימיזציה קיצונית \\
+\hline
+\end{tabular}
+\caption{מטריצת בחירת מסד נתונים וקטורי}
+\end{table}
+
+\subsection{החלטת ענן מול \en{On-Premise}}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+% ציר X: רגישות נתונים
+% ציר Y: נפח שימוש
+\draw[->] (0,0) -- (10,0) node[right] {\texthebrew{רגישות נתונים}};
+\draw[->] (0,0) -- (0,6) node[above] {\texthebrew{נפח שימוש חודשי}};
+
+% אזורים
+\fill[blue!20] (0,0) rectangle (5,3);
+\node at (2.5,1.5) {\textbf{\en{Cloud}}};
+
+\fill[green!20] (5,0) rectangle (10,3);
+\node at (7.5,1.5) {\textbf{\en{Hybrid}}};
+
+\fill[red!20] (5,3) rectangle (10,6);
+\node at (7.5,4.5) {\textbf{\en{On-Prem}}};
+
+\fill[yellow!20] (0,3) rectangle (5,6);
+\node at (2.5,4.5) {\textbf{\en{Cloud} מנוהל}};
+
+% תוויות
+\node[below] at (2.5,0) {\small \texthebrew{נתונים פומביים}};
+\node[below] at (7.5,0) {\small \texthebrew{נתונים רגישים}};
+\node[left] at (0,1.5) {\small \texthebrew{נמוך}};
+\node[left] at (0,4.5) {\small \texthebrew{גבוה}};
+\end{tikzpicture}
+\caption{מטריצת החלטה: ענן מול \en{On-Premise}}
+\end{figure}
+
+\textbf{פענוח המטריצה:}
+\begin{itemize}
+\item \textbf{רביע שמאלי תחתון (כחול):} נתונים לא רגישים, נפח נמוך $\rightarrow$ \en{Cloud} (OpenAI, Anthropic)
+\item \textbf{רביע ימני תחתון (ירוק):} נתונים רגישים, נפח נמוך $\rightarrow$ \en{Hybrid} (חלק בענן, חלק מקומי)
+\item \textbf{רביע ימני עליון (אדום):} נתונים רגישים, נפח גבוה $\rightarrow$ \en{On-Prem} (Llama 3 על שרתים פנימיים)
+\item \textbf{רביע שמאלי עליון (צהוב):} נתונים לא רגישים, נפח גבוה $\rightarrow$ \en{Cloud} מנוהל עם הסכם ארגוני
+\end{itemize}
+
+\section{נוסחאות מנהליות: חשבון כלכלי}
+
+כמנהלים, אנחנו צריכים להצדיק כל החלטה טכנולוגית בשפה כלכלית. הנה שתי נוסחאות קריטיות:
+
+\subsection{נוסחת \en{TCO} -- עלות בעלות כוללת}
+
+\begin{equation}
+\text{TCO} = C_{\text{license}} + C_{\text{infra}} + (C_{\text{HR}} \times 12)
+\end{equation}
+
+\textbf{פירוק הנוסחה:}
+\begin{itemize}
+\item $C_{\text{license}}$ -- עלות רישוי שנתית (מנויים ל-API, רישיונות תוכנה)
+\item $C_{\text{infra}}$ -- עלות תשתיות (שרתים, אחסון, רשת, חשמל)
+\item $C_{\text{HR}}$ -- עלות כוח אדם חודשית (מפתחים, \en{DevOps}, מנהלי מערכת)
+\end{itemize}
+
+\textbf{דוגמה 1: פתרון ענן טהור (\en{OpenAI})}
+\begin{itemize}
+\item רישוי: \$5,000 לחודש (\$60,000 לשנה)
+\item תשתיות: \$0 (ספק מנוהל)
+\item כוח אדם: מפתח חצי משרה (\$4,000 לחודש)
+\end{itemize}
+
+\begin{equation}
+\text{TCO} = 60{,}000 + 0 + (4{,}000 \times 12) = \$108{,}000
+\end{equation}
+
+\textbf{דוגמה 2: פתרון \en{On-Premise} (\en{Llama 3})}
+\begin{itemize}
+\item רישוי: \$0 (קוד פתוח)
+\item תשתיות: שרת עם 8 GPUs (\$80,000 לשנה, פחת על 5 שנים = \$16,000 לשנה) + חשמל וקירור (\$12,000 לשנה)
+\item כוח אדם: מפתח + \en{DevOps} (\$10,000 לחודש)
+\end{itemize}
+
+\begin{equation}
+\text{TCO} = 0 + 28{,}000 + (10{,}000 \times 12) = \$148{,}000
+\end{equation}
+
+\textbf{מסקנה:} בטווח הקצר, הענן זול יותר. אבל אם נפח השימוש גדל -- \en{On-Prem} משתלם יותר.
+
+\subsection{נוסחת \en{Latency} -- זמן תגובה}
+
+\begin{equation}
+T_{\text{total}} = T_{\text{network}} + T_{\text{processing}} + T_{\text{model}}
+\end{equation}
+
+\textbf{פירוק הנוסחה:}
+\begin{itemize}
+\item $T_{\text{network}}$ -- זמן העברת הבקשה והתשובה ברשת (RTT)
+\item $T_{\text{processing}}$ -- זמן עיבוד מקדים (Embedding, חיפוש במסד נתונים)
+\item $T_{\text{model}}$ -- זמן ההסקה של המודל עצמו
+\end{itemize}
+
+\textbf{דוגמה: שאילתת \en{RAG}}
+\begin{itemize}
+\item $T_{\text{network}}$ = 50ms (לענן בחו"ל) או 2ms (לשרת מקומי)
+\item $T_{\text{processing}}$ = 100ms (Embedding + חיפוש ב-Pinecone)
+\item $T_{\text{model}}$ = 800ms (GPT-4)
+\end{itemize}
+
+\textbf{סה"כ (ענן):}
+\begin{equation}
+T_{\text{total}} = 50 + 100 + 800 = 950 \text{ms}
+\end{equation}
+
+\textbf{סה"כ (מקומי):}
+\begin{equation}
+T_{\text{total}} = 2 + 100 + 800 = 902 \text{ms}
+\end{equation}
+
+\textbf{מסקנה:} זמן רשת נראה קטן, אבל בנפח גבוה (אלפי בקשות ביום) -- הוא משמעותי.
+
+\section{השוואת מחירים: מי הכי משתלם?}
+
+מחירי \en{API} משתנים כל הזמן, אבל הנה תמונת מצב (נכונה לדצמבר 2024):
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{מודל} & \textbf{קלט (\$/1M טוקנים)} & \textbf{פלט (\$/1M טוקנים)} & \textbf{משוקלל*} \\
+\hline
+GPT-4 Turbo & \$10.00 & \$30.00 & \$20.00 \\
+GPT-3.5 Turbo & \$0.50 & \$1.50 & \$1.00 \\
+Claude 3.5 Sonnet & \$3.00 & \$15.00 & \$9.00 \\
+Claude 3 Haiku & \$0.25 & \$1.25 & \$0.75 \\
+Gemini Pro & \$0.50 & \$1.50 & \$1.00 \\
+DeepSeek-V3 & \$0.27 & \$1.10 & \$0.69 \\
+Llama 3.1 70B** & \$0.00 & \$0.00 & \$0.00*** \\
+\hline
+\end{tabular}
+\caption{השוואת מחירי מודלים מרכזיים}
+\begin{flushleft}
+\small
+* משוקלל: הנחה של 50\% קלט, 50\% פלט\\
+** דרך \en{OpenRouter} או ספקים אחרים\\
+*** עלות אפסית לשימוש, אבל יש עלות תשתית
+\end{flushleft}
+\end{table}
+
+\textbf{תובנות מהטבלה:}
+\begin{enumerate}
+\item \en{GPT-4} הוא הכי יקר -- פי 20 מ-\en{GPT-3.5}. האם התוצאה מצדיקה? תלוי במשימה.
+\item \en{Claude Haiku} ו-\en{DeepSeek} -- אלטרנטיבות זולות ומצוינות לנפח גבוה.
+\item \en{Llama 3} -- עלות אפסית לשימוש, אבל צריך להשקיע בתשתית.
+\end{enumerate}
+
+\section{דוגמאות מעשיות מהשטח}
+
+\subsection{דוגמה 1: סטארטאפ בשלב \en{Seed} -- בחירת \en{Stack}}
+
+\textbf{תרחיש:} חברת \en{FinTech} עם 5 עובדים, רוצה לבנות עוזר פיננסי אישי. תקציב: \$2,000 לחודש.
+
+\textbf{צרכים:}
+\begin{itemize}
+\item עיבוד שאלות פיננסיות פשוטות (80\%) ומורכבות (20\%)
+\item אחסון ידע על מוצרים פיננסיים (200 מסמכים)
+\item אינטגרציה עם בנקים (API)
+\end{itemize}
+
+\textbf{ארכיטקטורה מומלצת:}
+\begin{itemize}
+\item \textbf{LLM:} \en{OpenRouter} עם \en{GPT-3.5} לשאלות פשוטות, \en{Claude Sonnet} למורכבות
+\item \textbf{Embeddings:} \en{OpenAI Text-Embedding-3-small} (זול)
+\item \textbf{Vector DB:} \en{Pinecone} תוכנית חינמית (עד 100K וקטורים)
+\item \textbf{Framework:} \en{LangChain} (קהילה גדולה, הרבה דוגמאות)
+\item \textbf{Automation:} \en{n8n} (Self-Hosted, חינמי)
+\end{itemize}
+
+\textbf{עלויות:}
+\begin{itemize}
+\item \en{OpenRouter}: \$800/חודש (בממוצע)
+\item \en{Pinecone}: \$0 (תוכנית חינמית)
+\item \en{n8n}: \$0 (Self-Hosted על \en{AWS EC2} קטן, \$20/חודש)
+\item פיתוח: מפתח אחד חצי משרה
+\end{itemize}
+
+\textbf{סה"כ: \$820/חודש} -- מתחת לתקציב, עם מרווח לגדילה.
+
+\subsection{דוגמה 2: ארגון גדול -- מעבר מ-\en{ChatGPT} לפתרון ארגוני}
+
+\textbf{תרחיש:} חברת ייעוץ עם 500 עובדים. כרגע כולם משתמשים ב-\en{ChatGPT} אישי. הבעיה: אין שליטה, נתונים דולפים, אין התאמה אישית.
+
+\textbf{דרישות:}
+\begin{itemize}
+\item גישה למידע פנימי (מדיניות, פרויקטים, לקוחות)
+\item פרטיות מלאה -- נתונים לא יוצאים
+\item יכולת ביקורת -- מי שאל מה ומתי
+\item התאמה אישית לתהליכים של הארגון
+\end{itemize}
+
+\textbf{ארכיטקטורה מומלצת:}
+\begin{itemize}
+\item \textbf{LLM:} \en{Azure OpenAI} (גרסה ארגונית -- נתונים לא משמשים לאימון)
+\item \textbf{RAG:} \en{Weaviate} על שרתים פנימיים
+\item \textbf{Embeddings:} \en{Azure OpenAI Embeddings}
+\item \textbf{Framework:} \en{LangChain} עם \en{LangSmith} (ניטור ולוגים)
+\item \textbf{UI:} פורטל פנימי מבוסס \en{Streamlit}
+\end{itemize}
+
+\textbf{יתרונות:}
+\begin{itemize}
+\item נתונים נשארים ב-\en{Tenant} הארגוני של \en{Azure}
+\item אפשר לחבר לכל מסדי הנתונים הפנימיים
+\item לוגים מלאים לביקורת
+\item התאמה אישית -- אפשר לכוון את המודל לתהליכים ספציפיים
+\end{itemize}
+
+\textbf{עלויות (הערכה):}
+\begin{itemize}
+\item \en{Azure OpenAI}: \$15,000/חודש (500 משתמשים)
+\item \en{Weaviate} על \en{Azure VM}: \$2,000/חודש
+\item פיתוח ותחזוקה: 2 מפתחים (\$20,000/חודש)
+\end{itemize}
+
+\textbf{סה"כ: \$37,000/חודש} -- נשמע יקר? לא בהשוואה ל-500 רישיונות \en{ChatGPT Plus} (\$10,000/חודש) ללא שליטה וללא התאמה אישית.
+
+\subsection{דוגמה 3: החלטת \en{Build vs Buy}}
+
+\textbf{תרחיש:} חברת \en{e-commerce} רוצה סוכן שירות אוטומטי. השאלה: לקנות פתרון מוכן (כמו \en{Intercom}) או לבנות בעצמנו?
+
+\textbf{ניתוח \en{Build}:}
+\begin{itemize}
+\item \textbf{עלות פיתוח:} 3 חודשי עבודה של מפתח (\$30,000)
+\item \textbf{עלות ריצה:} \en{API} + שרתים (\$1,500/חודש)
+\item \textbf{תחזוקה:} רבע משרה (\$3,000/חודש)
+\item \textbf{סה"כ שנה ראשונה:} \$30,000 + (\$4,500 × 12) = \$84,000
+\end{itemize}
+
+\textbf{ניתוח \en{Buy} (Intercom):}
+\begin{itemize}
+\item \textbf{רישוי:} \$5,000/חודש (500 שיחות ביום)
+\item \textbf{אינטגרציה:} חודש עבודה (\$10,000)
+\item \textbf{תחזוקה:} כמעט אפסית
+\item \textbf{סה"כ שנה ראשונה:} \$10,000 + (\$5,000 × 12) = \$70,000
+\end{itemize}
+
+\textbf{החלטה:} בשנה הראשונה, \en{Buy} זול יותר. אבל:
+\begin{itemize}
+\item אם הנפח גדל (1,000 שיחות ביום) -- \en{Intercom} יעלה ל-\$10,000/חודש
+\item פתרון \en{Build} נשאר באותה עלות (או עולה מעט)
+\item פתרון \en{Build} מאפשר התאמה מלאה לתהליכים
+\end{itemize}
+
+\textbf{המלצה:} התחילו עם \en{Buy} (מהיר, מוכח). אחרי שנה, אם הנפח גדל -- עברו ל-\en{Build}.
+
+\section{תרגילים}
+
+\subsection{תרגיל 1 (תיאורטי): בניית ארכיטקטורה לפרויקט \en{AI}}
+
+\textbf{תרחיש:} אתם סמנכ"ל טכנולוגיות בחברת ביטוח בינונית (200 עובדים). מנכ"ל מבקש מכם לבנות מערכת \en{AI} שתענה על שאלות סוכני הביטוח על מדיניות ותקנות (5,000 מסמכים פנימיים).
+
+\textbf{דרישות:}
+\begin{itemize}
+\item פרטיות מלאה -- מסמכים רגישים
+\item זמן תגובה: עד 3 שניות
+\item תקציב: \$10,000/חודש
+\item 50 שאלות ביום בממוצע
+\end{itemize}
+
+\textbf{משימה:}
+\begin{enumerate}
+\item בחרו ספק \en{LLM} (ענן / מקומי / היברידי)
+\item בחרו מודל \en{Embedding}
+\item בחרו מסד נתונים וקטורי
+\item בחרו ספריית אינטגרציה
+\item הצדיקו כל בחירה
+\item חשבו \en{TCO} לשנה
+\end{enumerate}
+
+\subsection{תרגיל 2 (תיאורטי): חישוב \en{TCO} לשלושה תרחישים}
+
+השוו \en{TCO} לשלוש אפשרויות:
+
+\textbf{תרחיש א': ענן טהור}
+\begin{itemize}
+\item \en{GPT-4} דרך \en{OpenAI}
+\item \en{Pinecone} מנוהל
+\item מפתח חצי משרה
+\end{itemize}
+
+\textbf{תרחיש ב': היברידי}
+\begin{itemize}
+\item \en{Azure OpenAI} (ארגוני)
+\item \en{Weaviate} על \en{Azure VM}
+\item מפתח + מנהל מערכת (שני חצאי משרה)
+\end{itemize}
+
+\textbf{תרחיש ג': \en{On-Premise} מלא}
+\begin{itemize}
+\item \en{Llama 3.1 70B} על שרת פנימי
+\item \en{Chroma} מקומי
+\item מפתח + \en{DevOps} + מנהל מערכת
+\end{itemize}
+
+חשבו \en{TCO} לשנה לכל תרחיש. איזה משתלם לנפח של:
+\begin{itemize}
+\item 1,000 שאלות ביום?
+\item 10,000 שאלות ביום?
+\item 100,000 שאלות ביום?
+\end{itemize}
+
+\subsection{תרגיל 3 (תיאורטי): ניתוח \en{Trade-offs} בין \en{Pinecone} ל-\en{Chroma}}
+
+מנהל פיתוח שואל אתכם: "למה לא פשוט להשתמש ב-\en{Chroma}? זה בחינם!"
+
+\textbf{משימה:}
+\begin{enumerate}
+\item רשמו 5 יתרונות של \en{Pinecone}
+\item רשמו 5 יתרונות של \en{Chroma}
+\item בנו טבלת החלטה: באיזה מקרים כל אחד עדיף
+\item הסבירו למה "בחינם" לא תמיד זול יותר
+\end{enumerate}
+
+\subsection{תרגיל 4 (תיאורטי): תכנון אסטרטגיית \en{Vendor}}
+
+אתם אחראים על אסטרטגיית \en{AI} ארוכת טווח. מנכ"ל דואג מ-\en{Vendor Lock-in}.
+
+\textbf{משימה:}
+\begin{enumerate}
+\item הסבירו מהם הסיכונים של תלות בספק בודד
+\item תכננו אסטרטגיית \en{Multi-Vendor} (יותר מספק אחד)
+\item רשמו 3 טכניקות למניעת \en{Lock-in}
+\item נתחו: האם \en{OpenRouter} פותר את הבעיה? למה כן / למה לא?
+\end{enumerate}
+
+\subsection{תרגיל 5 (תיאורטי): בניית \en{RFP} לבחירת ספק \en{AI}}
+
+\textbf{תרחיש:} הארגון שלכם רוצה לבחור ספק \en{AI} לטווח ארוך. עליכם לכתוב \en{RFP} (Request for Proposal).
+
+\textbf{משימה:} כתבו \en{RFP} שכולל:
+\begin{enumerate}
+\item רקע על הארגון וצרכיו
+\item דרישות פונקציונליות (מה המערכת צריכה לעשות)
+\item דרישות לא-פונקציונליות (ביצועים, אבטחה, זמינות)
+\item קריטריוני הערכה (איך תבחרו בין הצעות)
+\item לוח זמנים
+\end{enumerate}
+
+\subsection{תרגיל 6 (קוד \en{Python}): השוואת מחירי \en{API} בין ספקים}
+
+כתבו סקריפט \en{Python} שמקבל:
+\begin{itemize}
+\item מספר טוקנים קלט
+\item מספר טוקנים פלט
+\item מספר בקשות לחודש
+\end{itemize}
+
+ומחשב עלות חודשית עבור:
+\begin{itemize}
+\item \en{GPT-4 Turbo}
+\item \en{GPT-3.5 Turbo}
+\item \en{Claude 3.5 Sonnet}
+\item \en{Gemini Pro}
+\end{itemize}
+
+\textbf{בונוס:} הציגו את התוצאות בגרף עמודות.
+
+\textbf{קוד התחלתי:}
+
+\begin{lstlisting}[language=Python, caption={השוואת מחירי API}]
+# השוואת מחירי API בין ספקים
+
+# מחירים ($/1M טוקנים) - עדכן לפי מחירים אקטואליים
+PRICING = {
+    "GPT-4 Turbo": {"input": 10.0, "output": 30.0},
+    "GPT-3.5 Turbo": {"input": 0.5, "output": 1.5},
+    "Claude 3.5 Sonnet": {"input": 3.0, "output": 15.0},
+    "Gemini Pro": {"input": 0.5, "output": 1.5},
+}
+
+def calculate_monthly_cost(model_name, input_tokens,
+                          output_tokens, requests_per_month):
+    """
+    מחשב עלות חודשית עבור מודל נתון
+
+    Args:
+        model_name: שם המודל
+        input_tokens: מספר טוקני קלט לבקשה
+        output_tokens: מספר טוקני פלט לבקשה
+        requests_per_month: מספר בקשות לחודש
+
+    Returns:
+        עלות חודשית בדולרים
+    """
+    pricing = PRICING[model_name]
+
+    # חישוב סה"כ טוקנים לחודש
+    total_input = input_tokens * requests_per_month
+    total_output = output_tokens * requests_per_month
+
+    # חישוב עלות (מחיר למיליון, לכן מחלקים במיליון)
+    input_cost = (total_input / 1_000_000) * pricing["input"]
+    output_cost = (total_output / 1_000_000) * pricing["output"]
+
+    return input_cost + output_cost
+
+# דוגמת שימוש
+if __name__ == "__main__":
+    # פרמטרים לדוגמה
+    input_tokens = 500
+    output_tokens = 200
+    requests = 10_000  # 10K בקשות לחודש
+
+    print("השוואת עלויות חודשיות:")
+    print(f"פרמטרים: {input_tokens} טוקני קלט, "
+          f"{output_tokens} טוקני פלט, {requests:,} בקשות\n")
+
+    for model in PRICING.keys():
+        cost = calculate_monthly_cost(model, input_tokens,
+                                     output_tokens, requests)
+        print(f"{model:20s}: ${cost:8.2f}")
+
+    # TODO: הוסף הצגה גרפית עם matplotlib
+\end{lstlisting}
+
+\subsection{תרגיל 7 (קוד \en{Python}): בדיקת \en{Latency} של מודלים}
+
+כתבו סקריפט שבודק זמן תגובה ממוצע של מודלים שונים.
+
+\textbf{דרישות:}
+\begin{enumerate}
+\item שלחו 10 בקשות זהות לכל מודל
+\item מדדו זמן תגובה לכל בקשה
+\item חשבו ממוצע, חציון, סטיית תקן
+\item הציגו תוצאות בטבלה
+\item הציגו Box Plot להשוואה ויזואלית
+\end{enumerate}
+
+\textbf{קוד התחלתי:}
+
+\begin{lstlisting}[language=Python, caption={בדיקת Latency של מודלים}]
+import time
+import statistics
+from openai import OpenAI
+import anthropic
+
+# הגדרות
+MODELS = {
+    "gpt-3.5-turbo": "openai",
+    "gpt-4-turbo": "openai",
+    "claude-3-5-sonnet-20241022": "anthropic",
+}
+
+TEST_PROMPT = "מהי בירת צרפת? ענה במילה אחת."
+NUM_TESTS = 10
+
+def test_openai_latency(model_name, num_tests=10):
+    """בדיקת latency למודל OpenAI"""
+    client = OpenAI()  # API key מ-.env
+    latencies = []
+
+    for i in range(num_tests):
+        start = time.time()
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[{"role": "user", "content": TEST_PROMPT}],
+            max_tokens=10
+        )
+        end = time.time()
+        latencies.append((end - start) * 1000)  # המר לאלפיות שנייה
+        time.sleep(1)  # מנע rate limiting
+
+    return latencies
+
+def test_anthropic_latency(model_name, num_tests=10):
+    """בדיקת latency למודל Anthropic"""
+    client = anthropic.Anthropic()  # API key מ-.env
+    latencies = []
+
+    for i in range(num_tests):
+        start = time.time()
+        message = client.messages.create(
+            model=model_name,
+            max_tokens=10,
+            messages=[{"role": "user", "content": TEST_PROMPT}]
+        )
+        end = time.time()
+        latencies.append((end - start) * 1000)
+        time.sleep(1)
+
+    return latencies
+
+def analyze_latencies(latencies, model_name):
+    """ניתוח סטטיסטי של latencies"""
+    return {
+        "model": model_name,
+        "mean": statistics.mean(latencies),
+        "median": statistics.median(latencies),
+        "stdev": statistics.stdev(latencies),
+        "min": min(latencies),
+        "max": max(latencies)
+    }
+
+# TODO: הוסף הרצה ראשית והצגה גרפית
+\end{lstlisting}
+
+\section{סיכום: המפה שלכם לאקוסיסטם}
+
+עברנו מסע ארוך בג'ונגל הטכנולוגי. למדנו שאקוסיסטם הבינה המלאכותית אינו רק מודל שפה בודד, אלא מערכת שלמה של רכיבים מתוחכמים שעובדים יחד:
+
+\begin{itemize}
+\item \textbf{שכבת הליבה} -- מודלי שפה, ענן ומקומיים
+\item \textbf{שכבת החיבור} -- \en{OpenRouter} כרכזת גמישה
+\item \textbf{שכבת הפיתוח} -- ספריות כמו \en{LangChain}, \en{LangGraph}, \en{Pydantic AI}
+\item \textbf{שכבת ההטמעה} -- \en{Embeddings} ומסדי נתונים וקטוריים
+\item \textbf{שכבת האוטומציה} -- כלים אגנטיים לתזמור תהליכים
+\end{itemize}
+
+למדנו שאין פתרון אחד מושלם. כל בחירה תלויה בהקשר:
+\begin{itemize}
+\item \textbf{ענן} -- מהירות, נוחות, אבל תלות בספק
+\item \textbf{מקומי} -- פרטיות, שליטה, אבל מורכבות
+\item \textbf{היברידי} -- האיזון הטוב ביותר לארגונים גדולים
+\end{itemize}
+
+למדנו לחשב \en{TCO} ו-\en{Latency}, להשוות בין ספקים, ולקבל החלטות מושכלות. הידע הזה אינו רק טכני -- הוא אסטרטגי. בעולם שבו \en{AI} הופך למרכיב עסקי קריטי, היכולת לבחור את הכלים הנכונים היא יתרון תחרותי.
+
+בפרק הבא נצלול לעומק טכני יותר -- נלמד איך לתקשר עם מודלים השפה דרך \en{REST APIs} ו-\en{JSON}. זו השפה שבה מדברים עם מכונות, והיכולת להבין אותה היא המפתח לבניית מערכות אמיתיות.
+
+\section*{נספח: גרפים ותרשימים}
+
+\subsection*{תרשים 1: ארכיטקטורת אקוסיסטם מלאה}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={rectangle, draw, minimum width=3cm, minimum height=1cm, align=center},
+    layer/.style={rectangle, draw, dashed, minimum width=12cm, minimum height=2cm}
+]
+
+% שכבות
+\node[layer, fill=blue!10] (layer5) at (0,10) {};
+\node[above right] at (layer5.north west) {\small \textbf{שכבת אוטומציה}};
+
+\node[layer, fill=green!10] (layer4) at (0,7.5) {};
+\node[above right] at (layer4.north west) {\small \textbf{שכבת הטמעה}};
+
+\node[layer, fill=yellow!10] (layer3) at (0,5) {};
+\node[above right] at (layer3.north west) {\small \textbf{שכבת פיתוח}};
+
+\node[layer, fill=orange!10] (layer2) at (0,2.5) {};
+\node[above right] at (layer2.north west) {\small \textbf{שכבת חיבור}};
+
+\node[layer, fill=red!10] (layer1) at (0,0) {};
+\node[above right] at (layer1.north west) {\small \textbf{שכבת ליבה}};
+
+% רכיבים
+% שכבה 5
+\node[box] (auto1) at (-3,10) {\en{LangGraph}};
+\node[box] (auto2) at (0,10) {\en{n8n}};
+\node[box] (auto3) at (3,10) {\en{AutoGen}};
+
+% שכבה 4
+\node[box] (emb) at (-3,7.5) {\en{Embeddings}};
+\node[box] (vec) at (1.5,7.5) {\en{Vector DB}};
+
+% שכבה 3
+\node[box] (lc) at (-3,5) {\en{LangChain}};
+\node[box] (py) at (1.5,5) {\en{Pydantic AI}};
+
+% שכבה 2
+\node[box] (or) at (0,2.5) {\en{OpenRouter}};
+
+% שכבה 1
+\node[box] (oai) at (-4,0) {\en{OpenAI}};
+\node[box] (ant) at (-1.5,0) {\en{Anthropic}};
+\node[box] (goo) at (1,0) {\en{Google}};
+\node[box] (lla) at (3.5,0) {\en{Llama}};
+
+% חיצים
+\draw[->] (oai) -- (or);
+\draw[->] (ant) -- (or);
+\draw[->] (goo) -- (or);
+\draw[->] (lla) -- (or);
+\draw[->] (or) -- (lc);
+\draw[->] (or) -- (py);
+\draw[->] (lc) -- (auto1);
+\draw[->] (lc) -- (vec);
+\draw[->] (emb) -- (vec);
+
+\end{tikzpicture}
+\caption{ארכיטקטורת אקוסיסטם \en{AI} מלאה -- 5 שכבות}
+\end{figure}
+
+\subsection*{תרשים 2: גרף עמודות -- השוואת מחירים}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=20pt,
+    ylabel={\texthebrew{עלות (\$/1M טוקנים משוקלל)}},
+    symbolic x coords={GPT-4, GPT-3.5, Claude S., Gemini, DeepSeek},
+    xtick=data,
+    ymin=0,
+    ymax=25,
+    nodes near coords,
+    width=12cm,
+    height=7cm,
+]
+\addplot coordinates {(GPT-4,20) (GPT-3.5,1) (Claude S.,9) (Gemini,1) (DeepSeek,0.69)};
+\end{axis}
+\end{tikzpicture}
+\caption{השוואת מחירים ממוצעים בין מודלים מובילים}
+\end{figure}
+
+\subsection*{רשימת קריאה מומלצת}
+
+\begin{itemize}
+\item \textbf{LangChain Documentation} -- \en{https://python.langchain.com/}
+\item \textbf{OpenRouter Models List} -- \en{https://openrouter.ai/models}
+\item \textbf{Pinecone Learning Center} -- \en{https://www.pinecone.io/learn/}
+\item \textbf{Anthropic Claude Documentation} -- \en{https://docs.anthropic.com/}
+\item \textbf{Llama Model Card} -- \en{https://llama.meta.com/}
+\end{itemize}

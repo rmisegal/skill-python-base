@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "resource_schema.json",
+  "title": "QA Resource Schema",
+  "description": "Schema for QA resource configuration",
+  "type": "object",
+  "required": ["id", "name", "resource_type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique resource identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "default": "1.0.0"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "resource_type": {
+      "type": "string",
+      "enum": ["config", "template", "rules", "patterns"],
+      "description": "Type of resource"
+    },
+    "file_format": {
+      "type": "string",
+      "enum": ["json", "yaml", "md", "py", "tex"],
+      "description": "Format of the resource file"
+    },
+    "content": {
+      "description": "Parsed content of the resource"
+    },
+    "schema_path": {
+      "type": "string",
+      "description": "Path to JSON schema for validation"
+    },
+    "schema": {
+      "type": "object",
+      "description": "Embedded JSON schema for validation"
+    },
+    "defaults": {
+      "type": "object",
+      "description": "Default values for config resources"
+    }
+  }
+}

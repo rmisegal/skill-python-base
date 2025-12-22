@@ -1,0 +1,40 @@
+% Test file for encoding fix comparison
+\documentclass{article}
+\begin{document}
+
+% Text context - should use LaTeX commands
+The formula is 5$	imes$10 = 50.
+Click here $ightarrow$ to continue.
+Status: [+] Complete
+Failed: [-] Error
+Hello :) world!
+[Note] Important note here.
+[User] User profile section.
+[Bot] Bot response area.
+[Stats] Statistics dashboard.
+
+% Code context - should use ASCII equivalents
+\begin{lstlisting}
+result = 5*10
+a -> b
+status = "[+]"
+error = "[-]"
+\end{lstlisting}
+
+% Mixed content
+Regular text with $	imes$ multiplication.
+\begin{minted}{python}
+x = 5*10
+\end{minted}
+More text with $ightarrow$ arrow.
+
+% Smart quotes (from skill.md)
+The "smart" quotes and 'single' quotes.
+Also: "double" and 'single' variants.
+
+% Dashes (from skill.md)
+Mathematical minus: 5-3=2
+En dash: 2013-2024
+Em dash: Hello-World
+
+\end{document}

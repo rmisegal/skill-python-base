@@ -1,0 +1,239 @@
+% main.tex - Master Document
+% כלי בינה מלאכותית בעסקים (AI Tools in Business)
+% Authors: Dr. Yoram Segal & Prof. Eran Sheriff
+% Compiler: LuaLaTeX
+
+\input{preamble}
+
+\begin{document}
+
+%% ============================================
+%% Front Matter
+%% ============================================
+\frontmatter
+
+%% Title Page
+\begin{titlepage}
+\begin{center}
+
+\vspace*{2cm}
+
+{\Huge\bfseries\color{chaptercolor} כלי בינה מלאכותית בעסקים}
+
+\vspace{0.5cm}
+
+{\Large\textenglish{AI Tools in Business}}
+
+\vspace{0.3cm}
+
+{\large\textenglish{(Agentic AI Engineering)}}
+
+\vspace{2cm}
+
+{\LARGE מאת}
+
+\vspace{0.5cm}
+
+{\Large\bfseries דר' יורם סגל}
+
+\vspace{0.3cm}
+
+{\Large ו}
+
+\vspace{0.3cm}
+
+{\Large\bfseries פרופסור ערן שריף}
+
+\vspace{3cm}
+
+\begin{tikzpicture}[scale=0.8]
+  % AI Brain Icon
+  \draw[thick, chaptercolor, fill=examplecolor] (0,0) circle (2cm);
+  \foreach \i in {0,45,...,315} {
+    \draw[thick, sectioncolor] (0,0) -- (\i:1.8);
+  }
+  \draw[thick, chaptercolor, fill=white] (0,0) circle (0.8cm);
+  \node at (0,0) {\Large\textenglish{AI}};
+
+  % Connection nodes
+  \foreach \i in {0,60,...,300} {
+    \draw[thick, sectioncolor, fill=formulacolor] (\i:2.5) circle (0.3cm);
+    \draw[thick, sectioncolor] (\i:2) -- (\i:2.2);
+  }
+\end{tikzpicture}
+
+\vspace{2cm}
+
+{\large ספר לימוד לתואר שני במנהל עסקים}
+
+\vspace{0.5cm}
+
+{\normalsize מהדורה ראשונה -- 2025}
+
+\vfill
+
+{\small כל הזכויות שמורות לדר' יורם סגל ופרופסור ערן שריף}
+
+\end{center}
+\end{titlepage}
+
+%% Copyright Page
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+{\small
+כל הזכויות שמורות © 2025
+
+דר' יורם סגל ופרופסור ערן שריף
+
+\vspace{1cm}
+
+אין לשכפל, להעתיק, לצלם, להקליט, לתרגם, לאחסן במאגר מידע,
+לשדר או לקלוט בכל דרך או בכל אמצעי אלקטרוני, אופטי או מכני
+או אחר -- כל חלק שהוא מהחומר שבספר זה.
+
+שימוש מסחרי מכל סוג שהוא בחומר הכלול בספר זה אסור בהחלט,
+אלא ברשות מפורשת בכתב מהמחברים.
+
+\vspace{1cm}
+
+\textenglish{All rights reserved © 2025}
+
+\textenglish{Dr. Yoram Segal \& Prof. Eran Sheriff}
+}
+\end{center}
+\vspace*{\fill}
+
+%% Table of Contents
+\tableofcontents
+
+%% List of Figures
+\listoffigures
+
+%% List of Tables
+\listoftables
+
+%% Preface
+\chapter*{הקדמה}
+\addcontentsline{toc}{chapter}{הקדמה}
+
+ברוכים הבאים לספר "כלי בינה מלאכותית בעסקים".
+
+אנו חיים בעידן של מהפכה טכנולוגית חסרת תקדים. מודלי שפה גדולים (LLMs) ובינה מלאכותית יוצרת משנים את האופן שבו עסקים פועלים, מקבלים החלטות ומתקשרים עם לקוחותיהם. כמנהלים בעידן הזה, ההבנה של הכלים הללו אינה עוד מותרות -- היא הכרח.
+
+ספר זה נכתב עבור מנהלים ברמת MBA שרוצים להבין את עולם ה-AI העסקי לעומק, אך ללא הצורך להפוך למהנדסי תוכנה. המטרה שלנו היא לספק לכם את הידע הדרוש לקבלת החלטות מושכלות, לתכנון אסטרטגי של הטמעת AI בארגון, ולהובלת פרויקטים בתחום.
+
+הספר מחולק ל-13 פרקים, פרק לכל שבוע בסמסטר. כל פרק בנוי על קודמיו, ויחד הם יוצרים תמונה שלמה של האקוסיסטם של AI בעסקים -- מהיסודות התיאורטיים ועד ליישום מעשי מקצה לקצה.
+
+בכל פרק תמצאו:
+\begin{itemize}
+  \item הסברים תיאורטיים בסגנון נגיש וסיפורי
+  \item נוסחאות מנהליות לחישוב ROI, עלויות והחזר השקעה
+  \item תרשימים וגרפים להמחשה ויזואלית
+  \item דוגמאות מעשיות מעולם העסקים
+  \item תרגילים תיאורטיים ומעשיים עם פתרונות
+  \item קוד Python להתנסות מעשית
+\end{itemize}
+
+אנו מאחלים לכם למידה פורייה ומהנה.
+
+\vspace{1cm}
+
+\begin{flushright}
+דר' יורם סגל ופרופסור ערן שריף
+
+2025
+\end{flushright}
+
+%% ============================================
+%% Main Matter
+%% ============================================
+\mainmatter
+
+% Chapter 1: Introduction to LLMs
+\subfile{chapters/chapter-01}
+
+% Chapter 2: AI Ecosystem
+\subfile{chapters/chapter-02}
+
+% Chapter 3: REST APIs and JSON
+\subfile{chapters/chapter-03}
+
+% Chapter 4: MCP Protocol
+\subfile{chapters/chapter-04}
+
+% Chapter 5: Autonomous Agents
+\subfile{chapters/chapter-05}
+
+% Chapter 6: A2A Protocol
+\subfile{chapters/chapter-06}
+
+% Chapter 7: RAG Systems
+\subfile{chapters/chapter-07}
+
+% Chapter 8: Prompt Engineering
+\subfile{chapters/chapter-08}
+
+% Chapter 9: Deployment
+\subfile{chapters/chapter-09}
+
+% Chapter 10: Strategic Considerations
+\subfile{chapters/chapter-10}
+
+% Chapter 11: Interfaces and UX
+\subfile{chapters/chapter-11}
+
+% Chapter 12: Ethics, Regulation and Security
+\subfile{chapters/chapter-12}
+
+% Chapter 13: From Project to Product
+\subfile{chapters/chapter-13}
+
+%% ============================================
+%% Back Matter
+%% ============================================
+\backmatter
+
+%% Bibliography
+\printbibliography[heading=bibintoc,title={רשימת מקורות}]
+
+%% Index (optional)
+% \printindex
+
+%% Appendices
+\appendix
+
+\chapter{מילון מונחים}
+
+\begin{longtable}{p{4cm}p{4cm}p{6cm}}
+\toprule
+\textbf{מונח באנגלית} & \textbf{תרגום לעברית} & \textbf{הסבר} \\
+\midrule
+\endhead
+
+\textenglish{LLM} & מודל שפה גדול & מודל בינה מלאכותית המאומן על כמויות עצומות של טקסט \\
+\textenglish{API} & ממשק תכנות יישומים & דרך סטנדרטית לתקשורת בין מערכות \\
+\textenglish{REST} & העברת מצב ייצוגי & ארכיטקטורת תקשורת נפוצה ל-API \\
+\textenglish{JSON} & סימון אובייקט JavaScript & פורמט להעברת נתונים \\
+\textenglish{MCP} & פרוטוקול הקשר מודל & פרוטוקול להעברת הקשר למודלי AI \\
+\textenglish{Agent} & סוכן & תוכנה אוטונומית המבצעת משימות \\
+\textenglish{A2A} & סוכן-לסוכן & תקשורת בין סוכנים אוטונומיים \\
+\textenglish{RAG} & יצירה מועשרת באחזור & טכניקה לשילוב ידע עדכני ב-LLM \\
+\textenglish{Prompt} & פרומפט/הנחיה & הטקסט שנשלח ל-LLM לעיבוד \\
+\textenglish{Token} & טוקן & יחידת עיבוד בסיסית של LLM \\
+\textenglish{Embedding} & שיבוץ/הטמעה & ייצוג וקטורי של טקסט \\
+\textenglish{Vector Database} & בסיס נתונים וקטורי & מאגר לאחסון וחיפוש וקטורים \\
+\textenglish{Fine-tuning} & כוונון עדין & התאמת מודל קיים לתחום ספציפי \\
+\textenglish{Hallucination} & הזיה & יצירת מידע שגוי על ידי LLM \\
+\textenglish{Context Window} & חלון הקשר & כמות הטקסט שהמודל יכול לעבד בבת אחת \\
+\bottomrule
+\end{longtable}
+
+\chapter{קוד Python מלא}
+
+פרק זה מכיל את כל קטעי הקוד המופיעים בספר במלואם, מוכנים להעתקה והרצה.
+
+% Code snippets will be included here
+
+\end{document}

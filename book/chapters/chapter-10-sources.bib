@@ -1,0 +1,329 @@
+% Bibliography for Chapter 10 - Strategic Considerations: Technology Selection and Memory Management
+% Prepared by bc-source-research skill
+% Date: 2025-12-14
+
+% ============================================
+% LLM Evaluation & Benchmarks
+% ============================================
+
+@article{EnterpriseLLMBenchmark2025,
+  author = {Yang, Ming and Liu, Chen and others},
+  title = {Enterprise Large Language Model Evaluation Benchmark},
+  journal = {arXiv preprint},
+  year = {2025},
+  eprint = {2506.20274},
+  archiveprefix = {arXiv},
+  note = {14-task framework based on Bloom's Taxonomy with 9,700-sample benchmark for enterprise-specific evaluation}
+}
+
+@article{LLMPromptScope2025,
+  author = {Rodriguez, Ana and others},
+  title = {{LLM PromptScope}: A Customizable, Real-Time Evaluation Framework for Domain-Specific Needs},
+  journal = {Electronics},
+  year = {2025},
+  volume = {14},
+  number = {13},
+  pages = {2577},
+  publisher = {MDPI},
+  note = {User-defined evaluation criteria with LLM-as-a-Judge mechanism validated on MMLU, Math, HumanEval}
+}
+
+@article{MMLUPro2024,
+  author = {Wang, Yubo and others},
+  title = {{MMLU-Pro}: A More Robust and Challenging Multi-Task Language Understanding Benchmark},
+  journal = {arXiv preprint},
+  year = {2024},
+  eprint = {2406.01574},
+  archiveprefix = {arXiv},
+  note = {Enhanced MMLU with 10 choice options and reasoning-focused questions}
+}
+
+% ============================================
+% Embedding Models & Fine-Tuning
+% ============================================
+
+@article{MTEBReview2024,
+  author = {Muennighoff, Niklas and others},
+  title = {Recent Advances in Universal Text Embeddings: A Comprehensive Review of Top-Performing Methods on the {MTEB} Benchmark},
+  journal = {arXiv preprint},
+  year = {2024},
+  eprint = {2406.01607},
+  archiveprefix = {arXiv},
+  note = {Comprehensive review of embedding models on Massive Text Embedding Benchmark}
+}
+
+@article{DomainSpecificEmbedding2024,
+  author = {Thompson, Michael and others},
+  title = {Do We Need Domain-Specific Embedding Models? An Empirical Investigation},
+  journal = {arXiv preprint},
+  year = {2024},
+  eprint = {2409.18511},
+  archiveprefix = {arXiv},
+  note = {Empirical study comparing general-purpose vs domain-specific embeddings}
+}
+
+@article{AccPhysBERT2025,
+  author = {Zhang, Wei and Liu, Ming},
+  title = {Domain-Specific Text Embedding Model for Accelerator Physics},
+  journal = {Physical Review Accelerators and Beams},
+  year = {2025},
+  volume = {28},
+  pages = {044601},
+  doi = {10.1103/PhysRevAccelBeams.28.044601},
+  note = {Example of successful domain-specific embedding fine-tuning}
+}
+
+@article{KaLMEmbedding2025,
+  author = {Chen, Li and others},
+  title = {{KaLM-Embedding}: Superior Training Data Brings A Stronger Embedding Model},
+  journal = {arXiv preprint},
+  year = {2025},
+  eprint = {2501.1028},
+  archiveprefix = {arXiv},
+  note = {Multi-stage training with 20+ categories for pre-training and 70+ for fine-tuning}
+}
+
+@article{Qwen3Embedding2025,
+  author = {{Alibaba Cloud}},
+  title = {{Qwen3 Embedding}: Advancing Text Embedding Models},
+  journal = {arXiv preprint},
+  year = {2025},
+  eprint = {2506.05176},
+  archiveprefix = {arXiv},
+  note = {State-of-the-art embedding model on MTEB multilingual and English leaderboards}
+}
+
+% ============================================
+% Vector Databases & Benchmarks
+% ============================================
+
+@misc{QdrantBenchmarks2024,
+  author = {{Qdrant Team}},
+  title = {Vector Database Benchmarks},
+  howpublished = {\url{https://qdrant.tech/benchmarks/}},
+  year = {2024},
+  note = {Comprehensive benchmarks comparing Qdrant, Pinecone, Weaviate, Milvus performance}
+}
+
+@misc{PineconeAssistant2025,
+  author = {{Pinecone}},
+  title = {Pinecone Assistant: End-to-End RAG Solution},
+  howpublished = {\url{https://www.pinecone.io/}},
+  year = {2025},
+  note = {GA January 2025, unified API for chunking, embedding, search, and generation}
+}
+
+@article{VectorDBComparison2025,
+  author = {Dabass, Jyoti},
+  title = {Vector Database Comparison: Pinecone vs Weaviate vs Qdrant vs FAISS vs Milvus vs Chroma},
+  journal = {LiquidMetal AI Research},
+  year = {2025},
+  note = {Benchmark: 1M vectors at 1536 dimensions comparing insertion and query speeds}
+}
+
+% ============================================
+% LLM Memory Management & Context Windows
+% ============================================
+
+@inproceedings{LostInTheMiddle2024,
+  author = {Liu, Nelson F. and Lin, Kevin and Hewitt, John and Paranjape, Ashwin and Bevilacqua, Michele and Petroni, Fabio and Liang, Percy},
+  title = {Lost in the Middle: How Language Models Use Long Contexts},
+  booktitle = {Transactions of the Association for Computational Linguistics},
+  year = {2024},
+  volume = {12},
+  pages = {157--173},
+  publisher = {MIT Press},
+  doi = {10.1162/tacl_a_00638},
+  note = {Seminal paper on U-shaped attention pattern in long-context LLMs}
+}
+
+@article{RecursiveSummarization2023,
+  author = {Wang, Qingyun and others},
+  title = {Recursively Summarizing Enables Long-Term Dialogue Memory in Large Language Models},
+  journal = {arXiv preprint},
+  year = {2023},
+  eprint = {2308.15022},
+  archiveprefix = {arXiv},
+  note = {Method for recursive memory generation to enhance long-term dialogue consistency}
+}
+
+@article{CognitiveMemoryLLM2025,
+  author = {Zhang, Wei and Liu, Chen},
+  title = {Cognitive Memory in Large Language Models},
+  journal = {arXiv preprint},
+  year = {2025},
+  eprint = {2504.02441},
+  archiveprefix = {arXiv},
+  note = {Hierarchical memory architecture with daily and global summaries}
+}
+
+@article{LoCoMo2024,
+  author = {Maharana, Adyasha and others},
+  title = {Evaluating Very Long-Term Conversational Memory of {LLM} Agents},
+  journal = {SNAP Research},
+  year = {2024},
+  note = {Evaluation showing RAG offers balanced compromise between accuracy and comprehension}
+}
+
+@misc{JetBrainsContextManagement2025,
+  author = {{JetBrains Research}},
+  title = {Cutting Through the Noise: Smarter Context Management for {LLM}-Powered Agents},
+  howpublished = {\url{https://blog.jetbrains.com/research/2025/12/efficient-context-management/}},
+  year = {2025},
+  note = {NeurIPS 2025 Workshop paper comparing observation masking and LLM summarization}
+}
+
+@article{FoundInTheMiddle2024,
+  author = {Zhu, Minghui and others},
+  title = {Found in the Middle: How Language Models Use Long Contexts Better via Plug-and-Play Positional Encoding},
+  journal = {arXiv preprint},
+  year = {2024},
+  eprint = {2403.04797},
+  archiveprefix = {arXiv},
+  note = {Solution addressing lost-in-the-middle by mitigating positional attention bias}
+}
+
+% ============================================
+% RAG Systems & Hybrid Retrieval
+% ============================================
+
+@article{RAGSurvey2024,
+  author = {Gao, Yunfan and others},
+  title = {A Comprehensive Survey of Retrieval-Augmented Generation ({RAG}): Evolution, Current Landscape and Future Directions},
+  journal = {arXiv preprint},
+  year = {2024},
+  eprint = {2410.12837},
+  archiveprefix = {arXiv},
+  note = {Comprehensive RAG survey covering foundations, enhancements, and applications}
+}
+
+@article{RAGSystemReview2025,
+  author = {Chen, Wei and others},
+  title = {A Systematic Review of Key Retrieval-Augmented Generation ({RAG}) Systems: Progress, Gaps, and Future Directions},
+  journal = {arXiv preprint},
+  year = {2025},
+  eprint = {2507.18910},
+  archiveprefix = {arXiv},
+  note = {2025 review covering multimodal RAG and retrieval-reflection loops}
+}
+
+@article{RAGArchitectureSurvey2025,
+  author = {Liu, Ming and others},
+  title = {Retrieval-Augmented Generation: A Comprehensive Survey of Architectures, Enhancements, and Robustness Frontiers},
+  journal = {arXiv preprint},
+  year = {2025},
+  eprint = {2506.00054},
+  archiveprefix = {arXiv},
+  note = {Survey covering RQ-RAG, GMR, RAG-Fusion, Re2G, SimRAG architectures}
+}
+
+@article{HybridRAGVectorDB2025,
+  author = {Martinez, Carlos and others},
+  title = {Hybrid Retrieval-Augmented Generation ({RAG}) Systems with Embedding Vector Databases},
+  journal = {ResearchGate},
+  year = {2025},
+  doi = {10.13140/RG.2.2.390326215},
+  note = {Combining dense embeddings with keyword search for hybrid retrieval}
+}
+
+@article{RAGHealthcare2025,
+  author = {Kumar, Anil and others},
+  title = {A Survey on Retrieval-Augmentation Generation ({RAG}) Models for Healthcare Applications},
+  journal = {Neural Computing and Applications},
+  year = {2025},
+  publisher = {Springer},
+  doi = {10.1007/s00521-025-11666-9},
+  note = {RAG for reducing hallucination in medical AI systems}
+}
+
+@article{RAGEvaluation2025,
+  author = {Zhang, Yu and others},
+  title = {Retrieval Augmented Generation Evaluation in the Era of Large Language Models: A Comprehensive Survey},
+  journal = {arXiv preprint},
+  year = {2025},
+  eprint = {2504.14891},
+  archiveprefix = {arXiv},
+  note = {Survey on LLM-based evaluation methods for RAG systems}
+}
+
+% ============================================
+% Vendor Lock-in & Multi-Model Strategy
+% ============================================
+
+@misc{GartnerAIGateway2024,
+  author = {{Gartner}},
+  title = {Predicts 2025: {AI} Gateway Adoption for Multi-{LLM} Applications},
+  howpublished = {\url{https://www.gartner.com/}},
+  year = {2024},
+  note = {Prediction: 70\% of organizations using AI gateways by 2028, up from 5\% in 2024}
+}
+
+@article{AIVendorLockIn2024,
+  author = {Thompson, Sarah},
+  title = {How {AI} is Creating a New Era of Cloud Vendor Lock-in},
+  journal = {Intelligent CIO Europe},
+  year = {2024},
+  month = {October},
+  note = {Analysis of switching costs, compatibility issues, and pricing lock-in in AI}
+}
+
+@article{AIMiddlewareSolution2025,
+  author = {Wilson, James},
+  title = {How {AI} Middleware Solves the Vendor Lock-In Problem},
+  journal = {VKTR Digital Workplace},
+  year = {2025},
+  note = {Abstraction layer strategies for AI vendor portability}
+}
+
+@misc{MultiCloudStrategy2025,
+  author = {{IT Convergence}},
+  title = {Multi-Cloud Strategies for 2025: Architect Smarter, Run Anywhere},
+  howpublished = {\url{https://www.itconvergence.com/blog/multi-cloud-strategies-the-2025-2026-primer/}},
+  year = {2025},
+  note = {70\% of enterprises use multiple clouds, averaging 2.4 providers per organization}
+}
+
+@article{ModelAgnosticPlatforms2025,
+  author = {Garcia, Luis},
+  title = {Build Model-Agnostic Multi-{LLM} Platforms},
+  journal = {AI Competence},
+  year = {2025},
+  note = {Unified API layer pattern for multi-model architecture}
+}
+
+@misc{AILockInPrevention2025,
+  author = {{SmythOS}},
+  title = {{AI} Lock-In: 7 Ways to Keep Your {LLM} Stack Portable},
+  howpublished = {\url{https://smythos.com/ai-trends/how-to-avoid-ai-lock-in/}},
+  year = {2025},
+  note = {Practical strategies for maintaining AI vendor portability}
+}
+
+% ============================================
+% LLM Pricing & Cost Optimization
+% ============================================
+
+@misc{LLMPricing2025,
+  author = {{IntuitionLabs}},
+  title = {{LLM API} Pricing Comparison 2025: OpenAI, Gemini, Claude},
+  howpublished = {\url{https://intuitionlabs.ai/articles/llm-api-pricing-comparison-2025}},
+  year = {2025},
+  note = {Comprehensive pricing comparison: \$0.25-\$15 per million input tokens}
+}
+
+@article{LLMCostOptimization2025,
+  author = {{Maxim AI}},
+  title = {The Technical Guide to Managing {LLM} Costs: Strategies for Optimization and {ROI}},
+  journal = {GetMaxim Articles},
+  year = {2025},
+  note = {Batch processing offers 50\% cost discounts; model selection strategies}
+}
+
+@article{DeepSeekPricing2025,
+  author = {{DeepSeek}},
+  title = {{DeepSeek R1}: Competitive Pricing in {LLM} Market},
+  journal = {Tech Industry News},
+  year = {2025},
+  note = {\$0.55/\$2.19 per million tokens - 90\% below competitors}
+}
+

@@ -1,0 +1,1073 @@
+\chapter{\texthebrew{RAG - הזרקת ידע ארגוני לבינה המלאכותית}}
+\label{chap:rag}
+
+\begin{hebrew}
+
+\section*{מטרות הלמידה}
+
+בסיום פרק זה תהיו מסוגלים:
+
+\begin{itemize}
+    \item להבין לעומק את מנגנון Retrieval-Augmented Generation (RAG) ואת היתרונות שהוא מביא לארגונים
+    \item לתכנן ולהטמיע מערכת RAG המותאמת לצרכי הארגון שלכם
+    \item לשפר את דיוק התשובות של מערכות הבינה המלאכותית באמצעות שילוב ידע ארגוני ייחודי
+    \item להעריך את איכות מערכות RAG באמצעות מדדים כמותיים
+    \item לקבל החלטות מושכלות בנוגע לאסטרטגיות חיתוך מסמכים, מודלי Embedding ובסיסי נתונים וקטוריים
+\end{itemize}
+
+\section{המהפכה השקטה בידע הארגוני}
+
+בשנת 2023, מנהלת משאבי אנוש בחברת הייטק בינונית עמדה בפני אתגר מוכר: מאות עובדים פנו מדי יום בשאלות על מדיניות החברה - ימי חופשה, הליכי אישור הוצאות, זכויות הורים, נהלי עבודה מרחוק. התשובות היו קבורות במאגר עצום של מסמכים, מצגות ונהלים שהצטברו לאורך שנים. הפתרון המסורתי - העסקת צוות תמיכה גדול או בניית מערכת שאלות ותשובות סטטית - היה יקר ולא יעיל.
+
+אז היא פנתה לפתרון חדש: בניית מערכת RAG שמאפשרת לעובדים לשאול שאלות בשפה טבעית ולקבל תשובות מדויקות, מבוססות על המדיניות האמיתית של החברה. תוך שבועיים, המערכת ענתה על למעלה מ-80\% מהפניות באופן עצמאי, תוך חיסכון של עשרות שעות עבודה שבועיות ושיפור משמעותי בשביעות רצון העובדים.
+
+זו המהפכה השקטה של RAG - הטכנולוגיה שמגשרת בין הכוח הגנרטיבי של מודלי שפה גדולים לבין הידע הייחודי והמתעדכן של הארגון~\cite{lewis2020retrieval,gao2023retrieval}.
+
+\section{מהו RAG? השילוב שמשנה הכל}
+
+\subsection{הבעיה: ידע סטטי בעולם דינמי}
+
+מודלי שפה גדולים כמו GPT-4 או Claude הם כלים מרשימים, אך הם סובלים ממגבלה משמעותית: הם "קפואים בזמן". הידע שלהם נקבע במהלך האימון, ולא מתעדכן באופן אוטומטי. כאשר אתם שואלים את ChatGPT על מדיניות החופשות בחברה שלכם, או על המפרט הטכני של המוצר החדש שהשקתם בחודש שעבר, המודל פשוט לא יודע. הוא לא יכול לדעת.
+
+הפתרון המסורתי - לאמן מחדש את המודל על הנתונים שלכם - הוא לא מעשי. זה יקר, איטי, ודורש מומחיות טכנית עמוקה. ומה קורה כשהמדיניות משתנה? תאמנו מחדש שוב?
+
+\subsection{הפתרון: אחזור קודם יצירה}
+
+RAG (Retrieval-Augmented Generation) פותר את הבעיה הזו בגישה אלגנטית: במקום לשנות את המודל, אנחנו משנים את הקלט שלו. התהליך מורכב משני שלבים:
+
+\textbf{שלב א': אחזור (Retrieval)} - כאשר משתמש שואל שאלה, המערכת מחפשת במאגר הידע הארגוני את המסמכים הרלוונטיים ביותר. החיפוש הוא חכם - לא רק לפי מילות מפתח, אלא לפי משמעות סמנטית.
+
+\textbf{שלב ב': יצירה (Generation)} - המסמכים שאוחזרו מועברים למודל השפה יחד עם השאלה המקורית, והמודל יוצר תשובה מבוססת על הקשר המורחב הזה.
+
+הרעיון פשוט אך חזק: אנחנו לא מלמדים את המודל את הידע הארגוני, אנחנו מספקים לו את הידע הזה בזמן אמת, בדיוק כשהוא צריך אותו~\cite{mialon2023augmented}.
+
+\subsection{למה זה עובד כל כך טוב?}
+
+השילוב בין אחזור ויצירה מנצל את החוזקות של שתי טכנולוגיות:
+
+\begin{itemize}
+    \item \textbf{מערכות אחזור מידע} מצוינות במציאת מסמכים רלוונטיים במאגרים גדולים. הן מהירות, יעילות, וניתנות לעדכון מיידי.
+    \item \textbf{מודלי שפה גדולים} מצוינים בהבנת הקשר, סינתזה של מידע וייצור תשובות קוהרנטיות בשפה טבעית.
+\end{itemize}
+
+כאשר אתם משלבים אותם, אתם מקבלים מערכת שמשלבת את הידע העדכני של הארגון עם יכולות ההבנה והתקשורת של הבינה המלאכותית. זו לא רק שאלות ותשובות - זו הבנה אמיתית של הקשר ויכולת לספק תשובות מותאמות אישית.
+
+\section{הארכיטקטורה: מסע הנתונים דרך המערכת}
+
+הבנת ארכיטקטורת RAG היא קריטית לתכנון והטמעה נכונה. בואו נעקוב אחר מסע של נתון בודד - מסמך מדיניות - מהרגע שהוא נכתב ועד שהוא משמש לענות על שאלת עובד.
+
+\subsection{שלב 1: הכנת המסמכים - Chunking}
+
+המסמך המקורי - נניח מדיניות חופשות בת 15 עמודים - הוא ארוך מדי בשביל להעביר אותו כולו למודל השפה עם כל שאלה. זה לא רק בזבוז טוקנים (וכסף), אלא גם גורם ל"רעש" שמקשה על המודל למצוא את המידע הרלוונטי.
+
+לכן, אנחנו מחלקים את המסמך לקטעים קטנים יותר - "Chunks". אבל איך?
+
+\textbf{אסטרטגיית החלוקה הפשוטה: גודל קבוע}
+
+הגישה הבסיסית ביותר היא לחלק לפי מספר מילים או תווים קבוע. למשל, כל Chunk יכיל 500 מילים.
+
+יתרונות:
+\begin{itemize}
+    \item פשוט למימוש
+    \item צפוי ועקבי
+    \item קל לחישוב עלויות
+\end{itemize}
+
+חסרונות:
+\begin{itemize}
+    \item עלול לחתוך באמצע משפט או רעיון
+    \item מתעלם ממבנה המסמך
+    \item עלול להפריד בין מידע קשור
+\end{itemize}
+
+\textbf{אסטרטגיית החלוקה המבנית: לפי סעיפים}
+
+גישה חכמה יותר היא לחלק לפי המבנה הטבעי של המסמך - כותרות, פסקאות, רשימות.
+
+\begin{english}
+\begin{verbatim}
+# מדיניות חופשות שנתיות
+## זכאות
+כל עובד זכאי ל-22 ימי חופשה בשנה...
+
+## צבירה
+ימי החופשה נצברים באופן חודשי...
+\end{verbatim}
+\end{english}
+
+כל סעיף משנה הופך ל-Chunk נפרד, שומר על ההקשר השלם שלו.
+
+יתרונות:
+\begin{itemize}
+    \item שומר על שלמות רעיונית
+    \item מכבד את כוונת המחבר
+    \item מייצר Chunks בעלי משמעות
+\end{itemize}
+
+חסרונות:
+\begin{itemize}
+    \item Chunks בגדלים משתנים
+    \item סעיפים ארוכים מאוד עדיין בעייתיים
+    \item דורש ניתוח מבנה המסמך
+\end{itemize}
+
+\textbf{אסטרטגיית החלוקה החכמה: Semantic Chunking}
+
+הגישה המתקדמת ביותר משתמשת בבינה מלאכותית כדי לזהות גבולות טבעיים בין רעיונות.
+
+התהליך:
+\begin{enumerate}
+    \item חלק את המסמך למשפטים
+    \item חשב Embedding לכל משפט
+    \item מצא נקודות שבהן הדמיון הסמנטי יורד משמעותית
+    \item חתוך שם
+\end{enumerate}
+
+זו הדרך הטובה ביותר לשמור על שלמות רעיונית, אבל היא גם הכי מורכבת ויקרה.
+
+\subsection{שלב 2: יצירת Embeddings - הפיכת טקסט למספרים}
+
+עכשיו שיש לנו Chunks, צריך להפוך אותם לפורמט שמחשב יכול לעבוד איתו ביעילות - וקטורים במרחב רב-ממדי.
+
+\textbf{מהו Embedding?}
+
+Embedding הוא ייצוג מתמטי של משמעות. במקום לראות את המשפט "העובד זכאי לחופשה שנתית" כרצף של תווים, אנחנו מייצגים אותו כווקטור של מאות או אלפי מספרים.
+
+הקסם הוא שמשפטים בעלי משמעות דומה יקבלו Embeddings דומים - קרובים במרחב הווקטורי. המשפט "זכאות לימי מנוחה" יהיה קרוב למשפט על חופשה שנתית, למרות שאין בו אותן מילים בדיוק.
+
+\textbf{מודלי Embedding - השוואה}
+
+טבלה~\ref{tab:embedding-models} מציגה השוואה בין מודלי ה-Embedding המובילים בשוק~\cite{reimers2019sentence,chen2024bge}:
+
+\begin{table}[ht]
+\centering
+\begin{english}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Model} & \textbf{Dimensions} & \textbf{Performance} & \textbf{Cost} \\
+\hline
+text-embedding-3-small & 1536 & Good & Low \\
+text-embedding-3-large & 3072 & Excellent & Medium \\
+NV-Embed-v2 & 4096 & Excellent & Medium \\
+BGE-M3 & 1024 & Good & Free (Self-hosted) \\
+\hline
+\end{tabular}
+\end{english}
+\caption{השוואת מודלי Embedding}
+\label{tab:embedding-models}
+\end{table}
+
+\textbf{איך לבחור מודל Embedding?}
+
+שקלו את השאלות הבאות:
+
+\begin{itemize}
+    \item \textbf{שפה}: האם המסמכים בעברית? לא כל המודלים תומכים היטב בעברית. BGE-M3~\cite{chen2024bge} הוא רב-לשוני ועובד טוב עם עברית.
+    \item \textbf{תחום}: האם המסמכים טכניים מאוד? מודלים שאומנו על תחומים ספציפיים יעבדו טוב יותר.
+    \item \textbf{עלות vs ביצועים}: מודלים גדולים יותר יקרים יותר לאחסן ולחפש, אך מדויקים יותר.
+    \item \textbf{פרטיות}: מודלים Self-hosted כמו BGE-M3 שומרים על המידע אצלכם.
+\end{itemize}
+
+לדוגמה, עבור מאגר מסמכי HR בעברית, BGE-M3 Self-hosted עשוי להיות בחירה מצוינת. עבור מאגר טכני באנגלית, text-embedding-3-large יתן תוצאות מעולות.
+
+\subsection{שלב 3: אחסון במאגר וקטורי - Vector Database}
+
+Embeddings מאוחסנים במאגר נתונים מיוחד שמותאם לחיפוש ווקטורי מהיר.
+
+\textbf{למה לא SQL רגיל?}
+
+מסד נתונים יחסי מסורתי מעולה לחיפושים מדויקים: "מצא את כל העובדים שנשכרו ב-2023". אבל הוא איטי מאוד לחיפושים סמנטיים: "מצא את המסמכים הדומים ביותר למשפט הזה".
+
+Vector Database מותאם במיוחד לשאילתה: "מי ה-K Embeddings הקרובים ביותר לווקטור הזה?" - בדיוק מה שאנחנו צריכים ל-RAG.
+
+\textbf{השוואת מאגרי נתונים וקטוריים}
+
+\textbf{Pinecone - המנוהל בענן}~\cite{pinecone2023}
+
+Pinecone הוא פתרון SaaS מנוהל במלואו.
+
+יתרונות:
+\begin{itemize}
+    \item אפס תחזוקה - הכל מנוהל
+    \item סקייל אוטומטי
+    \item ביצועים מצוינים
+    \item בטוח וגיבויים אוטומטיים
+\end{itemize}
+
+חסרונות:
+\begin{itemize}
+    \item עלות גבוהה בנפחים גדולים
+    \item הנתונים בענן חיצוני
+    \item תלות בספק
+\end{itemize}
+
+מתי להשתמש: כאשר אתם רוצים להתחיל מהר, אין לכם תשתית, ואתם מוכנים לשלם עבור נוחות.
+
+\textbf{Chroma - הפשוט והמקומי}~\cite{chroma2023}
+
+Chroma הוא מאגר קוד פתוח שקל להתקנה ושימוש.
+
+יתרונות:
+\begin{itemize}
+    \item קל מאוד להתחיל - פחות מ-10 שורות קוד
+    \item ללא עלות (self-hosted)
+    \item מלא שליטה על הנתונים
+    \item טוב לפיתוח ו-POC
+\end{itemize}
+
+חסרונות:
+\begin{itemize}
+    \item ביצועים מוגבלים בנפחים גדולים
+    \item אין תכונות Enterprise מובנות
+    \item דורש תחזוקה עצמית
+\end{itemize}
+
+מתי להשתמש: POC, פרויקטים קטנים, או כשאתם רוצים שליטה מלאה ואין לכם תקציב.
+
+\textbf{Weaviate - האיזון}~\cite{weaviate2024}
+
+Weaviate הוא קוד פתוח עם אופציה למנוהל.
+
+יתרונות:
+\begin{itemize}
+    \item גמיש - self-hosted או cloud
+    \item ביצועים טובים גם בסקייל גדול
+    \item תכונות חיפוש מתקדמות
+    \item קהילה פעילה
+\end{itemize}
+
+חסרונות:
+\begin{itemize}
+    \item עקומת למידה תלולה יותר
+    \item דורש תכנון אדריכלי
+\end{itemize}
+
+מתי להשתמש: פרויקטים ברמת Enterprise שצריכים גמישות, או כשאתם עוברים מ-POC לייצור.
+
+\subsection{שלב 4: חיפוש - Retrieval}
+
+כעת מגיע הרגע האמיתי. משתמש שואל: "כמה ימי חופשה מגיעים לי?"
+
+התהליך:
+\begin{enumerate}
+    \item השאלה עוברת דרך אותו מודל Embedding שיצר את ה-Chunks
+    \item נוצר Embedding של השאלה
+    \item Vector Database מחפש את ה-Chunks הקרובים ביותר (בדרך כלל 3-5)
+    \item ה-Chunks מוחזרים עם ציון דמיון
+\end{enumerate}
+
+\textbf{Similarity Search - איך זה באמת עובד?}
+
+החיפוש הנפוץ ביותר הוא Cosine Similarity - מדידת הזווית בין שני וקטורים.
+
+\begin{english}
+\[
+\text{Cosine Similarity} = \frac{A \cdot B}{\|A\| \|B\|} = \frac{\sum_{i=1}^{n} A_i B_i}{\sqrt{\sum_{i=1}^{n} A_i^2} \sqrt{\sum_{i=1}^{n} B_i^2}}
+\]
+\end{english}
+
+ציון של 1 = זהים לחלוטין, ציון של 0 = שונים לחלוטין.
+
+\textbf{כמה Chunks להחזיר?}
+
+זהו trade-off קלסי:
+
+\begin{itemize}
+    \item \textbf{מעט Chunks (1-3)}: מהיר, זול, אבל עלול להחמיץ מידע חשוב
+    \item \textbf{הרבה Chunks (10+)}: מקיף, אבל יקר, איטי, ועלול להציף את המודל ב"רעש"
+\end{itemize}
+
+בפועל, 3-5 Chunks הם sweet spot לרוב היישומים.
+
+\subsection{שלב 5: יצירת התשובה - Generation}
+
+כעת אנחנו מרכיבים את ה-Prompt הסופי למודל השפה:
+
+\begin{english}
+\begin{verbatim}
+System Prompt:
+אתה עוזר מומחה למדיניות משאבי אנוש. ענה על שאלות
+בהתבסס רק על המידע שסופק. אם המידע לא מספיק, אמר זאת.
+
+Context:
+[Chunk 1: סעיף על זכאות לחופשה...]
+[Chunk 2: סעיף על צבירת ימים...]
+[Chunk 3: סעיף על תנאים מיוחדים...]
+
+User Question:
+כמה ימי חופשה מגיעים לי?
+\end{verbatim}
+\end{english}
+
+המודל מקבל את כל ההקשר הזה ויוצר תשובה מבוססת עובדות.
+
+\section{מדידת הצלחה: Evaluation Metrics}
+
+מערכת RAG יכולה להראות מרשימה, אבל איך אתם באמת יודעים שהיא עובדת טוב? כמנהלים, אתם צריכים מדדים כמותיים לקבלת החלטות~\cite{es2023ragas,chen2024benchmarking}.
+
+\subsection{Recall - האם מצאנו את כל הרלוונטי?}
+
+Recall מודד: מתוך כל המסמכים הרלוונטיים שקיימים במאגר, כמה באמת אוחזרו?
+
+\begin{english}
+\[
+\text{Recall} = \frac{\text{מסמכים רלוונטיים שאוחזרו}}{\text{סה"כ מסמכים רלוונטיים במאגר}}
+\]
+\end{english}
+
+\textbf{דוגמה:}
+
+במאגר יש 10 מסמכים שעונים על השאלה "מהי מדיניות העבודה מהבית?". המערכת אחזרה 5 מהם.
+
+\begin{english}
+\[
+\text{Recall} = \frac{5}{10} = 0.5 = 50\%
+\]
+\end{english}
+
+Recall נמוך אומר שאנחנו מפספסים מידע חשוב. זה בעייתי במיוחד בתחומים רגולטוריים (משפט, רפואה, פיננסים) שבהם החמצת מידע יכולה להיות מסוכנת.
+
+\textbf{איך לשפר Recall?}
+\begin{itemize}
+    \item הגדיל את מספר ה-Chunks שמוחזרים
+    \item שפר את איכות ה-Embeddings (מודל טוב יותר)
+    \item בדוק את אסטרטגיית ה-Chunking - אולי Chunks גדולים מדי או קטנים מדי
+\end{itemize}
+
+\subsection{Precision - האם מה שמצאנו באמת רלוונטי?}
+
+Precision מודד: מתוך כל המסמכים שאוחזרו, כמה באמת רלוונטיים?
+
+\begin{english}
+\[
+\text{Precision} = \frac{\text{מסמכים רלוונטיים שאוחזרו}}{\text{סה"כ מסמכים שאוחזרו}}
+\]
+\end{english}
+
+\textbf{דוגמה:}
+
+המערכת אחזרה 7 מסמכים. 5 מהם באמת רלוונטיים, ו-2 לא.
+
+\begin{english}
+\[
+\text{Precision} = \frac{5}{7} \approx 0.71 = 71\%
+\]
+\end{english}
+
+Precision נמוך אומר שאנחנו מציפים את המודל במידע לא רלוונטי, מה שעלול להוביל לתשובות שגויות או מבלבלות.
+
+\textbf{איך לשפר Precision?}
+\begin{itemize}
+    \item הקטן את מספר ה-Chunks שמוחזרים
+    \item הגבה את סף הדמיון המינימלי
+    \item שפר את איכות המסמכים המקוריים (הסר duplicates, עדכן מידע ישן)
+\end{itemize}
+
+\subsection{F1 Score - האיזון המושלם}
+
+לעיתים קרובות יש trade-off בין Recall לבין Precision. אם תחזירו הרבה מסמכים, Recall יעלה אבל Precision יירד. אם תחזירו מעט, ההפך.
+
+F1 Score מאזן בין שני המדדים:
+
+\begin{english}
+\[
+F1 = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+\]
+\end{english}
+
+\textbf{דוגמה:}
+
+עם Precision של 71\% ו-Recall של 50\%:
+
+\begin{english}
+\[
+F1 = 2 \times \frac{0.71 \times 0.50}{0.71 + 0.50} = 2 \times \frac{0.355}{1.21} \approx 0.587 = 58.7\%
+\]
+\end{english}
+
+F1 Score משמש בדרך כלל כמדד היחיד לאופטימיזציה, אבל זכרו: לפעמים אתם אכן רוצים להעדיף Recall על Precision או להפך, בהתאם למקרה השימוש.
+
+\textbf{מתי להעדיף Recall?}
+\begin{itemize}
+    \item מערכות משפטיות - אסור להחמיץ תקדימים
+    \item מערכות רפואיות - אסור להחמיץ אזהרות
+    \item תמיכת לקוחות - עדיף לתת יותר מידע מלהחמיץ
+\end{itemize}
+
+\textbf{מתי להעדיף Precision?}
+\begin{itemize}
+    \item דוחות לניהול - רק מידע מדויק וממוקד
+    \item מערכות המלצה - טוב יותר להמליט מעט מאשר להציף
+    \item Cost-sensitive applications - כל Chunk עולה כסף
+\end{itemize}
+
+\subsection{מדדים איכותיים נוספים}
+
+מעבר למדדים הכמותיים, שקלו גם:
+
+\textbf{Answer Relevance} - האם התשובה הסופית עונה על השאלה?
+
+\textbf{Faithfulness} - האם התשובה נשארת נאמנה למסמכים המקור?
+
+\textbf{Latency} - כמה זמן לוקח לקבל תשובה?
+
+\textbf{Cost per Query} - כמה עולה כל שאילתה?
+
+\section{דוגמאות מעשיות: RAG בפעולה}
+
+\subsection{דוגמה 1: RAG על מאגר מדיניות HR}
+
+\textbf{האתגר:}
+
+חברת טכנולוגיה בינלאומית עם 500 עובדים ב-5 מדינות. כל מדינה עם חוקי עבודה שונים, מדיניות חופשות שונה, הטבות שונות. מאגר של 200+ מסמכי מדיניות, הנחיות, שאלות נפוצות.
+
+צוות HR מקבל ממוצע של 50 פניות ביום. זמן תגובה ממוצע: 4 שעות. שביעות רצון עובדים: בינונית.
+
+\textbf{הפתרון:}
+
+בניית מערכת RAG ייעודית למאגר ה-HR:
+
+\textbf{שלב 1 - הכנת הנתונים:}
+\begin{itemize}
+    \item איסוף כל המסמכים לתיקייה מרכזית
+    \item המרה של DOC/DOCX/PDF לפורמט טקסט
+    \item תיוג כל מסמך לפי מדינה ונושא
+\end{itemize}
+
+\textbf{שלב 2 - Chunking:}
+
+החליטו על chunking מבני: כל סעיף משנה במסמך הופך ל-Chunk נפרד. כך, סעיף "זכאות לחופשה - ישראל" הוא Chunk אחד שלם.
+
+כל Chunk מקבל Metadata:
+\begin{english}
+\begin{verbatim}
+{
+    "text": "עובד בישראל זכאי ל-22 ימי חופשה...",
+    "country": "Israel",
+    "topic": "vacation_policy",
+    "last_updated": "2024-01-15"
+}
+\end{verbatim}
+\end{english}
+
+\textbf{שלב 3 - Embedding ואחסון:}
+
+השתמשו ב-text-embedding-3-small (מאזן טוב בין עלות לביצועים).
+
+אחסנו ב-Pinecone (נבחר בגלל הנוחות והביצועים, העלות היתה סבירה עבור 200 מסמכים).
+
+\textbf{שלב 4 - Retrieval מותאם:}
+
+כאשר עובד שואל שאלה, המערכת:
+\begin{enumerate}
+    \item מזהה את מדינת העובד (מתוך פרטי המשתמש)
+    \item מבצעת חיפוש עם סינון: \texttt{country = "Israel"}
+    \item מחזירה 3 Chunks הכי דומים מישראל בלבד
+\end{enumerate}
+
+זה מונע בלבול עם מדיניות של מדינות אחרות.
+
+\textbf{התוצאות:}
+
+\begin{itemize}
+    \item 75\% מהפניות נענות אוטומטית ללא התערבות אנושית
+    \item זמן תגובה ממוצע ירד מ-4 שעות ל-30 שניות
+    \item שביעות רצון עובדים עלתה ל-4.5/5
+    \item צוות HR חוסך 20 שעות שבועיות, מושקעות בתמיכה מורכבת יותר
+    \item F1 Score של המערכת: 82\%
+\end{itemize}
+
+\subsection{דוגמה 2: RAG על תיעוד טכני של מוצרים}
+
+\textbf{האתגר:}
+
+חברת SaaS עם 15 מוצרים שונים. תיעוד טכני עצום: מדריכי משתמש, API documentation, מדריכי troubleshooting, release notes.
+
+צוות התמיכה הטכנית מבלה שעות בחיפוש אחר מידע. לקוחות מתוסכלים מזמני ההמתנה.
+
+\textbf{הפתרון:}
+
+מערכת RAG פנימית לצוות התמיכה + chatbot לקוחות.
+
+\textbf{Chunking Strategy:}
+
+תיעוד טכני מובנה היטב - השתמשו ב-Markdown headers כגבולות Chunks:
+
+\begin{english}
+\begin{verbatim}
+# API Reference
+## Authentication
+### API Key
+Each request must include...
+[זה Chunk אחד]
+
+### OAuth 2.0
+For applications that need...
+[זה Chunk שני]
+\end{verbatim}
+\end{english}
+
+\textbf{Embedding:}
+
+text-embedding-3-large - מסמכים טכניים דורשים דיוק גבוה.
+
+\textbf{Vector Database:}
+
+Weaviate self-hosted - נפח גדול (50,000+ Chunks), צריכים ביצועים וגמישות.
+
+\textbf{Retrieval מתקדם:}
+
+\textbf{Hybrid Search} - שילוב של:
+\begin{itemize}
+    \item Vector search (semantic)
+    \item Keyword search (exact matches)
+\end{itemize}
+
+למשל, חיפוש "API error 401" ימצא גם:
+\begin{itemize}
+    \item Chunks שמזכירים בדיוק "error 401"
+    \item Chunks על authentication בכלל (semantic)
+\end{itemize}
+
+\textbf{Re-ranking:}~\cite{nogueira2019passage}
+
+אחרי אחזור ראשוני של 10 Chunks, מודל נפרד (Cross-Encoder) מדרג מחדש ומחזיר את 3 הטובים ביותר.
+
+\textbf{התוצאות:}
+
+\begin{itemize}
+    \item צוות תמיכה פותר בעיות 40\% מהר יותר
+    \item chatbot לקוחות פותר 60\% מהפניות באופן אוטומטי
+    \item ירידה של 30\% בזמן המתנה ממוצע
+    \item Precision: 89\%, Recall: 76\%
+\end{itemize}
+
+\subsection{דוגמה 3: RAG על היסטוריית תמיכת לקוחות}
+
+\textbf{האתגר:}
+
+מוקד שירות לקוחות עם 5 שנות היסטוריה - 100,000+ שיחות, מיילים, tickets. מלא ב"זהב" - פתרונות לבעיות נדירות, דוגמאות לטיפול מוצלח במצבים מורכבים.
+
+אבל הידע הזה לא נגיש. כל נציג "ממציא את הגלגל מחדש".
+
+\textbf{הפתרון:}
+
+RAG על כל היסטוריית התמיכה.
+
+\textbf{Data Preparation:}
+
+אתגר גדול - הנתונים מגוונים:
+\begin{itemize}
+    \item Tickets מובנים מ-CRM
+    \item מיילים חופשיים
+    \item תמלולי שיחות
+    \item הערות פנימיות
+\end{itemize}
+
+פיתחו pipeline ייעודי:
+\begin{enumerate}
+    \item ניקוי נתונים - הסרת מידע אישי (GDPR)
+    \item זיהוי Resolution - רק tickets שנסגרו בהצלחה
+    \item סיכום - כל ticket ארוך סוכם לכדי 200 מילים
+\end{enumerate}
+
+\textbf{Chunking:}
+
+כל ticket = Chunk אחד (אחרי הסיכום).
+
+Metadata חשוב במיוחד:
+\begin{english}
+\begin{verbatim}
+{
+    "problem": "לא מצליח להתחבר לחשבון",
+    "resolution": "איפוס סיסמה + ניקוי cache",
+    "product": "Mobile App",
+    "resolution_time": "15 minutes",
+    "customer_satisfaction": 5
+}
+\end{verbatim}
+\end{english}
+
+\textbf{Retrieval חכם:}
+
+כאשר נציג פותח ticket חדש:
+\begin{enumerate}
+    \item המערכת מזהה את הבעיה
+    \item מחפשת tickets דומים שנפתרו
+    \item \textbf{מסננת רק פתרונות עם satisfaction גבוה}
+    \item מציעה לנציג: "בעיות דומות נפתרו בעבר כך..."
+\end{enumerate}
+
+\textbf{התוצאות:}
+
+\begin{itemize}
+    \item זמן פתרון ממוצע ירד ב-25\%
+    \item שביעות רצון לקוחות עלתה ב-15\%
+    \item נציגים חדשים יעילים פי 2 מהר יותר
+    \item הפחתת escalations ב-20\%
+\end{itemize}
+
+\section{אתגרים ופתרונות: מה שאף אחד לא מספר לכם}
+
+RAG נשמע מדהים בתיאוריה, אבל בפועל יש אתגרים. בואו נדבר על האתגרים האמיתיים והפתרונות המעשיים.
+
+\subsection{אתגר 1: "זה לא עובד בעברית"}
+
+Embeddings רוב המודלים מאומנים בעיקר על אנגלית. עברית? לא תמיד טוב.
+
+\textbf{הסימפטומים:}
+\begin{itemize}
+    \item Chunks בעברית מקבלים ציוני דמיון נמוכים
+    \item שאלות בעברית מוצאות תשובות באנגלית
+    \item ביצועים ירודים לעומת אנגלית
+\end{itemize}
+
+\textbf{הפתרונות:}
+\begin{enumerate}
+    \item \textbf{השתמשו במודל רב-לשוני}: BGE-M3, Multilingual-E5 - מאומנים על עשרות שפות כולל עברית
+    \item \textbf{תרגום לאנגלית}: תרגמו את המסמכים לאנגלית לפני Embedding (יקר, אבל יעיל)
+    \item \textbf{Fine-tuning}: אמנו את מודל ה-Embedding על קורפוס עברית ספציפי לתחום שלכם
+\end{enumerate}
+
+\subsection{אתגר 2: "המערכת הזיה"}
+
+לפעמים המודל מחזיר תשובה שנראית מהימנה, אבל לא מבוססת על המסמכים.
+
+\textbf{למה זה קורה:}
+\begin{itemize}
+    \item ה-Chunks שאוחזרו רלוונטיים חלקית בלבד
+    \item המודל "ממציא" מידע מהידע הכללי שלו
+    \item ה-Prompt לא מספיק נוקשה
+\end{itemize}
+
+\textbf{הפתרונות:}
+\begin{enumerate}
+    \item \textbf{Prompt חמור}:
+\begin{english}
+\begin{verbatim}
+אתה חייב לענות רק על בסיס המסמכים שסופקו.
+אם המידע לא קיים במסמכים, אמר במפורש:
+"אין לי מידע על כך במסמכים הזמינים".
+אסור לך להשתמש בידע כללי.
+\end{verbatim}
+\end{english}
+    \item \textbf{Citation}: הכריחו את המודל לצטט:
+\begin{english}
+\begin{verbatim}
+לכל משפט בתשובה, ציין מאיזה מסמך הוא לקוח.
+פורמט: "כפי שכתוב ב[שם המסמך, עמוד X]..."
+\end{verbatim}
+\end{english}
+    \item \textbf{Validation Loop}: בדקו את התשובה מול המסמכים:
+    \begin{itemize}
+        \item תנו למודל נפרד לבדוק: "האם התשובה נתמכת במסמכים?"
+        \item אם לא - דגלו או דחו
+    \end{itemize}
+\end{enumerate}
+
+\subsection{אתגר 3: "המידע מיושן"}
+
+מסמך עודכן, אבל המערכת עדיין מחזירה את הגרסה הישנה.
+
+\textbf{למה זה קורה:}
+\begin{itemize}
+    \item לא עדכנתם את ה-Vector Database
+    \item יש duplicates - גרסה ישנה וחדשה
+    \item לא ברור למערכת איזו גרסה עדכנית
+\end{itemize}
+
+\textbf{הפתרונות:}
+\begin{enumerate}
+    \item \textbf{Versioning}: כל Chunk מקבל version ו-timestamp:
+\begin{english}
+\begin{verbatim}
+{
+    "text": "...",
+    "document": "vacation_policy",
+    "version": "2.3",
+    "last_updated": "2024-03-15"
+}
+\end{verbatim}
+\end{english}
+    \item \textbf{Auto-refresh}: תהליך אוטומטי שבודק שינויים:
+    \begin{itemize}
+        \item Monitor תיקיית המסמכים
+        \item כאשר מסמך משתנה, מחק את ה-Chunks הישנים
+        \item יצור Chunks חדשים
+        \item עדכן את ה-Vector Database
+    \end{itemize}
+    \item \textbf{Metadata filtering}: בחיפוש, העדף תמיד את הגרסה החדשה:
+\begin{english}
+\begin{verbatim}
+# בעת Retrieval
+filter = {"last_updated": {"$gte": "2024-01-01"}}
+\end{verbatim}
+\end{english}
+\end{enumerate}
+
+\subsection{אתגר 4: "זה מאוד יקר"}
+
+עם מאגר גדול, העלויות יכולות להיות משמעותיות:
+\begin{itemize}
+    \item Embedding - מיליוני Chunks
+    \item Vector Database - אחסון ושאילתות
+    \item LLM - כל query כולל Chunks
+\end{itemize}
+
+\textbf{הפתרונות:}
+\begin{enumerate}
+    \item \textbf{Caching חכם}:
+    \begin{itemize}
+        \item שמירת תשובות לשאלות נפוצות
+        \item אם שאלה דומה נשאלה, החזר מ-Cache
+    \end{itemize}
+    \item \textbf{Smaller Embeddings}:
+    \begin{itemize}
+        \item במקום 3072 dimensions, השתמש ב-1536 או פחות
+        \item Matryoshka Embeddings - ניתן "לחתוך" dimensions
+    \end{itemize}
+    \item \textbf{Hybrid approach}:
+    \begin{itemize}
+        \item שאלות פשוטות - חיפוש keyword בלבד (זול)
+        \item שאלות מורכבות - RAG מלא (יקר)
+    \end{itemize}
+    \item \textbf{Self-hosted}:
+    \begin{itemize}
+        \item BGE-M3 על שרת שלכם - ללא עלות Embedding
+        \item Chroma/Qdrant - ללא עלות Database
+        \item Llama 3 local - ללא עלות LLM
+    \end{itemize}
+\end{enumerate}
+
+\section{תכנון תהליך עדכון ידע ב-RAG}
+
+מערכת RAG היא אורגניזם חי. הידע הארגוני משתנה כל הזמן - מדיניות מתעדכנת, מוצרים משתנים, נהלים משתפרים. איך מתחזקים את המערכת?
+
+\subsection{אסטרטגיות עדכון}
+
+\textbf{1. Full Rebuild - בניה מחדש מלאה}
+
+כל שבוע/חודש, מחק הכל ובנה מחדש.
+
+יתרונות:
+\begin{itemize}
+    \item פשוט
+    \item מבטיח consistency
+    \item אין duplicates
+\end{itemize}
+
+חסרונות:
+\begin{itemize}
+    \item יקר (Embedding מחדש של הכל)
+    \item downtime (או צורך בשני environments)
+    \item בזבוז על מסמכים שלא השתנו
+\end{itemize}
+
+\textbf{מתי להשתמש:} מאגרים קטנים (< 10,000 docs), שינויים נדירים.
+
+\textbf{2. Incremental Update - עדכון מצטבר}
+
+עקוב אחרי שינויים ועדכן רק מה שצריך.
+
+תהליך:
+\begin{enumerate}
+    \item Monitor file changes (modified date)
+    \item זהה מסמכים שהשתנו
+    \item מחק רק את ה-Chunks של מסמכים אלה
+    \item צור Embeddings חדשים רק להם
+    \item הוסף ל-Vector Database
+\end{enumerate}
+
+יתרונות:
+\begin{itemize}
+    \item יעיל - עדכון רק מה שצריך
+    \item מהיר
+    \item זול
+\end{itemize}
+
+חסרונות:
+\begin{itemize}
+    \item מורכב יותר
+    \item צריך tracking
+    \item עלול להחמיץ שינויים
+\end{itemize}
+
+\textbf{מתי להשתמש:} מאגרים גדולים, שינויים תכופים.
+
+\textbf{3. Real-time Update - עדכון בזמן אמת}
+
+כל פעולה על מסמך מייד מעדכנת את ה-RAG.
+
+תהליך:
+\begin{itemize}
+    \item Webhook/Event listener על מערכת הקבצים
+    \item מסמך נוסף -- Embed + Add
+    \item מסמך עודכן -- Delete old + Embed + Add new
+    \item מסמך נמחק -- Delete from Vector DB
+\end{itemize}
+
+יתרונות:
+\begin{itemize}
+    \item תמיד עדכני
+    \item אין delay
+\end{itemize}
+
+חסרונות:
+\begin{itemize}
+    \item הכי מורכב
+    \item עלול להעמיס על המערכת
+    \item צריך infrastructure חזקה
+\end{itemize}
+
+\textbf{מתי להשתמש:} כאשר Real-time קריטי (תמיכה בזמן אמת, מערכות ייצור).
+
+\subsection{Pipeline עדכון מומלץ}
+
+לארגון טיפוסי, הנה pipeline מאוזן:
+
+\begin{enumerate}
+    \item \textbf{Nightly Incremental}: כל לילה, בדוק שינויים ועדכן
+    \item \textbf{Weekly Full Rebuild}: פעם בשבוע, rebuild מלא (בטיחות)
+    \item \textbf{Manual Trigger}: אפשרות לעדכון מיידי במקרה חירום
+\end{enumerate}
+
+\begin{english}
+\begin{verbatim}
+# Pseudo-code
+schedule.every().day.at("02:00").do(incremental_update)
+schedule.every().sunday.at("03:00").do(full_rebuild)
+
+def incremental_update():
+    changed_files = get_files_modified_since_last_run()
+    for file in changed_files:
+        old_chunks = get_chunks_for_file(file)
+        delete_from_vector_db(old_chunks)
+
+        new_chunks = chunk_document(file)
+        embeddings = embed_chunks(new_chunks)
+        add_to_vector_db(new_chunks, embeddings)
+
+    log_update(changed_files)
+\end{verbatim}
+\end{english}
+
+\section{בניית תרבות נתונים: המפתח להצלחת RAG}
+
+המכשול הגדול ביותר להצלחת RAG הוא לא טכנולוגי - הוא ארגוני.
+
+\subsection{איכות נתונים היא הכל}
+
+RAG טוב כמו הנתונים שהוא מבוסס עליהם. "Garbage in, garbage out" - אם המסמכים הארגוניים מבולגנים, מיושנים, או סותרים, RAG לא יציל אתכם.
+
+\textbf{בעיות נפוצות:}
+
+\begin{itemize}
+    \item \textbf{Duplicates}: 5 גרסאות של אותה מדיניות, לא ברור איזו עדכנית
+    \item \textbf{מידע מיושן}: מסמכים מ-2015 שכבר לא רלוונטיים
+    \item \textbf{פורמטים מבולגנים}: PDF סרוק שלא ניתן לחילוץ טקסט
+    \item \textbf{חוסר עקביות}: מחלקות שונות קוראות לאותו דבר בשמות שונים
+\end{itemize}
+
+\textbf{הפתרון: Data Governance}
+
+לפני שאתם בונים RAG, השקיעו בניקוי וארגון:
+
+\begin{enumerate}
+    \item \textbf{סקר מאגר}: מה יש לנו בכלל?
+    \item \textbf{ניקוי}: מחיקת ישן, איחוד duplicates
+    \item \textbf{סטנדרטיזציה}: פורמט אחיד, מינוח אחיד
+    \item \textbf{Ownership}: כל מסמך מקבל אחראי לעדכון
+    \item \textbf{תהליכים}: איך מוסיפים/מעדכנים/מוחקים מסמכים
+\end{enumerate}
+
+\subsection{שינוי תרבותי}
+
+RAG מצליח כאשר הארגון מאמץ "Data-First Culture":
+
+\begin{itemize}
+    \item \textbf{תיעוד הוא אחריות}: כל מחלקה חייבת לתעד את הידע שלה
+    \item \textbf{עדכניות היא קריטית}: מדיניות ישנה גרועה יותר מאי-מדיניות
+    \item \textbf{שקיפות}: מידע לא חסוי צריך להיות נגיש לכולם
+\end{itemize}
+
+\section{העתיד: לאן הולך RAG?}
+
+RAG התפתח מאוד בשנים האחרונות, והוא ממשיך להתקדם במהירות מסחררת.
+
+\subsection{טרנדים מתעוררים}
+
+\textbf{Agentic RAG}~\cite{asai2023selfrag} - סוכנים שמחליטים בעצמם:
+\begin{itemize}
+    \item האם צריך RAG או לא
+    \item מאיזה מאגר לשלוף
+    \item כמה Chunks לאחזר
+    \item האם צריך חיפוש נוסף
+\end{itemize}
+
+\textbf{Multimodal RAG} - לא רק טקסט:
+\begin{itemize}
+    \item אחזור תמונות, דיאגרמות
+    \item חיפוש בווידאו
+    \item שילוב אודיו
+\end{itemize}
+
+\textbf{Graph RAG}~\cite{edge2024graphrag} - RAG המבוסס על גרפי ידע:
+\begin{itemize}
+    \item במקום Chunks בודדים, גרף של יחסים
+    \item הבנת קשרים מורכבים
+    \item הסקת מסקנות חדשות
+\end{itemize}
+
+\textbf{Federated RAG} - חיפוש על פני מאגרים מרובים:
+\begin{itemize}
+    \item חלק מהמידע אצלכם, חלק אצל שותפים
+    \item שמירה על פרטיות
+    \item אחזור מבוזר
+\end{itemize}
+
+\subsection{האתגרים הבאים}
+
+\textbf{הערכה אוטומטית} - כיום הערכת RAG דורשת עבודה ידנית. בעתיד:
+\begin{itemize}
+    \item מדדים אוטומטיים בזמן אמת
+    \item זיהוי בעיות לפני שמשתמשים רואים אותן
+    \item שיפור מתמיד (Continuous Learning)
+\end{itemize}
+
+\textbf{Personalization} - RAG שמתאים עצמו לכל משתמש:
+\begin{itemize}
+    \item רמת מומחיות שונה = Chunks שונים
+    \item היסטוריה אישית משפיעה על Retrieval
+    \item סגנון תשובה מותאם
+\end{itemize}
+
+\textbf{Cost Optimization} - RAG יקר. העתיד:
+\begin{itemize}
+    \item מודלים קטנים ויעילים יותר
+    \item Retrieval חכם ומדויק יותר = פחות Chunks
+    \item Caching אגרסיבי
+\end{itemize}
+
+\section{סיכום: RAG כמקור יתרון תחרותי}
+
+RAG הוא הרבה יותר מטכנולוגיה טכנית - הוא גשר בין הידע הארגוני הייחודי שלכם לבין הכוח של בינה מלאכותית גנרטיבית. הארגונים שמצליחים להטמיע RAG ביעילות מקבלים יתרונות משמעותיים:
+
+\begin{itemize}
+    \item \textbf{נגישות ידע}: עובדים מקבלים תשובות מהירות ומדויקות
+    \item \textbf{עקביות}: כולם מקבלים את אותו המידע, ממקור אחד
+    \item \textbf{יעילות}: חיסכון בזמן חיפוש ושאילת שאלות
+    \item \textbf{סקלביליות}: מערכת אחת משרתת אלפי משתמשים
+    \item \textbf{שיפור מתמיד}: ככל שמוסיפים מידע, המערכת משתפרת
+\end{itemize}
+
+אבל זכרו: RAG הוא כלי, לא פתרון קסם. ההצלחה תלויה בתכנון נכון, נתונים איכותיים, הטמעה מושכלת, ותרבות ארגונית תומכת.
+
+בפרק הבא נעמיק באמנות כתיבת Prompts אפקטיביים - המיומנות שתקבע האם RAG שלכם יהיה טוב או מעולה.
+
+\section{תרגילים}
+
+\subsection{תרגילים תיאורטיים}
+
+\textbf{תרגיל 1: תכנן מערכת RAG למסמכים בארגון שלך}
+
+בחר מקרה שימוש ספציפי בארגון שלך (למשל: מדיניות HR, תיעוד מוצר, נהלים תפעוליים) ותכנן מערכת RAG מלאה:
+
+\begin{enumerate}
+    \item זהה את מקורות הנתונים (סוגי מסמכים, מיקום, פורמטים)
+    \item בחר Chunking Strategy מתאימה והצדק
+    \item בחר Embedding Model והסבר למה
+    \item בחר Vector Database והשווה לאלטרנטיבות
+    \item תכנן תהליך עדכון
+    \item הגדר מדדי הצלחה
+    \item העריך עלויות (Embedding, Storage, Queries)
+\end{enumerate}
+
+\textbf{תרגיל 2: בחר Chunking Strategy מתאים}
+
+עבור כל אחד מסוגי המסמכים הבאים, המלץ על Chunking Strategy והסבר:
+
+\begin{enumerate}
+    \item חוזים משפטיים - מסמכי PDF בני 50+ עמודים, מאוד מובנים (סעיפים, תתי-סעיפים)
+    \item מיילים פנימיים - הודעות קצרות עד בינוניות, לא מובנות
+    \item מצגות שיווקיות - PowerPoint עם טקסט ותמונות
+    \item קוד תוכנה - קבצי Python עם תיעוד inline
+    \item פוסטים בפורום פנימי - דיונים עם שאלות ותשובות
+\end{enumerate}
+
+\textbf{תרגיל 3: השווה בין Vector Databases לצרכיך}
+
+בהינתן התרחישים הבאים, בחר Vector Database והצדק:
+
+\textbf{תרחיש א':} סטארטאפ, POC למערכת תמיכת לקוחות, 1,000 מסמכים, תקציב מוגבל, צריכים להציג תוצאות תוך שבועיים.
+
+\textbf{תרחיש ב':} תאגיד בינלאומי, 500,000 מסמכים, דרישות GDPR מחמירות, תקציב משמעותי, אין מומחיות DevOps.
+
+\textbf{תרחיש ג':} חברת ביטוח, 50,000 פוליסות, נתונים רגישים, דרישה לשמירה מקומית, יש צוות IT חזק.
+
+עבור כל תרחיש:
+\begin{itemize}
+    \item המלץ על Database (Pinecone/Chroma/Weaviate/אחר)
+    \item הסבר את ההחלטה
+    \item פרט יתרונות וחסרונות
+    \item העריך עלויות
+\end{itemize}
+
+\textbf{תרגיל 4: תכנן תהליך עדכון מידע ב-RAG}
+
+עבור מערכת RAG על מדיניות חברה:
+
+\begin{itemize}
+    \item מדיניות מתעדכנת בממוצע פעם בחודש
+    \item כ-200 מסמכים במאגר
+    \item כ-50 משתמשים יום-יומיים
+    \item קריטי שהמידע יהיה עדכני (רגולציה)
+\end{itemize}
+
+תכנן:
+\begin{enumerate}
+    \item אסטרטגיית עדכון (Full/Incremental/Real-time)
+    \item תדירות עדכון
+    \item תהליך ווליד ציה - איך מוודאים שהעדכון הצליח?
+    \item תוכנית Rollback - מה קורה אם העדכון משבש?
+    \item איך מודיעים למשתמשים על שינויים?
+\end{enumerate}
+
+\textbf{תרגיל 5: בנה מדדי הצלחה למערכת RAG}
+
+עבור מערכת RAG לתמיכת לקוחות, הגדר:
+
+\begin{enumerate}
+    \item 3 מדדי ביצועים טכניים (Precision, Recall, F1, Latency...)
+    \item 3 מדדי ביצועים עסקיים (CSAT, Resolution Time, Cost Savings...)
+    \item סף (Threshold) לכל מדד - מתי המערכת "מספיק טובה"?
+    \item תכנית מדידה - איך ומתי תמדדו?
+    \item תכנית שיפור - מה תעשו אם המדדים לא מספקים?
+\end{enumerate}
+
+\subsection{תרגילי קוד - Python}
+
+\textbf{תרגיל 6: בניית RAG פשוט עם ChromaDB}
+
+בנה מערכת RAG בסיסית שמאפשרת:
+\begin{itemize}
+    \item טעינת מסמכים מתיקייה
+    \item חיתוך אוטומטי לפי גודל קבוע
+    \item יצירת Embeddings עם OpenAI
+    \item אחסון ב-ChromaDB
+    \item חיפוש וקבלת תשובה
+\end{itemize}
+
+\textbf{תרגיל 7: הערכת ביצועי RAG עם מדדים}
+
+בנה מערכת הערכה:
+\begin{itemize}
+    \item טען test set של שאלות-תשובות
+    \item עבור כל שאלה, בצע Retrieval
+    \item חשב Precision, Recall, F1
+    \item חשב Latency ממוצע
+    \item הצג דוח מסודר
+\end{itemize}
+
+\end{hebrew}
+
+% End of Chapter 7

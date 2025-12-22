@@ -1,0 +1,3294 @@
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{*}{iii}{chapter*.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{*}{xxi}{chapter*.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{*}{xxiii}{chapter*.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{*}{xxv}{chapter*.4}%
+\contentsline {chapter}{הקדמה}{xxv}{chapter*.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {1}}המהפכה השקטה - מבוא למודלי שפה גדולים בעולם העסקי}{1}{chapter.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.1}}פרולוג: בוקר רגיל בעולם חדש}{1}{section.1.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.2}}מהם מודלי שפה גדולים? הסבר אינטואיטיבי}{2}{section.1.2}%
+\contentsline {subsection}{\numberline {\textenglish {1.2.1}}המטאפורה: מכונת השלמת דפוסים}{2}{subsection.1.2.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.2.2}}מתחת למכסה המנוע: ארכיטקטורה בסיסית}{3}{subsection.1.2.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.3}}שני הכוחות העל של \LRE {\textenglish {LLM}}}{3}{section.1.3}%
+\contentsline {subsection}{\numberline {\textenglish {1.3.1}}כוח ראשון: תקשורת טבעית עם מכונה}{3}{subsection.1.3.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.3.2}}כוח שני: עיבוד לוגיקה מורכבת}{4}{subsection.1.3.2}%
+\xpg@aux {}{hebrew}
+\contentsline {subsubsection}{סיכום והפקת תובנות}{4}{subsubsection*.6}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsubsection}{השוואה וניתוח}{5}{subsubsection*.7}%
+\contentsline {subsubsection}{פתרון בעיות רב-שלבי}{5}{subsubsection*.8}%
+\contentsline {subsubsection}{תכנות וכתיבת קוד}{5}{subsubsection*.9}%
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.3.3}}המשמעות המשולבת: עובד דיגיטלי}{5}{subsection.1.3.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.4}}נקודות החוזק: מה \LRE {\textenglish {LLMs}} עושים טוב במיוחד}{6}{section.1.4}%
+\contentsline {subsection}{\numberline {\textenglish {1.4.1}}יצירתיות והפקת רעיונות}{6}{subsection.1.4.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.4.2}}הבנת הקשר ונואנסים}{6}{subsection.1.4.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.4.3}}גמישות והתאמה}{7}{subsection.1.4.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.4.4}}עבודה עם שפות מרובות}{7}{subsection.1.4.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.5}}נקודות החולשה: מה \LRE {\textenglish {LLMs}} לא עושים טוב}{7}{section.1.5}%
+\contentsline {subsection}{\numberline {\textenglish {1.5.1}}הזיות \LRE {\textenglish {(Hallucinations)}}}{7}{subsection.1.5.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.5.2}}חוסר עדכניות \LRE {\textenglish {(Knowledge Cutoff)}}}{8}{subsection.1.5.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.5.3}}עלויות - לא זניח}{8}{subsection.1.5.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.5.4}}חוסר שקיפות \LRE {\textenglish {(Black Box)}}}{9}{subsection.1.5.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.6}}נוסחאות מנהליות להערכת \LRE {\textenglish {LLMs}}}{10}{section.1.6}%
+\contentsline {subsection}{\numberline {\textenglish {1.6.1}}מדד \LRE {\textenglish {ROI}} של יישום \LRE {\textenglish {AI}}}{10}{subsection.1.6.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.6.2}}נוסחת עלות טוקנים}{11}{subsection.1.6.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.6.3}}\LRE {\textenglish {Break-Even Analysis}}}{11}{subsection.1.6.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.7}}השוואת מודלים: תרשים עלות מול יכולות}{12}{section.1.7}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.8}}תרשים \LRE {\textenglish {Venn}}: חפיפה בין יכולות אנושיות ו-\LRE {\textenglish {AI}}}{13}{section.1.8}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.9}}דוגמאות מעשיות: \LRE {\textenglish {LLMs}} בעבודה}{14}{section.1.9}%
+\contentsline {subsection}{\numberline {\textenglish {1.9.1}}מנהלת שיווק: תכנון ויצירת קמפיין}{14}{subsection.1.9.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.9.2}}סמנכ"ל כספים: ניתוח דוחות מורכבים}{15}{subsection.1.9.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.9.3}}מנהלת משאבי אנוש: סינון קורות חיים}{16}{subsection.1.9.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.10}}תרגילים}{16}{section.1.10}%
+\contentsline {subsection}{\numberline {\textenglish {1.10.1}}תרגילים תיאורטיים}{16}{subsection.1.10.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {1.10.2}}תרגילי קוד \LRE {\textenglish {Python}}}{19}{subsection.1.10.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {1.11}}סיכום הפרק}{20}{section.1.11}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {2}}אקוסיסטם הבינה המלאכותית -- מפת הכלים למנהל המודרני}{27}{chapter.2}%
+\contentsline {section}{\numberline {\textenglish {2.1}}פתח דבר: מסע בג'ונגל הטכנולוגי}{27}{section.2.1}%
+\contentsline {section}{\numberline {\textenglish {2.2}}שכבות האקוסיסטם: ארכיטקטורה מלמעלה למטה}{27}{section.2.2}%
+\contentsline {subsection}{\numberline {\textenglish {2.2.1}}שכבת הליבה: מודלי השפה}{28}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {\textenglish {2.2.2}}שכבת החיבור: \LRE {\textenglish {OpenRouter}} -- הרכזת של מודלים}{28}{subsection.2.2.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.2.3}}שכבת הפיתוח: ספריות אינטגרציה}{29}{subsection.2.2.3}%
+\contentsline {subsubsection}{\LRE {\textenglish {LangChain}} -- הסוכן המקצועי}{29}{subsubsection*.13}%
+\contentsline {subsubsection}{\LRE {\textenglish {LangGraph}} -- תזמור תהליכים}{29}{subsubsection*.14}%
+\contentsline {subsubsection}{\LRE {\textenglish {Pydantic AI}} -- המובנה והמסודר}{29}{subsubsection*.15}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.2.4}}שכבת ההטמעה: \LRE {\textenglish {Embeddings}} ומסדי נתונים וקטוריים}{30}{subsection.2.2.4}%
+\contentsline {subsubsection}{מהם \LRE {\textenglish {Embeddings}}?}{30}{subsubsection*.16}%
+\contentsline {subsubsection}{מודלי \LRE {\textenglish {Embedding}} מובילים}{30}{subsubsection*.17}%
+\contentsline {subsubsection}{מסדי נתונים וקטוריים}{30}{subsubsection*.18}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.2.5}}שכבת האוטומציה: כלים אגנטיים}{31}{subsection.2.2.5}%
+\contentsline {subsubsection}{\LRE {\textenglish {LangGraph}} (שוב, אבל בהקשר אחר)}{31}{subsubsection*.19}%
+\contentsline {subsubsection}{\LRE {\textenglish {AutoGen}} -- צוותי סוכנים}{31}{subsubsection*.20}%
+\contentsline {subsubsection}{\LRE {\textenglish {n8n}} -- אוטומציה חזותית}{31}{subsubsection*.21}%
+\contentsline {subsubsection}{\LRE {\textenglish {Zapier}} -- השחקן הוותיק}{31}{subsubsection*.22}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {2.3}}מתי להשתמש במה: מטריצת החלטות}{32}{section.2.3}%
+\contentsline {subsection}{\numberline {\textenglish {2.3.1}}בחירת ספק \LRE {\textenglish {LLM}}}{32}{subsection.2.3.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.3.2}}בחירת מסד נתונים וקטורי}{32}{subsection.2.3.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.3.3}}החלטת ענן מול \LRE {\textenglish {On-Premise}}}{32}{subsection.2.3.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {2.4}}נוסחאות מנהליות: חשבון כלכלי}{33}{section.2.4}%
+\contentsline {subsection}{\numberline {\textenglish {2.4.1}}נוסחת \LRE {\textenglish {TCO}} -- עלות בעלות כוללת}{33}{subsection.2.4.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.4.2}}נוסחת \LRE {\textenglish {Latency}} -- זמן תגובה}{34}{subsection.2.4.2}%
+\contentsline {section}{\numberline {\textenglish {2.5}}השוואת מחירים: מי הכי משתלם?}{34}{section.2.5}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {2.6}}דוגמאות מעשיות מהשטח}{35}{section.2.6}%
+\contentsline {subsection}{\numberline {\textenglish {2.6.1}}דוגמה 1: סטארטאפ בשלב \LRE {\textenglish {Seed}} -- בחירת \LRE {\textenglish {Stack}}}{35}{subsection.2.6.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.6.2}}דוגמה 2: ארגון גדול -- מעבר מ-\LRE {\textenglish {ChatGPT}} לפתרון ארגוני}{36}{subsection.2.6.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.6.3}}דוגמה 3: החלטת \LRE {\textenglish {Build vs Buy}}}{37}{subsection.2.6.3}%
+\contentsline {section}{\numberline {\textenglish {2.7}}תרגילים}{37}{section.2.7}%
+\contentsline {subsection}{\numberline {\textenglish {2.7.1}}תרגיל 1 (תיאורטי): בניית ארכיטקטורה לפרויקט \LRE {\textenglish {AI}}}{37}{subsection.2.7.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.7.2}}תרגיל 2 (תיאורטי): חישוב \LRE {\textenglish {TCO}} לשלושה תרחישים}{38}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {\textenglish {2.7.3}}תרגיל 3 (תיאורטי): ניתוח \LRE {\textenglish {Trade-offs}} בין \LRE {\textenglish {Pinecone}} ל-\LRE {\textenglish {Chroma}}}{38}{subsection.2.7.3}%
+\contentsline {subsection}{\numberline {\textenglish {2.7.4}}תרגיל 4 (תיאורטי): תכנון אסטרטגיית \LRE {\textenglish {Vendor}}}{38}{subsection.2.7.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.7.5}}תרגיל 5 (תיאורטי): בניית \LRE {\textenglish {RFP}} לבחירת ספק \LRE {\textenglish {AI}}}{39}{subsection.2.7.5}%
+\contentsline {subsection}{\numberline {\textenglish {2.7.6}}תרגיל 6 (קוד \LRE {\textenglish {Python}}): השוואת מחירי \LRE {\textenglish {API}} בין ספקים}{39}{subsection.2.7.6}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {2.7.7}}תרגיל 7 (קוד \LRE {\textenglish {Python}}): בדיקת \LRE {\textenglish {Latency}} של מודלים}{41}{subsection.2.7.7}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {2.8}}סיכום: המפה שלכם לאקוסיסטם}{43}{section.2.8}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {3}}תקשורת עם המכונה -- יסודות \LRE {\textenglish {REST APIs}} ו-\LRE {\textenglish {JSON}}}{45}{chapter.3}%
+\contentsline {section}{\numberline {\textenglish {3.1}}פרולוג: שיחה שלא הובנה}{45}{section.3.1}%
+\contentsline {section}{\numberline {\textenglish {3.2}}השפה שהמכונות מדברות: מבוא ל-\LRE {\textenglish {REST API}}}{45}{section.3.2}%
+\contentsline {subsection}{\numberline {\textenglish {3.2.1}}מהו \LRE {\textenglish {API}}? אנלוגיה למלצר במסעדה}{46}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {\textenglish {3.2.2}}ארבעת הפעלים הבסיסיים: \LRE {\textenglish {GET}}, \LRE {\textenglish {POST}}, \LRE {\textenglish {PUT}}, \LRE {\textenglish {DELETE}}}{46}{subsection.3.2.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {3.2.3}}מבנה הבקשה: \LRE {\textenglish {Headers}}, \LRE {\textenglish {Body}}, \LRE {\textenglish {Authentication}}}{47}{subsection.3.2.3}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {3.3}}\LRE {\textenglish {JSON}} - שפת חילופי הנתונים של האינטרנט}{47}{section.3.3}%
+\contentsline {subsection}{\numberline {\textenglish {3.3.1}}מהו \LRE {\textenglish {JSON}} ומדוע הוא כל כך נפוץ?}{47}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {\textenglish {3.3.2}}סוגי נתונים ב-\LRE {\textenglish {JSON}}}{47}{subsection.3.3.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {3.3.3}}מבנים מקוננים: הכוח האמיתי של \LRE {\textenglish {JSON}}}{48}{subsection.3.3.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {3.3.4}}תרגול: קריאת \LRE {\textenglish {JSON}} מתועד \LRE {\textenglish {API}}}{49}{subsection.3.3.4}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {3.4}}קודי תגובה: מה המכונה אומרת לנו?}{50}{section.3.4}%
+\contentsline {subsection}{\numberline {\textenglish {3.4.1}}מפת הקודים - ומה הם אומרים עליכם}{50}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {\textenglish {3.4.2}}סיפור מהשטח: מקרה 429}{50}{subsection.3.4.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {3.5}}\LRE {\textenglish {Rate Limiting}} - מנהלים ומגבלות}{51}{section.3.5}%
+\contentsline {subsection}{\numberline {\textenglish {3.5.1}}מהו \LRE {\textenglish {Rate Limiting}} ומדוע הוא קיים?}{51}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {\textenglish {3.5.2}}חישוב \LRE {\textenglish {Throughput}} מקסימלי}{51}{subsection.3.5.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {3.5.3}}תכנון ארכיטקטורת \LRE {\textenglish {Rate Limiting}}}{52}{subsection.3.5.3}%
+\contentsline {section}{\numberline {\textenglish {3.6}}\LRE {\textenglish {API Keys}} ואבטחה - מי שומר על השומרים?}{52}{section.3.6}%
+\contentsline {subsection}{\numberline {\textenglish {3.6.1}}מהו \LRE {\textenglish {API Key}}?}{52}{subsection.3.6.1}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {3.6.2}}סיפור אימה: דליפת \LRE {\textenglish {API Key}} ב-\LRE {\textenglish {GitHub}}}{53}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {\textenglish {3.6.3}}מדיניות ניהול \LRE {\textenglish {API Keys}} בארגון}{53}{subsection.3.6.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {3.7}}עלויות ומדדים עסקיים}{54}{section.3.7}%
+\contentsline {subsection}{\numberline {\textenglish {3.7.1}}נוסחת עלות לבקשה}{54}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {\textenglish {3.7.2}}תכנון תקציב \LRE {\textenglish {API}}}{54}{subsection.3.7.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {3.8}}דוגמאות מעשיות מעולם העסקים}{55}{section.3.8}%
+\contentsline {subsection}{\numberline {\textenglish {3.8.1}}דוגמה 1: חיבור אפליקציה פנימית ל-\LRE {\textenglish {OpenAI API}}}{55}{subsection.3.8.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {3.8.2}}דוגמה 2: שליפת נתונים מ-\LRE {\textenglish {CRM}} ושילוב עם \LRE {\textenglish {LLM}}}{56}{subsection.3.8.2}%
+\contentsline {subsection}{\numberline {\textenglish {3.8.3}}דוגמה 3: דאשבורד בזמן אמת של נתוני AI}{56}{subsection.3.8.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {3.9}}תרגילים}{57}{section.3.9}%
+\contentsline {subsection}{\numberline {\textenglish {3.9.1}}תרגילים תיאורטיים}{57}{subsection.3.9.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsection}{\numberline {\textenglish {3.9.2}}תרגילי קוד \LRE {\textenglish {Python}}}{60}{subsection.3.9.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {3.10}}סיכום}{61}{section.3.10}%
+\contentsline {subsection}{\numberline {\textenglish {3.10.1}}נקודות מפתח לזכור}{61}{subsection.3.10.1}%
+\contentsline {subsection}{\numberline {\textenglish {3.10.2}}מעבר לפרק הבא}{61}{subsection.3.10.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {4}}פרוטוקול ההקשר -- \LRE {\textenglish {MCP}} כגשר בין \LRE {\textenglish {AI}} לעולם העסקי}{63}{chapter.4}%
+\contentsline {section}{מטרות הלמידה}{63}{section*.32}%
+\contentsline {section}{הקדמה}{63}{section*.32}%
+\contentsline {subsection}{\textenglish {\textenglish {4.1}}\hskip 1em\relax \texthebrew {\textenglish {Model Context Protocol (MCP)} - מהו ומדוע הוא משנה את המשחק?}}{64}{section*.33}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.1}.1}\hskip 1em\relax \texthebrew {המהות של \textenglish {MCP}}}{64}{section*.34}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.1}.2}\hskip 1em\relax \texthebrew {הארכיטקטורה: לקוחות, שרתים, והקשר}}{64}{section*.35}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.1}.3}\hskip 1em\relax \texthebrew {שלושת היתרונות המהפכניים}}{65}{section*.37}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.1}.3.1}\hskip 1em\relax 1. גילוי דינמי (\textenglish {Dynamic Discovery})}{65}{section*.38}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {paragraph}{\textenglish {\textenglish {4.1}.3.2}\hskip 1em\relax 2. ניהול מצב (\textenglish {Stateful Interaction})}{66}{section*.39}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {paragraph}{\textenglish {\textenglish {4.1}.3.3}\hskip 1em\relax 3. פתרון בעיית $N \times M$}{67}{section*.40}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\textenglish {\textenglish {4.2}}\hskip 1em\relax \texthebrew {\textenglish {MCP} לעומת \textenglish {REST API}: מתי להשתמש בכל אחד?}}{68}{section*.42}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.2}.1}\hskip 1em\relax \texthebrew {הבדלים מהותיים}}{68}{section*.43}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.2}.2}\hskip 1em\relax \texthebrew {כשכדאי להשתמש ב-\textenglish {REST API}}}{68}{section*.45}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.2}.3}\hskip 1em\relax \texthebrew {כשכדאי להשתמש ב-\textenglish {MCP}}}{69}{section*.46}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.2}.4}\hskip 1em\relax \texthebrew {איך הם עובדים ביחד?}}{69}{section*.47}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\textenglish {\textenglish {4.3}}\hskip 1em\relax \texthebrew {שרתי \textenglish {MCP} זמינים: מפת האקוסיסטם}}{70}{section*.48}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.3}.1}\hskip 1em\relax \texthebrew {הצמיחה המהירה של האקוסיסטם}}{70}{section*.49}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.3}.2}\hskip 1em\relax \texthebrew {מקורות למציאת שרתי \textenglish {MCP}}}{70}{section*.50}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.3}.2.1}\hskip 1em\relax 1. \textenglish {mcpservers.org} - המאגר המרכזי}{70}{section*.51}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.3}.2.2}\hskip 1em\relax 2. \textenglish {PulseMCP} ו-\textenglish {Portkey}}{70}{section*.52}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.3}.3}\hskip 1em\relax \texthebrew {דוגמאות לשרתי \textenglish {MCP} פופולריים}}{70}{section*.53}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.3}.3.1}\hskip 1em\relax שרתים רשמיים (\textenglish {Official})}{70}{section*.54}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {paragraph}{\textenglish {\textenglish {4.3}.3.2}\hskip 1em\relax פיתוח (\textenglish {Development})}{71}{section*.55}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.3}.3.3}\hskip 1em\relax בסיסי נתונים (\textenglish {Database})}{71}{section*.56}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.3}.3.4}\hskip 1em\relax פרודוקטיביות (\textenglish {Productivity})}{71}{section*.57}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.3}.3.5}\hskip 1em\relax אוטומציה (\textenglish {Automation})}{71}{section*.58}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.3}.3.6}\hskip 1em\relax פיננסים ותשלומים}{71}{section*.59}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.3}.4}\hskip 1em\relax \texthebrew {שרתי \textenglish {MCP} מרוחקים (\textenglish {Remote MCP Servers})}}{71}{section*.60}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\textenglish {\textenglish {4.4}}\hskip 1em\relax \texthebrew {תרחישי שימוש עסקיים ב-\textenglish {MCP}}}{72}{section*.61}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.4}.1}\hskip 1em\relax \texthebrew {חיבור \textenglish {Claude} למאגר נתונים פנימי}}{72}{section*.62}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.4}.2}\hskip 1em\relax \texthebrew {גישה לקבצים ומסמכים ארגוניים}}{72}{section*.63}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.4}.3}\hskip 1em\relax \texthebrew {אינטגרציה עם כלי ניהול פרויקטים}}{73}{section*.64}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\textenglish {\textenglish {4.5}}\hskip 1em\relax \texthebrew {אבטחה ב-\textenglish {MCP}: הרשאות, בקרה, וסיכונים}}{73}{section*.65}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.5}.1}\hskip 1em\relax \texthebrew {אתגרי אבטחה ייחודיים ל-\textenglish {MCP}}}{73}{section*.66}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.5}.1.1}\hskip 1em\relax 1. \textenglish {Prompt Injection}}{73}{section*.67}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {paragraph}{\textenglish {\textenglish {4.5}.1.2}\hskip 1em\relax 2. שילוב כלים מסוכן (\textenglish {Tool Chaining})}{73}{section*.68}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {paragraph}{\textenglish {\textenglish {4.5}.1.3}\hskip 1em\relax 3. שרתים חסרי אימות}{74}{section*.69}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.5}.2}\hskip 1em\relax \texthebrew {עקרונות אבטחה ל-\textenglish {MCP}}}{74}{section*.70}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.5}.2.1}\hskip 1em\relax 1. \textenglish {Principle of Least Privilege}}{74}{section*.71}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.5}.2.2}\hskip 1em\relax 2. רישום (\textenglish {Logging}) מקיף}{74}{section*.72}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.5}.2.3}\hskip 1em\relax 3. אימות דו-שלבי לפעולות רגישות}{74}{section*.73}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.5}.2.4}\hskip 1em\relax 4. הפרדת סביבות}{74}{section*.74}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\textenglish {\textenglish {4.6}}\hskip 1em\relax \texthebrew {נוסחאות מנהליות: מדידת יעילות ועלות של \textenglish {MCP}}}{74}{section*.75}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.6}.1}\hskip 1em\relax \texthebrew {יעילות הקשר (\textenglish {Context Efficiency})}}{75}{section*.76}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.6}.2}\hskip 1em\relax \texthebrew {עלות הקשר (\textenglish {Context Cost})}}{75}{section*.77}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.6}.3}\hskip 1em\relax \texthebrew {זמן אינטגרציה (\textenglish {Integration Time})}}{76}{section*.78}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\textenglish {\textenglish {4.7}}\hskip 1em\relax \texthebrew {עתיד הפרוטוקול: כיוונים ומגמות}}{76}{section*.79}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.7}.1}\hskip 1em\relax \texthebrew {מ-פרויקט פרטי לסטנדרט תעשייתי}}{76}{section*.80}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.7}.2}\hskip 1em\relax \texthebrew {מגמות מרכזיות לשנים הקרובות}}{76}{section*.81}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.7}.2.1}\hskip 1em\relax 1. פעולות אסינכרוניות (\textenglish {Asynchronous Operations})}{76}{section*.82}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {paragraph}{\textenglish {\textenglish {4.7}.2.2}\hskip 1em\relax 2. \textenglish {Statelessness} וזהות שרתים}{77}{section*.83}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.7}.2.3}\hskip 1em\relax 3. \textenglish {Extensions} רשמיים}{77}{section*.84}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.7}.2.4}\hskip 1em\relax 4. אבטחה משופרת}{77}{section*.85}%
+\contentsline {paragraph}{\textenglish {\textenglish {4.7}.2.5}\hskip 1em\relax 5. \textenglish {MCP} למערכות \textenglish {Edge}}{77}{section*.86}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.7}.3}\hskip 1em\relax \texthebrew {השפעה ארוכת טווח: עידן הסוכנים}}{77}{section*.87}%
+\contentsline {subsection}{\textenglish {\textenglish {4.8}}\hskip 1em\relax \texthebrew {תרגילים}}{77}{section*.88}%
+\contentsline {subsubsection}{\textenglish {\textenglish {4.8}.1}\hskip 1em\relax \texthebrew {תרגילים תיאורטיים}}{77}{section*.89}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsubsection}{\textenglish {\textenglish {4.8}.2}\hskip 1em\relax \texthebrew {תרגיל תכנות: חיבור לשרת \textenglish {MCP}}}{80}{section*.90}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{סיכום}{83}{Item.225}%
+\contentsline {section}{מקורות}{83}{Item.225}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {5}}סוכנים אוטונומיים -- מ-\LRE {\textenglish {Chatbot}} לעובד דיגיטלי}{85}{chapter.5}%
+\contentsline {section}{\numberline {\textenglish {5.1}}הקדמה: מהפכת הסוכנים האוטונומיים}{85}{section.5.1}%
+\contentsline {section}{\numberline {\textenglish {5.2}}מצ'אטבוט לסוכן: מה השתנה?}{85}{section.5.2}%
+\contentsline {subsection}{\numberline {\textenglish {5.2.1}}הצ'אטבוט המסורתי: מגבלות וחוזקות}{85}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {\textenglish {5.2.2}}הסוכן האוטונומי: פריצת דרך קונספטואלית}{86}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {\textenglish {5.2.3}}דיאגרמת השוואה: \LRE {\textenglish {Chatbot}} לעומת \LRE {\textenglish {Agent}} לעומת \LRE {\textenglish {Autonomous Agent}}}{86}{subsection.5.2.3}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.2.4}}מקרה בוחן: מתזמון פגישה ידני לאוטונומי מלא}{86}{subsection.5.2.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {5.3}}\LRE {\textenglish {Agentic AI}}: הגדרה ועקרונות}{87}{section.5.3}%
+\contentsline {subsection}{\numberline {\textenglish {5.3.1}}הגדרה פורמלית}{87}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {\textenglish {5.3.2}}העקרונות המרכזיים של \LRE {\textenglish {Agentic AI}}}{87}{subsection.5.3.2}%
+\contentsline {subsubsection}{תכנון (\LRE {\textenglish {Planning}})}{87}{subsubsection*.92}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{ביצוע (\LRE {\textenglish {Execution}})}{88}{subsubsection*.93}%
+\contentsline {subsubsection}{למידה (\LRE {\textenglish {Learning}})}{88}{subsubsection*.94}%
+\contentsline {subsubsection}{משוב ובקרה (\LRE {\textenglish {Feedback \& Control}})}{88}{subsubsection*.95}%
+\contentsline {subsection}{\numberline {\textenglish {5.3.3}}ארכיטקטורת הסוכן: מבט פנימה}{88}{subsection.5.3.3}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {5.4}}כלי \LRE {\textenglish {Agentic Automation}}: מפת הטכנולוגיות}{89}{section.5.4}%
+\contentsline {subsection}{\numberline {\textenglish {5.4.1}}פריימוורקים מבוססי קוד: \LRE {\textenglish {LangGraph}} ו-\LRE {\textenglish {AutoGen}}}{89}{subsection.5.4.1}%
+\contentsline {subsubsection}{\LRE {\textenglish {LangGraph}}: תזמור סוכנים מורכבים}{89}{subsubsection*.97}%
+\contentsline {subsubsection}{\LRE {\textenglish {AutoGen}}: צוותי סוכנים בשיחה}{89}{subsubsection*.98}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.4.2}}פלטפורמות \LRE {\textenglish {Low-Code}}: \LRE {\textenglish {n8n}} ו-\LRE {\textenglish {Zapier}}}{90}{subsection.5.4.2}%
+\contentsline {subsubsection}{n8n: אוטומציה עם גמישות}{90}{subsubsection*.99}%
+\contentsline {subsubsection}{\LRE {\textenglish {Zapier}}: פשטות ומהירות}{90}{subsubsection*.100}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.4.3}}פלטפורמות \LRE {\textenglish {Zero-Code}}: \LRE {\textenglish {Make}}, \LRE {\textenglish {RelevanceAI}}, \LRE {\textenglish {Google AI Studio}}}{91}{subsection.5.4.3}%
+\contentsline {subsubsection}{Make (Integromat לשעבר): אוטומציה ויזואלית}{91}{subsubsection*.101}%
+\contentsline {subsubsection}{\LRE {\textenglish {RelevanceAI}}: סוכני \LRE {\textenglish {AI}} מותאמים אישית}{91}{subsubsection*.102}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\LRE {\textenglish {Google AI Studio}}: יצירה מהירה של אפליקציות \LRE {\textenglish {AI}}}{92}{subsubsection*.103}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.4.4}}טבלת השוואה: מציאת הכלי המתאים}{93}{subsection.5.4.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {5.5}}תכנון \LRE {\textenglish {Workflow}} לסוכנים}{93}{section.5.5}%
+\contentsline {subsection}{\numberline {\textenglish {5.5.1}}שלבי תכנון \LRE {\textenglish {Workflow}}}{93}{subsection.5.5.1}%
+\contentsline {subsubsection}{שלב 1: הגדרת המטרה והיקף}{93}{subsubsection*.105}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{שלב 2: מיפוי התהליך הנוכחי}{94}{subsubsection*.106}%
+\contentsline {subsubsection}{שלב 3: פירוק למשימות ולצמתי החלטה}{94}{subsubsection*.107}%
+\contentsline {subsubsection}{שלב 4: זיהוי תלויות ואילוצים}{94}{subsubsection*.108}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{שלב 5: תכנון טיפול בחריגים}{95}{subsubsection*.109}%
+\contentsline {subsection}{\numberline {\textenglish {5.5.2}}דיאגרמת \LRE {\textenglish {Workflow}} מורכבת: ניהול לידים אוטומטי}{95}{subsection.5.5.2}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.5.3}}עקרונות לתכנון \LRE {\textenglish {Workflow}} אפקטיבי}{95}{subsection.5.5.3}%
+\contentsline {subsubsection}{עקרון המודולריות}{95}{subsubsection*.111}%
+\contentsline {subsubsection}{עקרון האידמפוטנטיות}{95}{subsubsection*.112}%
+\contentsline {subsubsection}{עקרון הנראות (\LRE {\textenglish {Observability}})}{95}{subsubsection*.113}%
+\contentsline {subsubsection}{עקרון ה-\LRE {\textenglish {Fail Fast}}}{95}{subsubsection*.114}%
+\contentsline {subsubsection}{עקרון ה-\LRE {\textenglish {Graceful Degradation}}}{95}{subsubsection*.115}%
+\contentsline {section}{\numberline {\textenglish {5.6}}ניטור ובקרה: פיקוח על סוכנים אוטונומיים}{95}{section.5.6}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.6.1}}רמות הפיקוח}{96}{subsection.5.6.1}%
+\contentsline {subsubsection}{רמה 1: פיקוח מלא (\LRE {\textenglish {Human-in-the-Loop}})}{96}{subsubsection*.116}%
+\contentsline {subsubsection}{רמה 2: פיקוח סלקטיבי (\LRE {\textenglish {Human-on-the-Loop}})}{96}{subsubsection*.117}%
+\contentsline {subsubsection}{רמה 3: פיקוח בדיעבד (\LRE {\textenglish {Human-after-the-Loop}})}{96}{subsubsection*.118}%
+\contentsline {subsection}{\numberline {\textenglish {5.6.2}}מטריקות ניטור חיוניות}{96}{subsection.5.6.2}%
+\contentsline {subsubsection}{מטריקות ביצוע}{96}{subsubsection*.119}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{מטריקות עסקיות}{97}{subsubsection*.120}%
+\contentsline {subsubsection}{מטריקות אמינות}{97}{subsubsection*.121}%
+\contentsline {subsection}{\numberline {\textenglish {5.6.3}}כלים לניטור ולוגינג}{97}{subsection.5.6.3}%
+\contentsline {subsubsection}{לוגים מובנים}{97}{subsubsection*.122}%
+\contentsline {subsubsection}{מערכות ניטור חיצוניות}{97}{subsubsection*.123}%
+\contentsline {subsection}{\numberline {\textenglish {5.6.4}}אסטרטגיות התראה (\LRE {\textenglish {Alerting}})}{97}{subsection.5.6.4}%
+\contentsline {subsubsection}{התראות קריטיות (\LRE {\textenglish {Critical Alerts}})}{97}{subsubsection*.124}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{התראות חשובות (\LRE {\textenglish {High Priority}})}{98}{subsubsection*.125}%
+\contentsline {subsubsection}{התראות מידע (\LRE {\textenglish {Info}})}{98}{subsubsection*.126}%
+\contentsline {subsection}{\numberline {\textenglish {5.6.5}}בקרת איכות ואימות}{98}{subsection.5.6.5}%
+\contentsline {subsubsection}{\LRE {\textenglish {Spot Checks}}}{98}{subsubsection*.127}%
+\contentsline {subsubsection}{\LRE {\textenglish {A/B Testing}}}{98}{subsubsection*.128}%
+\contentsline {subsubsection}{\LRE {\textenglish {Regression Testing}}}{98}{subsubsection*.129}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {5.7}}דוגמאות מעשיות}{99}{section.5.7}%
+\contentsline {subsection}{\numberline {\textenglish {5.7.1}}דוגמה 1: סוכן לניהול לידים אוטומטי}{99}{subsection.5.7.1}%
+\contentsline {subsubsection}{רקע עסקי}{99}{subsubsection*.130}%
+\contentsline {subsubsection}{הפתרון: סוכן אוטונומי}{99}{subsubsection*.131}%
+\contentsline {subsubsection}{תוצאות}{99}{subsubsection*.132}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.7.2}}דוגמה 2: סוכן לתמיכת לקוחות \LRE {\textenglish {Tier 1}}}{100}{subsection.5.7.2}%
+\contentsline {subsubsection}{רקע עסקי}{100}{subsubsection*.133}%
+\contentsline {subsubsection}{הפתרון: סוכן \LRE {\textenglish {Tier 1}}}{100}{subsubsection*.134}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{תוצאות}{101}{subsubsection*.135}%
+\contentsline {subsection}{\numberline {\textenglish {5.7.3}}דוגמה 3: סוכן לניתוח נתונים יומי}{101}{subsection.5.7.3}%
+\contentsline {subsubsection}{רקע עסקי}{101}{subsubsection*.136}%
+\contentsline {subsubsection}{הפתרון: סוכן ניתוח אוטומטי}{101}{subsubsection*.137}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{תוצאות}{102}{subsubsection*.138}%
+\contentsline {section}{\numberline {\textenglish {5.8}}תכנית יישום: \LRE {\textenglish {Gantt Chart}}}{102}{section.5.8}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {5.9}}מתכונים ניהוליים}{102}{section.5.9}%
+\contentsline {subsection}{\numberline {\textenglish {5.9.1}}נוסחה 1: \LRE {\textenglish {ROI}} של אוטומציה}{102}{subsection.5.9.1}%
+\contentsline {subsection}{\numberline {\textenglish {5.9.2}}נוסחה 2: שיעור שגיאות}{102}{subsection.5.9.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.9.3}}נוסחה 3: \LRE {\textenglish {Capacity Planning}}}{103}{subsection.5.9.3}%
+\contentsline {section}{\numberline {\textenglish {5.10}}תרגילים}{103}{section.5.10}%
+\contentsline {subsection}{\numberline {\textenglish {5.10.1}}תרגיל 1: תכנון סוכן לאוטומציה של משימה יומית}{103}{subsection.5.10.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.10.2}}תרגיל 2: השוואה -- \LRE {\textenglish {n8n}} לעומת \LRE {\textenglish {Make}}}{104}{subsection.5.10.2}%
+\contentsline {subsection}{\numberline {\textenglish {5.10.3}}תרגיל 3: ניתוח כשלון - מה השתבש?}{104}{subsection.5.10.3}%
+\contentsline {subsection}{\numberline {\textenglish {5.10.4}}תרגיל 4: בניית \LRE {\textenglish {SLA}} לסוכן אוטונומי}{104}{subsection.5.10.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.10.5}}תרגיל 5: תכנון הסלמה - מתי סוכן מעביר לאדם?}{105}{subsection.5.10.5}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.10.6}}תרגיל 6: \LRE {\textenglish {Python}} -- בניית סוכן פשוט עם \LRE {\textenglish {LangChain}}}{105}{subsection.5.10.6}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {5.10.7}}תרגיל 7: \LRE {\textenglish {Python}} -- \LRE {\textenglish {Workflow}} אוטומטי עם \LRE {\textenglish {Retry}} ו-\LRE {\textenglish {Error Handling}}}{107}{subsection.5.10.7}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {5.11}}סיכום: העתיד של עבודת הידע}{111}{section.5.11}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {6}}פרוטוקול \LRE {\textenglish {A2A}} -- כשסוכנים מדברים ביניהם}{113}{chapter.6}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{יעדי הלמידה}{113}{figure.caption.141}%
+\contentsline {section}{\numberline {\textenglish {6.1}}מבוא: הכוח של רבים}{114}{section.6.1}%
+\contentsline {section}{\numberline {\textenglish {6.2}}מהו \LRE {\textenglish {A2A}}?}{114}{section.6.2}%
+\contentsline {subsection}{\numberline {\textenglish {6.2.1}}הגדרה}{114}{subsection.6.2.1}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.2.2}}מדוע נדרש \LRE {\textenglish {A2A}}?}{114}{subsection.6.2.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.2.3}}מרכיבי \LRE {\textenglish {A2A}}}{115}{subsection.6.2.3}%
+\contentsline {section}{\numberline {\textenglish {6.3}}ארכיטקטורות של מערכות \LRE {\textenglish {Multi-Agent}}}{115}{section.6.3}%
+\contentsline {subsection}{\numberline {\textenglish {6.3.1}}\LRE {\textenglish {Hub-and-Spoke}} (מרכז וזרועות)}{115}{subsection.6.3.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.3.2}}\LRE {\textenglish {Mesh}} (רשת)}{116}{subsection.6.3.2}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.3.3}}\LRE {\textenglish {Hierarchical}} (היררכי)}{117}{subsection.6.3.3}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {6.4}}תיאום משימות בין סוכנים}{117}{section.6.4}%
+\contentsline {subsection}{\numberline {\textenglish {6.4.1}}חלוקת עבודה (\LRE {\textenglish {Task Distribution}})}{117}{subsection.6.4.1}%
+\contentsline {subsubsection}{חלוקה סטטית (\LRE {\textenglish {Static Assignment}})}{117}{subsubsection*.145}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{חלוקה דינמית (\LRE {\textenglish {Dynamic Assignment}})}{118}{subsubsection*.146}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{חלוקה מבוססת יכולות (\LRE {\textenglish {Capability-Based}})}{118}{subsubsection*.147}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.4.2}}תיאום זמנים (\LRE {\textenglish {Coordination}})}{118}{subsection.6.4.2}%
+\contentsline {subsubsection}{\LRE {\textenglish {Sequential}} (סידרתי)}{118}{subsubsection*.148}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\LRE {\textenglish {Parallel}} (מקבילי)}{119}{subsubsection*.150}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\LRE {\textenglish {Conditional}} (מותנה)}{119}{subsubsection*.152}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.4.3}}עלויות תיאום (\LRE {\textenglish {Coordination Overhead}})}{119}{subsection.6.4.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {6.5}}טיפול בקונפליקטים}{120}{section.6.5}%
+\contentsline {subsection}{\numberline {\textenglish {6.5.1}}סוגי קונפליקטים}{120}{subsection.6.5.1}%
+\contentsline {subsubsection}{קונפליקט משאבים (\LRE {\textenglish {Resource Conflict}})}{120}{subsubsection*.154}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{קונפליקט החלטה (\LRE {\textenglish {Decision Conflict}})}{120}{subsubsection*.155}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsubsection}{קונפליקט סדר פעולות (\LRE {\textenglish {Ordering Conflict}})}{121}{subsubsection*.156}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.5.2}}מנגנוני פתרון קונפליקטים}{121}{subsection.6.5.2}%
+\contentsline {subsubsection}{\LRE {\textenglish {Priorities}} (עדיפויות)}{121}{subsubsection*.157}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\LRE {\textenglish {First-Come-First-Served (FCFS)}}}{121}{subsubsection*.158}%
+\contentsline {subsubsection}{\LRE {\textenglish {Voting}} (הצבעה)}{121}{subsubsection*.159}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsubsection}{\LRE {\textenglish {Escalation}} (הסלמה)}{122}{subsubsection*.160}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {section}{\numberline {\textenglish {6.6}}\LRE {\textenglish {Orchestration}}: תזמור סוכנים}{123}{section.6.6}%
+\contentsline {subsection}{\numberline {\textenglish {6.6.1}}מהו \LRE {\textenglish {Orchestration}}?}{123}{subsection.6.6.1}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.6.2}}\LRE {\textenglish {LangGraph}}: כלי לתזמור}{123}{subsection.6.6.2}%
+\contentsline {subsubsection}{רכיבי \LRE {\textenglish {LangGraph}}}{123}{subsubsection*.161}%
+\contentsline {subsubsection}{דוגמה: \LRE {\textenglish {Order Processing Workflow}}}{123}{subsubsection*.162}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.6.3}}\LRE {\textenglish {State Management}} (ניהול מצב)}{126}{subsection.6.6.3}%
+\contentsline {subsubsection}{\LRE {\textenglish {Shared State}} (מצב משותף)}{126}{subsubsection*.164}%
+\contentsline {subsubsection}{\LRE {\textenglish {Message Passing}} (העברת הודעות)}{126}{subsubsection*.165}%
+\contentsline {subsubsection}{\LRE {\textenglish {Event Sourcing}}}{126}{subsubsection*.166}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {6.7}}ניטור מערכות \LRE {\textenglish {Multi-Agent}}}{127}{section.6.7}%
+\contentsline {subsection}{\numberline {\textenglish {6.7.1}}מטריקות חשובות}{127}{subsection.6.7.1}%
+\contentsline {subsection}{\numberline {\textenglish {6.7.2}}כלי ניטור}{127}{subsection.6.7.2}%
+\contentsline {subsubsection}{\LRE {\textenglish {Logging}}}{127}{subsubsection*.167}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\LRE {\textenglish {Tracing}}}{128}{subsubsection*.168}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\LRE {\textenglish {Metrics Dashboard}}}{130}{subsubsection*.169}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {6.8}}דוגמאות מעשיות}{130}{section.6.8}%
+\contentsline {subsection}{\numberline {\textenglish {6.8.1}}דוגמה 1: צוות סוכנים לטיפול בהזמנה}{130}{subsection.6.8.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.8.2}}דוגמה 2: סוכן מכירות + סוכן מלאי + סוכן לוגיסטיקה}{135}{subsection.6.8.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.8.3}}דוגמה 3: מערכת \LRE {\textenglish {Multi-Agent}} לתמיכת לקוחות}{138}{subsection.6.8.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {6.9}}תרגילים}{138}{section.6.9}%
+\contentsline {subsection}{\numberline {\textenglish {6.9.1}}תרגיל 1: תכנון מערכת \LRE {\textenglish {Multi-Agent}}}{138}{subsection.6.9.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsection}{\numberline {\textenglish {6.9.2}}תרגיל 2: זיהוי נקודות כשל}{140}{subsection.6.9.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsection}{\numberline {\textenglish {6.9.3}}תרגיל 3: בניית מדיניות \LRE {\textenglish {Escalation}}}{141}{subsection.6.9.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsection}{\numberline {\textenglish {6.9.4}}תרגיל 4: תכנון ניטור}{144}{subsection.6.9.4}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.9.5}}תרגיל 5: ניתוח עלויות מול יעילות}{145}{subsection.6.9.5}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {6.9.6}}תרגיל 6: תקשורת בין שני סוכנים (\LRE {\textenglish {Python}})}{147}{subsection.6.9.6}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {6.10}}סיכום}{152}{section.6.10}%
+\contentsline {subsection}{\numberline {\textenglish {6.10.1}}נקודות מפתח למנהלים}{152}{subsection.6.10.1}%
+\contentsline {subsection}{\numberline {\textenglish {6.10.2}}המשך}{152}{subsection.6.10.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {7}}\LRE {\textenglish {RAG}} -- הזרקת ידע ארגוני לבינה המלאכותית}{153}{chapter.7}%
+\xpg@aux {}{hebrew}
+\contentsline {section}{\numberline {\textenglish {7.1}}המהפכה השקטה בידע הארגוני}{153}{section.7.1}%
+\contentsline {section}{\numberline {\textenglish {7.2}}מהו \LRE {\textenglish {RAG}}? השילוב שמשנה הכל}{154}{section.7.2}%
+\contentsline {subsection}{\numberline {\textenglish {7.2.1}}הבעיה: ידע סטטי בעולם דינמי}{154}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {\textenglish {7.2.2}}הפתרון: אחזור קודם יצירה}{154}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {\textenglish {7.2.3}}למה זה עובד כל כך טוב?}{154}{subsection.7.2.3}%
+\contentsline {section}{\numberline {\textenglish {7.3}}הארכיטקטורה: מסע הנתונים דרך המערכת}{154}{section.7.3}%
+\contentsline {subsection}{\numberline {\textenglish {7.3.1}}שלב 1: הכנת המסמכים - \LRE {\textenglish {Chunking}}}{154}{subsection.7.3.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.3.2}}שלב 2: יצירת \LRE {\textenglish {Embeddings}} - הפיכת טקסט למספרים}{156}{subsection.7.3.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.3.3}}שלב 3: אחסון במאגר וקטורי - \LRE {\textenglish {Vector Database}}}{156}{subsection.7.3.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.3.4}}שלב 4: חיפוש - \LRE {\textenglish {Retrieval}}}{158}{subsection.7.3.4}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.3.5}}שלב 5: יצירת התשובה - \LRE {\textenglish {Generation}}}{158}{subsection.7.3.5}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {section}{\numberline {\textenglish {7.4}}מדידת הצלחה: \LRE {\textenglish {Evaluation Metrics}}}{159}{section.7.4}%
+\contentsline {subsection}{\numberline {\textenglish {7.4.1}}\LRE {\textenglish {Recall}} - האם מצאנו את כל הרלוונטי?}{159}{subsection.7.4.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsection}{\numberline {\textenglish {7.4.2}}\LRE {\textenglish {Precision}} - האם מה שמצאנו באמת רלוונטי?}{160}{subsection.7.4.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.4.3}}\LRE {\textenglish {F1 Score}} - האיזון המושלם}{160}{subsection.7.4.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.4.4}}מדדים איכותיים נוספים}{161}{subsection.7.4.4}%
+\contentsline {section}{\numberline {\textenglish {7.5}}דוגמאות מעשיות: \LRE {\textenglish {RAG}} בפעולה}{161}{section.7.5}%
+\contentsline {subsection}{\numberline {\textenglish {7.5.1}}דוגמה 1: \LRE {\textenglish {RAG}} על מאגר מדיניות \LRE {\textenglish {HR}}}{161}{subsection.7.5.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.5.2}}דוגמה 2: \LRE {\textenglish {RAG}} על תיעוד טכני של מוצרים}{162}{subsection.7.5.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.5.3}}דוגמה 3: \LRE {\textenglish {RAG}} על היסטוריית תמיכת לקוחות}{163}{subsection.7.5.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {section}{\numberline {\textenglish {7.6}}אתגרים ופתרונות: מה שאף אחד לא מספר לכם}{164}{section.7.6}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.6.1}}אתגר 1: "זה לא עובד בעברית"}{165}{subsection.7.6.1}%
+\contentsline {subsection}{\numberline {\textenglish {7.6.2}}אתגר 2: "המערכת הזיה"}{165}{subsection.7.6.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.6.3}}אתגר 3: "המידע מיושן"}{165}{subsection.7.6.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.6.4}}אתגר 4: "זה מאוד יקר"}{166}{subsection.7.6.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {section}{\numberline {\textenglish {7.7}}תכנון תהליך עדכון ידע ב-\LRE {\textenglish {RAG}}}{167}{section.7.7}%
+\contentsline {subsection}{\numberline {\textenglish {7.7.1}}אסטרטגיות עדכון}{167}{subsection.7.7.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.7.2}}\LRE {\textenglish {Pipeline}} עדכון מומלץ}{168}{subsection.7.7.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\contentsline {section}{\numberline {\textenglish {7.8}}בניית תרבות נתונים: המפתח להצלחת \LRE {\textenglish {RAG}}}{169}{section.7.8}%
+\contentsline {subsection}{\numberline {\textenglish {7.8.1}}איכות נתונים היא הכל}{169}{subsection.7.8.1}%
+\contentsline {subsection}{\numberline {\textenglish {7.8.2}}שינוי תרבותי}{169}{subsection.7.8.2}%
+\contentsline {section}{\numberline {\textenglish {7.9}}העתיד: לאן הולך \LRE {\textenglish {RAG}}?}{169}{section.7.9}%
+\contentsline {subsection}{\numberline {\textenglish {7.9.1}}טרנדים מתעוררים}{169}{subsection.7.9.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.9.2}}האתגרים הבאים}{170}{subsection.7.9.2}%
+\contentsline {section}{\numberline {\textenglish {7.10}}סיכום: \LRE {\textenglish {RAG}} כמקור יתרון תחרותי}{170}{section.7.10}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {section}{\numberline {\textenglish {7.11}}תרגילים}{171}{section.7.11}%
+\contentsline {subsection}{\numberline {\textenglish {7.11.1}}תרגילים תיאורטיים}{171}{subsection.7.11.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {7.11.2}}תרגילי קוד - \LRE {\textenglish {Python}}}{172}{subsection.7.11.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {8}}אמנות הפרומפט - איך לדבר עם מכונות חכמות}{175}{chapter.8}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.1}}מבוא: השפה החדשה של הניהול}{175}{section.8.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.2}}אנטומיה של פרומפט מושלם}{176}{section.8.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.2.1}}רכיבי הפרומפט}{176}{subsection.8.2.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.2.2}}דוגמה: פרומפט מובנה לניתוח שוק}{176}{subsection.8.2.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.3}}\LRE {\textenglish {System Prompt}} לעומת \LRE {\textenglish {User Prompt}}}{178}{section.8.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.3.1}}\LRE {\textenglish {System Prompt}} - ההגדרה הארגונית}{178}{subsection.8.3.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.3.2}}\LRE {\textenglish {User Prompt}} - הבקשה הספציפית}{178}{subsection.8.3.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.3.3}}דוגמה מעשית: סוכן מכירות \LRE {\textenglish {AI}}}{179}{subsection.8.3.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.4}}טכניקות \LRE {\textenglish {Prompting}} מתקדמות}{181}{section.8.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.4.1}}\LRE {\textenglish {Zero-Shot Prompting}}}{181}{subsection.8.4.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.4.2}}\LRE {\textenglish {Few-Shot Prompting}}}{181}{subsection.8.4.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.4.3}}\LRE {\textenglish {Chain-of-Thought (CoT) Prompting}}}{182}{subsection.8.4.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.5}}\LRE {\textenglish {Role Playing}} - הגדרת תפקידים}{184}{section.8.5}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.5.1}}עקרונות להגדרת תפקיד אפקטיבית}{184}{subsection.8.5.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.6}}עיצוב פורמט הפלט}{186}{section.8.6}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.6.1}}\LRE {\textenglish {JSON}} - פורמט למכונות}{186}{subsection.8.6.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.6.2}}\LRE {\textenglish {Markdown}} - פורמט לבני אדם}{187}{subsection.8.6.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.6.3}}טבלאות וצורות מובנות אחרות}{188}{subsection.8.6.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.7}}נוסחאות ניהוליות למדידת יעילות}{188}{section.8.7}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.7.1}}\LRE {\textenglish {Prompt Efficiency}} - יעילות הפרומפט}{189}{subsection.8.7.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.7.2}}\LRE {\textenglish {Consistency Score}} - עקביות תשובות}{189}{subsection.8.7.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.7.3}}\LRE {\textenglish {First-Time Success Rate}}}{190}{subsection.8.7.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.7.4}}\LRE {\textenglish {Cost per Quality Output (CPQO)}}}{190}{subsection.8.7.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.8}}מדידה ושיפור מתמיד של פרומפטים}{190}{section.8.8}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.8.1}}בניית \LRE {\textenglish {Test Suite}} לפרומפטים}{191}{subsection.8.8.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.8.2}}\LRE {\textenglish {A/B Testing}} לפרומפטים}{193}{subsection.8.8.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.8.3}}תהליך שיפור מתמיד}{196}{subsection.8.8.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.9}}דוגמאות מעשיות}{197}{section.8.9}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.9.1}}דוגמה 1: פרומפט מערכת לסוכן מכירות}{197}{subsection.8.9.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.9.2}}דוגמה 2: ניתוח מסמכים משפטיים}{202}{subsection.8.9.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.9.3}}דוגמה 3: \LRE {\textenglish {Few-Shot}} לסיווג פניות}{205}{subsection.8.9.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.10}}תרגילים מעשיים}{209}{section.8.10}%
+\contentsline {subsection}{\numberline {\textenglish {8.10.1}}תרגיל 1: כתיבת \LRE {\textenglish {System Prompt}} לנציג שירות}{209}{subsection.8.10.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.10.2}}תרגיל 2: שיפור פרומפט באמצעות \LRE {\textenglish {Chain-of-Thought}}}{209}{subsection.8.10.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.10.3}}תרגיל 3: בניית \LRE {\textenglish {Prompt Template}} לדוחות שבועיים}{210}{subsection.8.10.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.10.4}}תרגיל 4: ניתוח כשלון פרומפט}{211}{subsection.8.10.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.10.5}}תרגיל 5: תכנון \LRE {\textenglish {A/B Testing}} לפרומפטים}{212}{subsection.8.10.5}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.10.6}}תרגיל 6 (\LRE {\textenglish {Python}}): מערכת בדיקה אוטומטית לפרומפטים}{213}{subsection.8.10.6}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {8.10.7}}תרגיל 7 (\LRE {\textenglish {Python}}): מערכת \LRE {\textenglish {Template}} דינמי}{217}{subsection.8.10.7}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {8.11}}סיכום}{224}{section.8.11}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {9}}הפריסה -- מעבדה לייצור בעולם האמיתי}{227}{chapter.9}%
+\contentsline {section}{\numberline {\textenglish {9.1}}\texthebrew {מטרות הלמידה}}{227}{section.9.1}%
+\contentsline {section}{\numberline {\textenglish {9.2}}\texthebrew {רגע האמת: מעבדה לייצור}}{227}{section.9.2}%
+\contentsline {section}{\numberline {\textenglish {9.3}}\texthebrew {שלוש דרכים לפריסה: \LRE {\textenglish {On-Prem}}, \LRE {\textenglish {Cloud}}, \LRE {\textenglish {Hybrid}}}}{228}{section.9.3}%
+\contentsline {subsection}{\numberline {\textenglish {9.3.1}}\texthebrew {\LRE {\textenglish {On-Premises}}: השליטה המוחלטת}}{228}{subsection.9.3.1}%
+\contentsline {subsubsection}{\texthebrew {דרישות טכניות לפריסה מקומית}}{228}{subsubsection*.177}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.3.2}}\texthebrew {\LRE {\textenglish {Cloud-Based}}: הגמישות האינסופית}}{229}{subsection.9.3.2}%
+\contentsline {subsubsection}{\texthebrew {\LRE {\textenglish {Amazon Web Services (AWS)}}}}{229}{subsubsection*.178}%
+\contentsline {subsubsection}{\texthebrew {\LRE {\textenglish {Microsoft Azure}}}}{229}{subsubsection*.179}%
+\contentsline {subsubsection}{\texthebrew {\LRE {\textenglish {Google Cloud Platform (GCP)}}}}{229}{subsubsection*.180}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.3.3}}\texthebrew {\LRE {\textenglish {Hybrid}}: הטוב משני העולמות}}{230}{subsection.9.3.3}%
+\contentsline {subsubsection}{\texthebrew {אסטרטגיות \LRE {\textenglish {Hybrid}} נפוצות}}{230}{subsubsection*.181}%
+\contentsline {section}{\numberline {\textenglish {9.4}}\texthebrew {נוסחאות מנהליות: חישוב \LRE {\textenglish {TCO}}}}{230}{section.9.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.4.1}}\texthebrew {\LRE {\textenglish {TCO Cloud}} -- עלות בעלות בענן}}{231}{subsection.9.4.1}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.4.2}}\texthebrew {\LRE {\textenglish {TCO On-Prem}} -- עלות בעלות מקומית}}{231}{subsection.9.4.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.4.3}}\texthebrew {\LRE {\textenglish {Break-Even Point}} -- נקודת האיזון}}{232}{subsection.9.4.3}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {9.5}}\texthebrew {\LRE {\textenglish {Containers}}: \LRE {\textenglish {Docker}} כמנוע הפריסה}}{233}{section.9.5}%
+\contentsline {subsection}{\numberline {\textenglish {9.5.1}}\texthebrew {מדוע \LRE {\textenglish {Containers}} קריטיים ל-\LRE {\textenglish {AI Deployment}}?}}{233}{subsection.9.5.1}%
+\contentsline {subsection}{\numberline {\textenglish {9.5.2}}\texthebrew {דוגמה: \LRE {\textenglish {Dockerfile}} למערכת \LRE {\textenglish {RAG}}}}{233}{subsection.9.5.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.5.3}}\texthebrew {\LRE {\textenglish {Docker Compose}}: תזמור מערכת מורכבת}}{235}{subsection.9.5.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {9.6}}\texthebrew {ניהול סביבות: \LRE {\textenglish {.env}} וקונפיגורציה}}{237}{section.9.6}%
+\contentsline {subsection}{\numberline {\textenglish {9.6.1}}\texthebrew {קובץ \LRE {\textenglish {.env}} -- ניהול קונפיגורציה}}{237}{subsection.9.6.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.6.2}}\texthebrew {שימוש ב-\LRE {\textenglish {.env}} בקוד \LRE {\textenglish {Python}}}}{239}{subsection.9.6.2}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.6.3}}\texthebrew {\LRE {\textenglish {Best Practices}} לניהול סודות}}{239}{subsection.9.6.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {9.7}}\texthebrew {\LRE {\textenglish {Scaling}}: כשההצלחה מביאה אתגרים}}{240}{section.9.7}%
+\contentsline {subsection}{\numberline {\textenglish {9.7.1}}\texthebrew {\LRE {\textenglish {Vertical Scaling}} -- גדילה אנכית}}{240}{subsection.9.7.1}%
+\contentsline {subsection}{\numberline {\textenglish {9.7.2}}\texthebrew {\LRE {\textenglish {Horizontal Scaling}} -- גדילה אופקית}}{240}{subsection.9.7.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.7.3}}\texthebrew {\LRE {\textenglish {Load Balancing}} -- חלוקת העומס}}{241}{subsection.9.7.3}%
+\contentsline {subsection}{\numberline {\textenglish {9.7.4}}\texthebrew {\LRE {\textenglish {Auto-Scaling}} -- התאמה דינמית}}{241}{subsection.9.7.4}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.7.5}}\texthebrew {דוגמה מעשית: \LRE {\textenglish {Scaling}} מערכת \LRE {\textenglish {RAG}}}}{241}{subsection.9.7.5}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {9.8}}\texthebrew {מעבר לייצור: \LRE {\textenglish {Go-Live Checklist}}}}{242}{section.9.8}%
+\contentsline {subsection}{\numberline {\textenglish {9.8.1}}\texthebrew {שלב א': טכני}}{242}{subsection.9.8.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.8.2}}\texthebrew {שלב ב': תהליכי}}{243}{subsection.9.8.2}%
+\contentsline {subsection}{\numberline {\textenglish {9.8.3}}\texthebrew {שלב ג': עסקי}}{243}{subsection.9.8.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.8.4}}\texthebrew {שלב ד': אסטרטגיה}}{244}{subsection.9.8.4}%
+\contentsline {section}{\numberline {\textenglish {9.9}}תכנון אסונות: \LRE {\textenglish {Disaster Recovery}}}{244}{section.9.9}%
+\contentsline {subsection}{\numberline {\textenglish {9.9.1}}\texthebrew {\LRE {\textenglish {RPO}} ו-\LRE {\textenglish {RTO}} -- שני המדדים הקריטיים}}{244}{subsection.9.9.1}%
+\contentsline {subsection}{\numberline {\textenglish {9.9.2}}\texthebrew {אסטרטגיות \LRE {\textenglish {DR}}}}{244}{subsection.9.9.2}%
+\contentsline {subsubsection}{\texthebrew {1. \LRE {\textenglish {Backup and Restore}} (זול, איטי)}}{244}{subsubsection*.182}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\texthebrew {2. \LRE {\textenglish {Pilot Light}} (איזון)}}{245}{subsubsection*.183}%
+\contentsline {subsubsection}{\texthebrew {3. \LRE {\textenglish {Warm Standby}} (מהיר יותר)}}{245}{subsubsection*.184}%
+\contentsline {subsubsection}{\texthebrew {4. \LRE {\textenglish {Multi-Site Active/Active}} (זמינות מקסימלית)}}{245}{subsubsection*.185}%
+\contentsline {subsection}{\numberline {\textenglish {9.9.3}}\texthebrew {תרגיל \LRE {\textenglish {DR}} -- מה הולם את הארגון שלך?}}{245}{subsection.9.9.3}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {9.10}}\texthebrew {דוגמאות מעשיות}}{245}{section.9.10}%
+\contentsline {subsection}{\numberline {\textenglish {9.10.1}}\texthebrew {דוגמה 1: פריסת \LRE {\textenglish {Ollama}} לריצה מקומית של \LRE {\textenglish {Llama}}}}{245}{subsection.9.10.1}%
+\contentsline {subsubsection}{\texthebrew {התקנה}}{245}{subsubsection*.187}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\texthebrew {הורדת מודל והרצה}}{246}{subsubsection*.188}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsubsection}{\texthebrew {פריסת \LRE {\textenglish {Ollama}} ב-\LRE {\textenglish {Docker}}}}{247}{subsubsection*.189}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.10.2}}\texthebrew {דוגמה 2: \LRE {\textenglish {Docker Compose}} למערכת \LRE {\textenglish {RAG}} מלאה}}{248}{subsection.9.10.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.10.3}}\texthebrew {דוגמה 3: מעבר מ-\LRE {\textenglish {Cloud POC}} ל-\LRE {\textenglish {Hybrid Production}}}}{252}{subsection.9.10.3}%
+\contentsline {subsubsection}{\texthebrew {שלב 1: \LRE {\textenglish {POC (Cloud-Only)}}}}{252}{subsubsection*.190}%
+\contentsline {subsubsection}{\texthebrew {שלב 2: החלטת \LRE {\textenglish {Hybrid}}}}{252}{subsubsection*.191}%
+\contentsline {subsubsection}{\texthebrew {שלב 3: הטמעה}}{252}{subsubsection*.192}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\texthebrew {שלב 4: תוצאות אחרי שנה}}{253}{subsubsection*.193}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {9.11}}\texthebrew {תרגילים}}{253}{section.9.11}%
+\contentsline {subsection}{\numberline {\textenglish {9.11.1}}\texthebrew {תרגיל 1: חישוב \LRE {\textenglish {TCO}} לשלושה תרחישים (תיאורטי)}}{253}{subsection.9.11.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.11.2}}\texthebrew {תרגיל 2: תכנון מעבר \LRE {\textenglish {Cloud}} ל-\LRE {\textenglish {Hybrid}} (תיאורטי)}}{255}{subsection.9.11.2}%
+\contentsline {subsection}{\numberline {\textenglish {9.11.3}}\texthebrew {תרגיל 3: כתיבת דרישות אבטחה (תיאורטי)}}{255}{subsection.9.11.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.11.4}}תרגיל 4: תכנון \LRE {\textenglish {Disaster Recovery}} (תיאורטי)}{256}{subsection.9.11.4}%
+\contentsline {subsection}{\numberline {\textenglish {9.11.5}}\texthebrew {תרגיל 5: בניית \LRE {\textenglish {Go-Live Checklist}} (תיאורטי)}}{256}{subsection.9.11.5}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {9.11.6}}\texthebrew {תרגיל 6: \LRE {\textenglish {Python - Docker Compose}} למערכת \LRE {\textenglish {AI}} בסיסית (קוד)}}{257}{subsection.9.11.6}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {9.12}}\texthebrew {סיכום הפרק}}{264}{section.9.12}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {10}}שיקולים אסטרטגיים -- בחירת טכנולוגיות וניהול זיכרון}{267}{chapter.10}%
+\contentsline {section}{\numberline {\textenglish {10.1}}פתיחה: עולם של בחירות}{267}{section.10.1}%
+\contentsline {section}{\numberline {\textenglish {10.2}}בחירת \LRE {\textenglish {LLM}}: המפה האסטרטגית}{268}{section.10.2}%
+\contentsline {subsection}{\numberline {\textenglish {10.2.1}}קריטריונים מרכזיים לבחירת מודל}{268}{subsection.10.2.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{ביצועים לפי סוג משימה}{268}{subsubsection*.195}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{רגישות נתונים ופרטיות}{269}{subsubsection*.196}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{גודל Context Window}{269}{subsubsection*.197}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.2.2}}מדדי השוואה: \LRE {\textenglish {Performance}} לעומת \LRE {\textenglish {Cost}}}{270}{subsection.10.2.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.2.3}}\LRE {\textenglish {Decision Tree}} לבחירת \LRE {\textenglish {LLM}}}{271}{subsection.10.2.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {10.3}}בחירת \LRE {\textenglish {Embedding Models}}: \LRE {\textenglish {Task-Specific}} או \LRE {\textenglish {General}}?}{272}{section.10.3}%
+\contentsline {subsection}{\numberline {\textenglish {10.3.1}}\LRE {\textenglish {General-Purpose Embeddings}}}{272}{subsection.10.3.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsection}{\numberline {\textenglish {10.3.2}}\LRE {\textenglish {Task-Specific Embeddings}}}{273}{subsection.10.3.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {10.4}}בחירת \LRE {\textenglish {Database}}: \LRE {\textenglish {Vector}}, \LRE {\textenglish {Relational}}, או \LRE {\textenglish {Hybrid}}?}{273}{section.10.4}%
+\contentsline {subsection}{\numberline {\textenglish {10.4.1}}\LRE {\textenglish {Vector Databases}}}{273}{subsection.10.4.1}%
+\contentsline {subsection}{\numberline {\textenglish {10.4.2}}\LRE {\textenglish {Relational Databases}}}{273}{subsection.10.4.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsection}{\numberline {\textenglish {10.4.3}}\LRE {\textenglish {Hybrid Approach}}}{274}{subsection.10.4.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {10.5}}ניהול זיכרון ב-\LRE {\textenglish {LLM}}: \LRE {\textenglish {Short-term}}, \LRE {\textenglish {Long-term}}, \LRE {\textenglish {External}}}{274}{section.10.5}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.5.1}}\LRE {\textenglish {Short-term Memory}}: ניהול השיחה הנוכחית}{275}{subsection.10.5.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.5.2}}\LRE {\textenglish {Long-term Memory}}: זיכרון בין שיחות}{275}{subsection.10.5.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.5.3}}\LRE {\textenglish {External Memory}}: גישה לידע חיצוני}{276}{subsection.10.5.3}%
+\contentsline {section}{\numberline {\textenglish {10.6}}\LRE {\textenglish {Context Window}}: מגבלות ואסטרטגיות התמודדות}{276}{section.10.6}%
+\contentsline {subsection}{\numberline {\textenglish {10.6.1}}אסטרטגיות להתמודדות עם Context Window מוגבל}{276}{subsection.10.6.1}%
+\contentsline {subsubsection}{\LRE {\textenglish {Chunking}} והזרקה חוזרת}{276}{subsubsection*.202}%
+\contentsline {subsubsection}{\LRE {\textenglish {Sliding Window}} עם סיכום}{276}{subsubsection*.203}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{שימוש במודל עם Context Window גדול}{277}{subsubsection*.204}%
+\contentsline {section}{\numberline {\textenglish {10.7}}\LRE {\textenglish {Vendor Lock-in}}: הסיכון הנסתר}{277}{section.10.7}%
+\contentsline {subsection}{\numberline {\textenglish {10.7.1}}איך נוצר \LRE {\textenglish {Vendor Lock-in}} במערכות \LRE {\textenglish {AI}}?}{277}{subsection.10.7.1}%
+\contentsline {subsection}{\numberline {\textenglish {10.7.2}}אסטרטגיות למניעת \LRE {\textenglish {Vendor Lock-in}}}{277}{subsection.10.7.2}%
+\contentsline {subsubsection}{שכבת הפשטה (Abstraction Layer)}{277}{subsubsection*.205}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{\LRE {\textenglish {Multi-Model Strategy}}}{278}{subsubsection*.206}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsubsection}{תיעוד ומבחני \LRE {\textenglish {Regression}}}{279}{subsubsection*.207}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.7.3}}חישוב \LRE {\textenglish {Switching Cost}}}{279}{subsection.10.7.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {10.8}}דוגמאות מעשיות}{280}{section.10.8}%
+\contentsline {subsection}{\numberline {\textenglish {10.8.1}}דוגמה 1: מעבר מ-\LRE {\textenglish {GPT-3.5}} ל-\LRE {\textenglish {GPT-4}}}{280}{subsection.10.8.1}%
+\contentsline {subsection}{\numberline {\textenglish {10.8.2}}דוגמה 2: בחירה בין \LRE {\textenglish {Claude}} ל-\LRE {\textenglish {GPT}} לתמיכת לקוחות}{280}{subsection.10.8.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.8.3}}דוגמה 3: תכנון אסטרטגיית \LRE {\textenglish {Multi-Model}}}{281}{subsection.10.8.3}%
+\contentsline {section}{\numberline {\textenglish {10.9}}תרגילים}{281}{section.10.9}%
+\contentsline {subsection}{\numberline {\textenglish {10.9.1}}תרגיל תיאורטי 1: בניית \LRE {\textenglish {Scorecard}} להשוואת \LRE {\textenglish {LLMs}}}{281}{subsection.10.9.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.9.2}}תרגיל תיאורטי 2: חישוב \LRE {\textenglish {Switching Cost}}}{282}{subsection.10.9.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.9.3}}תרגיל תיאורטי 3: תכנון אסטרטגיית \LRE {\textenglish {Context Management}}}{283}{subsection.10.9.3}%
+\contentsline {subsection}{\numberline {\textenglish {10.9.4}}תרגיל תיאורטי 4: ניתוח \LRE {\textenglish {Vendor Lock-in}}}{283}{subsection.10.9.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.9.5}}תרגיל תיאורטי 5: בניית \LRE {\textenglish {Roadmap}} טכנולוגי ל-3 שנים}{284}{subsection.10.9.5}%
+\contentsline {subsection}{\numberline {\textenglish {10.9.6}}תרגיל קוד 6: השוואת ביצועי מודלים אוטומטית}{284}{subsection.10.9.6}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {10.9.7}}תרגיל קוד 7: ניהול זיכרון שיחה עם סיכום}{288}{subsection.10.9.7}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {10.10}}סיכום}{292}{section.10.10}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {11}}ממשקים ואינטראקציה -- מהטרמינל לחוויית משתמש}{293}{chapter.11}%
+\contentsline {section}{מטרות הלמידה}{293}{section*.210}%
+\contentsline {section}{\numberline {\textenglish {11.1}}\LRE {\textenglish {GUI Frameworks}} לאפליקציות \LRE {\textenglish {AI}}}{294}{section.11.1}%
+\contentsline {subsection}{\numberline {\textenglish {11.1.1}}מעבר השנים: מטרמינל לחלון}{294}{subsection.11.1.1}%
+\contentsline {subsection}{\numberline {\textenglish {11.1.2}}שלושת העולמות: Web, Desktop, Mobile}{294}{subsection.11.1.2}%
+\contentsline {subsection}{\numberline {\textenglish {11.1.3}}Qt -- המלך הוותיק של Desktop Applications}{294}{subsection.11.1.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.1.4}}Electron -- Web בשמלת Desktop}{295}{subsection.11.1.4}%
+\contentsline {subsection}{\numberline {\textenglish {11.1.5}}Flutter -- העתיד של Cross-Platform}{295}{subsection.11.1.5}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.1.6}}טבלת השוואה: בחירת Framework לפי צרכים}{296}{subsection.11.1.6}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {11.2}}\LRE {\textenglish {Web Interfaces}} לפרוטוטייפים מהירים}{297}{section.11.2}%
+\contentsline {subsection}{\numberline {\textenglish {11.2.1}}הצורך במהירות: \LRE {\textenglish {MVP}} של ממשק}{297}{subsection.11.2.1}%
+\contentsline {subsection}{\numberline {\textenglish {11.2.2}}Streamlit -- הפשטות כערך עליון}{297}{subsection.11.2.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.2.3}}\LRE {\textenglish {Gradio}} -- ממשקים למודלי \LRE {\textenglish {ML}}}{298}{subsection.11.2.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.2.4}}מתי להשתמש בכל אחד?}{300}{subsection.11.2.4}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {11.3}}\LRE {\textenglish {Text-to-Speech}} -- כשהמכונה מדברת}{300}{section.11.3}%
+\contentsline {subsection}{\numberline {\textenglish {11.3.1}}הקול כממשק}{300}{subsection.11.3.1}%
+\contentsline {subsection}{\numberline {\textenglish {11.3.2}}\LRE {\textenglish {pyttsx3}} -- הפתרון הלא-תלוי}{300}{subsection.11.3.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.3.3}}\LRE {\textenglish {gTTS}} -- \LRE {\textenglish {Google Text-to-Speech}}}{302}{subsection.11.3.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.3.4}}\LRE {\textenglish {Coqui TTS}} -- \LRE {\textenglish {State-of-the-Art}} בקוד פתוח}{303}{subsection.11.3.4}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsection}{\numberline {\textenglish {11.3.5}}\LRE {\textenglish {OpenAI TTS API}} -- המלך החדש}{304}{subsection.11.3.5}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.3.6}}בחירת \LRE {\textenglish {TTS}} לפי \LRE {\textenglish {Use Case}}}{304}{subsection.11.3.6}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {11.4}}\LRE {\textenglish {Speech-to-Text}} -- כשהמכונה מקשיבה}{305}{section.11.4}%
+\contentsline {subsection}{\numberline {\textenglish {11.4.1}}מאוזן אנושי למכונה}{305}{subsection.11.4.1}%
+\contentsline {subsection}{\numberline {\textenglish {11.4.2}}SpeechRecognition -- הספרייה הנוחה}{305}{subsection.11.4.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.4.3}}\LRE {\textenglish {OpenAI Whisper}} -- המהפכה}{306}{subsection.11.4.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.4.4}}\LRE {\textenglish {AssemblyAI}} -- פתרון \LRE {\textenglish {Enterprise}}}{308}{subsection.11.4.4}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.4.5}}בניית Voice Agent מלא}{308}{subsection.11.4.5}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {11.5}}\LRE {\textenglish {UX}} לבינה מלאכותית -- עיצוב חוויית משתמש}{310}{section.11.5}%
+\contentsline {subsection}{\numberline {\textenglish {11.5.1}}למה \LRE {\textenglish {AI}} שונה?}{310}{subsection.11.5.1}%
+\contentsline {subsection}{\numberline {\textenglish {11.5.2}}עקרונות עיצוב לממשקי AI}{310}{subsection.11.5.2}%
+\contentsline {subsubsection}{1. שקיפות -- גלה את גבולות ה-\LRE {\textenglish {AI}}}{310}{subsubsection*.213}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{2. משוב מיידי -- אל תשאיר את המשתמש בתלייה}{311}{subsubsection*.214}%
+\contentsline {subsubsection}{3. \LRE {\textenglish {Graceful Failures}} -- תכנן לטעויות}{311}{subsubsection*.215}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{4. \LRE {\textenglish {Human in the Loop}} -- תן יד מושטת}{311}{subsubsection*.216}%
+\contentsline {subsubsection}{5. הקשר ורציפות -- זכור את השיחה}{311}{subsubsection*.217}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{6. פרסונה -- תן ל-\LRE {\textenglish {AI}} אישיות}{312}{subsubsection*.218}%
+\contentsline {subsection}{\numberline {\textenglish {11.5.3}}\LRE {\textenglish {Wireframes}} לממשק \LRE {\textenglish {AI}} אידיאלי}{312}{subsection.11.5.3}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {11.6}}נגישות -- \LRE {\textenglish {AI}} לכולם}{313}{section.11.6}%
+\contentsline {subsection}{\numberline {\textenglish {11.6.1}}החובה המוסרית והחוקית}{313}{subsection.11.6.1}%
+\contentsline {subsection}{\numberline {\textenglish {11.6.2}}עקרונות נגישות לממשקי \LRE {\textenglish {AI}}}{313}{subsection.11.6.2}%
+\contentsline {subsubsection}{1. תמיכה ב-Screen Readers}{313}{subsubsection*.220}%
+\contentsline {subsubsection}{2. ניגודיות צבעים}{313}{subsubsection*.221}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsubsection}{3. אפשרויות קוליות}{313}{subsubsection*.222}%
+\contentsline {subsubsection}{4. שפה פשוטה}{313}{subsubsection*.223}%
+\contentsline {subsubsection}{5. בקרות מקלדת}{313}{subsubsection*.224}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.6.3}}\LRE {\textenglish {Checklist}} נגישות למוצר \LRE {\textenglish {AI}}}{314}{subsection.11.6.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {11.7}}נוסחאות מנהליות}{314}{section.11.7}%
+\contentsline {subsection}{\numberline {\textenglish {11.7.1}}\LRE {\textenglish {User Satisfaction (CSAT)}}}{314}{subsection.11.7.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.7.2}}\LRE {\textenglish {Task Completion Rate}}}{314}{subsection.11.7.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.7.3}}\LRE {\textenglish {Cost per Interaction}}}{315}{subsection.11.7.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {11.8}}דוגמאות מעשיות}{315}{section.11.8}%
+\contentsline {subsection}{\numberline {\textenglish {11.8.1}}דוגמה 1: Chatbot עם ממשק Streamlit}{315}{subsection.11.8.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.8.2}}דוגמה 2: הוספת יכולת קול לסוכן קיים}{318}{subsection.11.8.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {11.8.3}}דוגמה 3: אפליקציית \LRE {\textenglish {Desktop}} עם \LRE {\textenglish {Electron + LLM}}}{320}{subsection.11.8.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {11.9}}תרגילים}{322}{section.11.9}%
+\contentsline {subsection}{\numberline {\textenglish {11.9.1}}תרגילים תיאורטיים}{322}{subsection.11.9.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\contentsline {subsection}{\numberline {\textenglish {11.9.2}}תרגילי קוד}{324}{subsection.11.9.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {12}}אתיקה, רגולציה ואבטחה -- גבולות האחריות}{327}{chapter.12}%
+\contentsline {section}{מטרות הלמידה}{327}{section*.225}%
+\contentsline {section}{פתח דבר}{327}{section*.225}%
+\contentsline {section}{\numberline {\textenglish {12.1}}\LRE {\textenglish {GDPR}} -- תקנת הגנת המידע של אירופה}{328}{section.12.1}%
+\contentsline {subsection}{\numberline {\textenglish {12.1.1}}מה זה \LRE {\textenglish {GDPR}} ולמה זה רלוונטי ל-\LRE {\textenglish {AI}}?}{328}{subsection.12.1.1}%
+\contentsline {subsection}{\numberline {\textenglish {12.1.2}}האתגרים הייחודיים של \LRE {\textenglish {AI}} מול \LRE {\textenglish {GDPR}}}{328}{subsection.12.1.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.1.3}}תרשים: תהליך ציות ל-\LRE {\textenglish {GDPR}} במערכת \LRE {\textenglish {AI}}}{328}{subsection.12.1.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.1.4}}דוגמה מעשית: ביקורת \LRE {\textenglish {GDPR}} למערכת \LRE {\textenglish {RAG}}}{329}{subsection.12.1.4}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {12.2}}\LRE {\textenglish {HIPAA}} -- \LRE {\textenglish {AI}} בתחום הבריאות}{330}{section.12.2}%
+\contentsline {subsection}{\numberline {\textenglish {12.2.1}}מה זה \LRE {\textenglish {HIPAA}}?}{330}{subsection.12.2.1}%
+\contentsline {subsection}{\numberline {\textenglish {12.2.2}}\LRE {\textenglish {AI}} ו-\LRE {\textenglish {HIPAA}}: הסיכונים והפתרונות}{330}{subsection.12.2.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {12.3}}\LRE {\textenglish {EU AI Act}} -- הרגולציה החדשה}{331}{section.12.3}%
+\contentsline {subsection}{\numberline {\textenglish {12.3.1}}המהפכה הרגולטורית של אירופה}{331}{subsection.12.3.1}%
+\contentsline {subsection}{\numberline {\textenglish {12.3.2}}פירמידת הסיכון של \LRE {\textenglish {EU AI Act}}}{331}{subsection.12.3.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.3.3}}דרישות למערכות בסיכון גבוה}{332}{subsection.12.3.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {12.4}}הטיות והוגנות -- כשה-\LRE {\textenglish {AI}} לומד את הדעות הקדומות שלנו}{332}{section.12.4}%
+\contentsline {subsection}{\numberline {\textenglish {12.4.1}}מהי הטיה ב-\LRE {\textenglish {AI}}?}{332}{subsection.12.4.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.4.2}}סוגי הטיות במערכות \LRE {\textenglish {AI}}}{333}{subsection.12.4.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.4.3}}זיהוי ומניעת הטיות}{333}{subsection.12.4.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {12.5}}אבטחת סייבר -- כשהמכונה פגיעה}{334}{section.12.5}%
+\contentsline {subsection}{\numberline {\textenglish {12.5.1}}נוף האיומים החדש}{334}{subsection.12.5.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.5.2}}\LRE {\textenglish {Prompt Injection}} -- ההתקפה הנפוצה ביותר}{335}{subsection.12.5.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.5.3}}קוד: בדיקת חסינות ל-\LRE {\textenglish {Prompt Injection}}}{336}{subsection.12.5.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.5.4}}דליפת מידע מאימון}{337}{subsection.12.5.4}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.5.5}}\LRE {\textenglish {Jailbreaking}} -- פריצת הגנות}{338}{subsection.12.5.5}%
+\contentsline {section}{\numberline {\textenglish {12.6}}מדיניות \LRE {\textenglish {AI}} ארגונית -- בניית מסגרת אחריות}{338}{section.12.6}%
+\contentsline {subsection}{\numberline {\textenglish {12.6.1}}למה צריך מדיניות \LRE {\textenglish {AI}}?}{338}{subsection.12.6.1}%
+\contentsline {subsection}{\numberline {\textenglish {12.6.2}}מרכיבי מדיניות \LRE {\textenglish {AI}}}{338}{subsection.12.6.2}%
+\contentsline {subsection}{\numberline {\textenglish {12.6.3}}תבנית: \LRE {\textenglish {Acceptable Use Policy}} ל-\LRE {\textenglish {AI}}}{338}{subsection.12.6.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {12.7}}נוסחאות מנהליות}{339}{section.12.7}%
+\contentsline {subsection}{\numberline {\textenglish {12.7.1}}ציון סיכון (\LRE {\textenglish {Risk Score}})}{339}{subsection.12.7.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.7.2}}עלות ציות (\LRE {\textenglish {Compliance Cost}})}{340}{subsection.12.7.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.7.3}}מדד הטיה (\LRE {\textenglish {Fairness Metrics}})}{340}{subsection.12.7.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {12.8}}הערכת סיכונים מקיפה}{341}{section.12.8}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {12.9}}דוגמאות מעשיות}{341}{section.12.9}%
+\contentsline {subsection}{\numberline {\textenglish {12.9.1}}דוגמה 1: תגובה לאירוע דליפת מידע}{341}{subsection.12.9.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.9.2}}דוגמה 2: ביקורת \LRE {\textenglish {Bias}} למודל אשראי}{342}{subsection.12.9.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {12.10}}תרגילים}{343}{section.12.10}%
+\contentsline {subsection}{\numberline {\textenglish {12.10.1}}תרגילים תיאורטיים}{343}{subsection.12.10.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {12.10.2}}תרגילי קוד}{344}{subsection.12.10.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{סיכום}{345}{Item.701}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{\numberline {\textenglish {13}}מפרויקט לפרודקט -- מסע הפיתוח המלא}{347}{chapter.13}%
+\contentsline {section}{מטרות הלמידה}{347}{section*.232}%
+\contentsline {section}{פתיחה}{347}{section*.232}%
+\contentsline {section}{\numberline {\textenglish {13.1}}\LRE {\textenglish {Discovery}} -- זיהוי הזדמנויות \LRE {\textenglish {AI}} בארגון}{348}{section.13.1}%
+\contentsline {subsection}{\numberline {\textenglish {13.1.1}}האמנות של לשאול את השאלות הנכונות}{348}{subsection.13.1.1}%
+\contentsline {subsection}{\numberline {\textenglish {13.1.2}}מתודולוגיית Discovery}{348}{subsection.13.1.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.1.3}}תיעוד הממצאים}{349}{subsection.13.1.3}%
+\contentsline {section}{\numberline {\textenglish {13.2}}מ-\LRE {\textenglish {POC}} לייצור -- המסע ואתגריו}{349}{section.13.2}%
+\contentsline {subsection}{\numberline {\textenglish {13.2.1}}\LRE {\textenglish {Proof of Concept (POC)}} -- הוכחת היתכנות}{349}{subsection.13.2.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.2.2}}מ-\LRE {\textenglish {POC}} ל-\LRE {\textenglish {Pilot}} -- ההרחבה המבוקרת}{349}{subsection.13.2.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.2.3}}ייצור (\LRE {\textenglish {Production}}) -- "\LRE {\textenglish {Go Live}}"}{350}{subsection.13.2.3}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.2.4}}אתגרי המעבר לייצור}{350}{subsection.13.2.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {13.3}}הרכבת צוות \LRE {\textenglish {AI}}}{351}{section.13.3}%
+\contentsline {subsection}{\numberline {\textenglish {13.3.1}}תפקידים בצוות \LRE {\textenglish {AI}}}{351}{subsection.13.3.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.3.2}}בניית הצוות -- \LRE {\textenglish {Build}} לעומת \LRE {\textenglish {Buy}} לעומת \LRE {\textenglish {Partner}}}{352}{subsection.13.3.2}%
+\contentsline {section}{\numberline {\textenglish {13.4}}ניהול פרויקט \LRE {\textenglish {AI}} בגישת \LRE {\textenglish {Agile}}}{352}{section.13.4}%
+\contentsline {subsection}{\numberline {\textenglish {13.4.1}}למה \LRE {\textenglish {Agile}} מתאים ל-\LRE {\textenglish {AI}}?}{352}{subsection.13.4.1}%
+\contentsline {subsection}{\numberline {\textenglish {13.4.2}}מבנה \LRE {\textenglish {Sprint}} בפרויקט \LRE {\textenglish {AI}}}{352}{subsection.13.4.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.4.3}}\LRE {\textenglish {User Stories}} ל-\LRE {\textenglish {AI}}}{353}{subsection.13.4.3}%
+\contentsline {subsection}{\numberline {\textenglish {13.4.4}}\LRE {\textenglish {Backlog Management}}}{353}{subsection.13.4.4}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {13.5}}יסודות \LRE {\textenglish {MLOps}} -- תחזוקה ושיפור מתמיד}{354}{section.13.5}%
+\contentsline {subsection}{\numberline {\textenglish {13.5.1}}מהו \LRE {\textenglish {MLOps}}?}{354}{subsection.13.5.1}%
+\contentsline {subsection}{\numberline {\textenglish {13.5.2}}\LRE {\textenglish {Version Control}} למערכות \LRE {\textenglish {AI}}}{354}{subsection.13.5.2}%
+\contentsline {subsection}{\numberline {\textenglish {13.5.3}}\LRE {\textenglish {Continuous Integration / Continuous Deployment (CI/CD)}}}{354}{subsection.13.5.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.5.4}}\LRE {\textenglish {Monitoring}} ו-\LRE {\textenglish {Logging}}}{355}{subsection.13.5.4}%
+\contentsline {subsection}{\numberline {\textenglish {13.5.5}}\LRE {\textenglish {Model Drift}} והצורך ב-\LRE {\textenglish {Retraining}}}{355}{subsection.13.5.5}%
+\contentsline {section}{\numberline {\textenglish {13.6}}מדידת הצלחה -- \LRE {\textenglish {KPIs}} למערכות \LRE {\textenglish {AI}}}{355}{section.13.6}%
+\contentsline {subsection}{\numberline {\textenglish {13.6.1}}למה \LRE {\textenglish {KPIs}} קריטיים?}{355}{subsection.13.6.1}%
+\contentsline {subsection}{\numberline {\textenglish {13.6.2}}שלושה סוגי \LRE {\textenglish {KPIs}}}{355}{subsection.13.6.2}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.6.3}}בניית \LRE {\textenglish {Dashboard}} ל-\LRE {\textenglish {KPIs}}}{357}{subsection.13.6.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {13.7}}דוגמאות מעשיות}{358}{section.13.7}%
+\contentsline {subsection}{\numberline {\textenglish {13.7.1}}\LRE {\textenglish {Case Study 1}}: פרויקט \LRE {\textenglish {AI}} מוצלח מ-\LRE {\textenglish {A}} עד \LRE {\textenglish {Z}}}{358}{subsection.13.7.1}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.7.2}}\LRE {\textenglish {Case Study 2}}: ניתוח כישלון -- מה לא לעשות}{359}{subsection.13.7.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.7.3}}תכנון \LRE {\textenglish {Roadmap}} למחלקת \LRE {\textenglish {AI}}}{360}{subsection.13.7.3}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {13.8}}תרגילים}{361}{section.13.8}%
+\contentsline {subsection}{\numberline {\textenglish {13.8.1}}תרגיל 1: כתיבת \LRE {\textenglish {Project Charter}} לפרויקט \LRE {\textenglish {AI}}}{361}{subsection.13.8.1}%
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.8.2}}תרגיל 2: תכנון צוות \LRE {\textenglish {AI}} אידיאלי}{362}{subsection.13.8.2}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.8.3}}תרגיל 3: בניית \LRE {\textenglish {Dashboard}} של \LRE {\textenglish {KPIs}}}{363}{subsection.13.8.3}%
+\contentsline {subsection}{\numberline {\textenglish {13.8.4}}תרגיל 4: ניתוח \LRE {\textenglish {Case Study}} ולמידת לקחים}{363}{subsection.13.8.4}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.8.5}}תרגיל 5: תכנון \LRE {\textenglish {AI Roadmap}} ל-12 חודשים}{364}{subsection.13.8.5}%
+\contentsline {subsection}{\numberline {\textenglish {13.8.6}}תרגיל 6 (קוד \LRE {\textenglish {Python}}): מערכת ניטור \LRE {\textenglish {KPIs}} בסיסית}{364}{subsection.13.8.6}%
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {subsection}{\numberline {\textenglish {13.8.7}}תרגיל 7 (קוד \LRE {\textenglish {Python}}): \LRE {\textenglish {Logging}} ו-\LRE {\textenglish {Monitoring}} למערכת \LRE {\textenglish {AI}}}{367}{subsection.13.8.7}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {section}{\numberline {\textenglish {13.9}}סיכום}{373}{section.13.9}%
+\contentsline {section}{מקורות והמלצות לקריאה נוספת}{373}{Item.778}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{english}
+\contentsline {chapter}{*}{375}{chapter*.236}%
+\contentsline {chapter}{References / \texthebrew {רשימת מקורות}}{375}{chapter*.236}%
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {}{hebrew}
+\xpg@aux {}{english}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{*}{383}{appendix*.237}%
+\contentsline {chapter}{נספח{} א: מילון מונחים}{383}{section*.238}%
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\xpg@aux {}{hebrew}
+\xpg@aux {numerals=arabic}{hebrew}
+\contentsline {chapter}{*}{385}{appendix*.239}%
+\contentsline {chapter}{נספח{} ב: קוד \LRE {\textenglish {Python}} מלא}{385}{section*.240}%

@@ -1,0 +1,22 @@
+{
+  "book_title": "כלי בינה מלאכותית בעסקים",
+  "authors": "דר' יורם סגל ופרופסור ערן שריף",
+  "overall_progress": 0,
+  "total_chapters": 13,
+  "chapters": {
+    "chapter_01": {"status": "pending", "percent": 0, "title": "המהפכה השקטה - מבוא למודלי שפה גדולים"},
+    "chapter_02": {"status": "pending", "percent": 0, "title": "אקוסיסטם הבינה המלאכותית"},
+    "chapter_03": {"status": "pending", "percent": 0, "title": "REST APIs ויסודות JSON"},
+    "chapter_04": {"status": "pending", "percent": 0, "title": "פרוטוקול ההקשר - MCP"},
+    "chapter_05": {"status": "pending", "percent": 0, "title": "סוכנים אוטונומיים"},
+    "chapter_06": {"status": "pending", "percent": 0, "title": "פרוטוקול A2A"},
+    "chapter_07": {"status": "pending", "percent": 0, "title": "RAG - הזרקת ידע ארגוני"},
+    "chapter_08": {"status": "pending", "percent": 0, "title": "אמנות הפרומפט"},
+    "chapter_09": {"status": "pending", "percent": 0, "title": "הפריסה - מעבדה לייצור"},
+    "chapter_10": {"status": "pending", "percent": 0, "title": "שיקולים אסטרטגיים"},
+    "chapter_11": {"status": "pending", "percent": 0, "title": "ממשקים ואינטראקציה"},
+    "chapter_12": {"status": "pending", "percent": 0, "title": "אתיקה, רגולציה ואבטחה"},
+    "chapter_13": {"status": "pending", "percent": 0, "title": "מפרויקט לפרודקט"}
+  },
+  "last_updated": "2025-12-14T00:00:00Z"
+}

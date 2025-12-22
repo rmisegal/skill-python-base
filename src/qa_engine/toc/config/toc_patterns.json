@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Regex patterns for TOC detection"
+  },
+  "unicode_ranges": {
+    "hebrew": "[\\u0590-\\u05FF]",
+    "hebrew_final": "[\\u05DA\\u05DD\\u05DF\\u05E3\\u05E5]",
+    "english": "[A-Za-z]",
+    "digits": "[0-9]"
+  },
+  "toc_entry_patterns": {
+    "contentsline": "\\\\contentsline\\s*\\{(\\w+)\\}\\s*\\{(.+?)\\}\\s*\\{([^}]*)\\}\\s*\\{([^}]*)\\}",
+    "chapter": "\\\\contentsline\\s*\\{chapter\\}",
+    "section": "\\\\contentsline\\s*\\{section\\}",
+    "subsection": "\\\\contentsline\\s*\\{subsection\\}",
+    "subsubsection": "\\\\contentsline\\s*\\{subsubsection\\}"
+  },
+  "ltr_wrapper_patterns": {
+    "lre": "\\\\LRE\\s*\\{",
+    "textenglish": "\\\\textenglish\\s*\\{",
+    "en": "\\\\en\\s*\\{",
+    "num": "\\\\num\\s*\\{",
+    "hebyear": "\\\\hebyear\\s*\\{"
+  },
+  "rtl_wrapper_patterns": {
+    "texthebrew": "\\\\texthebrew\\s*\\{",
+    "he": "\\\\he\\s*\\{"
+  },
+  "numbering_patterns": {
+    "chapter_number": "\\\\LRE\\s*\\{(\\d+)\\}",
+    "section_number": "\\\\LRE\\s*\\{(\\d+\\.\\d+)\\}",
+    "subsection_number": "\\\\LRE\\s*\\{(\\d+\\.\\d+\\.\\d+)\\}",
+    "subsubsection_number": "\\\\LRE\\s*\\{(\\d+\\.\\d+\\.\\d+\\.\\d+)\\}",
+    "any_number": "(\\d+(?:\\.\\d+)*)",
+    "page_number": "\\}\\s*\\{(\\d+|[ivxlcdm]+)\\}\\s*\\{"
+  },
+  "parenthetical_patterns": {
+    "parentheses": "[()]",
+    "brackets": "[\\[\\]]",
+    "curly_braces": "[{}]",
+    "angle_brackets": "[<>]",
+    "nested_parens": "\\([^()]*\\([^()]*\\)[^()]*\\)"
+  },
+  "mixed_text_patterns": {
+    "hebrew_english_hebrew": "([\\u0590-\\u05FF]+)\\s*([A-Za-z]+)\\s*([\\u0590-\\u05FF]+)",
+    "english_hebrew_english": "([A-Za-z]+)\\s*([\\u0590-\\u05FF]+)\\s*([A-Za-z]+)",
+    "alternating_3plus": "(?:[\\u0590-\\u05FF]+\\s*[A-Za-z]+\\s*){2,}|(?:[A-Za-z]+\\s*[\\u0590-\\u05FF]+\\s*){2,}"
+  },
+  "special_patterns": {
+    "percentage": "\\d+\\s*[%\\u066A]",
+    "formula_operators": "[=+\\-*/^<>\\u2264\\u2265\\u00B1\\u00D7\\u00F7]",
+    "symbols": "[\\u00A9\\u00AE\\u2122\\u2103\\u2109\\u00B0\\u00A7\\u00B6\\u2020\\u2021\\u2022]",
+    "acronym": "[A-Z]{2,6}",
+    "url_path": "(?:https?://|/|\\\\)[\\w\\-./]+",
+    "roman_numeral": "^[ivxlcdmIVXLCDM]+$"
+  },
+  "bibliography_patterns": {
+    "hebrew": "מקורות|ביבליוגרפיה|רשימת מקורות",
+    "english": "bibliography|references|sources"
+  },
+  "quote_patterns": {
+    "english_double": "\"[^\"]+\"",
+    "english_single": "'[^']+'",
+    "hebrew_guillemets": "<<[^>]+>>|«[^»]+»",
+    "hebrew_low_high": "„[^\"]+\""
+  }
+}

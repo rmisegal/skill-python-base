@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tool_schema.json",
+  "title": "QA Tool Schema",
+  "description": "Schema for QA tool configuration",
+  "type": "object",
+  "required": ["id", "name", "tool_type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique tool identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "default": "1.0.0"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "tool_type": {
+      "type": "string",
+      "enum": ["detector", "fixer", "utility"],
+      "description": "Type of tool"
+    },
+    "module_path": {
+      "type": "string",
+      "description": "Python module path"
+    },
+    "entry_function": {
+      "type": "string",
+      "default": "run",
+      "description": "Main function name to call"
+    },
+    "input_schema": {
+      "type": "object",
+      "description": "JSON schema for input"
+    },
+    "output_schema": {
+      "type": "object",
+      "description": "JSON schema for output"
+    },
+    "imports": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Required import statements"
+    },
+    "requires": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "List of dependent tool IDs"
+    },
+    "rules": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/rule_definition"
+      },
+      "description": "Rule definitions for detector tools"
+    },
+    "patterns": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/pattern_definition"
+      },
+      "description": "Pattern definitions for fixer tools"
+    },
+    "detector_class": {
+      "type": "string",
+      "description": "Name of detector class"
+    },
+    "fixer_class": {
+      "type": "string",
+      "description": "Name of fixer class"
+    }
+  },
+  "definitions": {
+    "rule_definition": {
+      "type": "object",
+      "required": ["id", "pattern"],
+      "properties": {
+        "id": {"type": "string"},
+        "description": {"type": "string"},
+        "pattern": {"type": "string"},
+        "severity": {"type": "string", "enum": ["info", "warning", "critical"]},
+        "context_pattern": {"type": "string"},
+        "exclude_pattern": {"type": "string"},
+        "negative_pattern": {"type": "string"},
+        "fix_template": {"type": "string"},
+        "skip_math_mode": {"type": "boolean"},
+        "skip_cite_context": {"type": "boolean"},
+        "document_context": {"type": "boolean"},
+        "enabled": {"type": "boolean"}
+      }
+    },
+    "pattern_definition": {
+      "type": "object",
+      "required": ["id", "find", "replace"],
+      "properties": {
+        "id": {"type": "string"},
+        "description": {"type": "string"},
+        "find": {"type": "string"},
+        "replace": {"type": "string"},
+        "condition": {"type": "string"},
+        "enabled": {"type": "boolean"}
+      }
+    }
+  }
+}

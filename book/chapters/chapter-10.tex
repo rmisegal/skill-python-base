@@ -1,0 +1,1204 @@
+% chapter-10.tex
+% פרק 10: שיקולים אסטרטגיים - בחירת טכנולוגיות וניהול זיכרון
+% כלי בינה מלאכותית בעסקים
+% מחברים: דר' יורם סגל ופרופסור ערן שריף
+
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{שיקולים אסטרטגיים -- בחירת טכנולוגיות וניהול זיכרון}
+
+\section*{מטרות הלמידה}
+
+בסיום פרק זה תהיו מסוגלים:
+
+\begin{itemize}
+  \item לקבל החלטות מושכלות על בחירת \term{LLM} ו-\term{Embedding Models} המתאימים לצרכי הארגון
+  \item להבין את אסטרטגיות ניהול זיכרון ב-\term{LLM} והשלכותיהן העסקיות
+  \item לתכנן אסטרטגיית טכנולוגיה ארוכת טווח תוך הימנעות מ-\term{Vendor Lock-in}
+  \item להעריך את היחס בין ביצועים לעלות במודלים שונים
+  \item לנהל בצורה יעילה את מגבלות \term{Context Window} במערכות AI
+\end{itemize}
+
+\section{פתיחה: עולם של בחירות}
+
+לפני מאתיים שנה, בעידן המהפכה התעשייתית, עמדו יזמים בפני שאלה פשוטה אך הרת גורל: האם לרכוש מנוע קיטור מסוג א' או מסוג ב'? ההחלטה הזו, שנראתה טכנית בלבד, קבעה לעתים קרובות את עתידו של בית המלאכה. מנוע יעיל מדי יכול היה ליצור עלויות תחזוקה מופרזות, בעוד מנוע חלש מדי לא יכול היה לענות על דרישות הייצור הגדלות. והכי גרוע מכל -- בחירה במנוע "לא נכון" מבחינה טכנולוגית יכלה להשאיר את בית המלאכה מאחור כאשר הסטנדרט התעשייתי השתנה.
+
+כיום, מנהלים בעולם הבינה המלאכותית עומדים בפני דילמות מפתיעות באופן מדהים. לא מדובר במנועי קיטור, אלא במודלי שפה גדולים -- \term{LLM}. וכמו אותם יזמים מהמאה ה-19, גם מנהלי העידן הדיגיטלי חייבים לבחור בחוכמה, כי ההשלכות של בחירה מוטעית יכולות להיות כבדות: עלויות מופרזות, ביצועים נמוכים, תלות בלתי רצויה בספק יחיד, או גרוע מכל -- הצורך להתחיל מחדש כאשר הטכנולוגיה שבחרנו הופכת למיושנת.
+
+בפרק זה נעסוק בשאלות האסטרטגיות המורכבות ביותר של הטמעת AI בארגון: איזה מודל שפה לבחור? איך לנהל את זיכרון השיחה? מתי כדאי להשקיע במודל Task-Specific ומתי להישאר עם General-Purpose? וכיצד לבנות ארכיטקטורה שלא תאלץ אותנו "להתחתן" עם ספק אחד לשארית ימי הפרויקט?
+
+\section{בחירת \en{LLM}: המפה האסטרטגית}
+
+\subsection{קריטריונים מרכזיים לבחירת מודל}
+
+כאשר ארגון עומד בפני החלטה על בחירת \term{LLM}, הוא למעשה מקבל החלטה אסטרטגית רב-שנתית. ההחלטה הזו דומה יותר לבחירת ספק ERP מאשר לרכישת תוכנה פשוטה. הסיבה פשוטה: כל בחירת מודל מגיעה עם השלכות עמוקות על הארכיטקטורה, על הנתונים, ועל הצוות שיעבוד מולה.
+
+\begin{notebox}[שאלות המפתח לפני בחירת LLM]
+לפני שאתם מתחילים להשוות ציונים ב-\term{Benchmarks}, שאלו את עצמכם:
+\begin{enumerate}
+  \item מהן המשימות הספציפיות שהמודל צריך לבצע? (סיכום, יצירת תוכן, קוד, שיחה?)
+  \item מהי רמת הרגישות של הנתונים? (האם נתונים רגישים יכולים לעזוב את הארגון?)
+  \item מהי התקציב החודשי המוקצה? (עלות לטוקן $\times$ נפח שימוש חזוי)
+  \item מהי רמת ה-\term{Latency} המקסימלית המקובלת? (זמן תגובה)
+  \item האם נדרשת תמיכה בשפות מרובות? (מעבר לאנגלית)
+  \item מהו גודל \term{Context Window} הנדרש? (כמה מידע צריך לעבד בו זמנית)
+\end{enumerate}
+\end{notebox}
+
+בואו ננתח כל קריטריון בנפרד.
+
+\subsubsection{ביצועים לפי סוג משימה}
+
+לא כל מודל מצטיין בכל משימה~\cite{EnterpriseLLMBenchmark2025,LLMPromptScope2025}. \term{GPT-4}, למשל, מצטיין במשימות שדורשות הבנה עמוקה והיגיון מורכב, אך הוא יקר יחסית ואיטי. \term{Claude 3.5 Sonnet}, לעומת זאת, מציג יכולות מצוינות בכתיבה יצירתית וניתוח טקסט ארוך, תוך שהוא מהיר יותר ולעתים זול יותר. \term{GPT-3.5 Turbo} הוא זול במיוחד ומהיר, אך פחות מדויק במשימות מורכבות.
+
+\begin{examplebox}[דוגמה: חברת ביטוח בוחרת מודל]
+חברת ביטוח גדולה צריכה AI לשתי מטרות שונות:
+\begin{enumerate}
+  \item \textbf{תמיכת לקוחות בזמן אמת} -- תגובות מהירות לשאלות נפוצות.
+  \item \textbf{ניתוח תביעות מורכבות} -- בדיקה עמוקה של מסמכים וזיהוי הונאות.
+\end{enumerate}
+
+אסטרטגיה חכמה היא להשתמש ב\textbf{-Multi-Model Strategy}:
+\begin{itemize}
+  \item עבור תמיכת לקוחות: \term{GPT-3.5 Turbo} (מהיר, זול, מספיק טוב)
+  \item עבור ניתוח תביעות: \term{GPT-4} או \term{Claude Opus} (איטי אך מדויק)
+\end{itemize}
+
+התוצאה: חיסכון של \en{70\%} בעלויות API תוך שמירה על איכות גבוהה במשימות קריטיות.
+\end{examplebox}
+
+\subsubsection{רגישות נתונים ופרטיות}
+
+אם הארגון מעבד מידע רגיש -- רפואי, פיננסי, אישי -- השאלה "לאן הולכים הנתונים שלי?" הופכת קריטית. מודלים בענן כמו \term{GPT-4} או \term{Claude} שולחים את הנתונים לשרתי הספק. אמנם OpenAI ו-Anthropic מבטיחים שנתונים לא משמשים לאימון נוסף, אך עבור ארגונים מסוימים אפילו זה לא מספיק טוב.
+
+בתרחישים אלו, פתרונות \term{Self-Hosted} כמו \term{Llama 3.1 405B} או \term{Mistral Large} מאפשרים הרצה מלאה \mbox{On-Premises}, כך שהנתונים לעולם לא עוזבים את הארגון. אמנם יש עלות אינפרסטרוקטורה (שרתים, GPU), אך לעתים זה המחיר ההכרחי של פרטיות.
+
+\begin{formulabox}[נוסחת עלות פרטיות]
+\[
+\text{Total Privacy Cost} = \text{Infrastructure Cost} + \text{Maintenance} + \text{HR Cost}
+\]
+לעומת:
+\[
+\text{Cloud API Cost} = \text{Tokens} \times \text{Price per Token}
+\]
+\textbf{נקודת האיזון} היא הנפח החודשי שבו שני המסלולים שווים בעלות.
+\end{formulabox}
+
+\subsubsection{גודל Context Window}
+
+\term{Context Window} הוא מספר הטוקנים המקסימלי שהמודל יכול לעבד בשיחה אחת. זה כולל את כל ההיסטוריה של השיחה, את הפרומפט, ואת התשובה הצפויה.
+
+\begin{itemize}
+  \item \textbf{GPT-3.5 Turbo}: 16K טוקנים (כ-12,000 מילים)
+  \item \textbf{GPT-4 Turbo}: 128K טוקנים (כ-96,000 מילים)
+  \item \textbf{Claude 3.5 Sonnet}: 200K טוקנים (כ-150,000 מילים)
+  \item \textbf{Gemini 1.5 Pro}: 2M טוקנים (כ-1.5 מיליון מילים!)
+\end{itemize}
+
+למה זה חשוב? אם אתם צריכים לעבד מסמכים ארוכים (חוזים, דוחות שנתיים, תיעוד טכני), Context Window גדול חוסך את הצורך ב-\term{RAG} ובעיבוד רב-שלבי.
+
+\begin{examplebox}[דוגמה: משרד עורכי דין מנתח חוזים]
+משרד עורכי דין צריך לנתח חוזים מורכבים באורך 50,000 מילים. אם הם משתמשים ב-GPT-3.5 Turbo, הם חייבים לפצל את החוזה לחלקים קטנים ולשלוח כל חלק בנפרד -- זה יוצר פיצול הקשר וסיכון להחמצת קשרים בין סעיפים.
+
+פתרון: שימוש ב-\textbf{Claude 3.5 Sonnet} עם 200K Context Window מאפשר לשלוח את כל החוזה בבת אחת, וכך המודל רואה את התמונה המלאה.
+
+\textbf{עלות לפי מודל (לחוזה בודד של 50K מילים = 67K טוקנים):}
+\begin{itemize}
+  \item GPT-3.5 Turbo: פיצול ל-5 קריאות $\times$ \$0.002/1K = \$0.67 (אך איכות נמוכה יותר)
+  \item Claude 3.5 Sonnet: קריאה אחת $\times$ \$0.003/1K = \$0.20 (איכות גבוהה יותר)
+\end{itemize}
+\end{examplebox}
+
+\subsection{מדדי השוואה: \en{Performance} לעומת \en{Cost}}
+
+אחת הדרכים הטובות ביותר להשוות מודלים היא באמצעות \textbf{Performance-to-Cost Ratio}~\cite{LLMPricing2025,LLMCostOptimization2025}. טבלה~\ref{tab:llm-comparison} מציגה השוואה בין המודלים המובילים, ואיור~\ref{fig:performance-cost} מדגים את היחס בין ביצועים לעלות.
+
+\begin{formulabox}[יחס ביצועים לעלות]
+\[
+\text{Performance/Cost Ratio} = \frac{\text{Performance Score}}{\text{Monthly Cost}}
+\]
+כאשר:
+\begin{itemize}
+  \item \textbf{Performance Score}: ציון מנורמל (0-100) ממדדים כמו MMLU, HumanEval, או בדיקה פנימית
+  \item \textbf{Monthly Cost}: עלות חודשית משוערת לפי נפח שימוש
+\end{itemize}
+\end{formulabox}
+
+\begin{table}[H]
+\centering
+\caption{השוואת מודלים מובילים (\en{2025})}
+\label{tab:llm-comparison}
+\begin{rtltabular}{|p{3cm}|c|c|c|c|}
+\hline
+\hebheader{מודל} & \textbf{\textenglish{MMLU}} & \hebheader{עלות/1M טוקן} & \textbf{\textenglish{Context}} & \textbf{\textenglish{Latency}} \\
+\hline
+\hebcell{\textenglish{GPT-4 Turbo}} & 86.4 & \$10 & 128K & 3-5s \\
+\hline
+\hebcell{\textenglish{Claude 3.5 Sonnet}} & 88.7 & \$3 & 200K & 2-4s \\
+\hline
+\hebcell{\textenglish{GPT-3.5 Turbo}} & 70.0 & \$0.50 & 16K & 0.5-1s \\
+\hline
+\hebcell{\textenglish{Gemini 1.5 Pro}} & 85.9 & \$7 & 2M & 4-6s \\
+\hline
+\hebcell{\textenglish{Llama 3.1 70B}} & 79.3 & \textenglish{Self-hosted} & 128K & 1-2s \\
+\hline
+\end{rtltabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{english}
+\begin{tikzpicture}[scale=0.95]
+  % Axes
+  \draw[->] (0,0) -- (10,0) node[right] {Cost (\$/million tokens)};
+  \draw[->] (0,0) -- (0,8) node[above] {Performance (MMLU)};
+
+  % Grid
+  \draw[gray!30, dashed] (0,2) -- (10,2);
+  \draw[gray!30, dashed] (0,4) -- (10,4);
+  \draw[gray!30, dashed] (0,6) -- (10,6);
+  \draw[gray!30, dashed] (2,0) -- (2,8);
+  \draw[gray!30, dashed] (4,0) -- (4,8);
+  \draw[gray!30, dashed] (6,0) -- (6,8);
+  \draw[gray!30, dashed] (8,0) -- (8,8);
+
+  % Y-axis labels (Performance)
+  \node[left] at (0,2) {70};
+  \node[left] at (0,4) {80};
+  \node[left] at (0,6) {90};
+
+  % X-axis labels (Cost)
+  \node[below] at (0.5,0) {0};
+  \node[below] at (2.5,0) {2};
+  \node[below] at (5,0) {5};
+  \node[below] at (7.5,0) {10};
+
+  % Data points
+  % GPT-3.5 Turbo: Cost=0.5, Performance=70
+  \fill[blue] (0.5,2) circle (3pt);
+  \node[above right, blue] at (0.5,2) {\small GPT-3.5};
+
+  % Claude 3.5 Sonnet: Cost=3, Performance=88.7
+  \fill[green!60!black] (3,6.8) circle (3pt);
+  \node[above, green!60!black] at (3,6.8) {\small Claude 3.5};
+
+  % GPT-4 Turbo: Cost=10, Performance=86.4
+  \fill[red] (9,6.2) circle (3pt);
+  \node[left, red] at (9,6.2) {\small GPT-4};
+
+  % Gemini 1.5 Pro: Cost=7, Performance=85.9
+  \fill[orange] (6.5,6) circle (3pt);
+  \node[below, orange] at (6.5,6) {\small Gemini};
+
+  % Pareto frontier (efficient models)
+  \draw[thick, dashed, purple] (0.5,2) -- (3,6.8);
+
+  % Legend
+  \node[purple, above right] at (0.5,6.5) {Pareto Frontier};
+  \node[purple, above right] at (0.5,6) {\small (Efficient Models)};
+\end{tikzpicture}
+\end{english}
+\caption{גרף \textenglish{Scatter}: ביצועים מול עלות}
+\label{fig:performance-cost}
+\end{figure}
+
+הגרף לעיל מדגים נקודה חשובה: \textbf{Claude 3.5 Sonnet} נמצא על "חזית פארטו" -- הוא מציע שילוב אופטימלי של ביצועים ועלות. מודלים שמעל הקו הסגול (כמו GPT-4) יקרים יותר בלי לתת שיפור פרופורציונלי, ומודלים מתחת לקו (כמו GPT-3.5) זולים אך פחות מדויקים.
+
+\subsection{\en{Decision Tree} לבחירת \en{LLM}}
+
+איור~\ref{fig:decision-tree} מציג עץ החלטות פשוט לבחירת \en{LLM} על בסיס צרכי הארגון.
+
+\begin{figure}[H]
+\centering
+\begin{english}
+\begin{tikzpicture}[
+  scale=0.85,
+  transform shape,
+  node distance=1.2cm and 1.5cm,
+  decision/.style={diamond, draw, fill=yellow!20, text width=3.2cm, text centered, inner sep=2pt},
+  outcome/.style={rectangle, draw, fill=green!20, text width=2.5cm, text centered, rounded corners, minimum height=0.8cm},
+  arrow/.style={->, thick}
+]
+
+% Root
+\node[decision] (root) {Sensitive Data?};
+
+% Level 1
+\node[decision, below left=of root] (cloud) {Large Context\\Required?};
+\node[outcome, below right=of root] (selfhosted) {Consider\\Llama 3.1\\or Mistral\\(Self-Hosted)};
+
+% Level 2
+\node[decision, below left=of cloud] (budget) {High\\Budget?};
+\node[outcome, below right=of cloud] (gemini) {Gemini 1.5 Pro\\(2M Context)};
+
+% Level 3
+\node[outcome, below left=of budget] (gpt35) {GPT-3.5 Turbo\\(Cheap \& Fast)};
+\node[outcome, below right=of budget] (claude) {Claude 3.5\\or GPT-4};
+
+% Arrows
+\draw[arrow] (root) -- node[left, pos=0.3] {\small No} (cloud);
+\draw[arrow] (root) -- node[right, pos=0.3] {\small Yes} (selfhosted);
+\draw[arrow] (cloud) -- node[left, pos=0.3] {\small No} (budget);
+\draw[arrow] (cloud) -- node[right, pos=0.3] {\small Yes} (gemini);
+\draw[arrow] (budget) -- node[left, pos=0.3] {\small No} (gpt35);
+\draw[arrow] (budget) -- node[right, pos=0.3] {\small Yes} (claude);
+
+\end{tikzpicture}
+\end{english}
+\caption{\textenglish{Decision Tree} לבחירת \textenglish{LLM}}
+\label{fig:decision-tree}
+\end{figure}
+
+\section{בחירת \en{Embedding Models}: \en{Task-Specific} או \en{General}?}
+
+\term{Embedding Models} הם המנוע שמאחורי מערכות \term{RAG} וחיפוש סמנטי~\cite{MTEBReview2024,DomainSpecificEmbedding2024}. הם הופכים טקסט לווקטורים מספריים, מה שמאפשר למדוד "דמיון" בין משפטים, מסמכים או שאלות.
+
+\subsection{\en{General-Purpose Embeddings}}
+
+מודלים כמו \term{text-embedding-3-large} של OpenAI או \term{NV-Embed-v2} של NVIDIA הם "מודלים כלליים" -- מאומנים על מגוון רחב של טקסטים ומסוגלים לטפל ברוב התחומים בצורה סבירה.
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item פשוט ליישום -- אין צורך באימון נוסף
+  \item מתאים לרוב המקרים (\en{80\%} מהמשימות)
+  \item מצטיין בטקסטים כלליים ובשפה טבעית
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item פחות מדויק בתחומים מאוד ספציפיים (רפואה, משפטים, כימיה)
+  \item עלויות API מתמשכות (אם משתמשים ב-API חיצוני)
+\end{itemize}
+
+\subsection{\en{Task-Specific Embeddings}}
+
+במקרים שבהם הטקסט שלכם מאוד ספציפי -- למשל, מסמכים רפואיים, תקנות משפטיות, או קוד -- כדאי לשקול \term{Fine-Tuning} של מודל Embedding או שימוש במודל ייעודי.
+
+\begin{examplebox}[דוגמה: חברת תרופות מפתחת Embedding ייעודי]
+חברת תרופות גדולה השתמשה ב-\term{text-embedding-3-large} לאחזור מאמרים מדעיים, אך גילתה שהדיוק נמוך -- המודל לא הבין טוב מונחים רפואיים כמו "nephrotoxicity" או "cytochrome P450".
+
+הפתרון: \textbf{Fine-Tune} של מודל \term{BGE-M3} על 50,000 מאמרים רפואיים.
+
+\textbf{תוצאה:}
+\begin{itemize}
+  \item דיוק אחזור עלה מ-\en{65\%} ל-\en{89\%}
+  \item עלות חד-פעמית: \$5,000 (אימון)
+  \item עלות שוטפת: \$200/חודש (Self-Hosted)
+  \item לעומת: \$2,000/חודש (API של OpenAI)
+\end{itemize}
+
+נקודת איזון: 2.5 חודשים.
+\end{examplebox}
+
+\section{בחירת \en{Database}: \en{Vector}, \en{Relational}, או \en{Hybrid}?}
+
+כאשר בונים מערכת AI, אחת השאלות הקריטיות היא: איפה לאחסן את הנתונים?
+
+\subsection{\en{Vector Databases}}
+
+\term{Vector Databases} כמו \term{Pinecone}, \term{Weaviate}, ו-\term{Qdrant} מותאמים לאחסון וחיפוש של \term{Embeddings}~\cite{QdrantBenchmarks2024,VectorDBComparison2025}. הם מאפשרים חיפוש לפי דמיון (\term{Similarity\allowbreak~Search}) במהירות גבוהה.
+
+\textbf{מתי להשתמש:}
+\begin{itemize}
+  \item כאשר רוב השאילתות הן סמנטיות ("מצא מסמכים דומים לזה")
+  \item כאשר יש צורך ב-RAG
+  \item כאשר הנתונים הם לא מובנים (טקסט חופשי, תמונות)
+\end{itemize}
+
+\subsection{\en{Relational Databases}}
+
+מסדי נתונים יחסיים מסורתיים כמו \term{PostgreSQL} או \term{MySQL} טובים למידע מובנה: טבלאות, שורות, עמודות.
+
+\textbf{מתי להשתמש:}
+\begin{itemize}
+  \item כאשר הנתונים מובנים (לקוחות, הזמנות, מלאי)
+  \item כאשר יש צורך ב-\term{ACID Transactions} (עסקאות אטומיות)
+  \item כאשר השאילתות הן מדויקות (WHERE, JOIN)
+\end{itemize}
+
+\subsection{\en{Hybrid Approach}}
+
+גישה היברידית משלבת את שני העולמות: נתונים מובנים ב-SQL, Embeddings ב-Vector DB. טבלה~\ref{tab:db-comparison} מסכמת את ההבדלים בין הגישות השונות.
+
+\begin{examplebox}[דוגמה: אתר e-commerce עם AI]
+אתר מסחר אלקטרוני רוצה להציע המלצות מותאמות אישית.
+
+\textbf{ארכיטקטורה היברידית:}
+\begin{itemize}
+  \item \textbf{PostgreSQL}: פרטי לקוחות, הזמנות, מלאי (נתונים מובנים)
+  \item \textbf{Pinecone}: Embeddings של תיאורי מוצרים והיסטוריית גלישה (חיפוש סמנטי)
+\end{itemize}
+
+\textbf{תהליך המלצה:}
+\begin{enumerate}
+  \item שלוף מ-PostgreSQL: היסטוריית רכישות של הלקוח
+  \item המר את זה ל-Embedding וחפש ב-Pinecone: מוצרים דומים
+  \item שלוף מ-PostgreSQL: פרטי המוצרים שנמצאו (מחיר, מלאי)
+  \item הצג ללקוח
+\end{enumerate}
+\end{examplebox}
+
+\begin{table}[H]
+\centering
+\caption{השוואת סוגי \textenglish{Databases}}
+\label{tab:db-comparison}
+\resizebox{\textwidth}{!}{%
+\begin{rtltabular}{|p{3cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+\hebheader{קריטריון} & \textbf{\textenglish{Vector DB}} & \textbf{\textenglish{Relational DB}} & \textbf{\textenglish{Hybrid}} \\
+\hline
+\hebcell{חיפוש סמנטי} & \hebcell{מצוין} & \hebcell{לא נתמך} & \hebcell{מצוין} \\
+\hline
+\hebcell{שאילתות \textenglish{SQL}} & \hebcell{לא נתמך} & \hebcell{מצוין} & \hebcell{מצוין} \\
+\hline
+\hebcell{מורכבות הטמעה} & \hebcell{בינונית} & \hebcell{נמוכה} & \hebcell{גבוהה} \\
+\hline
+\hebcell{עלות} & \hebcell{בינונית-גבוהה} & \hebcell{נמוכה} & \hebcell{גבוהה} \\
+\hline
+\hebcell{מהירות (\textenglish{Similarity})} & \hebcell{מהירה מאוד} & \hebcell{איטית} & \hebcell{מהירה} \\
+\hline
+\end{rtltabular}%
+}
+\end{table}
+
+\section{ניהול זיכרון ב-\en{LLM}: \en{Short-term}, \en{Long-term}, \en{External}}
+
+אחד האתגרים הגדולים ביותר בעבודה עם \term{LLM} הוא ניהול \textbf{זיכרון השיחה}~\cite{RecursiveSummarization2023,CognitiveMemoryLLM2025}. בניגוד לבני אדם, שזוכרים אינסוף שיחות קודמות, LLM "שוכח" הכל ברגע שהשיחה מסתיימת. בנוסף, גם בתוך שיחה אחת, יש מגבלה על כמות המידע שהוא יכול "לזכור" -- זה נקרא \term{Context Window}.
+
+\subsection{\en{Short-term Memory}: ניהול השיחה הנוכחית}
+
+\textbf{Short-term Memory} היא ההיסטוריה המיידית של השיחה הנוכחית. בכל פעם שאתם שולחים הודעה ל-LLM, אתם בעצם שולחים:
+\begin{enumerate}
+  \item את כל ההודעות הקודמות בשיחה
+  \item את ההודעה החדשה
+\end{enumerate}
+
+זה אומר שככל שהשיחה ארוכה יותר, כך אתם משלמים יותר -- כי אתם מעלים שוב ושוב את כל ההיסטוריה.
+
+\begin{formulabox}[עלות שיחה ממושכת]
+אם כל הודעה מוסיפה ממוצע של 100 טוקנים, ובשיחה יש 20 הודעות:
+\[
+\text{Total Tokens} = 100 \times \frac{20 \times (20+1)}{2} = 21,000 \hebmath{ טוקנים}
+\]
+זה בגלל שההודעה ה-1 נשלחת 20 פעמים, ההודעה ה-2 נשלחת 19 פעמים, וכו'.
+\end{formulabox}
+
+\textbf{אסטרטגיות לחיסכון:}
+\begin{itemize}
+  \item \textbf{Truncation}: חתוך הודעות ישנות כשהן חורגות מ-Context Window
+  \item \textbf{Summarization}: סכם כל 10 הודעות לפסקה אחת
+  \item \textbf{Sliding Window}: שמור רק את ה-N הודעות האחרונות
+\end{itemize}
+
+\subsection{\en{Long-term Memory}: זיכרון בין שיחות}
+
+\textbf{Long-term Memory} הוא היכולת של המערכת "לזכור" משהו גם אחרי שהשיחה הסתיימה. למשל, אם לקוח אמר לך בשבוע שעבר "אני צמחוני", אתה רוצה שהסוכן ידע את זה גם בשיחה הבאה.
+
+\textbf{דרכים ליישום Long-term Memory:}
+\begin{enumerate}
+  \item \textbf{Database של עובדות}: שמור עובדות על המשתמש (שם, העדפות, היסטוריה) ב-SQL
+  \item \textbf{Vector Database לשיחות קודמות}: שמור Embeddings של כל שיחה, וכשמתחילה שיחה חדשה -- אחזר שיחות רלוונטיות
+  \item \textbf{Summarized History}: סכם את כל השיחות הקודמות ל-"תקציר משתמש" (2-3 פסקאות)
+\end{enumerate}
+
+\begin{examplebox}[דוגמה: סוכן תמיכה עם זיכרון ארוך טווח]
+סטארטאפ בונה סוכן תמיכה ללקוחות. הם רוצים שהסוכן "יזכור" שיחות קודמות.
+
+\textbf{ארכיטקטורה:}
+\begin{itemize}
+  \item \textbf{PostgreSQL}: טבלה \code{customers} -- שם, מייל, העדפות
+  \item \textbf{ChromaDB}: Embeddings של כל שיחה עם \code{customer\_id}
+  \item \textbf{Summarization}: בסוף כל שיחה, סכם אותה ושמור ב-SQL
+\end{itemize}
+
+\textbf{תהליך:}
+\begin{enumerate}
+  \item לקוח מתחבר עם \code{customer\_id=123}
+  \item שאילתה ל-PostgreSQL: שלוף העדפות בסיסיות
+  \item שאילתה ל-ChromaDB: מצא 3 שיחות רלוונטיות מהעבר (דמיון סמנטי לנושא הנוכחי)
+  \item בנה Prompt: "משתמש 123 הוא צמחוני, בעבר התלונן על איחור במשלוח. הנה שיחות קודמות: ..."
+  \item שלח ל-LLM
+\end{enumerate}
+
+תוצאה: הלקוח מרגיש "מובן" ולא צריך לחזור על עצמו.
+\end{examplebox}
+
+\subsection{\en{External Memory}: גישה לידע חיצוני}
+
+\textbf{External Memory} הוא היכולת של ה-LLM לגשת למידע שלא נמצא בתוך ה-Context Window~\cite{RAGSurvey2024,RAGSystemReview2025}. זה נעשה בדרך כלל דרך \term{RAG} או דרך \term{Function Calling}.
+
+\begin{itemize}
+  \item \textbf{RAG}: אחזר מסמכים רלוונטיים מ-Vector DB והזרק אותם לפרומפט
+  \item \textbf{Function Calling}: אפשר ל-LLM לקרוא לפונקציות חיצוניות (API של CRM, ERP, מזג אוויר)
+\end{itemize}
+
+\section{\en{Context Window}: מגבלות ואסטרטגיות התמודדות}
+
+\term{Context Window} הוא המגבלה הקשיחה ביותר של LLM~\cite{LostInTheMiddle2024,FoundInTheMiddle2024}. אם השיחה שלך חורגת ממנו, המודל פשוט לא יכול לקבל את הקלט.
+
+\subsection{אסטרטגיות להתמודדות עם Context Window מוגבל}
+
+\subsubsection{\en{Chunking} והזרקה חוזרת}
+
+אם יש לך מסמך ארוך מדי (למשל, ספר של 200 עמודים), אתה יכול לפצל אותו לחלקים, לשלוח כל חלק בנפרד, ולסכם את התוצאות.
+
+\textbf{תהליך:}
+\begin{enumerate}
+  \item חלק את המסמך ל-10 חלקים
+  \item שלח כל חלק: "סכם את החלק הזה"
+  \item אסוף את 10 הסיכומים
+  \item שלח סיכום סופי: "סכם את 10 הסיכומים האלה לסיכום אחד"
+\end{enumerate}
+
+\subsubsection{\en{Sliding Window} עם סיכום}
+
+כאשר השיחה ארוכה מדי, אל תשמור את הכל -- שמור רק את ה-10 הודעות האחרונות, ו"סכם" את השאר לפסקה אחת.
+
+\textbf{דוגמה:}
+\begin{itemize}
+  \item הודעות 1-50: סוכמו ל-"המשתמש שאל על מוצרים, הוא מעוניין בטלפונים"
+  \item הודעות 51-60: שמורות במלואן
+\end{itemize}
+
+כך אתה "זוכר" את העבר, אבל לא משלם עבור כל הטוקנים.
+
+\subsubsection{שימוש במודל עם Context Window גדול}
+
+הדרך הפשוטה ביותר: עבור למודל עם Context גדול יותר.
+
+\begin{itemize}
+  \item אם אתה משתמש ב-GPT-3.5 (16K), עבור ל-GPT-4 Turbo (128K)
+  \item אם אתה צריך יותר, עבור ל-Claude 3.5 Sonnet (200K) או Gemini 1.5 Pro (2M)
+\end{itemize}
+
+זה יקר יותר, אבל לפעמים זה הכרחי.
+
+\section{\en{Vendor Lock-in}: הסיכון הנסתר}
+
+\term{Vendor Lock-in} הוא המצב שבו הארגון הופך תלוי לחלוטין בספק אחד, ומעבר לספק אחר כרוך בעלויות אדירות או בלתי אפשרי לחלוטין~\cite{AIVendorLockIn2024,MultiCloudStrategy2025}.
+
+\subsection{איך נוצר \en{Vendor Lock-in} במערכות \en{AI}?}
+
+\begin{enumerate}
+  \item \textbf{Proprietary APIs}: שימוש ב-API ייעודי של ספק מסוים (למשל, \code{gpt-4-vision}) שאין לו חלופה בספקים אחרים
+  \item \textbf{Fine-Tuned Models}: אימון מודל ייעודי ב-OpenAI -- לא ניתן להעביר אותו ל-Anthropic
+  \item \textbf{Data Format Lock}: שמירת נתונים בפורמט ייעודי שקשה להעביר (למשל, Embeddings של OpenAI לא תואמים ל-Embeddings של Cohere)
+  \item \textbf{Workflow Dependency}: שימוש בכלים ייעוד של ספק (למשל, LangChain עם OpenAI בלבד)
+\end{enumerate}
+
+\subsection{אסטרטגיות למניעת \en{Vendor Lock-in}}
+
+\subsubsection{שכבת הפשטה (Abstraction Layer)}
+
+במקום לקרוא ישירות ל-\code{openai.ChatCompletion.create()}, בנה ממשק כללי שיכול לקרוא לכל ספק~\cite{AIMiddlewareSolution2025,ModelAgnosticPlatforms2025}.
+
+\begin{latin}
+\begin{lstlisting}[style=python, caption={Python: שכבת הפשטה למודלים}]
+class LLMProvider:
+    def __init__(self, provider: str):
+        self.provider = provider
+
+    def generate(self, prompt: str) -> str:
+        if self.provider == "openai":
+            return self._openai_generate(prompt)
+        elif self.provider == "anthropic":
+            return self._anthropic_generate(prompt)
+        elif self.provider == "local":
+            return self._local_generate(prompt)
+        else:
+            raise ValueError(f"Unknown provider: {self.provider}")
+
+    def _openai_generate(self, prompt):
+        import openai
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response.choices[0].message.content
+
+    def _anthropic_generate(self, prompt):
+        import anthropic
+        client = anthropic.Anthropic()
+        message = client.messages.create(
+            model="claude-3-5-sonnet-20241022",
+            max_tokens=1024,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return message.content[0].text
+
+    def _local_generate(self, prompt):
+        # Ollama or local model
+        import ollama
+        response = ollama.chat(model='llama3.1', messages=[
+            {'role': 'user', 'content': prompt}
+        ])
+        return response['message']['content']
+
+# Usage
+llm = LLMProvider(provider="openai")  # Easy to switch!
+result = llm.generate("מהו AI?")
+\end{lstlisting}
+\end{latin}
+
+כעת, אם תרצה לעבור מ-OpenAI ל-Anthropic, פשוט תשנה את הפרמטר \code{provider} -- ללא צורך בשינוי קוד נוסף.
+
+\subsubsection{\en{Multi-Model Strategy}}
+
+במקום להתחייב למודל אחד, השתמש ב\textbf{-Multi-Model Strategy}:
+\begin{itemize}
+  \item משימות קלות: GPT-3.5 Turbo
+  \item משימות מורכבות: Claude 3.5 Sonnet
+  \item משימות רגישות: Llama 3.1 (Self-Hosted)
+\end{itemize}
+
+כך אתה לא תלוי בספק אחד, וגם מפזר סיכונים.
+
+\subsubsection{תיעוד ומבחני \en{Regression}}
+
+כל פעם שאתה משנה ספק, אתה רוצה לוודא שהמערכת עדיין עובדת. לכן, בנה \textbf{Regression Tests}:
+
+\begin{latin}
+\begin{lstlisting}[style=python, caption={Python: מבחן Regression למודלים}]
+def test_llm_output():
+    test_cases = [
+        {"prompt": "What is 2+2?", "expected_substring": "4"},
+        {"prompt": "Translate 'hello' to Hebrew", "expected_substring": "שלום"},
+    ]
+
+    providers = ["openai", "anthropic", "local"]
+
+    for provider in providers:
+        llm = LLMProvider(provider=provider)
+        for case in test_cases:
+            result = llm.generate(case["prompt"])
+            assert case["expected_substring"] in result, \
+                f"Failed for {provider}: {result}"
+        print(f"{provider} passed all tests!")
+
+test_llm_output()
+\end{lstlisting}
+\end{latin}
+
+\subsection{חישוב \en{Switching Cost}}
+
+לפני שמחליטים לעבור ספק, חשוב לחשב את \textbf{עלות המעבר}:
+
+\begin{formulabox}[נוסחת Switching Cost]
+\[
+\text{Switching Cost} = C_{\text{dev}} + C_{\text{data}} + C_{\text{downtime}} + C_{\text{training}}
+\]
+כאשר:
+\begin{itemize}
+  \item $C_{\text{dev}}$: עלות פיתוח מחדש (שעות מהנדס $\times$ שכר שעתי)
+  \item $C_{\text{data}}$: עלות העברת נתונים והמרת Embeddings
+  \item $C_{\text{downtime}}$: אובדן הכנסות במהלך המעבר
+  \item $C_{\text{training}}$: הדרכת הצוות על הכלי החדש
+\end{itemize}
+\end{formulabox}
+
+\begin{examplebox}[דוגמה: חישוב Switching Cost]
+חברה משתמשת ב-OpenAI GPT-4 ורוצה לעבור ל-Claude 3.5 Sonnet.
+
+\textbf{חישוב:}
+\begin{itemize}
+  \item \textbf{פיתוח מחדש}: 3 מהנדסים $\times$ 2 שבועות $\times$ 80 שעות $\times$ \$100/שעה = \$48,000
+  \item \textbf{העברת נתונים}: 500GB Embeddings $\times$ \$0.02/GB = \$10,000 (צריך ליצור מחדש עם Embedding אחר)
+  \item \textbf{Downtime}: 3 ימים $\times$ \$5,000/יום הכנסות = \$15,000
+  \item \textbf{הדרכה}: 20 עובדים $\times$ 4 שעות $\times$ \$80/שעה = \$6,400
+\end{itemize}
+
+\[
+\text{Switching Cost} = 48,000 + 10,000 + 15,000 + 6,400 = \$79,400
+\]
+
+\textbf{החלטה}: אם המעבר ל-Claude חוסך \$3,000/חודש, נקודת האיזון היא 26.5 חודשים. האם זה כדאי? תלוי באסטרטגיה ארוכת הטווח.
+\end{examplebox}
+
+\section{דוגמאות מעשיות}
+
+\subsection{דוגמה 1: מעבר מ-\en{GPT-3.5} ל-\en{GPT-4}}
+
+\textbf{תרחיש:}
+חברת SaaS השתמשה ב-GPT-3.5 Turbo לסיכום פניות לקוחות. הם קיבלו תלונות על דיוק נמוך -- המודל "החמיץ" נקודות חשובות.
+
+\textbf{שיקולים:}
+\begin{itemize}
+  \item \textbf{ביצועים}: GPT-4 מדויק יותר, אך איטי פי 2-3
+  \item \textbf{עלות}: GPT-4 יקר פי 20 (!)
+  \item \textbf{נפח}: 10,000 פניות/חודש, ממוצע 500 טוקנים לפנייה
+\end{itemize}
+
+\textbf{חישוב עלויות:}
+\begin{itemize}
+  \item GPT-3.5 Turbo: $10,000 \times 0.5K \times \$0.002 = \$10$/חודש
+  \item GPT-4: $10,000 \times 0.5K \times \$0.03 = \$150$/חודש
+\end{itemize}
+
+\textbf{החלטה:}
+החברה עברה ל-\textbf{Hybrid Strategy}:
+\begin{itemize}
+  \item \en{80\%} פניות "רגילות": GPT-3.5 Turbo (\$8/חודש)
+  \item \en{20\%} פניות "מורכבות": GPT-4 (\$30/חודש)
+\end{itemize}
+
+עלות כוללת: \$38/חודש -- שיפור איכות משמעותי בעלות סבירה.
+
+\subsection{דוגמה 2: בחירה בין \en{Claude} ל-\en{GPT} לתמיכת לקוחות}
+
+\textbf{תרחיש:}
+סטארטאפ בונה סוכן תמיכה לקוחות אוטומטי. הם צריכים להחליט: Claude 3.5 Sonnet או GPT-4?
+
+\textbf{בדיקת POC:}
+הם הריצו 100 שיחות אמיתיות במקביל על שני המודלים.
+
+\textbf{תוצאות:}
+\begin{table}[H]
+\centering
+\begin{rtltabular}{|p{4cm}|c|c|}
+\hline
+\hebheader{מדד} & \textbf{\textenglish{Claude 3.5}} & \textbf{\textenglish{GPT-4}} \\
+\hline
+\hebcell{דיוק תשובות} & \en{87\%} & \en{84\%} \\
+\hline
+\hebcell{זמן תגובה ממוצע} & 2.3s & 4.1s \\
+\hline
+\hebcell{עלות/שיחה} & \$0.015 & \$0.08 \\
+\hline
+\hebcell{שביעות רצון לקוחות} & 4.2/5 & 4.0/5 \\
+\hline
+\end{rtltabular}
+\caption{השוואת ביצועים בין \textenglish{Claude 3.5} ל-\textenglish{GPT-4}}
+\end{table}
+
+\textbf{החלטה:}
+Claude 3.5 Sonnet -- מהיר יותר, זול יותר, ודיוק טוב יותר. GPT-4 לא הצדיק את העלות.
+
+\subsection{דוגמה 3: תכנון אסטרטגיית \en{Multi-Model}}
+
+\textbf{תרחיש:}
+ארגון גדול רוצה לבנות מערכת AI שמטפלת במגוון משימות.
+
+\textbf{ארכיטקטורה:}
+\begin{itemize}
+  \item \textbf{FAQ ושאלות פשוטות}: GPT-3.5 Turbo (מהיר וזול)
+  \item \textbf{ניתוח חוזים ומסמכים}: Claude 3.5 Sonnet (Context גדול, דיוק גבוה)
+  \item \textbf{נתונים רגישים}: Llama 3.1 70B Self-Hosted (פרטיות מלאה)
+  \item \textbf{יצירת קוד}: GPT-4 (מצטיין בקוד)
+\end{itemize}
+
+\textbf{תוצאה:}
+\begin{itemize}
+  \item עלות חודשית: \$2,500 (לעומת \$8,000 אם היו משתמשים רק ב-GPT-4)
+  \item איכות: גבוהה בכל תחום
+  \item גמישות: אפשר להחליף ספק בכל תחום בנפרד
+\end{itemize}
+
+\section{תרגילים}
+
+\subsection{תרגיל תיאורטי 1: בניית \en{Scorecard} להשוואת \en{LLMs}}
+
+\textbf{משימה:}
+בנה \textbf{Scorecard} להשוואת 4 מודלים: GPT-4, Claude 3.5, Gemini 1.5 Pro, Llama 3.1 70B.
+
+\textbf{קריטריונים:}
+\begin{itemize}
+  \item ביצועים (MMLU)
+  \item עלות למיליון טוקן
+  \item Context Window
+  \item Latency
+  \item רגישות נתונים (האם Self-Hosted?)
+\end{itemize}
+
+תן ציון 1-10 לכל קריטריון, ושקלל לפי חשיבות לארגון שלך.
+
+\textbf{פתרון לדוגמה:}
+\begin{table}[H]
+\centering
+\begin{rtltabular}{|p{3.5cm}|c|c|c|c|}
+\hline
+\hebheader{קריטריון (משקל)} & \textbf{\textenglish{GPT-4}} & \textbf{\textenglish{Claude 3.5}} & \textbf{\textenglish{Gemini}} & \textbf{\textenglish{Llama 3.1}} \\
+\hline
+\hebcell{ביצועים (\en{30\%})} & 9 & 10 & 8 & 7 \\
+\hline
+\hebcell{עלות (\en{25\%})} & 3 & 7 & 5 & 10 \\
+\hline
+\textenglish{Context} (\en{20\%}) & 7 & 9 & 10 & 7 \\
+\hline
+\textenglish{Latency} (\en{15\%}) & 5 & 7 & 4 & 8 \\
+\hline
+\hebcell{פרטיות (\en{10\%})} & 2 & 2 & 2 & 10 \\
+\hline
+\hebheader{ציון כולל} & 6.3 & 8.0 & 6.7 & 8.0 \\
+\hline
+\end{rtltabular}
+\caption{מטריצת השוואת מודלים לפי קריטריונים משוקללים}
+\end{table}
+
+\textbf{המלצה:} Claude 3.5 או Llama 3.1 -- תלוי אם אתה מוכן לנהל Self-Hosted.
+
+\subsection{תרגיל תיאורטי 2: חישוב \en{Switching Cost}}
+
+\textbf{תרחיש:}
+חברה משתמשת ב-Pinecone (Vector DB) ורוצה לעבור ל-Qdrant (Self-Hosted).
+
+\textbf{נתונים:}
+\begin{itemize}
+  \item 10 מיליון Embeddings ב-Pinecone
+  \item עלות Pinecone: \$500/חודש
+  \item עלות Qdrant Self-Hosted: \$200/חודש (שרת)
+  \item זמן העברה משוער: 3 שבועות (2 מהנדסים)
+  \item שכר מהנדס: \$120/שעה
+\end{itemize}
+
+\textbf{חשב:}
+\begin{enumerate}
+  \item Switching Cost
+  \item נקודת איזון (כמה חודשים עד שהמעבר משתלם?)
+  \item האם כדאי?
+\end{enumerate}
+
+\textbf{פתרון:}
+\begin{align*}
+C_{\text{dev}} &= 2 \times 3 \times 40 \times 120 = \$28,800 \\
+C_{\text{data}} &= 10M \times \$0.0001 = \$1,000 \\
+C_{\text{downtime}} &= 2 \times \$2,000 = \$4,000 \\
+C_{\text{training}} &= 5 \times 8 \times 100 = \$4,000 \\
+\text{Total} &= \$37,800
+\end{align*}
+
+חיסכון חודשי: $500 - 200 = \$300$
+
+נקודת איזון: $37,800 / 300 = 126$ חודשים (10.5 שנים!)
+
+\textbf{החלטה:} לא כדאי -- Switching Cost גבוה מדי.
+
+\subsection{תרגיל תיאורטי 3: תכנון אסטרטגיית \en{Context Management}}
+
+\textbf{תרחיש:}
+אתה בונה סוכן שיחה ללקוחות. שיחה ממוצעת היא 30 הודעות, כל הודעה 150 טוקנים.
+
+\textbf{בעיה:}
+אם תשלח את כל ההיסטוריה בכל פעם, תשלם הרבה!
+
+\textbf{משימה:}
+תכנן 3 אסטרטגיות Context Management וחשב את העלות של כל אחת.
+
+\textbf{פתרון:}
+\begin{enumerate}
+  \item \textbf{Full History}: שלח הכל בכל פעם
+  \begin{itemize}
+    \item טוקנים לשיחה: $150 \times \frac{30 \times 31}{2} = 69,750$
+    \item עלות: $69,750 \times \$0.002 / 1000 = \$0.14$ לשיחה
+  \end{itemize}
+
+  \item \textbf{Sliding Window (10 הודעות אחרונות)}
+  \begin{itemize}
+    \item טוקנים לשיחה: בממוצע $150 \times 10 \times 30 = 45,000$
+    \item עלות: $45,000 \times \$0.002 / 1000 = \$0.09$ לשיחה
+  \end{itemize}
+
+  \item \textbf{Summarization (סכם כל 10 הודעות)}
+  \begin{itemize}
+    \item טוקנים לשיחה: $500 \text{ (summary)} + 1,500 \text{ (last 10)} = 2,000$
+    \item עלות: $2,000 \times \$0.002 / 1000 = \$0.004$ לשיחה
+  \end{itemize}
+\end{enumerate}
+
+\textbf{המלצה:} Summarization -- חיסכון של \en{97\%}!
+
+\subsection{תרגיל תיאורטי 4: ניתוח \en{Vendor Lock-in}}
+
+\textbf{תרחיש:}
+בדוק את הארכיטקטורה הבאה וזהה נקודות Vendor Lock-in:
+
+\begin{itemize}
+  \item Frontend: שולח בקשות ישירות ל-OpenAI API
+  \item Embeddings: משתמש ב-\code{text-embedding-ada-002}
+  \item Database: שמור ב-Pinecone (ענן)
+  \item Fine-Tuned Model: \code{ft:gpt-3.5-turbo:company:v1}
+\end{itemize}
+
+\textbf{משימה:}
+\begin{enumerate}
+  \item זהה 4 נקודות Lock-in
+  \item הצע פתרון לכל נקודה
+\end{enumerate}
+
+\textbf{פתרון:}
+\begin{enumerate}
+  \item \textbf{Lock-in \#1}: Frontend קורא ישירות ל-OpenAI
+  \begin{itemize}
+    \item \textbf{פתרון}: הוסף Abstraction Layer (Backend Proxy)
+  \end{itemize}
+
+  \item \textbf{Lock-in \#2}: Embeddings ייעודיים ל-OpenAI
+  \begin{itemize}
+    \item \textbf{פתרון}: השתמש במודל Embedding נייטרלי (BGE-M3 Self-Hosted)
+  \end{itemize}
+
+  \item \textbf{Lock-in \#3}: Pinecone בענן
+  \begin{itemize}
+    \item \textbf{פתרון}: עבור ל-Qdrant או Weaviate (Self-Hosted)
+  \end{itemize}
+
+  \item \textbf{Lock-in \#4}: Fine-Tuned Model ייעודי
+  \begin{itemize}
+    \item \textbf{פתרון}: שמור את Data Training -- אפשר לאמן מחדש על מודל אחר
+  \end{itemize}
+\end{enumerate}
+
+\subsection{תרגיל תיאורטי 5: בניית \en{Roadmap} טכנולוגי ל-3 שנים}
+
+\textbf{תרחיש:}
+אתה CTO של סטארטאפ בתחום ה-FinTech. בנה Roadmap טכנולוגי AI ל-3 שנים.
+
+\textbf{שלב 1 (שנה 1):}
+\begin{itemize}
+  \item POC עם GPT-4 API (מהיר ליישום)
+  \item Vector DB בענן (Pinecone)
+  \item 1,000 לקוחות
+\end{itemize}
+
+\textbf{שלב 2 (שנה 2):}
+\begin{itemize}
+  \item מעבר ל-Multi-Model (GPT-4 + Claude)
+  \item הוספת Self-Hosted Embedding Model (BGE-M3)
+  \item 10,000 לקוחות
+\end{itemize}
+
+\textbf{שלב 3 (שנה 3):}
+\begin{itemize}
+  \item Self-Hosted LLM (Llama 4) לנתונים רגישים
+  \item Self-Hosted Vector DB (Qdrant)
+  \item 100,000 לקוחות
+\end{itemize}
+
+\textbf{תוצאה:}
+גמישות מלאה, עלויות מבוקרות, אין Vendor Lock-in.
+
+\subsection{תרגיל קוד 6: השוואת ביצועי מודלים אוטומטית}
+
+\textbf{משימה:}
+כתוב סקריפט Python שמשווה אוטומטית את הביצועים של 3 מודלים על 10 שאלות.
+
+\begin{latin}
+\begin{lstlisting}[style=python, caption={Python: השוואת ביצועי מודלים}]
+import time
+from typing import List, Dict
+import openai
+import anthropic
+import ollama
+
+class ModelBenchmark:
+    def __init__(self):
+        self.results = []
+
+    def benchmark_openai(self, prompt: str) -> Dict:
+        start = time.time()
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        latency = time.time() - start
+        answer = response.choices[0].message.content
+        tokens = response.usage.total_tokens
+        cost = tokens * 0.002 / 1000  # $0.002 per 1K tokens
+
+        return {
+            "model": "GPT-3.5 Turbo",
+            "answer": answer,
+            "latency": latency,
+            "tokens": tokens,
+            "cost": cost
+        }
+
+    def benchmark_claude(self, prompt: str) -> Dict:
+        client = anthropic.Anthropic()
+        start = time.time()
+        message = client.messages.create(
+            model="claude-3-5-sonnet-20241022",
+            max_tokens=1024,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        latency = time.time() - start
+        answer = message.content[0].text
+        tokens = message.usage.input_tokens + message.usage.output_tokens
+        cost = (message.usage.input_tokens * 0.003 +
+                message.usage.output_tokens * 0.015) / 1000
+
+        return {
+            "model": "Claude 3.5 Sonnet",
+            "answer": answer,
+            "latency": latency,
+            "tokens": tokens,
+            "cost": cost
+        }
+
+    def benchmark_ollama(self, prompt: str) -> Dict:
+        start = time.time()
+        response = ollama.chat(model='llama3.1', messages=[
+            {'role': 'user', 'content': prompt}
+        ])
+        latency = time.time() - start
+        answer = response['message']['content']
+
+        return {
+            "model": "Llama 3.1 (Local)",
+            "answer": answer,
+            "latency": latency,
+            "tokens": 0,  # Local - no token tracking
+            "cost": 0  # Self-hosted - no API cost
+        }
+
+    def run_benchmark(self, prompts: List[str]):
+        for i, prompt in enumerate(prompts):
+            print(f"\n=== Question {i+1}: {prompt[:50]}... ===")
+
+            # Test all models
+            for benchmark_func in [self.benchmark_openai,
+                                   self.benchmark_claude,
+                                   self.benchmark_ollama]:
+                try:
+                    result = benchmark_func(prompt)
+                    self.results.append({
+                        "question": i+1,
+                        **result
+                    })
+                    print(f"{result['model']}: "
+                          f"{result['latency']:.2f}s, "
+                          f"${result['cost']:.4f}")
+                except Exception as e:
+                    print(f"Error with {benchmark_func.__name__}: {e}")
+
+        self.print_summary()
+
+    def print_summary(self):
+        print("\n=== SUMMARY ===")
+        models = set([r['model'] for r in self.results])
+
+        for model in models:
+            model_results = [r for r in self.results if r['model'] == model]
+            avg_latency = sum([r['latency'] for r in model_results]) / len(model_results)
+            total_cost = sum([r['cost'] for r in model_results])
+
+            print(f"\n{model}:")
+            print(f"  Avg Latency: {avg_latency:.2f}s")
+            print(f"  Total Cost: ${total_cost:.4f}")
+
+# Usage
+benchmark = ModelBenchmark()
+
+test_prompts = [
+    "What is 2+2?",
+    "Explain quantum computing in simple terms.",
+    "Write a short poem about AI.",
+    "Translate 'Hello World' to Hebrew.",
+    "What are the benefits of cloud computing?",
+    "Summarize the French Revolution in 2 sentences.",
+    "What is the capital of Australia?",
+    "Explain the difference between AI and ML.",
+    "Write a Python function to calculate factorial.",
+    "What are the main causes of climate change?"
+]
+
+benchmark.run_benchmark(test_prompts)
+\end{lstlisting}
+\end{latin}
+
+\textbf{תוצאה צפויה:}
+\begin{verbatim}
+=== SUMMARY ===
+
+GPT-3.5 Turbo:
+  Avg Latency: 1.2s
+  Total Cost: $0.0150
+
+Claude 3.5 Sonnet:
+  Avg Latency: 2.8s
+  Total Cost: $0.0320
+
+Llama 3.1 (Local):
+  Avg Latency: 0.8s
+  Total Cost: $0.0000
+\end{verbatim}
+
+\subsection{תרגיל קוד 7: ניהול זיכרון שיחה עם סיכום}
+
+\textbf{משימה:}
+כתוב מערכת שמנהלת זיכרון שיחה ארוכה באמצעות סיכומים אוטומטיים.
+
+\begin{latin}
+\begin{lstlisting}[style=python, caption={Python: ניהול זיכרון עם סיכום}]
+import openai
+from typing import List, Dict
+
+class ConversationMemoryManager:
+    def __init__(self, max_messages: int = 10):
+        self.messages: List[Dict] = []
+        self.summary: str = ""
+        self.max_messages = max_messages
+
+    def add_message(self, role: str, content: str):
+        """Add a new message to conversation history"""
+        self.messages.append({"role": role, "content": content})
+
+        # If exceeded max messages, summarize and truncate
+        if len(self.messages) > self.max_messages:
+            self._summarize_and_truncate()
+
+    def _summarize_and_truncate(self):
+        """Summarize old messages and keep only recent ones"""
+        print("[Note] Summarizing old messages...")
+
+        # Take first half of messages to summarize
+        messages_to_summarize = self.messages[:self.max_messages // 2]
+
+        # Create summary prompt
+        conversation_text = "\n".join([
+            f"{msg['role']}: {msg['content']}"
+            for msg in messages_to_summarize
+        ])
+
+        summary_prompt = f"""Summarize this conversation in 2-3 sentences:
+
+{conversation_text}
+
+Previous summary: {self.summary if self.summary else 'None'}
+
+Provide a concise summary that captures key points."""
+
+        # Generate summary
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": summary_prompt}],
+            max_tokens=200
+        )
+
+        new_summary = response.choices[0].message.content
+
+        # Update summary
+        if self.summary:
+            self.summary = f"{self.summary}\n\n{new_summary}"
+        else:
+            self.summary = new_summary
+
+        # Keep only recent messages
+        self.messages = self.messages[self.max_messages // 2:]
+
+        print(f"[OK] Summary updated. Keeping {len(self.messages)} recent messages.")
+
+    def get_context_for_llm(self) -> List[Dict]:
+        """Get full context to send to LLM"""
+        context = []
+
+        # Add summary as system message if exists
+        if self.summary:
+            context.append({
+                "role": "system",
+                "content": f"Previous conversation summary:\n{self.summary}"
+            })
+
+        # Add recent messages
+        context.extend(self.messages)
+
+        return context
+
+    def chat(self, user_message: str) -> str:
+        """Send message and get response"""
+        # Add user message
+        self.add_message("user", user_message)
+
+        # Get context
+        context = self.get_context_for_llm()
+
+        # Call LLM
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=context
+        )
+
+        assistant_message = response.choices[0].message.content
+
+        # Add assistant message
+        self.add_message("assistant", assistant_message)
+
+        return assistant_message
+
+    def get_stats(self) -> Dict:
+        """Get memory statistics"""
+        total_tokens = sum([
+            len(msg['content'].split()) * 1.3  # rough estimate
+            for msg in self.messages
+        ])
+
+        return {
+            "total_messages": len(self.messages),
+            "summary_length": len(self.summary.split()) if self.summary else 0,
+            "estimated_tokens": int(total_tokens)
+        }
+
+# Usage Example
+memory = ConversationMemoryManager(max_messages=10)
+
+# Simulate long conversation
+conversation = [
+    "What is machine learning?",
+    "Can you give me an example?",
+    "How does it differ from deep learning?",
+    "What are neural networks?",
+    "Explain backpropagation.",
+    "What is gradient descent?",
+    "How do you prevent overfitting?",
+    "What is cross-validation?",
+    "Explain the bias-variance tradeoff.",
+    "What are ensemble methods?",
+    "Tell me about random forests.",
+    "How does XGBoost work?",
+    "What is feature engineering?",
+    "Explain dimensionality reduction.",
+    "What is PCA?"
+]
+
+for user_msg in conversation:
+    print(f"\n[User]: {user_msg}")
+    response = memory.chat(user_msg)
+    print(f"[Bot]: {response[:100]}...")
+
+    # Print stats every 5 messages
+    if len(memory.messages) % 5 == 0:
+        stats = memory.get_stats()
+        print(f"\n[Stats]: {stats}")
+
+# Final summary
+print("\n" + "="*50)
+print("FINAL SUMMARY:")
+print(memory.summary)
+print("\n[Stats] Final:", memory.get_stats())
+\end{lstlisting}
+\end{latin}
+
+\textbf{הסבר הקוד:}
+\begin{enumerate}
+  \item המערכת שומרת רק את ה-10 הודעות האחרונות
+  \item כשעוברים את המגבלה, היא מסכמת את המחצית הראשונה
+  \item הסיכום נשלח כ-System Message בכל קריאה
+  \item כך חוסכים טוקנים אבל שומרים על הקשר
+\end{enumerate}
+
+\section{סיכום}
+
+בפרק זה למדנו כיצד לקבל החלטות אסטרטגיות בעולם ה-AI העסקי~\cite{GartnerAIGateway2024}. ראינו שבחירת \term{LLM} אינה רק שאלה טכנית -- היא החלטה עסקית שמשפיעה על עלויות, ביצועים, פרטיות וגמישות עתידית.
+
+\textbf{נקודות מפתח:}
+\begin{itemize}
+  \item \textbf{אין מודל "מושלם"} -- כל מודל מצטיין במשימות מסוימות. Multi-Model Strategy היא לעתים קרובות הפתרון הטוב ביותר.
+  \item \textbf{Context Window הוא מגבלה קריטית} -- תכנן מראש איך אתה מנהל זיכרון, ובחר מודל עם Context מתאים למשימות שלך.
+  \item \textbf{Vendor Lock-in הוא סיכון אמיתי} -- השקיעו בשכבות הפשטה ובארכיטקטורה גמישה מהיום הראשון.
+  \item \textbf{חשבו ארוך טווח} -- Switching Cost יכול להיות עצום. תכננו Roadmap טכנולוגי ל-3 שנים לפחות.
+\end{itemize}
+
+בפרק הבא נעסוק בממשקי משתמש ואינטראקציה -- איך להפוך את כל הטכנולוגיה הזו לחוויית משתמש מעולה.
+
+\end{document}

@@ -1,0 +1,411 @@
+{
+  "metadata": {
+    "version": "2.3.0",
+    "description": "Comprehensive TOC detection rules for Hebrew-English bilingual documents",
+    "total_rules": 62,
+    "changelog": "v2.3.0: Added section gap and page jump detection (2 rules); v2.2.0: Added duplicate title detection (3 rules); v2.1.0: Added toc-english-text-naked rule; v2.0.0: Added 8 unnumbered entry detection rules"
+  },
+  "severity_levels": {
+    "CRITICAL": "Must fix - document will not render correctly",
+    "WARNING": "Should fix - visual or semantic issues",
+    "INFO": "Consider fixing - best practice recommendations"
+  },
+  "numbering_rules": {
+    "toc-numbering-discontinuous": {
+      "id": 1,
+      "description": "Chapter/section numbering is not continuous",
+      "severity": "CRITICAL",
+      "category": "numbering"
+    },
+    "toc-numbering-format-invalid": {
+      "id": 2,
+      "description": "Numbering doesn't follow chapter.section.subsection pattern",
+      "severity": "WARNING",
+      "category": "numbering"
+    },
+    "toc-sources-no-number": {
+      "id": 3,
+      "description": "Sources section missing sequential section number",
+      "severity": "WARNING",
+      "category": "numbering"
+    },
+    "toc-chapter-gap": {
+      "id": 4,
+      "description": "Gap in chapter numbering sequence",
+      "severity": "CRITICAL",
+      "category": "numbering"
+    },
+    "toc-chapter-no-numberline": {
+      "id": 49,
+      "description": "Chapter entry missing \\numberline{} wrapper",
+      "severity": "WARNING",
+      "category": "numbering"
+    },
+    "toc-section-no-numberline": {
+      "id": 50,
+      "description": "Section entry missing \\numberline{} wrapper",
+      "severity": "WARNING",
+      "category": "numbering"
+    },
+    "toc-subsection-no-numberline": {
+      "id": 51,
+      "description": "Subsection entry missing \\numberline{} wrapper",
+      "severity": "WARNING",
+      "category": "numbering"
+    },
+    "toc-subsubsection-no-numberline": {
+      "id": 52,
+      "description": "Subsubsection entry missing \\numberline{} wrapper",
+      "severity": "WARNING",
+      "category": "numbering"
+    }
+  },
+  "unnumbered_rules": {
+    "toc-unnumbered-chapter-unexpected": {
+      "id": 53,
+      "description": "Unexpected unnumbered chapter (not bibliography/appendix)",
+      "severity": "WARNING",
+      "category": "unnumbered"
+    },
+    "toc-unnumbered-section-unexpected": {
+      "id": 54,
+      "description": "Unexpected unnumbered section",
+      "severity": "WARNING",
+      "category": "unnumbered"
+    },
+    "toc-unnumbered-entry-expected": {
+      "id": 55,
+      "description": "Expected unnumbered entry (bibliography, appendix, front matter)",
+      "severity": "INFO",
+      "category": "unnumbered"
+    },
+    "toc-unnumbered-entry-starred": {
+      "id": 56,
+      "description": "Starred entry (chapter*, section*) without number",
+      "severity": "INFO",
+      "category": "unnumbered"
+    }
+  },
+  "bidi_number_rules": {
+    "toc-chapter-number-not-ltr": {
+      "id": 5,
+      "description": "Chapter number not wrapped in LTR",
+      "severity": "CRITICAL",
+      "category": "bidi_number"
+    },
+    "toc-section-number-not-ltr": {
+      "id": 6,
+      "description": "Section number (X.Y) not wrapped in LTR",
+      "severity": "CRITICAL",
+      "category": "bidi_number"
+    },
+    "toc-subsection-number-not-ltr": {
+      "id": 7,
+      "description": "Subsection number (X.Y.Z) not wrapped in LTR",
+      "severity": "CRITICAL",
+      "category": "bidi_number"
+    },
+    "toc-subsubsection-number-not-ltr": {
+      "id": 8,
+      "description": "Subsubsection number (X.Y.Z.W) not wrapped in LTR",
+      "severity": "CRITICAL",
+      "category": "bidi_number"
+    },
+    "toc-page-number-not-ltr": {
+      "id": 9,
+      "description": "Page number not in LTR format",
+      "severity": "CRITICAL",
+      "category": "bidi_number"
+    },
+    "toc-percentage-not-ltr": {
+      "id": 10,
+      "description": "Percentage not wrapped in LTR",
+      "severity": "WARNING",
+      "category": "bidi_number"
+    },
+    "toc-formula-not-ltr": {
+      "id": 11,
+      "description": "Mathematical formula not in LTR/math mode",
+      "severity": "CRITICAL",
+      "category": "bidi_number"
+    },
+    "toc-symbol-not-ltr": {
+      "id": 12,
+      "description": "Symbol not in correct direction",
+      "severity": "WARNING",
+      "category": "bidi_number"
+    }
+  },
+  "parenthetical_rules": {
+    "toc-parentheses-reversed": {
+      "id": 13,
+      "description": "Parentheses reversed in Hebrew RTL context",
+      "severity": "CRITICAL",
+      "category": "parenthetical"
+    },
+    "toc-brackets-reversed": {
+      "id": 14,
+      "description": "Square brackets reversed in Hebrew RTL context",
+      "severity": "CRITICAL",
+      "category": "parenthetical"
+    },
+    "toc-curly-braces-reversed": {
+      "id": 15,
+      "description": "Curly braces reversed in Hebrew RTL context",
+      "severity": "WARNING",
+      "category": "parenthetical"
+    },
+    "toc-angle-brackets-reversed": {
+      "id": 16,
+      "description": "Angle brackets reversed in Hebrew RTL context",
+      "severity": "WARNING",
+      "category": "parenthetical"
+    },
+    "toc-quotes-hebrew-incorrect": {
+      "id": 17,
+      "description": "Hebrew quotation marks incorrect",
+      "severity": "WARNING",
+      "category": "parenthetical"
+    },
+    "toc-quotes-english-in-hebrew": {
+      "id": 18,
+      "description": "English quotes used in Hebrew context",
+      "severity": "INFO",
+      "category": "parenthetical"
+    },
+    "toc-nested-parens-bidi": {
+      "id": 19,
+      "description": "Nested parentheses with mixed Hebrew/English",
+      "severity": "CRITICAL",
+      "category": "parenthetical"
+    },
+    "toc-math-parens-in-hebrew": {
+      "id": 20,
+      "description": "Mathematical parentheses in Hebrew not in math mode",
+      "severity": "CRITICAL",
+      "category": "parenthetical"
+    }
+  },
+  "bidi_text_rules": {
+    "toc-english-text-not-ltr": {
+      "id": 21,
+      "description": "English text not wrapped in textenglish",
+      "severity": "WARNING",
+      "category": "bidi_text"
+    },
+    "toc-hebrew-text-not-rtl": {
+      "id": 22,
+      "description": "Hebrew text not wrapped in texthebrew",
+      "severity": "WARNING",
+      "category": "bidi_text"
+    },
+    "toc-mixed-heb-eng-heb": {
+      "id": 23,
+      "description": "Hebrew-English-Hebrew pattern without proper wrappers",
+      "severity": "CRITICAL",
+      "category": "bidi_text"
+    },
+    "toc-mixed-eng-heb-eng": {
+      "id": 24,
+      "description": "English-Hebrew-English pattern without proper wrappers",
+      "severity": "CRITICAL",
+      "category": "bidi_text"
+    },
+    "toc-mixed-alternating-complex": {
+      "id": 25,
+      "description": "Complex alternating pattern needs verification",
+      "severity": "WARNING",
+      "category": "bidi_text"
+    },
+    "toc-acronym-not-ltr": {
+      "id": 26,
+      "description": "English acronym not wrapped in LTR",
+      "severity": "WARNING",
+      "category": "bidi_text"
+    },
+    "toc-url-path-not-ltr": {
+      "id": 27,
+      "description": "URL or file path not wrapped in LTR",
+      "severity": "WARNING",
+      "category": "bidi_text"
+    },
+    "toc-code-inline-not-ltr": {
+      "id": 28,
+      "description": "Inline code not wrapped in LTR",
+      "severity": "WARNING",
+      "category": "bidi_text"
+    },
+    "toc-english-text-naked": {
+      "id": 57,
+      "description": "English text without LTR wrapper will render RTL (backwards)",
+      "severity": "CRITICAL",
+      "category": "bidi_text",
+      "example_bad": "English References → secnerefeR hsilgnE",
+      "example_good": "\\textenglish{English References}",
+      "fix": "Wrap English text in \\textenglish{} or \\en{}"
+    }
+  },
+  "alignment_rules": {
+    "toc-left-alignment-detected": {
+      "id": 29,
+      "description": "Left alignment detected in RTL context",
+      "severity": "CRITICAL",
+      "category": "alignment"
+    },
+    "toc-text-not-right-aligned": {
+      "id": 30,
+      "description": "Text not aligned to right margin",
+      "severity": "CRITICAL",
+      "category": "alignment"
+    },
+    "toc-footer-page-not-ltr": {
+      "id": 31,
+      "description": "TOC page footer number not in LTR",
+      "severity": "WARNING",
+      "category": "alignment"
+    },
+    "toc-header-alignment": {
+      "id": 32,
+      "description": "TOC header alignment incorrect for RTL",
+      "severity": "INFO",
+      "category": "alignment"
+    }
+  },
+  "structure_rules": {
+    "toc-indentation-chapter": {
+      "id": 33,
+      "description": "Chapter not right-aligned",
+      "severity": "WARNING",
+      "category": "structure"
+    },
+    "toc-indentation-subsection": {
+      "id": 34,
+      "description": "Subsection indentation incorrect",
+      "severity": "WARNING",
+      "category": "structure"
+    },
+    "toc-indentation-subsubsection": {
+      "id": 35,
+      "description": "Subsubsection indentation incorrect",
+      "severity": "WARNING",
+      "category": "structure"
+    },
+    "toc-missing-chapter": {
+      "id": 36,
+      "description": "Expected chapter missing from TOC",
+      "severity": "CRITICAL",
+      "category": "structure"
+    },
+    "toc-bibliography-missing": {
+      "id": 37,
+      "description": "Bibliography section missing from TOC",
+      "severity": "CRITICAL",
+      "category": "structure"
+    },
+    "toc-duplicate-entry": {
+      "id": 38,
+      "description": "Duplicate entry detected in TOC (exact match)",
+      "severity": "WARNING",
+      "category": "structure"
+    },
+    "toc-duplicate-title": {
+      "id": 58,
+      "description": "Same title appears multiple times with different section numbers",
+      "severity": "WARNING",
+      "category": "structure",
+      "example": "11.19 English References and 11.20 English References"
+    },
+    "toc-sequential-duplicate": {
+      "id": 59,
+      "description": "Adjacent entries have identical titles (likely copy-paste error)",
+      "severity": "CRITICAL",
+      "category": "structure"
+    },
+    "toc-similar-title": {
+      "id": 60,
+      "description": "Very similar titles may indicate typo or copy-paste error",
+      "severity": "INFO",
+      "category": "structure"
+    },
+    "toc-section-gap-missing": {
+      "id": 61,
+      "description": "Missing vertical gap before section entry in TOC",
+      "severity": "WARNING",
+      "category": "structure",
+      "note": "Sections should have addvspace before them for visual hierarchy",
+      "example_bad": "2.1.4 subsection\\n2.2 section (no gap)",
+      "example_good": "2.1.4 subsection\\n[gap]\\n2.2 section"
+    },
+    "toc-page-number-jump": {
+      "id": 62,
+      "description": "Anomalous page number jump within subsection group",
+      "severity": "WARNING",
+      "category": "structure",
+      "note": "Large page jumps within same section may indicate copy-paste error",
+      "example": "2.1.3 page 23, 2.1.4 page 42 (jump of 19 pages)",
+      "threshold": 10
+    },
+    "toc-page-not-sequential": {
+      "id": 39,
+      "description": "Page numbers not sequential",
+      "severity": "INFO",
+      "category": "structure"
+    },
+    "toc-empty-title": {
+      "id": 40,
+      "description": "Empty title in TOC entry",
+      "severity": "CRITICAL",
+      "category": "structure"
+    }
+  },
+  "validation_rules": {
+    "toc-invalid-page-number": {
+      "id": 41,
+      "description": "Invalid page number",
+      "severity": "CRITICAL",
+      "category": "validation"
+    },
+    "toc-orphan-subsection": {
+      "id": 42,
+      "description": "Subsection without parent section",
+      "severity": "WARNING",
+      "category": "validation"
+    },
+    "toc-hyperref-invalid": {
+      "id": 43,
+      "description": "Invalid hyperref anchor format",
+      "severity": "INFO",
+      "category": "validation"
+    },
+    "toc-title-missing": {
+      "id": 44,
+      "description": "TOC title missing or not RTL",
+      "severity": "WARNING",
+      "category": "validation"
+    },
+    "toc-appendix-before-chapters": {
+      "id": 45,
+      "description": "Appendix appears before regular chapters",
+      "severity": "WARNING",
+      "category": "validation"
+    },
+    "toc-copyright-format-invalid": {
+      "id": 46,
+      "description": "Copyright notice format invalid",
+      "severity": "INFO",
+      "category": "validation"
+    },
+    "toc-dot-leaders-missing": {
+      "id": 47,
+      "description": "Dot leaders missing between title and page",
+      "severity": "WARNING",
+      "category": "validation"
+    },
+    "toc-roman-numeral-not-ltr": {
+      "id": 48,
+      "description": "Roman numerals not in LTR format",
+      "severity": "WARNING",
+      "category": "validation"
+    }
+  }
+}

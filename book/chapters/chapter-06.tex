@@ -1,0 +1,1895 @@
+% chapter-06.tex - פרוטוקול A2A - כשסוכנים מדברים ביניהם
+% Part of: כלי בינה מלאכותית בעסקים (AI Tools in Business)
+% Authors: Dr. Yoram Segal & Prof. Eran Sheriff
+% Compiler: LuaLaTeX
+
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{פרוטוקול \en{A2A} -- כשסוכנים מדברים ביניהם}
+\label{ch:a2a}
+
+איור~\ref{fig:a2a_intro} מציג את הרעיון המרכזי של הפרק: סוכנים אוטונומיים המתקשרים ביניהם באמצעות פרוטוקול מובנה, תחת תיאום של מתזמר (\en{Orchestrator}) מרכזי.
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[scale=0.9]
+  % Three agents communicating
+  \foreach \i/\name in {0/Agent A, 120/Agent B, 240/Agent C} {
+    \node[circle, draw, thick, fill=examplecolor, minimum size=1.5cm] (agent\i) at (\i:3cm) {\en{\name}};
+  }
+
+  % Communication arrows
+  \draw[->, very thick, draw=sectioncolor] (agent0) -- (agent120) node[midway, above left] {\small\en{A2A}};
+  \draw[->, very thick, draw=sectioncolor] (agent120) -- (agent240) node[midway, below] {\small\en{A2A}};
+  \draw[->, very thick, draw=sectioncolor] (agent240) -- (agent0) node[midway, above right] {\small\en{A2A}};
+
+  % Central orchestrator
+  \node[rectangle, draw, thick, fill=formulacolor, minimum size=1cm] (orch) at (0,0) {\en{Orchestrator}};
+  \draw[<->, dashed, thick] (agent0) -- (orch);
+  \draw[<->, dashed, thick] (agent120) -- (orch);
+  \draw[<->, dashed, thick] (agent240) -- (orch);
+\end{tikzpicture}
+\end{english}
+\caption{מערכת \en{Multi-Agent} עם מתזמר מרכזי}
+\label{fig:a2a_intro}
+\end{figure}
+
+\vspace{1cm}
+
+\section*{יעדי הלמידה}
+\addcontentsline{toc}{section}{יעדי הלמידה}
+
+בסיום פרק זה תוכלו:
+\begin{itemize}
+  \item להבין מהו פרוטוקול \en{A2A} ואיך סוכנים מתקשרים זה עם זה
+  \item לתכנן ארכיטקטורה של מערכת \en{Multi-Agent}
+  \item לנהל תיאום ותזמון בין סוכנים אוטונומיים
+  \item להתמודד עם קונפליקטים והתנגשויות בין סוכנים
+  \item להשתמש בכלי תזמור (\en{Orchestration}) כמו \en{LangGraph}
+  \item לנטר ולמדוד ביצועים של מערכות \en{Multi-Agent}
+\end{itemize}
+
+\newpage
+
+\section{מבוא: הכוח של רבים}
+
+חברת מסחר אלקטרוני גדולה עומדת בפני אתגר: כל הזמנה שמגיעה דורשת טיפול של מספר מחלקות -- שירות לקוחות צריך לאשר את הפרטים, מחלקת המלאי צריכה לבדוק זמינות, מחלקת התמחור צריכה לאשר מחירים והנחות, ולוגיסטיקה צריכה לתכנן משלוח. בעבר, כל זה נעשה באמצעות מערכות נפרדות, אימיילים אינסופיים ושיחות טלפון. כל הזמנה לקחה שעות, לפעמים ימים.
+
+פתרון אפשרי היה לבנות סוכן ענק אחד שמטפל בהכל. אבל הסוכן הזה היה צריך לדעת הכל -- את כל כללי המלאי, את כל מדיניות התמחור, את כל מגבלות הלוגיסטיקה. הוא היה נהיה מורכב מדי, איטי מדי, וקשה מדי לתחזוקה.
+
+הפתרון שהחברה בחרה היה שונה לחלוטין: במקום סוכן אחד גדול, היא בנתה חמישה סוכנים קטנים, כל אחד מומחה בתחומו. סוכן שירות לקוחות, סוכן מלאי, סוכן תמחור, סוכן לוגיסטיקה וסוכן תשלומים. כל אחד מהם יודע לעשות דבר אחד, אבל לעשות אותו מצוין.
+
+האתגר האמיתי התחיל כשהחברה שאלה: איך הסוכנים האלה ידברו אחד עם השני? מי יחליט מי עושה מה? מה קורה אם שני סוכנים לא מסכימים? איך מוודאים שכולם עובדים לקראת אותה מטרה?
+
+זהו בדיוק התפקיד של פרוטוקול \en{Agent-to-Agent (A2A)}.
+
+\section{מהו \en{A2A}?}
+
+\subsection{הגדרה}
+
+\begin{definition}[פרוטוקול A2A]
+\textbf{\en{Agent-to-Agent Protocol (A2A)}} הוא פרוטוקול תקשורת המאפשר לסוכנים אוטונומיים לתקשר זה עם זה, לחלוק מידע, לתאם פעולות ולעבוד יחד להשגת מטרה משותפת~\cite{GoogleA2A2025, A2ASpec2025}.
+\end{definition}
+
+בעוד ש-\en{MCP} (פרוטוקול \en{Model Context}) עוסק בתקשורת בין סוכן בודד לבין המודל שלו, \en{A2A} עוסק בתקשורת \textbf{בין סוכנים}~\cite{AgentMasterA2A2025, LinuxFoundationA2A2025}.
+
+\subsection{מדוע נדרש \en{A2A}?}
+
+בעולם העסקי, בעיות רבות מורכבות מדי עבור סוכן בודד:
+
+\begin{itemize}
+  \item \textbf{מומחיות מבוזרת}: ידע שונה נמצא במקומות שונים (CRM, ERP, מלאי, לוגיסטיקה)
+  \item \textbf{זמינות ותפוסה}: סוכן אחד לא יכול לטפל בהכל בו-זמנית
+  \item \textbf{חוסן (\en{Resilience})}: אם סוכן אחד נכשל, אחרים יכולים להמשיך
+  \item \textbf{התמחות}: כל סוכן יכול להתמחות במה שהוא עושה הכי טוב
+  \item \textbf{סקלביליות}: קל יותר להוסיף סוכנים חדשים מאשר להגדיל סוכן קיים
+\end{itemize}
+
+\begin{examplebox}[דוגמה: מערכת הזמנות]
+במערכת הזמנות אונליין:
+\begin{itemize}
+  \item \textbf{סוכן קבלה (\en{Intake Agent})}: מקבל את ההזמנה, מוודא שהנתונים תקינים
+  \item \textbf{סוכן מלאי (\en{Inventory Agent})}: בודק זמינות מוצרים
+  \item \textbf{סוכן תמחור (\en{Pricing Agent})}: מחשב מחיר סופי, כולל הנחות
+  \item \textbf{סוכן לוגיסטיקה (\en{Logistics Agent})}: מתזמן משלוח
+  \item \textbf{סוכן תשלום (\en{Payment Agent})}: מעבד תשלום
+\end{itemize}
+
+כל סוכן עושה את התפקיד שלו, אבל הם חייבים לתקשר כדי להשלים את ההזמנה מקצה לקצה.
+\end{examplebox}
+
+\subsection{מרכיבי \en{A2A}}
+
+פרוטוקול \en{A2A} טיפוסי מורכב מהמרכיבים הבאים:
+
+\begin{enumerate}
+  \item \textbf{שכבת תקשורת (\en{Communication Layer})}: איך הסוכנים שולחים ומקבלים הודעות
+  \item \textbf{פורמט הודעות (\en{Message Format})}: מבנה סטנדרטי של הודעות (לרוב \en{JSON})
+  \item \textbf{ניתוב (\en{Routing})}: כיצד הודעה מגיעה לסוכן הנכון
+  \item \textbf{תזמור (\en{Orchestration})}: מנגנון לתיאום פעולות בין סוכנים
+  \item \textbf{ניהול מצב (\en{State Management})}: מעקב אחרי מצב השיחה/המשימה
+  \item \textbf{טיפול בשגיאות (\en{Error Handling})}: מה קורה כשסוכן נכשל
+\end{enumerate}
+
+\section{ארכיטקטורות של מערכות \en{Multi-Agent}}
+
+ישנן שלוש ארכיטקטורות עיקריות למערכות \en{Multi-Agent}~\cite{MultiAgentCollabSurvey2025, AgentOrchestra2025}:
+
+\subsection{\en{Hub-and-Spoke} (מרכז וזרועות)}
+
+בארכיטקטורה זו, יש סוכן מרכזי אחד (\en{Hub}) שמתאם את כל האחרים (\en{Spokes}), כפי שמוצג באיור~\ref{fig:hub_spoke}.
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[scale=0.8]
+  % Central hub
+  \node[rectangle, draw, very thick, fill=formulacolor, minimum size=1.5cm] (hub) at (0,0) {\textbf{\en{Hub}}};
+
+  % Spoke agents
+  \foreach \i/\name in {0/Sales, 60/Inventory, 120/Pricing, 180/Logistics, 240/Payment, 300/Support} {
+    \node[circle, draw, thick, fill=examplecolor, minimum size=1.2cm] (spoke\i) at (\i:3.5cm) {\small\en{\name}};
+    \draw[->, very thick] (hub) -- (spoke\i);
+    \draw[->, very thick, dashed] (spoke\i) -- (hub);
+  }
+\end{tikzpicture}
+\end{english}
+\caption{ארכיטקטורת \en{Hub-and-Spoke} -- סוכן מרכזי מתאם את כולם}
+\label{fig:hub_spoke}
+\end{figure}
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item פשוט לתכנן ולנהל
+  \item בקרה מרכזית ברורה
+  \item קל לדבג ולנטר
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item ה-\en{Hub} הוא נקודת כשל יחידה (\en{Single Point of Failure})
+  \item יכול להפוך לצוואר בקבוק (\en{Bottleneck})
+  \item קשה לסקלביליות גבוהה
+\end{itemize}
+
+\subsection{\en{Mesh} (רשת)}
+
+בארכיטקטורת רשת (\en{Mesh}), כל סוכן יכול לדבר עם כל סוכן אחר ישירות, כפי שמוצג באיור~\ref{fig:mesh}.
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[scale=0.8]
+  % Agents in circle
+  \foreach \i/\name in {0/A1, 72/A2, 144/A3, 216/A4, 288/A5} {
+    \node[circle, draw, thick, fill=examplecolor, minimum size=1.2cm] (agent\i) at (\i:3cm) {\en{\name}};
+  }
+
+  % Full mesh connections
+  \foreach \i in {0, 72, 144, 216, 288} {
+    \foreach \j in {0, 72, 144, 216, 288} {
+      \ifnum\i<\j
+        \draw[->, thick, draw=sectioncolor] (agent\i) -- (agent\j);
+      \fi
+    }
+  }
+\end{tikzpicture}
+\end{english}
+\caption{ארכיטקטורת \en{Mesh} -- כל סוכן מתקשר ישירות עם כולם}
+\label{fig:mesh}
+\end{figure}
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item אין נקודת כשל יחידה
+  \item גמישות גבוהה
+  \item תקשורת ישירה ומהירה
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item מורכב מאוד לנהל
+  \item קשה לוודא עקביות
+  \item קשה לעקוב אחרי זרימת מידע
+\end{itemize}
+
+\subsection{\en{Hierarchical} (היררכי)}
+
+בארכיטקטורה היררכית, סוכנים מאורגנים בשכבות, כאשר סוכנים ברמה גבוהה יותר מנהלים סוכנים ברמה נמוכה יותר. איור~\ref{fig:hierarchical} מדגים מבנה זה.
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[
+  level 1/.style={sibling distance=5cm, level distance=2cm},
+  level 2/.style={sibling distance=2.5cm, level distance=2cm}
+]
+  \node[rectangle, draw, very thick, fill=formulacolor] {\en{Master Agent}}
+    child {
+      node[rectangle, draw, thick, fill=examplecolor] {\en{Sales Manager}}
+      child {node[circle, draw, fill=white] {\small\en{S1}}}
+      child {node[circle, draw, fill=white] {\small\en{S2}}}
+    }
+    child {
+      node[rectangle, draw, thick, fill=examplecolor] {\en{Ops Manager}}
+      child {node[circle, draw, fill=white] {\small\en{O1}}}
+      child {node[circle, draw, fill=white] {\small\en{O2}}}
+    };
+\end{tikzpicture}
+\end{english}
+\caption{ארכיטקטורה היררכית -- סוכן ראשי מנהל מנהלי ביניים}
+\label{fig:hierarchical}
+\end{figure}
+
+\textbf{יתרונות:}
+\begin{itemize}
+  \item מבנה ברור וסדור
+  \item קל לנהל באופן מודולרי
+  \item מתאים לארגונים קיימים
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+  \item יכול להיות איטי (הודעות עוברות דרך שכבות)
+  \item נוקשה למדי
+  \item דורש ניהול זהיר של ההיררכיה
+\end{itemize}
+
+\section{תיאום משימות בין סוכנים}
+
+\subsection{חלוקת עבודה (\en{Task Distribution})}
+
+אחת השאלות החשובות ביותר במערכת \en{Multi-Agent} היא: איך מחלקים עבודה בין הסוכנים?
+
+ישנן מספר אסטרטגיות:
+
+\subsubsection{חלוקה סטטית (\en{Static Assignment})}
+
+כל סוכן מקבל מראש סט קבוע של משימות.
+
+\begin{examplebox}[דוגמה: חלוקה סטטית]
+\begin{itemize}
+  \item \textbf{סוכן A}: כל ההזמנות מאירופה
+  \item \textbf{סוכן B}: כל ההזמנות מאסיה
+  \item \textbf{סוכן C}: כל ההזמנות מאמריקה
+\end{itemize}
+\end{examplebox}
+
+\textbf{יתרונות}: פשוט, ברור, צפוי
+
+\textbf{חסרונות}: לא מאוזן (אם אירופה עמוסה ואסיה פנויה, סוכן A יהיה עמוס ואילו סוכן B יושב בטל)
+
+\subsubsection{חלוקה דינמית (\en{Dynamic Assignment})}
+
+משימות מחולקות בזמן אמת על פי זמינות וכושר.
+
+\begin{formulabox}[נוסחה: חלוקת משימות]
+\[
+\text{Task\_Distribution} = \frac{\text{assigned\_tasks}}{\text{max\_tasks}}
+\]
+
+כאשר:
+\begin{itemize}
+  \item \textbf{assigned\_tasks}: מספר המשימות שהוקצו לסוכן
+  \item \textbf{max\_tasks}: מספר המשימות המקסימלי שסוכן יכול לטפל בו במקביל
+\end{itemize}
+
+סוכן זמין כאשר $\text{Task\_Distribution} < 1.0$
+\end{formulabox}
+
+\textbf{יתרונות}: איזון עומסים, ניצול אופטימלי
+
+\textbf{חסרונות}: מורכב יותר ליישום, דורש מעקב בזמן אמת
+
+\subsubsection{חלוקה מבוססת יכולות (\en{Capability-Based})}
+
+משימות מחולקות על פי היכולות והמומחיות של כל סוכן.
+
+\begin{examplebox}[דוגמה: חלוקה מבוססת יכולות]
+משימה: "אשר הזמנה עם הנחת VIP"
+
+\begin{itemize}
+  \item \textbf{סוכן מלאי}: בודק זמינות
+  \item \textbf{סוכן תמחור VIP}: מחשב הנחה (בגלל שיש מומחיות ב-VIP)
+  \item \textbf{סוכן לוגיסטיקה מהירה}: מתאם משלוח מהיר
+\end{itemize}
+\end{examplebox}
+
+\subsection{תיאום זמנים (\en{Coordination})}
+
+כאשר מספר סוכנים עובדים על אותה משימה, חשוב לתאם ביניהם~\cite{DeMAC2025, CooperativeDecisionSurvey2025}.
+
+\subsubsection{\en{Sequential} (סידרתי)}
+
+בתיאום סידרתי, סוכן A מסיים ומעביר לסוכן B, שמסיים ומעביר לסוכן C, כפי שמוצג באיור~\ref{fig:sequential}.
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[node distance=2.5cm]
+  \node[rectangle, draw, thick, fill=examplecolor] (a) {\en{Agent A}};
+  \node[rectangle, draw, thick, fill=examplecolor, right of=a] (b) {\en{Agent B}};
+  \node[rectangle, draw, thick, fill=examplecolor, right of=b] (c) {\en{Agent C}};
+
+  \draw[->, very thick] (a) -- (b) node[midway, above] {\small Result};
+  \draw[->, very thick] (b) -- (c) node[midway, above] {\small Result};
+\end{tikzpicture}
+\end{english}
+\caption{תיאום סידרתי -- כל סוכן ממתין לקודמו}
+\label{fig:sequential}
+\end{figure}
+
+\textbf{יתרונות}: פשוט, ברור, קל לדבג
+
+\textbf{חסרונות}: איטי (כל סוכן חייב לחכות לקודם)
+
+\subsubsection{\en{Parallel} (מקבילי)}
+
+בתיאום מקבילי, כמה סוכנים עובדים בו-זמנית על חלקים שונים של המשימה, כפי שמודגם באיור~\ref{fig:parallel}.
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[node distance=1.5cm]
+  \node[rectangle, draw, thick, fill=formulacolor] (start) {\en{Start}};
+
+  \node[rectangle, draw, thick, fill=examplecolor, above right=0.5cm and 1.5cm of start] (a) {\en{Agent A}};
+  \node[rectangle, draw, thick, fill=examplecolor, right=1.5cm of start] (b) {\en{Agent B}};
+  \node[rectangle, draw, thick, fill=examplecolor, below right=0.5cm and 1.5cm of start] (c) {\en{Agent C}};
+
+  \node[rectangle, draw, thick, fill=formulacolor, right=4cm of start] (end) {\en{Merge}};
+
+  \draw[->, very thick] (start) -- (a);
+  \draw[->, very thick] (start) -- (b);
+  \draw[->, very thick] (start) -- (c);
+
+  \draw[->, very thick] (a) -- (end);
+  \draw[->, very thick] (b) -- (end);
+  \draw[->, very thick] (c) -- (end);
+\end{tikzpicture}
+\end{english}
+\caption{תיאום מקבילי -- סוכנים עובדים בו-זמנית}
+\label{fig:parallel}
+\end{figure}
+
+\textbf{יתרונות}: מהיר, יעיל
+
+\textbf{חסרונות}: דורש סנכרון, מורכב יותר
+
+\subsubsection{\en{Conditional} (מותנה)}
+
+בתיאום מותנה, הסוכן הבא תלוי בתוצאת הסוכן הנוכחי. איור~\ref{fig:conditional} מציג דוגמה לזרימה כזו.
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[node distance=2cm]
+  \node[rectangle, draw, thick, fill=examplecolor] (a) {\en{Check Inventory}};
+  \node[diamond, draw, thick, fill=formulacolor, below of=a, aspect=2] (decision) {Available?};
+  \node[rectangle, draw, thick, fill=examplecolor, below left=1.5cm and 2cm of decision] (b1) {\en{Order}};
+  \node[rectangle, draw, thick, fill=examplecolor, below right=1.5cm and 2cm of decision] (b2) {\en{Backorder}};
+
+  \draw[->, very thick] (a) -- (decision);
+  \draw[->, very thick] (decision) -- (b1) node[midway, above left] {\small Yes};
+  \draw[->, very thick] (decision) -- (b2) node[midway, above right] {\small No};
+\end{tikzpicture}
+\end{english}
+\caption{תיאום מותנה -- הנתיב נקבע לפי תוצאת הבדיקה}
+\label{fig:conditional}
+\end{figure}
+
+\subsection{עלויות תיאום (\en{Coordination Overhead})}
+
+תיאום בין סוכנים דורש זמן ומשאבים. חשוב למדוד את העלות הזו.
+
+\begin{formulabox}[נוסחה: עומס תיאום]
+\[
+\text{Coordination\_Overhead} = \frac{\text{coordination\_time}}{\text{total\_execution\_time}}
+\]
+
+כאשר:
+\begin{itemize}
+  \item \textbf{coordination\_time}: הזמן שמוקדש לתקשורת ותיאום בין סוכנים
+  \item \textbf{total\_execution\_time}: סך הזמן לביצוע המשימה
+\end{itemize}
+
+ערך נמוך (< 0.2) מצביע על תיאום יעיל.
+
+ערך גבוה (> 0.5) מצביע על עומס תיאום גבוה מדי.
+\end{formulabox}
+
+\begin{examplebox}[חישוב עומס תיאום]
+משימה: עיבוד הזמנה
+
+\begin{itemize}
+  \item זמן עבודה אפקטיבי: \num{30} שניות
+  \item זמן תקשורת בין סוכנים: \num{10} שניות
+  \item סך הזמן: \num{40} שניות
+\end{itemize}
+
+\[
+\text{Coordination\_Overhead} = \frac{10}{40} = 0.25 = 25\%
+\]
+
+זהו עומס סביר. אם התקשורת הייתה לוקחת \num{25} שניות, היינו מקבלים:
+
+\[
+\text{Coordination\_Overhead} = \frac{25}{55} = 0.45 = 45\%
+\]
+
+זהו עומס גבוה מדי, כדאי לשקול מיזוג סוכנים או שיפור התקשורת.
+\end{examplebox}
+
+\section{טיפול בקונפליקטים}
+
+כאשר מספר סוכנים עובדים יחד, בלתי נמנע שיהיו מצבים שבהם הם לא מסכימים או שפעולותיהם מתנגשות~\cite{ConflictResolutionTechniques2025, CoordinationCooperationConflict2007}.
+
+\subsection{סוגי קונפליקטים}
+
+\subsubsection{קונפליקט משאבים (\en{Resource Conflict})}
+
+שני סוכנים רוצים להשתמש באותו משאב.
+
+\begin{examplebox}[דוגמה: קונפליקט מלאי]
+\begin{itemize}
+  \item \textbf{סוכן הזמנה A}: רוצה להקצות את הפריט האחרון במלאי ללקוח VIP
+  \item \textbf{סוכן הזמנה B}: רוצה להקצות את אותו פריט להזמנה דחופה
+\end{itemize}
+
+הפתרון: צריך מנגנון \textbf{נעילה (\en{Locking})} או \textbf{עדיפויות (\en{Priorities})}.
+\end{examplebox}
+
+\subsubsection{קונפליקט החלטה (\en{Decision Conflict})}
+
+שני סוכנים מגיעים להחלטות שונות על אותה בעיה.
+
+\begin{examplebox}[דוגמה: קונפליקט תמחור]
+\begin{itemize}
+  \item \textbf{סוכן תמחור}: מחשב הנחה של \en{10\%}
+  \item \textbf{סוכן שיווק}: מציע הנחה של \en{20\%} כחלק ממבצע
+\end{itemize}
+
+הפתרון: צריך מנגנון \textbf{בוררות (\en{Arbitration})} או \textbf{הסלמה (\en{Escalation})}.
+\end{examplebox}
+
+\subsubsection{קונפליקט סדר פעולות (\en{Ordering Conflict})}
+
+שני סוכנים רוצים לעשות פעולות שצריכות להיות בסדר מסוים.
+
+\begin{examplebox}[דוגמה: קונפליקט עדכון]
+\begin{itemize}
+  \item \textbf{סוכן A}: רוצה לעדכן מחיר מוצר
+  \item \textbf{סוכן B}: רוצה לעדכן מלאי של אותו מוצר
+\end{itemize}
+
+אם שני העדכונים קורים בו-זמנית, עלול להיווצר מצב לא עקבי.
+
+הפתרון: \textbf{סנכרון (\en{Synchronization})} או \textbf{עסקאות (\en{Transactions})}.
+\end{examplebox}
+
+\subsection{מנגנוני פתרון קונפליקטים}
+
+\subsubsection{\en{Priorities} (עדיפויות)}
+
+לכל סוכן יש רמת עדיפות, וסוכן בעדיפות גבוהה יותר "מנצח".
+
+\begin{codebox}[\en{Python: Priority-Based Resolution}]
+\begin{english}
+\begin{lstlisting}[style=python]
+class Agent:
+    def __init__(self, name, priority):
+        self.name = name
+        self.priority = priority
+
+def resolve_conflict(agent1, agent2, resource):
+    """Resolve resource conflict by priority."""
+    if agent1.priority > agent2.priority:
+        print(f"{agent1.name} gets {resource}")
+        return agent1
+    else:
+        print(f"{agent2.name} gets {resource}")
+        return agent2
+
+# Example
+vip_agent = Agent("VIP Agent", priority=10)
+standard_agent = Agent("Standard Agent", priority=5)
+
+resolve_conflict(vip_agent, standard_agent, "Last item")
+# Output: VIP Agent gets Last item
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsubsection{\en{First-Come-First-Served (FCFS)}}
+
+מי שהגיע ראשון מקבל את המשאב.
+
+\subsubsection{\en{Voting} (הצבעה)}
+
+מספר סוכנים "מצביעים" על הפתרון הנכון.
+
+\subsubsection{\en{Escalation} (הסלמה)}
+
+אם הסוכנים לא מסכימים, ההחלטה עוברת לסוכן ברמה גבוהה יותר או למנהל אנושי.
+
+\begin{codebox}[\en{Python: Escalation Mechanism}]
+\begin{english}
+\begin{lstlisting}[style=python]
+class ConflictManager:
+    def __init__(self):
+        self.escalation_threshold = 3
+        self.conflicts = []
+
+    def handle_conflict(self, agent1, agent2, issue):
+        """Handle conflict between agents."""
+        # Try automated resolution
+        if self.can_resolve_automatically(issue):
+            return self.auto_resolve(agent1, agent2, issue)
+
+        # Escalate to human
+        self.conflicts.append({
+            'agent1': agent1,
+            'agent2': agent2,
+            'issue': issue,
+            'escalated': True
+        })
+
+        print(f"ESCALATION: {issue} needs human decision")
+        return None
+
+    def can_resolve_automatically(self, issue):
+        """Check if issue can be resolved automatically."""
+        return issue.get('auto_resolvable', False)
+
+    def auto_resolve(self, agent1, agent2, issue):
+        """Automatically resolve simple conflicts."""
+        if 'priority' in issue:
+            return agent1 if agent1.priority > agent2.priority else agent2
+        return None
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\section{\en{Orchestration}: תזמור סוכנים}
+
+\subsection{מהו \en{Orchestration}?}
+
+\begin{definition}[Orchestration]
+\textbf{\en{Orchestration}} הוא התהליך של תיאום, ניהול וניטור של מערכת \en{Multi-Agent} כדי להבטיח שכל הסוכנים עובדים ביעילות לקראת המטרה המשותפת~\cite{MultiAgentEvolvingOrch2025}.
+\end{definition}
+
+תזמור כולל:
+\begin{itemize}
+  \item ניתוב הודעות בין סוכנים
+  \item ניהול מצב השיחה
+  \item קביעת סדר ביצוע
+  \item טיפול בשגיאות
+  \item מעקב אחרי התקדמות
+\end{itemize}
+
+\subsection{\en{LangGraph}: כלי לתזמור}
+
+\en{LangGraph} הוא ספריית Python המאפשרת לבנות זרימות עבודה (\en{Workflows}) מורכבות של סוכנים~\cite{LangGraphDocs2025, LangGraphMultiAgent2024}.
+
+\subsubsection{רכיבי \en{LangGraph}}
+
+\begin{itemize}
+  \item \textbf{Nodes (צמתים)}: מייצגים סוכנים או פעולות
+  \item \textbf{Edges (קשתות)}: מייצגים מעברים בין סוכנים
+  \item \textbf{State (מצב)}: המידע המשותף בין הסוכנים
+  \item \textbf{Conditional Edges (קשתות מותנות)}: מעברים שתלויים בתנאי
+\end{itemize}
+
+\subsubsection{דוגמה: \en{Order Processing Workflow}}
+
+\begin{codebox}[\en{Python: LangGraph Multi-Agent System}]
+\begin{english}
+\begin{lstlisting}[style=python]
+from langgraph.graph import StateGraph, END
+from typing import TypedDict, Annotated
+import operator
+
+# Define shared state
+class OrderState(TypedDict):
+    order_id: str
+    customer: str
+    items: list
+    inventory_status: str
+    price: float
+    delivery_date: str
+    payment_status: str
+    errors: Annotated[list, operator.add]
+
+# Define agent functions
+def intake_agent(state: OrderState) -> OrderState:
+    """Receive and validate order."""
+    print(f"Intake: Processing order {state['order_id']}")
+    # Validation logic here
+    return state
+
+def inventory_agent(state: OrderState) -> OrderState:
+    """Check inventory availability."""
+    print(f"Inventory: Checking stock for {state['items']}")
+    # Check stock
+    state['inventory_status'] = 'available'
+    return state
+
+def pricing_agent(state: OrderState) -> OrderState:
+    """Calculate final price."""
+    print(f"Pricing: Calculating price")
+    state['price'] = 100.0  # Simplified
+    return state
+
+def logistics_agent(state: OrderState) -> OrderState:
+    """Schedule delivery."""
+    print(f"Logistics: Scheduling delivery")
+    state['delivery_date'] = '2025-12-20'
+    return state
+
+def payment_agent(state: OrderState) -> OrderState:
+    """Process payment."""
+    print(f"Payment: Processing ${state['price']}")
+    state['payment_status'] = 'completed'
+    return state
+
+# Define routing logic
+def should_continue(state: OrderState) -> str:
+    """Decide next step based on state."""
+    if state.get('inventory_status') != 'available':
+        return 'backorder'
+    return 'continue'
+
+# Build the graph
+workflow = StateGraph(OrderState)
+
+# Add nodes
+workflow.add_node("intake", intake_agent)
+workflow.add_node("inventory", inventory_agent)
+workflow.add_node("pricing", pricing_agent)
+workflow.add_node("logistics", logistics_agent)
+workflow.add_node("payment", payment_agent)
+
+# Add edges
+workflow.add_edge("intake", "inventory")
+workflow.add_conditional_edges(
+    "inventory",
+    should_continue,
+    {
+        "continue": "pricing",
+        "backorder": END
+    }
+)
+workflow.add_edge("pricing", "logistics")
+workflow.add_edge("logistics", "payment")
+workflow.add_edge("payment", END)
+
+# Set entry point
+workflow.set_entry_point("intake")
+
+# Compile
+app = workflow.compile()
+
+# Run the workflow
+initial_state = {
+    "order_id": "ORD-12345",
+    "customer": "John Doe",
+    "items": ["laptop", "mouse"],
+    "errors": []
+}
+
+result = app.invoke(initial_state)
+print(f"\nFinal state: {result}")
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+איור~\ref{fig:langgraph_workflow} מציג את תרשים הזרימה של המערכת.
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[
+  node distance=1.5cm,
+  agent/.style={rectangle, draw, thick, fill=examplecolor, minimum width=2.5cm, minimum height=1cm},
+  decision/.style={diamond, draw, thick, fill=formulacolor, aspect=2}
+]
+  \node[agent] (intake) {\en{Intake Agent}};
+  \node[agent, below of=intake] (inventory) {\en{Inventory Agent}};
+  \node[decision, below of=inventory] (check) {Available?};
+  \node[agent, below left=1.5cm and 1cm of check] (backorder) {\en{Backorder}};
+  \node[agent, below right=1.5cm and 1cm of check] (pricing) {\en{Pricing Agent}};
+  \node[agent, below of=pricing] (logistics) {\en{Logistics Agent}};
+  \node[agent, below of=logistics] (payment) {\en{Payment Agent}};
+  \node[rectangle, draw, thick, below of=payment] (end) {\en{END}};
+
+  \draw[->, very thick] (intake) -- (inventory);
+  \draw[->, very thick] (inventory) -- (check);
+  \draw[->, very thick] (check) -- (backorder) node[midway, above left] {\small No};
+  \draw[->, very thick] (check) -- (pricing) node[midway, above right] {\small Yes};
+  \draw[->, very thick] (pricing) -- (logistics);
+  \draw[->, very thick] (logistics) -- (payment);
+  \draw[->, very thick] (payment) -- (end);
+\end{tikzpicture}
+\end{english}
+\caption{זרימת עבודה ב-\en{LangGraph} לעיבוד הזמנות}
+\label{fig:langgraph_workflow}
+\end{figure}
+
+\subsection{\en{State Management} (ניהול מצב)}
+
+אחד האתגרים הגדולים ב-\en{Multi-Agent} הוא ניהול מצב משותף.
+
+\subsubsection{\en{Shared State} (מצב משותף)}
+
+כל הסוכנים ניגשים לאותו מצב.
+
+\textbf{יתרונות}: פשוט, כולם רואים את אותו מידע
+
+\textbf{חסרונות}: קונפליקטים אפשריים, דורש נעילות
+
+\subsubsection{\en{Message Passing} (העברת הודעות)}
+
+כל סוכן שומר את המצב שלו, ושולח הודעות לאחרים.
+
+\textbf{יתרונות}: אין קונפליקטים, סוכנים עצמאיים
+
+\textbf{חסרונות}: מורכב יותר, קשה יותר לעקוב
+
+\subsubsection{\en{Event Sourcing}}
+
+כל שינוי נרשם כאירוע, והמצב הנוכחי הוא סכום כל האירועים.
+
+\textbf{יתרונות}: היסטוריה מלאה, ניתן לשחזר מצבים קודמים
+
+\textbf{חסרונות}: דורש תשתית נוספת
+
+\section{ניטור מערכות \en{Multi-Agent}}
+
+\subsection{מטריקות חשובות}
+
+כדי לנהל מערכת \en{Multi-Agent} ביעילות, חשוב למדוד~\cite{BeyondBlackBox2025, OpsAgent2025}:
+
+\begin{enumerate}
+  \item \textbf{Throughput (תפוקה)}: כמה משימות המערכת מעבדת ליחידת זמן
+  \item \textbf{Latency (זמן תגובה)}: כמה זמן לוקח לסיים משימה מקצה לקצה
+  \item \textbf{Agent Utilization (ניצול סוכנים)}: כמה אחוזים מהזמן כל סוכן עובד
+  \item \textbf{Error Rate (שיעור שגיאות)}: כמה משימות נכשלות
+  \item \textbf{Coordination Overhead (עומס תיאום)}: כמה זמן הולך על תקשורת
+  \item \textbf{Resource Conflicts (קונפליקטי משאבים)}: כמה קונפליקטים מתרחשים
+\end{enumerate}
+
+\subsection{כלי ניטור}
+
+\subsubsection{\en{Logging}}
+
+תיעוד כל פעולה של כל סוכן.
+
+\begin{codebox}[\en{Python: Agent Logging}]
+\begin{english}
+\begin{lstlisting}[style=python]
+import logging
+from datetime import datetime
+
+class MonitoredAgent:
+    def __init__(self, name):
+        self.name = name
+        self.logger = logging.getLogger(name)
+        self.logger.setLevel(logging.INFO)
+
+        # File handler
+        fh = logging.FileHandler(f'{name}_log.txt')
+        formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        )
+        fh.setFormatter(formatter)
+        self.logger.addHandler(fh)
+
+    def execute_task(self, task):
+        """Execute task with logging."""
+        self.logger.info(f"Starting task: {task}")
+        start_time = datetime.now()
+
+        try:
+            # Do the work
+            result = self.perform_work(task)
+
+            duration = (datetime.now() - start_time).total_seconds()
+            self.logger.info(
+                f"Completed task: {task} in {duration}s"
+            )
+            return result
+
+        except Exception as e:
+            self.logger.error(f"Failed task: {task}, Error: {e}")
+            raise
+
+    def perform_work(self, task):
+        """Actual work simulation."""
+        import time
+        time.sleep(0.5)  # Simulate work
+        return f"Result of {task}"
+
+# Usage
+agent = MonitoredAgent("InventoryAgent")
+agent.execute_task("check_stock_item_12345")
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsubsection{\en{Tracing}}
+
+מעקב אחרי זרימת משימה דרך כל הסוכנים.
+
+\begin{codebox}[\en{Python: Simple Tracing}]
+\begin{english}
+\begin{lstlisting}[style=python]
+from typing import Dict, List
+from dataclasses import dataclass, field
+from datetime import datetime
+
+@dataclass
+class TraceEvent:
+    """Single event in execution trace."""
+    timestamp: datetime
+    agent: str
+    event_type: str  # 'start', 'end', 'message'
+    details: Dict
+
+@dataclass
+class ExecutionTrace:
+    """Complete trace of a task execution."""
+    task_id: str
+    events: List[TraceEvent] = field(default_factory=list)
+
+    def add_event(self, agent, event_type, details):
+        """Add event to trace."""
+        event = TraceEvent(
+            timestamp=datetime.now(),
+            agent=agent,
+            event_type=event_type,
+            details=details
+        )
+        self.events.append(event)
+
+    def get_duration(self):
+        """Calculate total execution time."""
+        if len(self.events) < 2:
+            return 0
+        start = self.events[0].timestamp
+        end = self.events[-1].timestamp
+        return (end - start).total_seconds()
+
+    def print_trace(self):
+        """Print execution trace."""
+        print(f"\nTrace for Task {self.task_id}")
+        print("-" * 60)
+        for event in self.events:
+            print(f"{event.timestamp.strftime('%H:%M:%S.%f')[:-3]} | "
+                  f"{event.agent:15} | {event.event_type:10} | "
+                  f"{event.details}")
+        print(f"\nTotal Duration: {self.get_duration():.3f}s")
+
+# Usage
+trace = ExecutionTrace(task_id="ORD-12345")
+
+trace.add_event("IntakeAgent", "start", {"action": "validate_order"})
+trace.add_event("IntakeAgent", "end", {"status": "valid"})
+trace.add_event("InventoryAgent", "start", {"action": "check_stock"})
+trace.add_event("InventoryAgent", "end", {"status": "available"})
+trace.add_event("PricingAgent", "start", {"action": "calculate"})
+trace.add_event("PricingAgent", "end", {"price": 100.0})
+
+trace.print_trace()
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsubsection{\en{Metrics Dashboard}}
+
+ויזואליזציה של מצב המערכת בזמן אמת.
+
+\begin{examplebox}[דשבורד מטריקות]
+מטריקות שחשוב להציג:
+
+\begin{itemize}
+  \item \textbf{Agent Status}: איזה סוכנים פעילים/לא פעילים
+  \item \textbf{Task Queue}: כמה משימות ממתינות לכל סוכן
+  \item \textbf{Success Rate}: אחוז ההצלחה של כל סוכן
+  \item \textbf{Average Latency}: זמן ממוצע לכל סוכן
+  \item \textbf{Communication Graph}: מי מדבר עם מי
+  \item \textbf{Error Log}: שגיאות אחרונות
+\end{itemize}
+\end{examplebox}
+
+\section{דוגמאות מעשיות}
+
+\subsection{דוגמה 1: צוות סוכנים לטיפול בהזמנה}
+
+נבנה מערכת שלמה לטיפול בהזמנות מקצה לקצה.
+
+\begin{codebox}[\en{Python: Complete Order Processing System}]
+\begin{english}
+\begin{lstlisting}[style=python]
+from typing import Dict, Any
+from dataclasses import dataclass
+from enum import Enum
+
+class OrderStatus(Enum):
+    NEW = "new"
+    VALIDATED = "validated"
+    IN_STOCK = "in_stock"
+    OUT_OF_STOCK = "out_of_stock"
+    PRICED = "priced"
+    SCHEDULED = "scheduled"
+    PAID = "paid"
+    COMPLETED = "completed"
+    FAILED = "failed"
+
+@dataclass
+class Order:
+    order_id: str
+    customer: str
+    items: list
+    status: OrderStatus = OrderStatus.NEW
+    price: float = 0.0
+    delivery_date: str = ""
+    payment_id: str = ""
+    error: str = ""
+
+class OrderProcessingSystem:
+    def __init__(self):
+        self.agents = {
+            'intake': IntakeAgent(),
+            'inventory': InventoryAgent(),
+            'pricing': PricingAgent(),
+            'logistics': LogisticsAgent(),
+            'payment': PaymentAgent()
+        }
+
+    def process_order(self, order: Order) -> Order:
+        """Process order through all agents."""
+        print(f"\n{'='*60}")
+        print(f"Processing Order: {order.order_id}")
+        print(f"{'='*60}")
+
+        # Step 1: Intake
+        order = self.agents['intake'].process(order)
+        if order.status == OrderStatus.FAILED:
+            return order
+
+        # Step 2: Inventory
+        order = self.agents['inventory'].process(order)
+        if order.status == OrderStatus.OUT_OF_STOCK:
+            print("Order on backorder")
+            return order
+
+        # Step 3: Pricing
+        order = self.agents['pricing'].process(order)
+
+        # Step 4: Logistics
+        order = self.agents['logistics'].process(order)
+
+        # Step 5: Payment
+        order = self.agents['payment'].process(order)
+
+        if order.status == OrderStatus.PAID:
+            order.status = OrderStatus.COMPLETED
+            print(f"\n*** Order {order.order_id} COMPLETED ***")
+
+        return order
+
+class IntakeAgent:
+    def process(self, order: Order) -> Order:
+        """Validate order data."""
+        print(f"\n[INTAKE] Validating order {order.order_id}")
+
+        if not order.customer:
+            order.status = OrderStatus.FAILED
+            order.error = "Missing customer info"
+            return order
+
+        if not order.items:
+            order.status = OrderStatus.FAILED
+            order.error = "No items in order"
+            return order
+
+        order.status = OrderStatus.VALIDATED
+        print(f"[INTAKE] Order validated: {len(order.items)} items")
+        return order
+
+class InventoryAgent:
+    def __init__(self):
+        self.stock = {
+            'laptop': 10,
+            'mouse': 50,
+            'keyboard': 30
+        }
+
+    def process(self, order: Order) -> Order:
+        """Check inventory."""
+        print(f"\n[INVENTORY] Checking stock")
+
+        for item in order.items:
+            if item not in self.stock:
+                print(f"[INVENTORY] Item not found: {item}")
+                order.status = OrderStatus.OUT_OF_STOCK
+                return order
+
+            if self.stock[item] < 1:
+                print(f"[INVENTORY] Out of stock: {item}")
+                order.status = OrderStatus.OUT_OF_STOCK
+                return order
+
+        order.status = OrderStatus.IN_STOCK
+        print(f"[INVENTORY] All items available")
+        return order
+
+class PricingAgent:
+    def __init__(self):
+        self.prices = {
+            'laptop': 1000.0,
+            'mouse': 25.0,
+            'keyboard': 75.0
+        }
+
+    def process(self, order: Order) -> Order:
+        """Calculate price."""
+        print(f"\n[PRICING] Calculating price")
+
+        total = sum(self.prices.get(item, 0) for item in order.items)
+
+        # VIP discount
+        if 'VIP' in order.customer:
+            total *= 0.9
+            print(f"[PRICING] VIP discount applied")
+
+        order.price = total
+        order.status = OrderStatus.PRICED
+        print(f"[PRICING] Total: ${total:.2f}")
+        return order
+
+class LogisticsAgent:
+    def process(self, order: Order) -> Order:
+        """Schedule delivery."""
+        print(f"\n[LOGISTICS] Scheduling delivery")
+
+        # Simple scheduling
+        order.delivery_date = "2025-12-20"
+        order.status = OrderStatus.SCHEDULED
+        print(f"[LOGISTICS] Delivery: {order.delivery_date}")
+        return order
+
+class PaymentAgent:
+    def process(self, order: Order) -> Order:
+        """Process payment."""
+        print(f"\n[PAYMENT] Processing payment of ${order.price:.2f}")
+
+        # Simulate payment
+        order.payment_id = f"PAY-{order.order_id}"
+        order.status = OrderStatus.PAID
+        print(f"[PAYMENT] Payment successful: {order.payment_id}")
+        return order
+
+# Run example
+system = OrderProcessingSystem()
+
+order1 = Order(
+    order_id="ORD-001",
+    customer="John Doe VIP",
+    items=['laptop', 'mouse']
+)
+
+result = system.process_order(order1)
+print(f"\nFinal Status: {result.status.value}")
+print(f"Price: ${result.price:.2f}")
+print(f"Delivery: {result.delivery_date}")
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsection{דוגמה 2: סוכן מכירות + סוכן מלאי + סוכן לוגיסטיקה}
+
+דוגמה לתקשורת ישירה בין שלושה סוכנים בארכיטקטורת \en{Mesh}.
+
+\begin{codebox}[\en{Python: Multi-Agent Mesh Communication}]
+\begin{english}
+\begin{lstlisting}[style=python]
+from typing import Optional, Dict
+
+class Message:
+    def __init__(self, from_agent: str, to_agent: str,
+                 msg_type: str, content: Dict):
+        self.from_agent = from_agent
+        self.to_agent = to_agent
+        self.msg_type = msg_type
+        self.content = content
+
+class Agent:
+    def __init__(self, name: str):
+        self.name = name
+        self.inbox = []
+
+    def send_message(self, to_agent: 'Agent',
+                    msg_type: str, content: Dict):
+        """Send message to another agent."""
+        msg = Message(self.name, to_agent.name, msg_type, content)
+        to_agent.receive_message(msg)
+        print(f"[{self.name}] -> [{to_agent.name}]: {msg_type}")
+
+    def receive_message(self, msg: Message):
+        """Receive message from another agent."""
+        self.inbox.append(msg)
+
+    def process_messages(self):
+        """Process all pending messages."""
+        while self.inbox:
+            msg = self.inbox.pop(0)
+            self.handle_message(msg)
+
+    def handle_message(self, msg: Message):
+        """Handle incoming message - to be overridden."""
+        pass
+
+class SalesAgent(Agent):
+    def __init__(self):
+        super().__init__("SalesAgent")
+        self.current_order = None
+
+    def create_order(self, items: list,
+                    inventory_agent: Agent, logistics_agent: Agent):
+        """Create new order and coordinate with other agents."""
+        self.current_order = {
+            'order_id': 'ORD-123',
+            'items': items,
+            'status': 'pending'
+        }
+
+        print(f"\n[{self.name}] Creating order: {items}")
+
+        # Ask inventory about availability
+        self.send_message(
+            inventory_agent,
+            'check_availability',
+            {'items': items, 'order_id': 'ORD-123'}
+        )
+
+    def handle_message(self, msg: Message):
+        """Handle responses from other agents."""
+        if msg.msg_type == 'availability_confirmed':
+            print(f"[{self.name}] Stock confirmed!")
+            # Can now proceed with pricing, etc.
+
+        elif msg.msg_type == 'availability_denied':
+            print(f"[{self.name}] Out of stock: {msg.content}")
+            self.current_order['status'] = 'backorder'
+
+class InventoryAgent(Agent):
+    def __init__(self):
+        super().__init__("InventoryAgent")
+        self.stock = {'laptop': 5, 'mouse': 20}
+
+    def handle_message(self, msg: Message):
+        """Handle inventory requests."""
+        if msg.msg_type == 'check_availability':
+            items = msg.content['items']
+            all_available = all(
+                self.stock.get(item, 0) > 0 for item in items
+            )
+
+            if all_available:
+                print(f"[{self.name}] All items available")
+                # Respond to sales agent
+                # (in real system would use reference to sender)
+            else:
+                print(f"[{self.name}] Some items unavailable")
+
+class LogisticsAgent(Agent):
+    def __init__(self):
+        super().__init__("LogisticsAgent")
+
+    def handle_message(self, msg: Message):
+        """Handle logistics requests."""
+        if msg.msg_type == 'schedule_delivery':
+            print(f"[{self.name}] Scheduling delivery")
+
+# Create agents
+sales = SalesAgent()
+inventory = InventoryAgent()
+logistics = LogisticsAgent()
+
+# Process order
+sales.create_order(['laptop', 'mouse'], inventory, logistics)
+inventory.process_messages()
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsection{דוגמה 3: מערכת \en{Multi-Agent} לתמיכת לקוחות}
+
+מערכת עם סוכני תמיכה מרובים שמטפלים בפניות שונות בו-זמנית.
+
+\begin{examplebox}[מערכת תמיכה]
+\textbf{סוכנים}:
+\begin{itemize}
+  \item \textbf{Router Agent}: מנתב פניות לסוכן המתאים
+  \item \textbf{Technical Support Agent}: תמיכה טכנית
+  \item \textbf{Billing Agent}: שאלות חיוב
+  \item \textbf{General Support Agent}: שאלות כלליות
+  \item \textbf{Escalation Agent}: טיפול בבעיות מורכבות
+\end{itemize}
+
+\textbf{זרימה}:
+\begin{enumerate}
+  \item לקוח שולח שאלה
+  \item Router מנתח את השאלה וקובע לאיזה סוכן לשלוח
+  \item הסוכן המתאים מטפל בפנייה
+  \item אם הבעיה מורכבת מדי, הסוכן מעביר ל-Escalation
+  \item Escalation Agent יכול לשתף פעולה עם מספר סוכנים או להעביר לאדם
+\end{enumerate}
+\end{examplebox}
+
+\section{תרגילים}
+
+\subsection{תרגיל 1: תכנון מערכת \en{Multi-Agent}}
+
+\begin{exercisebox}[תכנון מערכת Multi-Agent]
+\textbf{תרחיש}: בנק רוצה לבנות מערכת לאישור הלוואות באופן אוטומטי.
+
+\textbf{משימה}:
+\begin{enumerate}
+  \item זהה את הסוכנים הנדרשים (לפחות 4)
+  \item בחר ארכיטקטורה מתאימה (Hub-and-Spoke / Mesh / Hierarchical)
+  \item צייר תרשים של הארכיטקטורה
+  \item הגדר את התקשורת בין הסוכנים
+  \item זהה קונפליקטים אפשריים והצע פתרון
+\end{enumerate}
+\end{exercisebox}
+
+\textbf{פתרון מוצע}:
+
+\textbf{1. סוכנים נדרשים}:
+\begin{itemize}
+  \item \textbf{Application Agent}: מקבל את הבקשה, מוודא שהיא מלאה
+  \item \textbf{Credit Score Agent}: בודק ציון אשראי של הלקוח
+  \item \textbf{Income Verification Agent}: מאמת הכנסות
+  \item \textbf{Risk Assessment Agent}: מעריך סיכון
+  \item \textbf{Decision Agent}: מחליט האם לאשר או לדחות
+  \item \textbf{Notification Agent}: שולח הודעה ללקוח
+\end{itemize}
+
+\textbf{2. ארכיטקטורה}: \en{Hub-and-Spoke} עם \en{Decision Agent} כ-\en{Hub}.
+
+\textbf{סיבה}: ההחלטה צריכה להתקבל במקום אחד, על בסיס כל הנתונים. \en{Hub-and-Spoke} מבטיח שכל המידע עובר דרך סוכן החלטה אחד.
+
+\textbf{3. תרשים}: איור~\ref{fig:loan_approval} מציג את הארכיטקטורה המוצעת.
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[scale=0.85]
+  \node[rectangle, draw, very thick, fill=formulacolor, minimum width=2cm] (hub) at (0,0) {\en{Decision}};
+
+  \node[circle, draw, thick, fill=examplecolor] (app) at (0,3) {\en{App}};
+  \node[circle, draw, thick, fill=examplecolor] (credit) at (2.5,2) {\en{Credit}};
+  \node[circle, draw, thick, fill=examplecolor] (income) at (2.5,-2) {\en{Income}};
+  \node[circle, draw, thick, fill=examplecolor] (risk) at (-2.5,-2) {\en{Risk}};
+  \node[circle, draw, thick, fill=examplecolor] (notif) at (-2.5,2) {\en{Notify}};
+
+  \draw[->, very thick] (app) -- (hub);
+  \draw[<->, thick] (hub) -- (credit);
+  \draw[<->, thick] (hub) -- (income);
+  \draw[<->, thick] (hub) -- (risk);
+  \draw[->, very thick] (hub) -- (notif);
+\end{tikzpicture}
+\end{english}
+\caption{מערכת אישור הלוואות בארכיטקטורת \en{Hub-and-Spoke}}
+\label{fig:loan_approval}
+\end{figure}
+
+\textbf{4. תקשורת}:
+\begin{itemize}
+  \item Application Agent $\rightarrow$ Decision Agent: נתוני בקשה
+  \item Decision Agent $\leftrightarrow$ Credit/Income/Risk: בקשות מידע
+  \item Decision Agent $\rightarrow$ Notification Agent: החלטה סופית
+\end{itemize}
+
+\textbf{5. קונפליקטים אפשריים}:
+\begin{itemize}
+  \item \textbf{קונפליקט}: Credit Score אומר "אשר", אבל Risk Assessment אומר "דחה"
+  \item \textbf{פתרון}: Decision Agent משקלל את כל הגורמים לפי משקלות מוגדרים מראש (למשל: Credit 40\%, Income 30\%, Risk 30\%)
+\end{itemize}
+
+\subsection{תרגיל 2: זיהוי נקודות כשל}
+
+\begin{exercisebox}[זיהוי נקודות כשל]
+נתונה מערכת \en{Multi-Agent} בארכיטקטורת \en{Hub-and-Spoke}:
+
+\begin{itemize}
+  \item Hub: Orchestrator Agent
+  \item Spokes: 5 worker agents
+\end{itemize}
+
+\textbf{שאלות}:
+\begin{enumerate}
+  \item מה קורה אם ה-Orchestrator נכשל?
+  \item מה קורה אם אחד מה-Workers נכשל?
+  \item איך אפשר להפוך את המערכת לחסינה יותר?
+\end{enumerate}
+\end{exercisebox}
+
+\textbf{פתרון}:
+
+\textbf{1. אם Orchestrator נכשל}:
+\begin{itemize}
+  \item כל המערכת נופלת -- אף Worker לא יכול לקבל משימות
+  \item זוהי נקודת כשל יחידה קריטית
+\end{itemize}
+
+\textbf{2. אם Worker נכשל}:
+\begin{itemize}
+  \item המערכת ממשיכה לעבוד
+  \item המשימות של ה-Worker הנכשל לא יבוצעו
+  \item Orchestrator צריך לזהות ולנתב מחדש
+\end{itemize}
+
+\textbf{3. הפיכת המערכת לחסינה יותר}:
+
+\textbf{פתרון א: Orchestrator Redundancy}
+\begin{itemize}
+  \item הרץ שני Orchestrators במצב \en{Active-Passive}
+  \item אם הראשי נכשל, הגיבוי נכנס לפעולה
+\end{itemize}
+
+\textbf{פתרון ב: Worker Health Checks}
+\begin{itemize}
+  \item Orchestrator בודק כל \num{10} שניות שכל ה-Workers חיים
+  \item אם Worker לא עונה, Orchestrator מפסיק לשלוח לו משימות
+  \item כשה-Worker חוזר, הוא מצטרף בחזרה
+\end{itemize}
+
+\textbf{פתרון ג: Task Retry Mechanism}
+\begin{itemize}
+  \item אם Worker לא מחזיר תשובה תוך זמן מוגדר
+  \item Orchestrator שולח את המשימה ל-Worker אחר
+\end{itemize}
+
+\subsection{תרגיל 3: בניית מדיניות \en{Escalation}}
+
+\begin{exercisebox}[מדיניות Escalation]
+בנה מדיניות \en{Escalation} למערכת תמיכת לקוחות עם 3 רמות:
+\begin{enumerate}
+  \item \textbf{L1 Support}: סוכן אוטומטי
+  \item \textbf{L2 Support}: סוכן מתקדם
+  \item \textbf{L3 Support}: אדם (מומחה)
+\end{enumerate}
+
+הגדר:
+\begin{itemize}
+  \item מתי לעבור מ-L1 ל-L2?
+  \item מתי לעבור מ-L2 ל-L3?
+  \item מהם הקריטריונים?
+\end{itemize}
+\end{exercisebox}
+
+\textbf{פתרון מוצע}:
+
+\textbf{מעבר מ-L1 ל-L2}:
+\begin{enumerate}
+  \item \textbf{Confidence Score נמוך}: אם L1 לא בטוח בתשובה (confidence < 0.7)
+  \item \textbf{מספר ניסיונות}: אם L1 ניסה 3 פעמים ולא הצליח לפתור
+  \item \textbf{בקשה מפורשת}: אם הלקוח מבקש "לדבר עם מישהו אחר"
+  \item \textbf{נושא מורכב}: אם הנושא בקטגוריה מוגדרת כמורכבת
+\end{enumerate}
+
+\textbf{מעבר מ-L2 ל-L3}:
+\begin{enumerate}
+  \item \textbf{בעיה קריטית}: תקלה במערכת שמשפיעה על לקוחות רבים
+  \item \textbf{ערך גבוה}: לקוח VIP עם בעיה שלא נפתרה ב-L2
+  \item \textbf{זמן ארוך}: בעיה פתוחה מעל 24 שעות
+  \item \textbf{מגבלות טכניות}: L2 לא יכול לבצע פעולה (למשל: החזר כספי מעל סכום מסוים)
+\end{enumerate}
+
+\textbf{קוד לדוגמה}:
+
+\begin{codebox}[\en{Python: Escalation Policy}]
+\begin{english}
+\begin{lstlisting}[style=python]
+from dataclasses import dataclass
+from typing import Optional
+from datetime import datetime, timedelta
+
+@dataclass
+class SupportTicket:
+    ticket_id: str
+    customer: str
+    issue: str
+    level: int = 1
+    attempts: int = 0
+    created_at: datetime = None
+    is_vip: bool = False
+
+    def __post_init__(self):
+        if self.created_at is None:
+            self.created_at = datetime.now()
+
+class EscalationPolicy:
+    def should_escalate_to_l2(self, ticket: SupportTicket,
+                             confidence: float) -> bool:
+        """Check if should escalate from L1 to L2."""
+        # Low confidence
+        if confidence < 0.7:
+            return True
+
+        # Too many attempts
+        if ticket.attempts >= 3:
+            return True
+
+        # Complex category
+        complex_keywords = ['refund', 'legal', 'security breach']
+        if any(kw in ticket.issue.lower() for kw in complex_keywords):
+            return True
+
+        return False
+
+    def should_escalate_to_l3(self, ticket: SupportTicket) -> bool:
+        """Check if should escalate from L2 to L3."""
+        # VIP customer
+        if ticket.is_vip:
+            return True
+
+        # Open too long
+        time_open = datetime.now() - ticket.created_at
+        if time_open > timedelta(hours=24):
+            return True
+
+        # Critical issue
+        critical_keywords = ['system down', 'data loss', 'security']
+        if any(kw in ticket.issue.lower() for kw in critical_keywords):
+            return True
+
+        return False
+
+    def escalate(self, ticket: SupportTicket,
+                confidence: Optional[float] = None):
+        """Escalate ticket to appropriate level."""
+        if ticket.level == 1:
+            if self.should_escalate_to_l2(ticket, confidence or 1.0):
+                ticket.level = 2
+                print(f"ESCALATED to L2: Ticket {ticket.ticket_id}")
+
+        elif ticket.level == 2:
+            if self.should_escalate_to_l3(ticket):
+                ticket.level = 3
+                print(f"ESCALATED to L3: Ticket {ticket.ticket_id}")
+
+# Example
+policy = EscalationPolicy()
+
+ticket1 = SupportTicket(
+    ticket_id="T001",
+    customer="John Doe",
+    issue="Need refund for order",
+    attempts=1
+)
+
+policy.escalate(ticket1, confidence=0.5)
+# Output: ESCALATED to L2: Ticket T001
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\subsection{תרגיל 4: תכנון ניטור}
+
+\begin{exercisebox}[תכנון ניטור]
+תכנן מערכת ניטור למערכת \en{Multi-Agent} עם \num{10} סוכנים.
+
+\textbf{הגדר}:
+\begin{enumerate}
+  \item אלו מטריקות לאסוף?
+  \item באיזו תדירות?
+  \item מהם ה-\en{Thresholds} (ספים) לאזהרות?
+  \item איך להציג את המידע?
+\end{enumerate}
+\end{exercisebox}
+
+\textbf{פתרון}:
+
+\textbf{1. מטריקות לאסוף}:
+
+\textbf{ברמת סוכן בודד}:
+\begin{itemize}
+  \item \textbf{Status}: up/down
+  \item \textbf{Tasks Completed}: מספר משימות שהושלמו
+  \item \textbf{Tasks Failed}: מספר משימות שנכשלו
+  \item \textbf{Average Latency}: זמן ממוצע למשימה
+  \item \textbf{Current Load}: כמה משימות פעילות כרגע
+  \item \textbf{CPU/Memory Usage}: ניצול משאבים
+\end{itemize}
+
+\textbf{ברמת המערכת}:
+\begin{itemize}
+  \item \textbf{Total Throughput}: משימות לשנייה של כל המערכת
+  \item \textbf{Average End-to-End Latency}: זמן מקצה לקצה
+  \item \textbf{Active Agents}: כמה סוכנים פעילים
+  \item \textbf{Message Queue Size}: כמה הודעות בתור
+  \item \textbf{Coordination Overhead}: עומס תיאום כולל
+\end{itemize}
+
+\textbf{2. תדירות איסוף}:
+\begin{itemize}
+  \item \textbf{Real-time metrics} (כל שנייה): Status, Current Load
+  \item \textbf{Fast metrics} (כל \num{10} שניות): Latency, Throughput
+  \item \textbf{Slow metrics} (כל דקה): CPU/Memory, Task counts
+\end{itemize}
+
+\textbf{3. Thresholds לאזהרות}:
+
+\begin{table}[h]
+\centering
+\begin{rtltabular}{|p{4cm}|c|c|}
+\hline
+\hebheader{מטריקה} & \hebheader{אזהרה} & \hebheader{קריטי} \\
+\hline
+\hebcell{\textenglish{Agent Status}} & - & \textenglish{Down} \\
+\hline
+\hebcell{\textenglish{Error Rate}} & \textenglish{> 5\%} & \textenglish{> 10\%} \\
+\hline
+\hebcell{\textenglish{Average Latency}} & \textenglish{> 2s} & \textenglish{> 5s} \\
+\hline
+\hebcell{\textenglish{Agent Load}} & \textenglish{> 80\%} & \textenglish{> 95\%} \\
+\hline
+\hebcell{\textenglish{Queue Size}} & \textenglish{> 100} & \textenglish{> 500} \\
+\hline
+\hebcell{\textenglish{Coordination Overhead}} & \textenglish{> 40\%} & \textenglish{> 60\%} \\
+\hline
+\end{rtltabular}
+\caption{ספי אזהרה וקריטיים למטריקות ניטור}
+\end{table}
+
+\textbf{4. הצגת מידע}:
+
+\textbf{Dashboard ראשי}:
+\begin{itemize}
+  \item \textbf{Overview Panel}: סך סוכנים פעילים, throughput כולל, error rate כולל
+  \item \textbf{Agent Grid}: טבלה עם שורה לכל סוכן, עמודות: Status, Load, Latency, Errors
+  \item \textbf{Graph Network}: גרף המראה תקשורת בין סוכנים (עובי קו = כמות הודעות)
+  \item \textbf{Timeline Chart}: latency לאורך זמן
+  \item \textbf{Alert Panel}: רשימת התראות אקטיביות
+\end{itemize}
+
+\subsection{תרגיל 5: ניתוח עלויות מול יעילות}
+
+\begin{exercisebox}[ניתוח עלויות]
+חברה שוקלת בין שתי אפשרויות:
+
+\textbf{אפשרות A}: סוכן יחיד גדול
+\begin{itemize}
+  \item עלות פיתוח: \$\num{50,000}
+  \item עלות תפעול חודשית: \$\num{1,000}
+  \item זמן עיבוד משימה: \num{10} שניות
+  \item יכולת: \num{100} משימות/דקה
+\end{itemize}
+
+\textbf{אפשרות B}: \num{5} סוכנים קטנים
+\begin{itemize}
+  \item עלות פיתוח: \$\num{80,000} (\num{5} $\times$ \$\num{16,000})
+  \item עלות תפעול חודשית: \$\num{1,500}
+  \item זמן עיבוד משימה: \num{5} שניות (כל סוכן)
+  \item יכולת: \num{200} משימות/דקה (במקביל)
+\end{itemize}
+
+\textbf{שאלות}:
+\begin{enumerate}
+  \item מהי נקודת האיזון (break-even)?
+  \item איזו אפשרות עדיפה לטווח ארוך (\num{3} שנים)?
+  \item מהן העלויות הנוספות שצריך לקחת בחשבון?
+\end{enumerate}
+\end{exercisebox}
+
+\textbf{פתרון}:
+
+\textbf{1. עלויות כוללות}:
+
+\textbf{אפשרות A}:
+\[
+\text{Total Cost (t months)} = 50{,}000 + 1{,}000t
+\]
+
+\textbf{אפשרות B}:
+\[
+\text{Total Cost (t months)} = 80{,}000 + 1{,}500t
+\]
+
+\textbf{נקודת איזון}:
+\[
+50{,}000 + 1{,}000t = 80{,}000 + 1{,}500t
+\]
+\[
+-500t = 30{,}000
+\]
+\[
+t = -60
+\]
+
+מכיוון ש-$t$ שלילי, אין נקודת איזון -- אפשרות A תמיד זולה יותר מבחינה כלכלית נטו!
+
+\textbf{אבל}, זה לא כל הסיפור...
+
+\textbf{2. ניתוח ערך (3 שנים = 36 חודשים)}:
+
+\textbf{אפשרות A}:
+\[
+\text{Cost}_A = 50{,}000 + 1{,}000 \times 36 = 86{,}000
+\]
+
+תפוקה: 100 משימות/דקה
+
+\textbf{אפשרות B}:
+\[
+\text{Cost}_B = 80{,}000 + 1{,}500 \times 36 = 134{,}000
+\]
+
+תפוקה: 200 משימות/דקה
+
+\textbf{עלות למשימה}:
+
+\textbf{נניח} 1,000,000 משימות בשנה:
+
+\textbf{אפשרות A}:
+\[
+\text{Cost per task} = \frac{86{,}000}{3{,}000{,}000} = \$0.0287
+\]
+
+\textbf{אפשרות B}:
+\[
+\text{Cost per task} = \frac{134{,}000}{3{,}000{,}000} = \$0.0447
+\]
+
+נראה שאפשרות A זולה יותר!
+
+\textbf{אבל}, מה אם הביקוש גדל?
+
+אם מגיעות 300 משימות/דקה:
+\begin{itemize}
+  \item \textbf{אפשרות A}: לא מספיקה (רק 100/דקה) -- צריך להוסיף סוכנים
+  \item \textbf{אפשרות B}: עדיין מספיקה (200/דקה)
+\end{itemize}
+
+אם צריך להכפיל את A:
+\[
+\text{Cost}_A = 2 \times 86{,}000 = 172{,}000
+\]
+
+עכשיו B זולה יותר!
+
+\textbf{3. עלויות נוספות}:
+\begin{itemize}
+  \item \textbf{תחזוקה}: Multi-Agent מורכב יותר לתחזוקה (\en{+20\%})
+  \item \textbf{ניטור}: צריך כלים לניטור Multi-Agent (+\$500/חודש)
+  \item \textbf{תקלות}: אם סוכן בודד נופל, כל המערכת נופלת (עלות downtime)
+  \item \textbf{גמישות}: Multi-Agent מאפשר שדרוגים חלקיים (חיסכון עתידי)
+  \item \textbf{סקלביליות}: Multi-Agent קל יותר להרחבה
+\end{itemize}
+
+\textbf{המלצה}:
+\begin{itemize}
+  \item אם הביקוש צפוי ויציב (< 100 משימות/דקה): אפשרות A
+  \item אם הביקוש משתנה או צפוי לצמוח: אפשרות B
+  \item אם חשוב זמינות גבוהה (uptime): אפשרות B
+\end{itemize}
+
+\subsection{תרגיל 6: תקשורת בין שני סוכנים (\en{Python})}
+
+\begin{exercisebox}[Python: תקשורת בסיסית]
+בנה מערכת תקשורת פשוטה בין שני סוכנים:
+\begin{itemize}
+  \item \textbf{Agent A}: שואל שאלה
+  \item \textbf{Agent B}: עונה על השאלה
+\end{itemize}
+
+יש ליישם:
+\begin{enumerate}
+  \item מחלקת \en{Message}
+  \item מחלקת \en{Agent} בסיסית
+  \item מנגנון שליחה וקבלה
+  \item לוג של כל ההודעות
+\end{enumerate}
+\end{exercisebox}
+
+\textbf{פתרון}:
+
+\begin{codebox}[\en{Python: Basic A2A Communication}]
+\begin{english}
+\begin{lstlisting}[style=python]
+from typing import Dict, List, Optional
+from dataclasses import dataclass, field
+from datetime import datetime
+import json
+
+@dataclass
+class Message:
+    """A2A message."""
+    msg_id: str
+    from_agent: str
+    to_agent: str
+    msg_type: str
+    payload: Dict
+    timestamp: datetime = field(default_factory=datetime.now)
+
+    def to_json(self) -> str:
+        """Convert message to JSON."""
+        return json.dumps({
+            'msg_id': self.msg_id,
+            'from': self.from_agent,
+            'to': self.to_agent,
+            'type': self.msg_type,
+            'payload': self.payload,
+            'timestamp': self.timestamp.isoformat()
+        }, indent=2)
+
+class MessageBroker:
+    """Central message broker for A2A communication."""
+    def __init__(self):
+        self.agents: Dict[str, 'Agent'] = {}
+        self.message_log: List[Message] = []
+
+    def register_agent(self, agent: 'Agent'):
+        """Register agent with broker."""
+        self.agents[agent.name] = agent
+        print(f"[BROKER] Registered: {agent.name}")
+
+    def send_message(self, msg: Message):
+        """Route message to recipient."""
+        self.message_log.append(msg)
+
+        print(f"\n[BROKER] Routing message:")
+        print(f"  From: {msg.from_agent}")
+        print(f"  To: {msg.to_agent}")
+        print(f"  Type: {msg.msg_type}")
+
+        if msg.to_agent in self.agents:
+            self.agents[msg.to_agent].receive_message(msg)
+        else:
+            print(f"[BROKER] ERROR: Agent {msg.to_agent} not found")
+
+    def print_log(self):
+        """Print all messages."""
+        print(f"\n{'='*60}")
+        print("MESSAGE LOG")
+        print(f"{'='*60}")
+        for i, msg in enumerate(self.message_log, 1):
+            print(f"\n--- Message {i} ---")
+            print(msg.to_json())
+
+class Agent:
+    """Basic agent with A2A capabilities."""
+    def __init__(self, name: str, broker: MessageBroker):
+        self.name = name
+        self.broker = broker
+        self.inbox: List[Message] = []
+        self.msg_counter = 0
+
+        # Register with broker
+        broker.register_agent(self)
+
+    def send(self, to_agent: str, msg_type: str, payload: Dict):
+        """Send message to another agent."""
+        self.msg_counter += 1
+        msg = Message(
+            msg_id=f"{self.name}-{self.msg_counter}",
+            from_agent=self.name,
+            to_agent=to_agent,
+            msg_type=msg_type,
+            payload=payload
+        )
+
+        print(f"\n[{self.name}] Sending: {msg_type} to {to_agent}")
+        self.broker.send_message(msg)
+
+    def receive_message(self, msg: Message):
+        """Receive message."""
+        self.inbox.append(msg)
+        print(f"[{self.name}] Received: {msg.msg_type}")
+        self.handle_message(msg)
+
+    def handle_message(self, msg: Message):
+        """Handle incoming message - to be overridden."""
+        print(f"[{self.name}] Processing: {msg.msg_type}")
+
+class QuestionAgent(Agent):
+    """Agent that asks questions."""
+    def ask_question(self, to_agent: str, question: str):
+        """Ask a question."""
+        self.send(
+            to_agent,
+            'question',
+            {'question': question}
+        )
+
+    def handle_message(self, msg: Message):
+        """Handle answer."""
+        if msg.msg_type == 'answer':
+            answer = msg.payload.get('answer')
+            print(f"[{self.name}] Got answer: {answer}")
+
+class AnswerAgent(Agent):
+    """Agent that answers questions."""
+    def __init__(self, name: str, broker: MessageBroker):
+        super().__init__(name, broker)
+        self.knowledge = {
+            'What is AI?': 'Artificial Intelligence',
+            'What is A2A?': 'Agent-to-Agent communication',
+            'What is Python?': 'A programming language'
+        }
+
+    def handle_message(self, msg: Message):
+        """Handle question and send answer."""
+        if msg.msg_type == 'question':
+            question = msg.payload.get('question')
+            answer = self.knowledge.get(question, 'I don\'t know')
+
+            print(f"[{self.name}] Question: {question}")
+            print(f"[{self.name}] Answer: {answer}")
+
+            # Send answer back
+            self.send(
+                msg.from_agent,
+                'answer',
+                {'answer': answer, 'original_question': question}
+            )
+
+# Example usage
+print("="*60)
+print("A2A COMMUNICATION DEMO")
+print("="*60)
+
+# Create broker
+broker = MessageBroker()
+
+# Create agents
+alice = QuestionAgent("Alice", broker)
+bob = AnswerAgent("Bob", broker)
+
+# Alice asks questions
+alice.ask_question("Bob", "What is AI?")
+alice.ask_question("Bob", "What is A2A?")
+
+# Print message log
+broker.print_log()
+\end{lstlisting}
+\end{english}
+\end{codebox}
+
+\section{סיכום}
+
+בפרק זה למדנו:
+
+\begin{itemize}
+  \item \textbf{פרוטוקול A2A}: תקשורת בין סוכנים אוטונומיים
+  \item \textbf{ארכיטקטורות}: Hub-and-Spoke, Mesh, Hierarchical
+  \item \textbf{תיאום משימות}: חלוקה סטטית, דינמית ומבוססת יכולות
+  \item \textbf{קונפליקטים}: זיהוי וטיפול במצבי התנגשות
+  \item \textbf{תזמור}: שימוש ב-LangGraph לניהול זרימות עבודה
+  \item \textbf{ניטור}: מטריקות וכלים למעקב אחרי Multi-Agent
+  \item \textbf{דוגמאות מעשיות}: מערכות לעיבוד הזמנות ותמיכת לקוחות
+\end{itemize}
+
+\subsection{נקודות מפתח למנהלים}
+
+\begin{enumerate}
+  \item \textbf{Multi-Agent לא תמיד הפתרון}: לפעמים סוכן יחיד פשוט יותר וזול יותר
+  \item \textbf{תכנון הארכיטקטורה קריטי}: בחירת ארכיטקטורה שגויה עלולה ליצור בעיות תחזוקה
+  \item \textbf{תיאום עולה כסף}: Coordination Overhead יכול להיות \en{20\%-50\%} מהזמן
+  \item \textbf{טיפול בקונפליקטים הכרחי}: צריך מנגנונים ברורים לפתרון סכסוכים
+  \item \textbf{ניטור הוא must-have}: ללא ניטור, בלתי אפשרי לנהל Multi-Agent בייצור
+  \item \textbf{התחל קטן}: עדיף להתחיל עם \num{2}-\num{3} סוכנים ולהוסיף בהדרגה
+\end{enumerate}
+
+\subsection{המשך}
+
+בפרק הבא נלמד על \textbf{RAG (Retrieval-Augmented Generation)} -- טכניקה המאפשרת לסוכנים לגשת למידע עדכני ומדויק מחוץ ל-LLM, דרך אחזור ממאגרי ידע.
+
+\end{document}

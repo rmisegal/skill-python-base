@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "version": "2.0.0",
+    "description": "Maps TOC detection rules to existing fixers and skills",
+    "changelog": "v2.0.0: Added NakedEnglishFixer for toc-english-text-naked rule"
+  },
+  "fixer_modules": {
+    "BiDiFixer": {
+      "module": "qa_engine.infrastructure.fixing.bidi_fixer",
+      "class": "BiDiFixer",
+      "capabilities": ["number-wrap", "english-wrap", "acronym-wrap", "year-wrap", "percent-wrap"]
+    },
+    "DirectionFixer": {
+      "module": "qa_engine.infrastructure.fixing.direction_fixer",
+      "class": "DirectionFixer",
+      "capabilities": ["hebrew-in-code", "hebrew-comment", "hebrew-string"]
+    },
+    "TOCFixer": {
+      "module": "qa_engine.infrastructure.fixing.toc_fixer",
+      "class": "TOCFixer",
+      "capabilities": ["counter-wrap", "numberline-fix", "thechapter-fix", "thesection-fix"]
+    },
+    "NakedEnglishFixer": {
+      "module": "qa_engine.toc.fixing.naked_english_fixer",
+      "class": "NakedEnglishFixer",
+      "capabilities": ["naked-english-wrap", "phrase-group", "section-title-fix"]
+    }
+  },
+  "skill_references": {
+    "qa-BiDi-fix-text": {
+      "skill_name": "qa-BiDi-fix-text",
+      "description": "Fix text direction issues",
+      "handles": ["english-wrap", "hebrew-wrap", "acronym-wrap"]
+    },
+    "qa-BiDi-fix-numbers": {
+      "skill_name": "qa-BiDi-fix-numbers",
+      "description": "Fix number direction with LTR wrappers",
+      "handles": ["number-wrap", "percent-wrap", "year-wrap"]
+    },
+    "qa-BiDi-fix-toc-config": {
+      "skill_name": "qa-BiDi-fix-toc-config",
+      "description": "Fix TOC configuration in CLS",
+      "handles": ["counter-wrap", "l-at-rtl"]
+    },
+    "qa-BiDi-fix-sections": {
+      "skill_name": "qa-BiDi-fix-sections",
+      "description": "Fix section numbering issues",
+      "handles": ["section-number", "subsection-number"]
+    },
+    "qa-toc-english-text-naked-fix": {
+      "skill_name": "qa-toc-english-text-naked-fix",
+      "description": "Fix naked English text that renders RTL in TOC",
+      "handles": ["naked-english-wrap", "section-title-fix", "phrase-group"]
+    }
+  },
+  "rule_to_fixer": {
+    "toc-numbering-discontinuous": {"fixer": null, "skill": null, "manual": true, "action": "Check chapter inclusion order"},
+    "toc-numbering-format-invalid": {"fixer": "TOCFixer", "skill": "qa-BiDi-fix-toc-config", "manual": false},
+    "toc-sources-no-number": {"fixer": null, "skill": null, "manual": true, "action": "Use hebrewsection instead of section*"},
+    "toc-chapter-gap": {"fixer": null, "skill": null, "manual": true, "action": "Check all chapter files are included"},
+
+    "toc-chapter-number-not-ltr": {"fixer": "TOCFixer", "skill": "qa-BiDi-fix-toc-config", "manual": false},
+    "toc-section-number-not-ltr": {"fixer": "TOCFixer", "skill": "qa-BiDi-fix-toc-config", "manual": false},
+    "toc-subsection-number-not-ltr": {"fixer": "TOCFixer", "skill": "qa-BiDi-fix-toc-config", "manual": false},
+    "toc-subsubsection-number-not-ltr": {"fixer": "TOCFixer", "skill": "qa-BiDi-fix-toc-config", "manual": false},
+    "toc-page-number-not-ltr": {"fixer": "TOCFixer", "skill": "qa-BiDi-fix-toc-config", "manual": false},
+    "toc-percentage-not-ltr": {"fixer": "BiDiFixer", "skill": "qa-BiDi-fix-numbers", "manual": false},
+    "toc-formula-not-ltr": {"fixer": null, "skill": null, "manual": true, "action": "Wrap in math mode $...$ or textenglish"},
+    "toc-symbol-not-ltr": {"fixer": "BiDiFixer", "skill": "qa-BiDi-fix-text", "manual": false},
+
+    "toc-parentheses-reversed": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Wrap content with textenglish for LTR parentheses"},
+    "toc-brackets-reversed": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Wrap content appropriately"},
+    "toc-curly-braces-reversed": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Wrap in textenglish if LTR needed"},
+    "toc-angle-brackets-reversed": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Use textenglish for LTR angle brackets"},
+    "toc-quotes-hebrew-incorrect": {"fixer": null, "skill": null, "manual": true, "action": "Use Hebrew quotation style"},
+    "toc-quotes-english-in-hebrew": {"fixer": null, "skill": null, "manual": true, "action": "Consider Hebrew quotation marks"},
+    "toc-nested-parens-bidi": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Wrap each nesting level explicitly"},
+    "toc-math-parens-in-hebrew": {"fixer": null, "skill": null, "manual": true, "action": "Use $f(x)$ or textenglish{f(x)}"},
+
+    "toc-english-text-not-ltr": {"fixer": "BiDiFixer", "skill": "qa-BiDi-fix-text", "manual": false},
+    "toc-english-text-naked": {"fixer": "NakedEnglishFixer", "skill": "qa-toc-english-text-naked-fix", "manual": false, "action": "Wrap naked English in section titles with textenglish{}"},
+    "toc-hebrew-text-not-rtl": {"fixer": "DirectionFixer", "skill": "qa-BiDi-fix-text", "manual": false},
+    "toc-mixed-heb-eng-heb": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Wrap each segment separately"},
+    "toc-mixed-eng-heb-eng": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Wrap each segment separately"},
+    "toc-mixed-alternating-complex": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Review and wrap each segment"},
+    "toc-acronym-not-ltr": {"fixer": "BiDiFixer", "skill": "qa-BiDi-fix-text", "manual": false},
+    "toc-url-path-not-ltr": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Use url{} or textenglish{}"},
+    "toc-code-inline-not-ltr": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Use texttt{textenglish{...}}"},
+
+    "toc-left-alignment-detected": {"fixer": null, "skill": "qa-BiDi-fix-toc-config", "manual": true, "action": "Add pardir TRT to l@ macros"},
+    "toc-text-not-right-aligned": {"fixer": null, "skill": "qa-BiDi-fix-toc-config", "manual": true, "action": "Check l@ macro pardir TRT"},
+    "toc-footer-page-not-ltr": {"fixer": null, "skill": null, "manual": true, "action": "Check fancyhdr page format"},
+    "toc-header-alignment": {"fixer": null, "skill": null, "manual": true, "action": "Check fancyhdr header config"},
+
+    "toc-indentation-chapter": {"fixer": null, "skill": "qa-BiDi-fix-toc-config", "manual": true, "action": "Check l@chapter leftskip"},
+    "toc-indentation-subsection": {"fixer": null, "skill": "qa-BiDi-fix-toc-config", "manual": true, "action": "Check l@subsection leftskip=2.3em"},
+    "toc-indentation-subsubsection": {"fixer": null, "skill": "qa-BiDi-fix-toc-config", "manual": true, "action": "Check l@subsubsection leftskip=4.6em"},
+    "toc-missing-chapter": {"fixer": null, "skill": null, "manual": true, "action": "Ensure chapter file included via subfile or input"},
+    "toc-bibliography-missing": {"fixer": null, "skill": "qa-bib-fix-missing", "manual": true, "action": "Use printenglishbibliography with bibintoc"},
+    "toc-duplicate-entry": {"fixer": null, "skill": null, "manual": true, "action": "Check for duplicate addcontentsline"},
+    "toc-page-not-sequential": {"fixer": null, "skill": null, "manual": false, "action": "May indicate content ordering issue"},
+    "toc-empty-title": {"fixer": null, "skill": null, "manual": true, "action": "Check section/chapter has title argument"},
+
+    "toc-invalid-page-number": {"fixer": null, "skill": null, "manual": true, "action": "Check LaTeX compilation completed"},
+    "toc-orphan-subsection": {"fixer": null, "skill": null, "manual": true, "action": "Add missing hebrewsection before hebrewsubsection"},
+    "toc-hyperref-invalid": {"fixer": null, "skill": null, "manual": false, "action": "Check hyperref configuration"},
+    "toc-title-missing": {"fixer": null, "skill": "qa-BiDi-fix-toc-config", "manual": true, "action": "Check tableofcontents redefinition"},
+    "toc-appendix-before-chapters": {"fixer": null, "skill": null, "manual": true, "action": "Move appendix after all chapters"},
+    "toc-copyright-format-invalid": {"fixer": null, "skill": "qa-BiDi-fix-text", "manual": true, "action": "Use hebfoot with en for copyright"},
+    "toc-dot-leaders-missing": {"fixer": null, "skill": "qa-BiDi-fix-toc-config", "manual": true, "action": "Check l@ macros have leaders hbox"},
+    "toc-roman-numeral-not-ltr": {"fixer": null, "skill": "qa-BiDi-fix-numbers", "manual": true, "action": "Wrap frontmatter page numbers in textenglish"}
+  }
+}

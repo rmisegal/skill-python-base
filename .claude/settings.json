@@ -1,0 +1,18 @@
+{
+  "project": {
+    "name": "skill-python-base",
+    "version": "1.0.0",
+    "description": "skill-python-base project"
+  },
+  "environment": {
+    "python_version": "3.11"
+  },
+  "paths": {
+    "src": "./src",
+    "tests": "./tests"
+  },
+  "features": {
+    "auto_test": true,
+    "auto_format": true
+  }
+}

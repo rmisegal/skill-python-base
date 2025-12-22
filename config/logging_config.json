@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "log_levels": {
+    "DEBUG": "Detailed information for debugging",
+    "INFO": "General information about QA progress",
+    "WARNING": "Warnings about potential issues",
+    "ERROR": "Errors that prevent normal operation"
+  },
+  "event_types": {
+    "QA_START": {
+      "level": "INFO",
+      "fields": ["run_id", "project_path"]
+    },
+    "QA_COMPLETE": {
+      "level": "INFO",
+      "fields": ["total_issues", "duration_seconds"]
+    },
+    "SKILL_START": {
+      "level": "INFO",
+      "fields": ["skill", "agent_id"]
+    },
+    "SKILL_COMPLETE": {
+      "level": "INFO",
+      "fields": ["skill", "issues_count", "verdict"]
+    },
+    "SKILL_ERROR": {
+      "level": "ERROR",
+      "fields": ["skill", "error_message"]
+    },
+    "PROGRESS": {
+      "level": "DEBUG",
+      "fields": ["skill", "progress_pct", "status"]
+    },
+    "LOCK_ACQUIRE": {
+      "level": "DEBUG",
+      "fields": ["resource", "agent_id"]
+    },
+    "LOCK_RELEASE": {
+      "level": "DEBUG",
+      "fields": ["resource", "agent_id"]
+    },
+    "HEARTBEAT": {
+      "level": "DEBUG",
+      "fields": ["agent_id", "task"]
+    },
+    "WATCHDOG_ALERT": {
+      "level": "WARNING",
+      "fields": ["agent_id", "last_seen"]
+    }
+  },
+  "formatters": {
+    "json": {
+      "format": "{timestamp} - {level} - [{agent}] {json_payload}"
+    },
+    "console": {
+      "format": "[{timestamp}] {level}: {message}"
+    }
+  }
+}

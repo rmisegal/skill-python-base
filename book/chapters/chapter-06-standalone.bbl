@@ -1,0 +1,492 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{A2ASpec2025}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=e75b1116b104fb27d7d79696284c5798}{%
+           family={{A2A Project}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{e75b1116b104fb27d7d79696284c5798}
+      \strng{fullhash}{e75b1116b104fb27d7d79696284c5798}
+      \strng{fullhashraw}{e75b1116b104fb27d7d79696284c5798}
+      \strng{bibnamehash}{e75b1116b104fb27d7d79696284c5798}
+      \strng{authorbibnamehash}{e75b1116b104fb27d7d79696284c5798}
+      \strng{authornamehash}{e75b1116b104fb27d7d79696284c5798}
+      \strng{authorfullhash}{e75b1116b104fb27d7d79696284c5798}
+      \strng{authorfullhashraw}{e75b1116b104fb27d7d79696284c5798}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://a2a-protocol.org/latest/specification/}}
+      \field{note}{Official protocol specification using JSON-RPC 2.0 over HTTP(S)}
+      \field{title}{{Agent2Agent} ({A2A}) Protocol Specification (DRAFT v1.0)}
+      \field{year}{2025}
+    \endentry
+    \entry{OpsAgent2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=76d2a0c3861b383bfabec56e48139137}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Feng},
+           giveni={F\bibinitperiod}}}%
+        {{hash=c0e0d23e2d09e45e6f51cc2bcea6d9f9}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Wei},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{e269b1f9a4aa73c5962824e6cd9a19c6}
+      \strng{fullhash}{e269b1f9a4aa73c5962824e6cd9a19c6}
+      \strng{fullhashraw}{e269b1f9a4aa73c5962824e6cd9a19c6}
+      \strng{bibnamehash}{e269b1f9a4aa73c5962824e6cd9a19c6}
+      \strng{authorbibnamehash}{e269b1f9a4aa73c5962824e6cd9a19c6}
+      \strng{authornamehash}{e269b1f9a4aa73c5962824e6cd9a19c6}
+      \strng{authorfullhash}{e269b1f9a4aa73c5962824e6cd9a19c6}
+      \strng{authorfullhashraw}{e269b1f9a4aa73c5962824e6cd9a19c6}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{OpsAgent for cloud incident management using metrics, logs, and traces}
+      \field{title}{From Observability Data to Diagnosis: An Evolving Multi-agent System for Incident Management in Cloud Systems}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2510.24145
+      \endverb
+    \endentry
+    \entry{AgentOrchestra2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=685d97480ebafb5a158e7c3dfdcb69a8}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Li},
+           giveni={L\bibinitperiod}}}%
+        {{hash=49a19e08791a3dc09c932ff975949361}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Jing},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{b7af5082c25403daeb6e075ee50e389a}
+      \strng{fullhash}{b7af5082c25403daeb6e075ee50e389a}
+      \strng{fullhashraw}{b7af5082c25403daeb6e075ee50e389a}
+      \strng{bibnamehash}{b7af5082c25403daeb6e075ee50e389a}
+      \strng{authorbibnamehash}{b7af5082c25403daeb6e075ee50e389a}
+      \strng{authornamehash}{b7af5082c25403daeb6e075ee50e389a}
+      \strng{authorfullhash}{b7af5082c25403daeb6e075ee50e389a}
+      \strng{authorfullhashraw}{b7af5082c25403daeb6e075ee50e389a}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Hierarchical framework with central planning agent that decomposes objectives and delegates sub-tasks}
+      \field{title}{{AgentOrchestra}: A Hierarchical Multi-Agent Framework for General-Purpose Task Solving}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2506.12508
+      \endverb
+    \endentry
+    \entry{GoogleA2A2025}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=8b36e9207c24c76e6719268e49201d94}{%
+           family={{Google}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \strng{bibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorbibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authornamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/}}
+      \field{note}{Official announcement of A2A protocol for agent interoperability}
+      \field{title}{Announcing the {Agent2Agent} Protocol ({A2A})}
+      \field{year}{2025}
+    \endentry
+    \entry{BeyondBlackBox2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=e2089f792c7e0314a9d5734744414015}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=fed56306e0b43cc270e6d75eb460b5f9}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Sarah},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{baf47b94d2bdb9a914c9b16736be92ed}
+      \strng{fullhash}{baf47b94d2bdb9a914c9b16736be92ed}
+      \strng{fullhashraw}{baf47b94d2bdb9a914c9b16736be92ed}
+      \strng{bibnamehash}{baf47b94d2bdb9a914c9b16736be92ed}
+      \strng{authorbibnamehash}{baf47b94d2bdb9a914c9b16736be92ed}
+      \strng{authornamehash}{baf47b94d2bdb9a914c9b16736be92ed}
+      \strng{authorfullhash}{baf47b94d2bdb9a914c9b16736be92ed}
+      \strng{authorfullhashraw}{baf47b94d2bdb9a914c9b16736be92ed}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Addresses unique challenges in monitoring LLM-based applications}
+      \field{title}{Beyond Black-Box Benchmarking: Observability, Analytics, and Optimization of Agentic Systems}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2503.06745
+      \endverb
+    \endentry
+    \entry{DeMAC2025}{inproceedings}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=c7f96cacf253c5bd341e961ef704048f}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Sunwoo},
+           giveni={S\bibinitperiod}}}%
+        {{hash=2d3b761363af9336bb406189f3848d4f}{%
+           family={Park},
+           familyi={P\bibinitperiod},
+           given={Jiyeon},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computational Linguistics}%
+      }
+      \strng{namehash}{b87accd1d4ec315af0b5be2b9dd9c8b4}
+      \strng{fullhash}{b87accd1d4ec315af0b5be2b9dd9c8b4}
+      \strng{fullhashraw}{b87accd1d4ec315af0b5be2b9dd9c8b4}
+      \strng{bibnamehash}{b87accd1d4ec315af0b5be2b9dd9c8b4}
+      \strng{authorbibnamehash}{b87accd1d4ec315af0b5be2b9dd9c8b4}
+      \strng{authornamehash}{b87accd1d4ec315af0b5be2b9dd9c8b4}
+      \strng{authorfullhash}{b87accd1d4ec315af0b5be2b9dd9c8b4}
+      \strng{authorfullhashraw}{b87accd1d4ec315af0b5be2b9dd9c8b4}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Findings of the Association for Computational Linguistics: EMNLP 2025}
+      \field{note}{Addresses task uncertainty and dependency in multi-agent processes}
+      \field{title}{{DeMAC}: Enhancing Multi-Agent Coordination with Dynamic {DAG}}
+      \field{year}{2025}
+    \endentry
+    \entry{LangGraphMultiAgent2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=8de59538e5206b848891f2b0e1898dfb}{%
+           family={{LangChain}},
+           familyi={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{fullhash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{fullhashraw}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{bibnamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorbibnamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authornamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorfullhash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorfullhashraw}{8de59538e5206b848891f2b0e1898dfb}
+      \field{extraname}{1}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://blog.langchain.com/langgraph-multi-agent-workflows/}}
+      \field{note}{Official guide on multi-agent workflow construction}
+      \field{title}{{LangGraph}: Multi-Agent Workflows}
+      \field{year}{2024}
+    \endentry
+    \entry{LangGraphDocs2025}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=8de59538e5206b848891f2b0e1898dfb}{%
+           family={{LangChain}},
+           familyi={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{fullhash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{fullhashraw}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{bibnamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorbibnamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authornamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorfullhash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorfullhashraw}{8de59538e5206b848891f2b0e1898dfb}
+      \field{extraname}{2}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.langchain.com/langgraph}}
+      \field{note}{DAG-based orchestration with StateGraph for multi-agent workflows}
+      \field{title}{{LangGraph}: Low-Level Agent Orchestration Framework}
+      \field{year}{2025}
+    \endentry
+    \entry{AgentMasterA2A2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=dbe83fd8da75338203d4e8dd0e20be17}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Ming},
+           giveni={M\bibinitperiod}}}%
+        {{hash=accfaf086a407bfb746d7875478d9130}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Kai},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{3b3ddf7b4f0f06fa0cfa1c40137eeb97}
+      \strng{fullhash}{3b3ddf7b4f0f06fa0cfa1c40137eeb97}
+      \strng{fullhashraw}{3b3ddf7b4f0f06fa0cfa1c40137eeb97}
+      \strng{bibnamehash}{3b3ddf7b4f0f06fa0cfa1c40137eeb97}
+      \strng{authorbibnamehash}{3b3ddf7b4f0f06fa0cfa1c40137eeb97}
+      \strng{authornamehash}{3b3ddf7b4f0f06fa0cfa1c40137eeb97}
+      \strng{authorfullhash}{3b3ddf7b4f0f06fa0cfa1c40137eeb97}
+      \strng{authorfullhashraw}{3b3ddf7b4f0f06fa0cfa1c40137eeb97}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Framework combining A2A and MCP protocols for multi-agent coordination}
+      \field{title}{{AgentMaster}: A Multi-Agent Conversational Framework Using {A2A} and {MCP} Protocols for Multimodal Information Retrieval and Analysis}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2507.21105
+      \endverb
+    \endentry
+    \entry{LinuxFoundationA2A2025}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=94a241e826a7f8a41a92c1f73a5882d9}{%
+           family={{Linux Foundation}},
+           familyi={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{94a241e826a7f8a41a92c1f73a5882d9}
+      \strng{fullhash}{94a241e826a7f8a41a92c1f73a5882d9}
+      \strng{fullhashraw}{94a241e826a7f8a41a92c1f73a5882d9}
+      \strng{bibnamehash}{94a241e826a7f8a41a92c1f73a5882d9}
+      \strng{authorbibnamehash}{94a241e826a7f8a41a92c1f73a5882d9}
+      \strng{authornamehash}{94a241e826a7f8a41a92c1f73a5882d9}
+      \strng{authorfullhash}{94a241e826a7f8a41a92c1f73a5882d9}
+      \strng{authorfullhashraw}{94a241e826a7f8a41a92c1f73a5882d9}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents}}
+      \field{note}{A2A governance under Linux Foundation with 150+ supporting organizations}
+      \field{title}{Linux Foundation Launches the {Agent2Agent} Protocol Project}
+      \field{year}{2025}
+    \endentry
+    \entry{ConflictResolutionTechniques2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=5d0ddda3a367ceb26fbaeca02e391c22}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{2d05b2cf738af6ea5fe08887b681d257}
+      \strng{fullhash}{2d05b2cf738af6ea5fe08887b681d257}
+      \strng{fullhashraw}{2d05b2cf738af6ea5fe08887b681d257}
+      \strng{bibnamehash}{2d05b2cf738af6ea5fe08887b681d257}
+      \strng{authorbibnamehash}{2d05b2cf738af6ea5fe08887b681d257}
+      \strng{authornamehash}{2d05b2cf738af6ea5fe08887b681d257}
+      \strng{authorfullhash}{2d05b2cf738af6ea5fe08887b681d257}
+      \strng{authorfullhashraw}{2d05b2cf738af6ea5fe08887b681d257}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{European Modern Studies Journal}
+      \field{note}{Categorizes conflict resolution into goal conflicts, information conflicts, and belief merging}
+      \field{title}{Conflict Resolution Techniques in Multi-Agent Systems: Technical Review}
+      \field{year}{2025}
+    \endentry
+    \entry{CooperativeDecisionSurvey2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=1f647bb6da8304b7be380ec58eb6373a}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Lei},
+           giveni={L\bibinitperiod}}}%
+        {{hash=2c81656c924858824dfb10d50423b77a}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yong},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{3244c97690829b2ba5a9ec1c55f8fb0f}
+      \strng{fullhash}{3244c97690829b2ba5a9ec1c55f8fb0f}
+      \strng{fullhashraw}{3244c97690829b2ba5a9ec1c55f8fb0f}
+      \strng{bibnamehash}{3244c97690829b2ba5a9ec1c55f8fb0f}
+      \strng{authorbibnamehash}{3244c97690829b2ba5a9ec1c55f8fb0f}
+      \strng{authornamehash}{3244c97690829b2ba5a9ec1c55f8fb0f}
+      \strng{authorfullhash}{3244c97690829b2ba5a9ec1c55f8fb0f}
+      \strng{authorfullhashraw}{3244c97690829b2ba5a9ec1c55f8fb0f}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Evolution from single-agent to complex multi-agent decision-making}
+      \field{title}{A Comprehensive Survey on Multi-Agent Cooperative Decision-Making: Scenarios, Approaches, Challenges and Perspectives}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2503.13415
+      \endverb
+    \endentry
+    \entry{CoordinationCooperationConflict2007}{incollection}{}{}
+      \name{author}{2}{}{%
+        {{hash=1dbead6bb535576afc14adfe5a5c42bb}{%
+           family={Wooldridge},
+           familyi={W\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3e9d13389bc37863f3bde327adf0de3c}{%
+           family={Jennings},
+           familyi={J\bibinitperiod},
+           given={Nick},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{8a11d4f124a683aad3269db14238206f}
+      \strng{fullhash}{8a11d4f124a683aad3269db14238206f}
+      \strng{fullhashraw}{8a11d4f124a683aad3269db14238206f}
+      \strng{bibnamehash}{8a11d4f124a683aad3269db14238206f}
+      \strng{authorbibnamehash}{8a11d4f124a683aad3269db14238206f}
+      \strng{authornamehash}{8a11d4f124a683aad3269db14238206f}
+      \strng{authorfullhash}{8a11d4f124a683aad3269db14238206f}
+      \strng{authorfullhashraw}{8a11d4f124a683aad3269db14238206f}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Handbook of Automation}
+      \field{note}{Foundational work on MAS coordination mechanisms}
+      \field{title}{Coordination, Cooperation and Conflict Resolution in Multi-Agent Systems}
+      \field{year}{2007}
+      \verb{doi}
+      \verb 10.1007/978-1-4020-6268-1_87
+      \endverb
+    \endentry
+    \entry{MultiAgentCollabSurvey2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=6154e8b767a07e53ba059e3ac7df5d83}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Qingyun},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=6751ff8ce679fd345d66a156462f1915}{%
+           family={Bansal},
+           familyi={B\bibinitperiod},
+           given={Gagan},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{3de1625a240a2b9f145c1c8197a3497d}
+      \strng{fullhash}{3de1625a240a2b9f145c1c8197a3497d}
+      \strng{fullhashraw}{3de1625a240a2b9f145c1c8197a3497d}
+      \strng{bibnamehash}{3de1625a240a2b9f145c1c8197a3497d}
+      \strng{authorbibnamehash}{3de1625a240a2b9f145c1c8197a3497d}
+      \strng{authornamehash}{3de1625a240a2b9f145c1c8197a3497d}
+      \strng{authorfullhash}{3de1625a240a2b9f145c1c8197a3497d}
+      \strng{authorfullhashraw}{3de1625a240a2b9f145c1c8197a3497d}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Comprehensive survey characterizing collaborations by actors, type, structure, and strategy}
+      \field{title}{Multi-Agent Collaboration Mechanisms: A Survey of {LLMs}}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2501.06322
+      \endverb
+    \endentry
+    \entry{MultiAgentEvolvingOrch2025}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=25bbf4047d900f3760c65b01ee899dba}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Wei},
+           giveni={W\bibinitperiod}}}%
+        {{hash=9be3de32b4a90f4dc041661f671a531c}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Chen},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{32c7afb90abd5020612ee2c5b15b6364}
+      \strng{fullhash}{32c7afb90abd5020612ee2c5b15b6364}
+      \strng{fullhashraw}{32c7afb90abd5020612ee2c5b15b6364}
+      \strng{bibnamehash}{32c7afb90abd5020612ee2c5b15b6364}
+      \strng{authorbibnamehash}{32c7afb90abd5020612ee2c5b15b6364}
+      \strng{authornamehash}{32c7afb90abd5020612ee2c5b15b6364}
+      \strng{authorfullhash}{32c7afb90abd5020612ee2c5b15b6364}
+      \strng{authorfullhashraw}{32c7afb90abd5020612ee2c5b15b6364}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{arXiv preprint}
+      \field{note}{Proposes puppeteer-style paradigm for LLM-based multi-agent collaboration with RL-trained orchestrator}
+      \field{title}{Multi-Agent Collaboration via Evolving Orchestration}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2505.19591
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

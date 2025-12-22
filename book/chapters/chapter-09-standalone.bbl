@@ -1,0 +1,341 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{gift2021practical}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=388e92473633b0f1c936f49242c15967}{%
+           family={Gift},
+           familyi={G\bibinitperiod},
+           given={Noah},
+           giveni={N\bibinitperiod}}}%
+        {{hash=5af3e96e7255d9b4cf4027121168c57e}{%
+           family={Deza},
+           familyi={D\bibinitperiod},
+           given={Alfredo},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{c63db487fc36ae809570991b253c9259}
+      \strng{fullhash}{c63db487fc36ae809570991b253c9259}
+      \strng{fullhashraw}{c63db487fc36ae809570991b253c9259}
+      \strng{bibnamehash}{c63db487fc36ae809570991b253c9259}
+      \strng{authorbibnamehash}{c63db487fc36ae809570991b253c9259}
+      \strng{authornamehash}{c63db487fc36ae809570991b253c9259}
+      \strng{authorfullhash}{c63db487fc36ae809570991b253c9259}
+      \strng{authorfullhashraw}{c63db487fc36ae809570991b253c9259}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Practical MLOps: Operationalizing Machine Learning Models}
+      \field{year}{2021}
+    \endentry
+    \entry{docker2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=0a6e82dfd0df55343233c1768adf738c}{%
+           family={Inc.},
+           familyi={I\bibinitperiod},
+           given={Docker},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{0a6e82dfd0df55343233c1768adf738c}
+      \strng{fullhash}{0a6e82dfd0df55343233c1768adf738c}
+      \strng{fullhashraw}{0a6e82dfd0df55343233c1768adf738c}
+      \strng{bibnamehash}{0a6e82dfd0df55343233c1768adf738c}
+      \strng{authorbibnamehash}{0a6e82dfd0df55343233c1768adf738c}
+      \strng{authornamehash}{0a6e82dfd0df55343233c1768adf738c}
+      \strng{authorfullhash}{0a6e82dfd0df55343233c1768adf738c}
+      \strng{authorfullhashraw}{0a6e82dfd0df55343233c1768adf738c}
+      \field{extraname}{1}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Docker: Accelerated Container Application Development}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.docker.com/
+      \endverb
+      \verb{url}
+      \verb https://www.docker.com/
+      \endverb
+    \endentry
+    \entry{ollama2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=77122524c6794e87ab2401ffbcd2ea20}{%
+           family={Inc.},
+           familyi={I\bibinitperiod},
+           given={Ollama},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{77122524c6794e87ab2401ffbcd2ea20}
+      \strng{fullhash}{77122524c6794e87ab2401ffbcd2ea20}
+      \strng{fullhashraw}{77122524c6794e87ab2401ffbcd2ea20}
+      \strng{bibnamehash}{77122524c6794e87ab2401ffbcd2ea20}
+      \strng{authorbibnamehash}{77122524c6794e87ab2401ffbcd2ea20}
+      \strng{authornamehash}{77122524c6794e87ab2401ffbcd2ea20}
+      \strng{authorfullhash}{77122524c6794e87ab2401ffbcd2ea20}
+      \strng{authorfullhashraw}{77122524c6794e87ab2401ffbcd2ea20}
+      \field{extraname}{2}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Ollama: Get Up and Running with Large Language Models Locally}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://ollama.com/
+      \endverb
+      \verb{url}
+      \verb https://ollama.com/
+      \endverb
+    \endentry
+    \entry{kreuzberger2023mlops}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=bf9dc8d7b183c9f2fe88309e7c8e33ae}{%
+           family={Kreuzberger},
+           familyi={K\bibinitperiod},
+           given={Dominik},
+           giveni={D\bibinitperiod}}}%
+        {{hash=03b52cf351599ddbce95b65d9a6ec57a}{%
+           family={Kühl},
+           familyi={K\bibinitperiod},
+           given={Niklas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=6be27add3b78bbe2b7b07e740b32e23b}{%
+           family={Hirschl},
+           familyi={H\bibinitperiod},
+           given={Sebastian},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{4d451f70457f27e1cfdaac0c412419bd}
+      \strng{fullhash}{e31a2d477d0b505e025333557edd0ca3}
+      \strng{fullhashraw}{e31a2d477d0b505e025333557edd0ca3}
+      \strng{bibnamehash}{e31a2d477d0b505e025333557edd0ca3}
+      \strng{authorbibnamehash}{e31a2d477d0b505e025333557edd0ca3}
+      \strng{authornamehash}{4d451f70457f27e1cfdaac0c412419bd}
+      \strng{authorfullhash}{e31a2d477d0b505e025333557edd0ca3}
+      \strng{authorfullhashraw}{e31a2d477d0b505e025333557edd0ca3}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Access}
+      \field{title}{Machine Learning Operations (MLOps): Overview, Definition, and Architecture}
+      \field{volume}{11}
+      \field{year}{2023}
+      \field{pages}{31866\bibrangedash 31879}
+      \range{pages}{14}
+    \endentry
+    \entry{mell2011nist}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=eac098e5805fbc204d757a7083c69ac6}{%
+           family={Mell},
+           familyi={M\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod}}}%
+        {{hash=55a1eaf2530c3eda34c0063a885352e9}{%
+           family={Grance},
+           familyi={G\bibinitperiod},
+           given={Tim},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{publisher}{2}{%
+        {National Institute of Standards}%
+        {Technology}%
+      }
+      \strng{namehash}{ed8b44940993a12c604e0c659cdfd2b6}
+      \strng{fullhash}{ed8b44940993a12c604e0c659cdfd2b6}
+      \strng{fullhashraw}{ed8b44940993a12c604e0c659cdfd2b6}
+      \strng{bibnamehash}{ed8b44940993a12c604e0c659cdfd2b6}
+      \strng{authorbibnamehash}{ed8b44940993a12c604e0c659cdfd2b6}
+      \strng{authornamehash}{ed8b44940993a12c604e0c659cdfd2b6}
+      \strng{authorfullhash}{ed8b44940993a12c604e0c659cdfd2b6}
+      \strng{authorfullhashraw}{ed8b44940993a12c604e0c659cdfd2b6}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{NIST Special Publication 800-145}
+      \field{title}{The NIST Definition of Cloud Computing}
+      \field{year}{2011}
+    \endentry
+    \entry{opara2014cloud}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=d023652039c15872965117e4ef46dd86}{%
+           family={Opara-Martins},
+           familyi={O\bibinithyphendelim M\bibinitperiod},
+           given={Justice},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e1b76c6dae587f6ca8316f12d958a685}{%
+           family={Sahandi},
+           familyi={S\bibinitperiod},
+           given={Reza},
+           giveni={R\bibinitperiod}}}%
+        {{hash=1487e60477fb6a315fa69b2f8ee53c9f}{%
+           family={Tian},
+           familyi={T\bibinitperiod},
+           given={Feng},
+           giveni={F\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{e485cd78fcd6f65a1f92bb91d2cb1810}
+      \strng{fullhash}{91c2faade6a3044fd7cb6c2a6853f3ab}
+      \strng{fullhashraw}{91c2faade6a3044fd7cb6c2a6853f3ab}
+      \strng{bibnamehash}{91c2faade6a3044fd7cb6c2a6853f3ab}
+      \strng{authorbibnamehash}{91c2faade6a3044fd7cb6c2a6853f3ab}
+      \strng{authornamehash}{e485cd78fcd6f65a1f92bb91d2cb1810}
+      \strng{authorfullhash}{91c2faade6a3044fd7cb6c2a6853f3ab}
+      \strng{authorfullhashraw}{91c2faade6a3044fd7cb6c2a6853f3ab}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Cloud Computing}
+      \field{number}{4}
+      \field{title}{A Comparison of the Financial Benefits of Cloud Computing versus On-Premise Computing}
+      \field{volume}{1}
+      \field{year}{2014}
+      \field{pages}{56\bibrangedash 62}
+      \range{pages}{7}
+    \endentry
+    \entry{paleyes2022challenges}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=965a5c0abc65962166bbfe7e3e15d40d}{%
+           family={Paleyes},
+           familyi={P\bibinitperiod},
+           given={Andrei},
+           giveni={A\bibinitperiod}}}%
+        {{hash=ce97d05f0855e040ff43d51cd685711e}{%
+           family={Urma},
+           familyi={U\bibinitperiod},
+           given={Raoul-Gabriel},
+           giveni={R\bibinithyphendelim G\bibinitperiod}}}%
+        {{hash=f83d1b861ef00c2c1e490eb5f7360434}{%
+           family={Lawrence},
+           familyi={L\bibinitperiod},
+           given={Neil\bibnamedelima D},
+           giveni={N\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{775901d7fac0a9a209467487926ef64c}
+      \strng{fullhash}{3e1bdc89683231b3e05eb0657150ec7e}
+      \strng{fullhashraw}{3e1bdc89683231b3e05eb0657150ec7e}
+      \strng{bibnamehash}{3e1bdc89683231b3e05eb0657150ec7e}
+      \strng{authorbibnamehash}{3e1bdc89683231b3e05eb0657150ec7e}
+      \strng{authornamehash}{775901d7fac0a9a209467487926ef64c}
+      \strng{authorfullhash}{3e1bdc89683231b3e05eb0657150ec7e}
+      \strng{authorfullhashraw}{3e1bdc89683231b3e05eb0657150ec7e}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Computing Surveys}
+      \field{number}{6}
+      \field{title}{Challenges in Deploying Machine Learning: A Survey of Case Studies}
+      \field{volume}{55}
+      \field{year}{2022}
+      \field{pages}{1\bibrangedash 29}
+      \range{pages}{29}
+    \endentry
+    \entry{sculley2015hidden}{inproceedings}{}{}
+      \name{author}{10}{}{%
+        {{hash=5c6a1bebc2a08b2c1299f410c0ec9490}{%
+           family={Sculley},
+           familyi={S\bibinitperiod},
+           given={D},
+           giveni={D\bibinitperiod}}}%
+        {{hash=a8fbce13fcffb9703bea69a5d8d49ff4}{%
+           family={Holt},
+           familyi={H\bibinitperiod},
+           given={Gary},
+           giveni={G\bibinitperiod}}}%
+        {{hash=299065af672db40823b358aab4a8ea22}{%
+           family={Golovin},
+           familyi={G\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+        {{hash=c0ab7dcbc912f87d3a70c27d10c4e6ea}{%
+           family={Davydov},
+           familyi={D\bibinitperiod},
+           given={Eugene},
+           giveni={E\bibinitperiod}}}%
+        {{hash=7ef3e78c36cff7e43c38c516102ce045}{%
+           family={Phillips},
+           familyi={P\bibinitperiod},
+           given={Todd},
+           giveni={T\bibinitperiod}}}%
+        {{hash=cd9a1c028ba3c4be93eaec6cbaa97ff5}{%
+           family={Ebner},
+           familyi={E\bibinitperiod},
+           given={Dietmar},
+           giveni={D\bibinitperiod}}}%
+        {{hash=8c87f614964035eb6a03be6ea98943f4}{%
+           family={Chaudhary},
+           familyi={C\bibinitperiod},
+           given={Vinay},
+           giveni={V\bibinitperiod}}}%
+        {{hash=dd67473938345c135f49444d372c2123}{%
+           family={Young},
+           familyi={Y\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=34993426bab529853d14e2411aa231f9}{%
+           family={Crespo},
+           familyi={C\bibinitperiod},
+           given={Jean-Francois},
+           giveni={J\bibinithyphendelim F\bibinitperiod}}}%
+        {{hash=d2122cc82cc772d6de488437ba012729}{%
+           family={Dennison},
+           familyi={D\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{b75d4018bbff18ab496d7ef97107116e}
+      \strng{fullhash}{80918f9cc7099066cca7aaf358e432e5}
+      \strng{fullhashraw}{80918f9cc7099066cca7aaf358e432e5}
+      \strng{bibnamehash}{80918f9cc7099066cca7aaf358e432e5}
+      \strng{authorbibnamehash}{80918f9cc7099066cca7aaf358e432e5}
+      \strng{authornamehash}{b75d4018bbff18ab496d7ef97107116e}
+      \strng{authorfullhash}{80918f9cc7099066cca7aaf358e432e5}
+      \strng{authorfullhashraw}{80918f9cc7099066cca7aaf358e432e5}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Advances in Neural Information Processing Systems}
+      \field{title}{Hidden Technical Debt in Machine Learning Systems}
+      \field{volume}{28}
+      \field{year}{2015}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

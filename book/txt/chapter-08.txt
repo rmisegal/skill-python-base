@@ -1,0 +1,2308 @@
+\chapter{אמנות הפרומפט - איך לדבר עם מכונות חכמות}
+\label{chap:prompt-engineering}
+
+\begin{abstract}
+\begin{hebrew}
+פרק זה עוסק באמנות כתיבת פרומפטים יעילים לעבודה עם מודלי שפה גדולים. נלמד את המבנה האופטימלי של פרומפט, נבין את ההבדל בין פרומפטי מערכת לפרומפטי משתמש, ונתנסה בטכניקות מתקדמות כמו Chain-of-Thought ו-Few-Shot Learning. הפרק מציע כלים ניהוליים למדידת יעילות הפרומפטים ולשיפורם המתמיד.
+\end{hebrew}
+\end{abstract}
+
+\section*{מטרות הלמידה}
+\begin{enumerate}
+\item \he{לשלוט בכתיבת פרומפטים אפקטיביים המניבים תוצאות עקביות ואיכותיות}
+\item \he{להבין את תפקידם של פרומפטי מערכת (System Prompts) ואת ההבדל מפרומפטי משתמש}
+\item \he{להכיר טכניקות מתקדמות: Chain-of-Thought, Few-Shot Learning, Zero-Shot Prompting}
+\item \he{לפתח שיטות למדידה ושיפור מתמיד של איכות הפרומפטים}
+\end{enumerate}
+
+\section{מבוא: השפה החדשה של הניהול}
+\label{sec:prompt-intro}
+
+\begin{hebrew}
+בעידן שבו מנהלים מתקשרים עם בינה מלאכותית באותה תדירות שבה הם מתקשרים עם עובדיהם, אומנות הפרומפט הפכה למיומנות ניהולית קריטית. בדיוק כפי שמנהל טוב יודע כיצד לנסח משוב לעובד, להציב יעדים ברורים, ולהנחות תהליך עבודה, כך גם התקשורת עם מודלי שפה גדולים דורשת דיוק, מבנה ומחשבה אסטרטגית.
+
+אולם בניגוד לתקשורת אנושית, שבה ניתן להסתמך על הקשר משותף, אינטואיציה חברתית ויכולת לשאול שאלות הבהרה, המודלים הלשוניים תלויים לחלוטין באיכות ההנחיות שאנו מספקים להם. פרומפט גרוע יניב תוצאה גרועה, לא בגלל מגבלות הטכנולוגיה, אלא בגלל כשל בתקשורת.
+
+התובנה המרכזית היא שפרומפט איכותי אינו רק שאלה או בקשה - הוא מכשיר ניהולי שמגדיר הקשר, מציב ציפיות, מספק דוגמאות ומנחה את תהליך החשיבה של המודל. בדיוק כפי שתיאור תפקיד (Job Description) טוב קובע את הצלחת הגיוס, כך פרומפט מובנה היטב קובע את איכות הפלט שנקבל מהבינה המלאכותית.
+\end{hebrew}
+
+\section{אנטומיה של פרומפט מושלם}
+\label{sec:prompt-anatomy}
+
+\begin{hebrew}
+פרומפט אפקטיבי מורכב ממספר רכיבים מובנים, כאשר כל רכיב ממלא תפקיד ספציפי בהנחיית המודל. הבנת המבנה הזה מאפשרת למנהלים לבנות פרומפטים עקביים ויעילים.
+\end{hebrew}
+
+\subsection{רכיבי הפרומפט}
+\label{subsec:prompt-components}
+
+\begin{hebrew}
+\textbf{1. הגדרת תפקיד (Role Definition):} הקצאת תפקיד או פרסונה למודל משפיעה באופן משמעותי על סגנון התשובה, רמת הפירוט והטון. כאשר אנו מבקשים מהמודל להתנהג כיועץ עסקי בכיר, הוא יאמץ נקודת מבט אסטרטגית ורחבה. כאשר אנו מבקשים ממנו להיות אנליסט פיננסי, הוא יתמקד בנתונים ובניתוחים כמותיים.
+
+\textbf{2. הקשר (Context):} מתן מידע רקע רלוונטי למשימה. ככל שההקשר מפורט ומדויק יותר, כך התוצאה תהיה רלוונטית יותר למצב העסקי הספציפי. הקשר יכול לכלול מידע על החברה, השוק, הלקוחות או כל פרט אחר המשפיע על המשימה.
+
+\textbf{3. המשימה (Task):} הוראה ברורה ומפורשת לגבי מה נדרש מהמודל לעשות. משימה מוגדרת היטב משתמשת בפעלים פעולתיים ספציפיים: "נתח", "סכם", "המלץ", "השווה", "הערך" - ולא "תחשוב על" או "תסתכל על".
+
+\textbf{4. אילוצים ומגבלות (Constraints):} הגדרת גבולות למשימה - אורך הפלט, סגנון הכתיבה, נקודות מבט שיש להימנע מהן, או מגבלות תוכן. אילוצים ממוקדים מונעים תשובות מסורבלות ומבטיחים שהפלט יתאים לצורך העסקי.
+
+\textbf{5. פורמט הפלט (Output Format):} הגדרה מדויקת של המבנה הרצוי של התשובה. האם נדרשת רשימה ממוספרת, טבלה, קוד JSON, דוח מובנה או טקסט חופשי? פורמט ברור מקל על עיבוד אוטומטי של התשובות ומבטיח עקביות.
+
+\textbf{6. דוגמאות (Examples):} במיוחד בטכניקת Few-Shot, מתן דוגמאות קונקרטיות של קלט-פלט רצוי מלמד את המודל את הדפוס המצופה. דוגמה אחת טובה שווה לעתים אלפי מילים של הסבר.
+
+\textbf{7. טון ונקודת מבט (Tone and Perspective):} הגדרה האם התשובה צריכה להיות פורמלית או לא פורמלית, אופטימית או שמרנית, טכנית או מונגשת. טון מתאים לקהל היעד מגביר את השימושיות של הפלט.
+
+איור~\ref{fig:prompt-structure} מציג את ההיררכיה של רכיבי הפרומפט ואת הזרימה ליצירת פלט איכותי~\cite{white2023prompt,liu2023pretrain}.
+\end{hebrew}
+
+\begin{figure}[h]
+\centering
+\begin{english}
+\begin{tikzpicture}[node distance=0.8cm, auto,
+    component/.style={rectangle, draw, fill=blue!20, text width=3.5cm, text centered, rounded corners, minimum height=1cm},
+    arrow/.style={->, >=stealth, thick}]
+
+    \node[component] (role) {\textbf{\he{הגדרת תפקיד}}};
+    \node[component, below=of role] (context) {\textbf{\he{הקשר}}};
+    \node[component, below=of context] (task) {\textbf{\he{משימה}}};
+    \node[component, below=of task] (constraints) {\textbf{\he{אילוצים}}};
+    \node[component, below=of constraints] (format) {\textbf{\he{פורמט פלט}}};
+    \node[component, below=of format] (examples) {\textbf{\he{דוגמאות}}};
+    \node[component, below=of examples] (tone) {\textbf{\he{טון}}};
+
+    \draw[arrow] (role) -- (context);
+    \draw[arrow] (context) -- (task);
+    \draw[arrow] (task) -- (constraints);
+    \draw[arrow] (constraints) -- (format);
+    \draw[arrow] (format) -- (examples);
+    \draw[arrow] (examples) -- (tone);
+
+    \node[right=2cm of task, text width=4cm] (output) {\he{\Large{פלט\\איכותי\\ועקבי}}};
+    \draw[arrow, very thick, color=green!60!black] (tone.south) -| (output.south);
+
+\end{tikzpicture}
+\end{english}
+\caption{\he{מבנה פרומפט מושלם - רכיבים והיררכיה}}
+\label{fig:prompt-structure}
+\end{figure}
+
+\subsection{דוגמה: פרומפט מובנה לניתוח שוק}
+\label{subsec:structured-prompt-example}
+
+\begin{hebrew}
+להלן דוגמה לפרומפט מובנה היטב לניתוח שוק תחרותי:
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{פרומפט מובנה לניתוח שוק}}, label={lst:market-analysis-prompt}]
+prompt = """
+# Role
+You are a senior market analyst with 15 years of experience
+in competitive intelligence and market positioning.
+
+# Context
+Our company is a mid-sized SaaS provider in the project
+management space. We're preparing for a Series B funding
+round and need to demonstrate clear understanding of our
+competitive landscape.
+
+# Task
+Analyze the competitive positioning of our top 3 competitors:
+Asana, Monday.com, and ClickUp. Focus on:
+1. Pricing strategy
+2. Target market segments
+3. Key differentiators
+4. Recent product launches
+
+# Constraints
+- Maximum 500 words per competitor
+- Use publicly available information only
+- Avoid speculation; mark assumptions clearly
+- Include data sources
+
+# Output Format
+For each competitor, provide:
+## [Competitor Name]
+**Pricing Strategy:** [analysis]
+**Target Segments:** [list]
+**Differentiators:** [bullet points]
+**Recent Launches:** [chronological list]
+**Sources:** [URLs]
+
+# Tone
+Professional, data-driven, objective. Avoid marketing language.
+"""
+\end{lstlisting}
+
+\section{System Prompt לעומת User Prompt}
+\label{sec:system-vs-user-prompts}
+
+\begin{hebrew}
+אחת ההבחנות המרכזיות בעבודה עם מודלי שפה היא ההבדל בין פרומפט מערכת (System Prompt) לבין פרומפט משתמש (User Prompt). הבנת ההבדל הזה קריטית לבניית מערכות AI יעילות~\cite{reynolds2021prompt}. טבלה~\ref{tab:system-vs-user} מסכמת את ההבדלים העיקריים.
+\end{hebrew}
+
+\subsection{System Prompt - ההגדרה הארגונית}
+\label{subsec:system-prompt}
+
+\begin{hebrew}
+פרומפט המערכת הוא ההנחיות הקבועות המגדירות את התנהגות הבסיסית של המודל לאורך כל השיחה. הוא דומה לתיאור תפקיד או למסמך מדיניות ארגונית - הוא קובע את המסגרת שבתוכה פועל המודל.
+
+\textbf{מאפיינים של System Prompt טוב:}
+
+\textbf{עקביות:} System Prompt נכתב פעם אחת ונשאר קבוע לאורך אינטראקציות רבות. הוא מבטיח שהמודל יתנהג באופן עקבי ללא קשר למשתמש הספציפי או לשאלה הספציפית.
+
+\textbf{הגדרת גבולות:} הוא קובע מה המודל יכול ולא יכול לעשות, אילו סוגי תשובות מקובלים, ואילו נושאים מחוץ לתחום.
+
+\textbf{זהות ארגונית:} הוא משקף את ערכי הארגון, את הטון המועדף, ואת רמת הפורמליות הנדרשת.
+
+\textbf{מומחיות ספציפית:} הוא מגדיר את תחום המומחיות של המודל - האם הוא יועץ משפטי, אנליסט פיננסי, או סוכן שירות לקוחות.
+\end{hebrew}
+
+\subsection{User Prompt - הבקשה הספציפית}
+\label{subsec:user-prompt}
+
+\begin{hebrew}
+פרומפט המשתמש הוא הבקשה הספציפית, המשימה הקונקרטית שאנו רוצים שהמודל יבצע כעת. הוא דומה למשימה שמנהל מטיל על עובד - ספציפית, מוגדרת בזמן, ומתייחסת למצב מסוים.
+
+\textbf{מאפיינים של User Prompt טוב:}
+
+\textbf{ספציפיות:} הוא מתייחס למשימה קונקרטית עם פרמטרים ברורים ותוצאות מדידות.
+
+\textbf{הקשר מקומי:} הוא מספק את המידע הספציפי הרלוונטי לשאלה הנוכחית.
+
+\textbf{גמישות:} בניגוד ל-System Prompt, הוא יכול להשתנות מאינטראקציה לאינטראקציה.
+
+\textbf{פרטיות:} הוא עשוי להכיל מידע פרטי או מסווג שרלוונטי רק לשיחה הספציפית.
+\end{hebrew}
+
+\begin{table}[h]
+\centering
+\caption{\he{השוואה: System Prompt לעומת User Prompt}}
+\label{tab:system-vs-user}
+\begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{\he{מאפיין}} & \textbf{System Prompt} & \textbf{User Prompt} \\
+\hline
+\he{תדירות שינוי} & \he{קבוע, משתנה לעיתים רחוקות} & \he{משתנה בכל אינטראקציה} \\
+\hline
+\he{היקף} & \he{כללי, חל על כל השיחות} & \he{ספציפי למשימה נוכחית} \\
+\hline
+\he{תוכן} & \he{זהות, ערכים, גבולות} & \he{משימה, נתונים, בקשה} \\
+\hline
+\he{דוגמה} & \he{"אתה יועץ עסקי המתמחה בסטארטאפים"} & \he{"נתח את התוכנית העסקית המצורפת"} \\
+\hline
+\he{אורך טיפוסי} & \he{200-1000 מילים} & \he{50-500 מילים} \\
+\hline
+\he{בעלות} & \he{צוות המוצר/ארגון} & \he{משתמש קצה} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{דוגמה מעשית: סוכן מכירות AI}
+\label{subsec:sales-agent-example}
+
+\begin{hebrew}
+נבחן מערכת AI לסוכן מכירות. System Prompt יגדיר את האישיות, הגבולות וההנחיות הכלליות, בעוד User Prompts יהיו השיחות הספציפיות עם לקוחות:
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{System Prompt לסוכן מכירות}}, label={lst:sales-system-prompt}]
+SYSTEM_PROMPT = """
+# Identity
+You are Sarah, a senior sales consultant at TechFlow Solutions,
+a B2B SaaS company specializing in workflow automation tools.
+You have 8 years of experience in enterprise sales.
+
+# Company Context
+- Product: Workflow automation platform for mid-to-large enterprises
+- Pricing: Starts at $5,000/month for up to 100 users
+- Key differentiator: No-code interface with advanced AI features
+- Target customers: Operations managers, CIOs in 200+ employee companies
+
+# Communication Style
+- Professional yet warm and personable
+- Use consultative selling approach, not pushy
+- Ask clarifying questions before proposing solutions
+- Always focus on customer pain points, not features
+- Use specific examples and case studies when relevant
+
+# Boundaries
+- Never promise features that don't exist
+- Don't provide pricing discounts - refer to sales manager
+- Avoid technical jargon unless customer is technical
+- Don't criticize competitors directly
+- Always be honest about limitations
+
+# Sales Process
+1. Understand the customer's current workflow challenges
+2. Identify pain points and quantify impact
+3. Demonstrate how our solution addresses specific needs
+4. Handle objections with empathy and data
+5. Move towards scheduling a demo or trial
+
+# Conversation Goals
+- Build trust and credibility
+- Qualify leads (budget, authority, need, timeline)
+- Schedule next steps (demo, trial, meeting with team)
+"""
+
+# Example User Prompt (changes per conversation)
+user_prompt_1 = """
+Customer: "We're struggling with manual approval processes
+that take 3-5 days. Can your platform help?"
+"""
+
+user_prompt_2 = """
+Customer: "How does your pricing compare to Zapier and
+Monday.com? We're currently spending $2,000/month."
+"""
+\end{lstlisting}
+
+\section{טכניקות Prompting מתקדמות}
+\label{sec:advanced-prompting}
+
+\begin{hebrew}
+מעבר למבנה הבסיסי של פרומפט, קיימות טכניקות מתקדמות המשפרות משמעותית את איכות הפלט במשימות מורכבות~\cite{schulhoff2024prompt,sahoo2024prompt}. שלוש הטכניקות המרכזיות הן: Zero-Shot, Few-Shot ו-Chain-of-Thought. איור~\ref{fig:prompting-techniques} מציג השוואה בין הטכניקות.
+\end{hebrew}
+
+\subsection{Zero-Shot Prompting}
+\label{subsec:zero-shot}
+
+\begin{hebrew}
+בגישת Zero-Shot, אנו מבקשים מהמודל לבצע משימה ללא מתן דוגמאות~\cite{kojima2022large}. אנו מסתמכים על ידע קיים של המודל ועל הנחיות ברורות. גישה זו יעילה למשימות פשוטות או כאשר קשה לספק דוגמאות.
+
+\textbf{יתרונות:}
+\begin{itemize}
+\item פשטות ומהירות - אין צורך בהכנת דוגמאות
+\item חיסכון בטוקנים - פרומפט קצר יותר
+\item מתאים למשימות כלליות שהמודל מכיר
+\end{itemize}
+
+\textbf{חסרונות:}
+\begin{itemize}
+\item פחות שליטה על פורמט הפלט
+\item עלול להיות לא עקבי במשימות ספציפיות
+\item פחות מדויק בדומיינים מיוחדים
+\end{itemize}
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{דוגמה: Zero-Shot Classification}}, label={lst:zero-shot-example}]
+# Zero-Shot: Classify customer inquiry without examples
+zero_shot_prompt = """
+Classify the following customer inquiry into one of these
+categories: Technical Support, Billing, Sales, General Question.
+
+Customer inquiry: "I've been charged twice this month for my
+subscription. Can someone look into this?"
+
+Category:
+"""
+# Expected output: "Billing"
+\end{lstlisting}
+
+\subsection{Few-Shot Prompting}
+\label{subsec:few-shot}
+
+\begin{hebrew}
+Few-Shot Learning היא טכניקה שבה אנו מספקים למודל מספר דוגמאות (בדרך כלל 2-5) של קלט-פלט רצוי לפני המשימה האמיתית~\cite{brown2020fewshot}. המודל לומד את הדפוס מהדוגמאות ומיישם אותו על הקלט החדש.
+
+גישה זו חזקה במיוחד כאשר:
+\begin{itemize}
+\item יש לנו פורמט פלט מאוד ספציפי
+\item המשימה דורשת סגנון ייחודי או טרמינולוגיה מיוחדת
+\item אנו רוצים עקביות גבוהה בין תשובות
+\item הדומיין ספציפי או טכני
+\end{itemize}
+
+\textbf{עקרונות לבניית דוגמאות איכותיות:}
+\begin{itemize}
+\item דוגמאות צריכות להיות מגוונות ומייצגות את טווח הקלטים האפשרי
+\item כל דוגמה צריכה להדגים נכון את הפורמט והסגנון הרצוי
+\item סדר הדוגמאות משפיע - התחילו מהפשוט למורכב
+\item הקפידו על איכות ודיוק בדוגמאות - טעויות יועתקו
+\end{itemize}
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{דוגמה: Few-Shot Learning לסיווג פניות}}, label={lst:few-shot-example}]
+few_shot_prompt = """
+Classify customer inquiries into categories.
+Here are some examples:
+
+Input: "How do I reset my password?"
+Output: Technical Support | Priority: Medium | Sentiment: Neutral
+
+Input: "Your product is amazing! Can I upgrade to enterprise?"
+Output: Sales | Priority: High | Sentiment: Positive
+
+Input: "I've been waiting for support for 3 days!"
+Output: Technical Support | Priority: Urgent | Sentiment: Negative
+
+Input: "What are your business hours?"
+Output: General Question | Priority: Low | Sentiment: Neutral
+
+Now classify this inquiry:
+Input: "Can I get a refund? The product doesn't work as advertised."
+Output:
+"""
+# Expected: "Billing | Priority: High | Sentiment: Negative"
+\end{lstlisting}
+
+\subsection{Chain-of-Thought (CoT) Prompting}
+\label{subsec:chain-of-thought}
+
+\begin{hebrew}
+Chain-of-Thought היא טכניקה שבה אנו מבקשים מהמודל להציג את תהליך החשיבה שלו לפני המסקנה הסופית~\cite{wei2022chain,wang2022selfconsistency}. במקום לקפוץ ישירות לתשובה, המודל מפרט את השלבים ההגיוניים שהובילו אותו למסקנה.
+
+טכניקה זו משפרה משמעותית ביצועים במשימות הדורשות:
+\begin{itemize}
+\item חשיבה רב-שלבית
+\item ניתוח מורכב
+\item פתרון בעיות
+\item היגיון והסקת מסקנות
+\item חישובים מתמטיים
+\end{itemize}
+
+\textbf{יתרונות Chain-of-Thought:}
+\begin{itemize}
+\item דיוק גבוה יותר במשימות מורכבות
+\item שקיפות - ניתן לעקוב אחר ההיגיון
+\item קל יותר לזהות שגיאות בתהליך החשיבה
+\item מלמד את המודל לפרק בעיות מורכבות
+\end{itemize}
+
+הפעלת CoT יכולה להיות מפורשת ("הסבר את תהליך החשיבה שלך צעד אחר צעד") או מרומזת באמצעות דוגמאות המדגימות חשיבה שלב-אחר-שלב.
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{Chain-of-Thought לניתוח עסקי}}, label={lst:cot-example}]
+cot_prompt = """
+Analyze whether we should launch our product in the German
+market. Use step-by-step reasoning.
+
+Context:
+- Our SaaS product has 10,000 users in the US
+- Current MRR: $200,000
+- Development cost for German localization: $150,000
+- Germany has 83M population vs US 330M
+- German B2B SaaS market growing 25% annually
+- We have no European presence yet
+- Our main competitor already has 30% market share in Germany
+
+Provide your analysis with explicit reasoning steps:
+
+Step 1: Market Size Analysis
+[Your analysis here]
+
+Step 2: Competition Assessment
+[Your analysis here]
+
+Step 3: Investment ROI Calculation
+[Your analysis here]
+
+Step 4: Risk Evaluation
+[Your analysis here]
+
+Final Recommendation:
+[Yes/No with confidence level and key reasons]
+"""
+\end{lstlisting}
+
+\begin{figure}[h]
+\centering
+\begin{english}
+\begin{tikzpicture}[node distance=1.5cm, auto]
+    \node[rectangle, draw, fill=blue!10, text width=3cm, align=center] (zeroshot)
+        {\textbf{Zero-Shot}\\[2pt]\he{משימה ללא דוגמאות}};
+    \node[rectangle, draw, fill=green!10, text width=3cm, align=center, right=of zeroshot] (fewshot)
+        {\textbf{Few-Shot}\\[2pt]\he{2-5 דוגמאות}};
+    \node[rectangle, draw, fill=orange!10, text width=3cm, align=center, right=of fewshot] (cot)
+        {\textbf{Chain-of-Thought}\\[2pt]\he{חשיבה שלב-אחר-שלב}};
+
+    \node[below=0.5cm of zeroshot, text width=3cm, align=center, font=\small]
+        {\he{פשוט ומהיר\\חיסכון בטוקנים\\פחות דיוק}};
+    \node[below=0.5cm of fewshot, text width=3cm, align=center, font=\small]
+        {\he{עקביות גבוהה\\פורמט ספציפי\\צריך דוגמאות}};
+    \node[below=0.5cm of cot, text width=3cm, align=center, font=\small]
+        {\he{דיוק גבוה\\שקיפות\\יקר בטוקנים}};
+\end{tikzpicture}
+\end{english}
+\caption{\he{השוואת טכניקות Prompting}}
+\label{fig:prompting-techniques}
+\end{figure}
+
+\section{Role Playing - הגדרת תפקידים}
+\label{sec:role-playing}
+
+\begin{hebrew}
+אחת הדרכים היעילות ביותר לעצב את התנהגות המודל היא הקצאת תפקיד או פרסונה ספציפית. כאשר אנו מבקשים מהמודל "להיות" מומחה מסוים, הוא מתאים את סגנון התשובה, רמת הפירוט, הטרמינולוגיה ונקודת המבט בהתאם.
+
+\textbf{למה Role Playing עובד?}
+
+מודלי שפה גדולים אומנו על כמויות עצומות של טקסט מתחומים שונים. כאשר אנו מבקשים מהם לאמץ תפקיד, אנו למעשה מפעילים את הידע הספציפי שנצבר מטקסטים שנכתבו על ידי אנשי מקצוע בתחום זה.
+
+\textbf{רמות של Role Definition:}
+
+\textbf{רמה 1 - תפקיד כללי:} "אתה יועץ עסקי מנוסה"
+
+\textbf{רמה 2 - תפקיד ספציפי:} "אתה CFO עם 15 שנות ניסיון בחברות טכנולוגיה ציבוריות"
+
+\textbf{רמה 3 - פרסונה מלאה:} תיאור מפורט הכולל רקע, התמחות, סגנון עבודה, ערכים ואפילו שם ודמיון ויזואלי.
+
+ככל שהתפקיד מוגדר בצורה ספציפית ומפורטת יותר, כך התשובות יהיו ממוקדות ורלוונטיות יותר.
+\end{hebrew}
+
+\subsection{עקרונות להגדרת תפקיד אפקטיבית}
+\label{subsec:role-definition-principles}
+
+\begin{hebrew}
+\textbf{1. ספציפיות:} במקום "מומחה שיווק", העדיפו "מנהלת שיווק דיגיטלי בחברת B2B SaaS עם התמחות ב-Content Marketing ו-SEO".
+
+\textbf{2. ניסיון רלוונטי:} ציינו את רמת הניסיון והתחום הספציפי. "10 שנות ניסיון" מעביר ציפייה לעומק ולבשלות בתשובות.
+
+\textbf{3. הקשר ארגוני:} האם מדובר ביועץ חיצוני, מנהל בכיר, או מומחה טכני? כל תפקיד מביא נקודת מבט שונה.
+
+\textbf{4. מומחיות ייחודית:} מה מייחד את האדם הזה? האם יש לו הכשרה מיוחדת, הסמכות, או ניסיון בתעשייה ספציפית?
+
+\textbf{5. סגנון תקשורת:} כיצד האדם הזה מתקשר? האם הוא ישיר ותמציתי, או מפורט ומסביר?
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{דוגמאות להגדרת תפקידים}}, label={lst:role-examples}]
+# Basic Role
+basic_role = """
+You are a business consultant.
+"""
+
+# Enhanced Role
+enhanced_role = """
+You are Dr. Rachel Kim, a strategic business consultant
+specializing in digital transformation for traditional
+manufacturing companies. You have:
+- PhD in Industrial Engineering from MIT
+- 12 years consulting with Fortune 500 manufacturers
+- Published author on Industry 4.0 strategies
+- Known for data-driven, pragmatic recommendations
+- Communication style: Direct, uses concrete examples,
+  always ties recommendations to ROI
+"""
+
+# Persona with Constraints
+legal_analyst = """
+You are Michael Torres, Senior Legal Analyst at a corporate
+law firm specializing in contract review for tech companies.
+
+Background:
+- JD from Stanford Law School
+- 8 years experience in tech contracts (SaaS, licensing, M&A)
+- Specialization: Data privacy, IP protection, liability clauses
+
+Working Style:
+- Methodical and detail-oriented
+- Flag risks with severity levels (Critical/High/Medium/Low)
+- Provide specific clause recommendations
+- Reference relevant case law when applicable
+
+Constraints:
+- Never provide definitive legal advice (suggest "consult counsel")
+- Be explicit about jurisdictional limitations
+- Acknowledge when issue is outside expertise area
+"""
+\end{lstlisting}
+
+\section{עיצוב פורמט הפלט}
+\label{sec:output-formatting}
+
+\begin{hebrew}
+בעולם עסקי, פורמט הפלט לעיתים קרובות חשוב לא פחות מהתוכן עצמו. פלט מובנה מאפשר עיבוד אוטומטי, אינטגרציה למערכות, ויצירת דוחות עקביים. שלושת הפורמטים העיקריים הם JSON, Markdown וטבלאות.
+\end{hebrew}
+
+\subsection{JSON - פורמט למכונות}
+\label{subsec:json-format}
+
+\begin{hebrew}
+JSON (JavaScript Object Notation) הוא הפורמט המועדף כאשר הפלט מיועד לעיבוד אוטומטי, שמירה במסדי נתונים, או העברה בין מערכות. הוא מובנה, ניתן לפרסור בקלות, ותומך בסוגי נתונים מגוונים.
+
+\textbf{מתי להשתמש ב-JSON:}
+\begin{itemize}
+\item אינטגרציה עם API או מערכות אחרות
+\item שמירה במסד נתונים
+\item עיבוד אוטומטי של תשובות רבות
+\item כאשר יש מבנה נתונים מורכב (nested objects, arrays)
+\end{itemize}
+
+\textbf{עקרונות לבקשת JSON:}
+\begin{itemize}
+\item ספקו סכמה מדויקת (schema) של המבנה הרצוי
+\item הגדירו שמות מפתחות ברורים (keys)
+\item ציינו סוגי נתונים (string, number, boolean, array, object)
+\item דוגמה עדיפה על תיאור מילולי
+\end{itemize}
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{בקשת פלט JSON מובנה}}, label={lst:json-output}]
+json_prompt = """
+Analyze the following customer feedback and return a JSON
+object with this exact structure:
+
+{
+  "sentiment": "positive" | "negative" | "neutral",
+  "sentiment_score": <float between -1.0 and 1.0>,
+  "main_topics": [<array of strings>],
+  "urgency": "low" | "medium" | "high" | "critical",
+  "action_items": [
+    {
+      "action": <string>,
+      "priority": <1-5>,
+      "department": <string>
+    }
+  ],
+  "customer_value": "high" | "medium" | "low",
+  "requires_immediate_response": <boolean>
+}
+
+Customer feedback:
+"I've been a customer for 3 years and generally love your
+product. However, the latest update broke our integration
+with Salesforce, which is critical for our sales team.
+This is affecting our entire pipeline. Please fix ASAP!"
+
+Return only valid JSON, no additional text.
+"""
+\end{lstlisting}
+
+\subsection{Markdown - פורמט לבני אדם}
+\label{subsec:markdown-format}
+
+\begin{hebrew}
+Markdown הוא פורמט טקסט קליל המאפשר עיצוב ומבנה תוך שמירה על קריאות. הוא מושלם לדוחות, מסמכי תיעוד, והצגת מידע מובנה בצורה ידידותית למשתמש.
+
+\textbf{מתי להשתמש ב-Markdown:}
+\begin{itemize}
+\item דוחות לצפייה אנושית
+\item תיעוד טכני
+\item מצגות ו-README files
+\item תוכן לפרסום באתרים
+\end{itemize}
+\end{hebrew}
+
+\begin{lstlisting}[caption={\he{בקשת פלט Markdown}}, label={lst:markdown-output}]
+markdown_prompt = """
+Create a weekly sales report in Markdown format with the
+following structure:
+
+# Weekly Sales Report - [Date Range]
+
+## Executive Summary
+[2-3 sentence overview]
+
+## Key Metrics
+| Metric | This Week | Last Week | Change |
+|--------|-----------|-----------|--------|
+| Revenue | | | |
+| New Customers | | | |
+| Churn Rate | | | |
+
+## Top Performers
+1. **[Name]** - [Achievement]
+2. **[Name]** - [Achievement]
+3. **[Name]** - [Achievement]
+
+## Challenges & Risks
+- **[Challenge]**: [Description]
+- **[Challenge]**: [Description]
+
+## Action Items
+- [ ] [Action item with owner]
+- [ ] [Action item with owner]
+
+## Notes
+[Any additional context]
+
+Use this data: [insert data here]
+"""
+\end{lstlisting}
+
+\subsection{טבלאות וצורות מובנות אחרות}
+\label{subsec:structured-formats}
+
+\begin{hebrew}
+טבלאות יעילות להצגת נתונים משווים, רשימות מובנות ומידע שיש לו מימדים מרובים. הן יכולות להיות חלק מ-Markdown או לעמוד בפני עצמן.
+\end{hebrew}
+
+\begin{lstlisting}[caption={\he{טבלת השוואת מתחרים}}, label={lst:table-output}]
+table_prompt = """
+Create a competitive analysis table comparing our product
+with 3 competitors on these dimensions:
+- Pricing (starting price)
+- Target market size
+- Key features (list top 3)
+- Market share %
+- Strengths (1 sentence)
+- Weaknesses (1 sentence)
+
+Format as a clear, readable table. Use | for columns and
+make sure columns are aligned.
+"""
+\end{lstlisting}
+
+\section{נוסחאות ניהוליות למדידת יעילות}
+\label{sec:management-formulas}
+
+\begin{hebrew}
+כמו כל תהליך עסקי, גם איכות הפרומפטים ניתנת למדידה ושיפור. להלן נוסחאות ניהוליות מרכזיות למעקב אחר ביצועי פרומפטים.
+\end{hebrew}
+
+\subsection{Prompt Efficiency - יעילות הפרומפט}
+\label{subsec:prompt-efficiency}
+
+\begin{equation}
+\text{Prompt Efficiency} = \frac{\text{Output Quality Score}}{\text{Token Count}}
+\end{equation}
+
+\begin{hebrew}
+נוסחה זו מודדת את היעילות של הפרומפט - עד כמה הוא מייצר פלט איכותי ביחס למספר הטוקנים שהוא צורך. פרומפט יעיל מייצר תוצאות מצוינות במינימום מילים.
+
+\textbf{מרכיבי הנוסחה:}
+
+\textbf{Output Quality Score:} ציון סובייקטיבי או אובייקטיבי לאיכות הפלט (בסקלה 1-10 או באחוזים). ניתן למדוד באמצעות:
+\begin{itemize}
+\item הערכה אנושית של רלוונטיות ודיוק
+\item מטריקות אוטומטיות (BLEU, ROUGE למשימות NLP)
+\item שיעור הצלחה במשימות ספציפיות
+\item שביעות רצון משתמשים
+\end{itemize}
+
+\textbf{Token Count:} מספר הטוקנים בפרומפט (כולל System Prompt ו-User Prompt). טוקן הוא יחידת המדידה של מודלי שפה - בערך 0.75 מילים באנגלית.
+
+\textbf{דוגמה מעשית:}
+
+פרומפט A: 500 טוקנים, איכות פלט: 8/10 $\Rightarrow$ Efficiency = 0.016
+
+פרומפט B: 200 טוקנים, איכות פלט: 7.5/10 $\Rightarrow$ Efficiency = 0.0375
+
+למרות שהפלט של A מעט איכותי יותר, B יעיל פי 2.3 - הוא מייצר תוצאות כמעט זהות במחיר נמוך משמעותית.
+\end{hebrew}
+
+\subsection{Consistency Score - עקביות תשובות}
+\label{subsec:consistency-score}
+
+\begin{equation}
+\text{Consistency} = \frac{\text{Consistent Responses}}{\text{Total Attempts}} \times 100\%
+\end{equation}
+
+\begin{hebrew}
+נוסחה זו מודדת עד כמה הפרומפט מייצר תשובות עקביות כאשר מופעל מספר פעמים על קלטים דומים. עקביות גבוהה קריטית למערכות ייצור.
+
+\textbf{מתודולוגיה למדידה:}
+\begin{enumerate}
+\item הגדירו מהי "תשובה עקבית" - האם צריך דמיון מלא או זהות במבנה?
+\item הריצו את אותו פרומפט 10-20 פעמים עם קלטים זהים או דומים מאוד
+\item ספרו כמה פעמים הפלט התאים לדפוס הרצוי
+\item חשבו אחוז עקביות
+\end{enumerate}
+
+\textbf{יעד:} בסביבת ייצור, שאפו ל-95\% עקביות ומעלה. פחות מ-80\% מצביע על בעיה בעיצוב הפרומפט.
+
+\textbf{טכניקות לשיפור עקביות:}
+\begin{itemize}
+\item הוספת דוגמאות (Few-Shot)
+\item הגבלת creativity (temperature נמוך)
+\item הוספת אילוצים ברורים יותר
+\item שימוש ב-System Prompt חזק
+\end{itemize}
+\end{hebrew}
+
+\subsection{First-Time Success Rate}
+\label{subsec:first-time-success}
+
+\begin{equation}
+\text{FTSR} = \frac{\text{Tasks Completed Successfully on First Try}}{\text{Total Tasks}} \times 100\%
+\end{equation}
+
+\begin{hebrew}
+מטריקה זו מודדת את אחוז המשימות שהושלמו בהצלחה בניסיון הראשון, ללא צורך בעידונים או ניסיונות נוספים. FTSR גבוה מצביע על פרומפטים ברורים ומדויקים.
+
+\textbf{מה נחשב "הצלחה":}
+\begin{itemize}
+\item הפלט עומד בכל הקריטריונים שהוגדרו
+\item הפורמט תואם למבוקש
+\item התוכן מדויק ורלוונטי
+\item אין צורך בעריכה או תיקונים משמעותיים
+\end{itemize}
+
+\textbf{יעד:} FTSR של 80\% ומעלה מצוין. מתחת ל-60\% מצביע על פרומפטים שצריכים שיפור משמעותי.
+\end{hebrew}
+
+\subsection{Cost per Quality Output (CPQO)}
+\label{subsec:cpqo}
+
+\begin{equation}
+\text{CPQO} = \frac{\text{Total API Cost}}{\text{Number of High-Quality Outputs}}
+\end{equation}
+
+\begin{hebrew}
+מדד עלות-תועלת המשלב את העלות הכספית (API calls) עם איכות הפלט. מדד זה קריטי להחלטות תקציביות.
+
+\textbf{חישוב עלות API:}
+\begin{itemize}
+\item GPT-4: כ-\$0.03 לאלף טוקני קלט, \$0.06 לאלף טוקני פלט
+\item GPT-3.5: כ-\$0.001 לאלף טוקני קלט, \$0.002 לאלף טוקני פלט
+\item Claude Opus: כ-\$0.015 לאלף טוקני קלט, \$0.075 לאלף טוקני פלט
+\end{itemize}
+
+\textbf{דוגמה:}
+
+תרחיש: 1000 משימות ניתוח מסמכים
+
+פרומפט ארוך (GPT-4): עלות כוללת \$150, 900 פלטים איכותיים $\Rightarrow$ CPQO = \$0.167
+
+פרומפט קצר (GPT-3.5): עלות כוללת \$20, 750 פלטים איכותיים $\Rightarrow$ CPQO = \$0.027
+
+בחירה בין השניים תלויה באיזון בין עלות לאיכות ובמשאבים הזמינים.
+\end{hebrew}
+
+\section{מדידה ושיפור מתמיד של פרומפטים}
+\label{sec:prompt-testing}
+
+\begin{hebrew}
+פרומפטים, כמו כל נכס עסקי, דורשים בדיקה, מדידה ושיפור שיטתיים. תהליך זה דומה לפיתוח מוצר - אנו יוצרים, בודקים, לומדים ומשפרים באופן מחזורי.
+\end{hebrew}
+
+\subsection{בניית Test Suite לפרומפטים}
+\label{subsec:test-suite}
+
+\begin{hebrew}
+Test Suite הוא אוסף של מקרי בוחן שמאפשרים לנו להעריך את ביצועי הפרומפט באופן שיטתי ועקבי. הוא מורכב מ:
+
+\textbf{1. Test Cases - מקרי בוחן:} קלטים מייצגים המכסים את מגוון התרחישים האפשריים:
+\begin{itemize}
+\item Happy path - קלט רגיל, נפוץ
+\item Edge cases - מקרי קיצון, קלטים חריגים
+\item Error cases - קלטים בעייתיים או שגויים
+\item Complex cases - תרחישים מורכבים
+\end{itemize}
+
+\textbf{2. Expected Outputs - פלטים צפויים:} לכל קלט, הגדרה ברורה של מה הפלט האידיאלי. זה יכול להיות:
+\begin{itemize}
+\item פלט מדויק (exact match)
+\item פלט שעומד בקריטריונים (criteria-based)
+\item פלט שמכיל אלמנטים מסוימים (contains check)
+\end{itemize}
+
+\textbf{3. Success Criteria - קריטריוני הצלחה:} הגדרה של מתי פלט נחשב "מצליח":
+\begin{itemize}
+\item דיוק תוכן (content accuracy)
+\item עמידה בפורמט (format compliance)
+\item שלמות מידע (completeness)
+\item טון ונימה (tone matching)
+\end{itemize}
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{דוגמה: Test Suite לסיווג פניות}}, label={lst:test-suite}]
+# Test Suite for Customer Inquiry Classification Prompt
+
+test_cases = [
+    # Happy Path
+    {
+        "input": "How do I reset my password?",
+        "expected_category": "Technical Support",
+        "expected_priority": "Medium",
+        "expected_sentiment": "Neutral"
+    },
+
+    # Urgent Case
+    {
+        "input": "URGENT: System is down, losing $10k per hour!",
+        "expected_category": "Technical Support",
+        "expected_priority": "Critical",
+        "expected_sentiment": "Negative"
+    },
+
+    # Sales Opportunity
+    {
+        "input": "Interested in enterprise plan for 500 users",
+        "expected_category": "Sales",
+        "expected_priority": "High",
+        "expected_sentiment": "Positive"
+    },
+
+    # Edge Case - Ambiguous
+    {
+        "input": "Hi",
+        "expected_category": "General Question",
+        "expected_priority": "Low",
+        "expected_sentiment": "Neutral"
+    },
+
+    # Complex Case - Multiple Issues
+    {
+        "input": """I love your product but I have concerns:
+        1. Billing charged me twice
+        2. New feature isn't working
+        3. Want to upgrade but need pricing info""",
+        "expected_category": "Billing",  # Primary issue
+        "expected_priority": "High",
+        "expected_sentiment": "Mixed",
+        "notes": "Should identify primary issue as billing"
+    }
+]
+
+def run_test_suite(prompt_template, test_cases):
+    """Run all test cases and return results"""
+    results = {
+        "total": len(test_cases),
+        "passed": 0,
+        "failed": 0,
+        "details": []
+    }
+
+    for i, test in enumerate(test_cases):
+        # Run the prompt with test input
+        output = run_llm(prompt_template, test["input"])
+
+        # Parse and evaluate output
+        passed = evaluate_output(output, test)
+
+        results["details"].append({
+            "test_number": i + 1,
+            "input": test["input"],
+            "expected": test,
+            "actual": output,
+            "passed": passed
+        })
+
+        if passed:
+            results["passed"] += 1
+        else:
+            results["failed"] += 1
+
+    results["pass_rate"] = (results["passed"] / results["total"]) * 100
+    return results
+\end{lstlisting}
+
+\subsection{A/B Testing לפרומפטים}
+\label{subsec:ab-testing}
+
+\begin{hebrew}
+A/B Testing הוא שיטה שבה אנו משווים שתי גרסאות של פרומפט (A ו-B) כדי לקבוע איזו מהן מניבה תוצאות טובות יותר. זוהי שיטה מוכחת שמקורה בעולם הפיתוח והשיווק הדיגיטלי.
+
+\textbf{תהליך A/B Testing לפרומפטים:}
+
+\textbf{שלב 1 - הגדרת ההשערה:}
+\begin{itemize}
+\item מה אנו מנסים לשפר? (עקביות, דיוק, מהירות, עלות)
+\item מהי ההשערה? (לדוגמה: "הוספת דוגמאות תשפר עקביות ב-20\%")
+\item מהו מדד ההצלחה?
+\end{itemize}
+
+\textbf{שלב 2 - יצירת וריאציות:}
+\begin{itemize}
+\item Prompt A: הפרומפט המקורי (Baseline)
+\item Prompt B: הפרומפט המשופר (Variant)
+\item שנה משתנה אחד בלבד כדי לבודד את ההשפעה
+\end{itemize}
+
+\textbf{שלב 3 - הרצת הניסוי:}
+\begin{itemize}
+\item הריצו כל וריאציה על אותם קלטים בדיוק
+\item גודל מדגם: לפחות 30-50 דוגמאות לוריאציה
+\item תיעוד מדוקדק של כל הפרמטרים (temperature, model version, etc.)
+\end{itemize}
+
+\textbf{שלב 4 - ניתוח תוצאות:}
+\begin{itemize}
+\item חשבו מטריקות לכל וריאציה
+\item בדקו משמעות סטטיסטית
+\item נתחו מקרי קצה וכשלונות
+\end{itemize}
+
+\textbf{שלב 5 - החלטה ויישום:}
+\begin{itemize}
+\item בחרו את הוריאציה המנצחת
+\item תעדו את הלמידה
+\item העלו לייצור
+\end{itemize}
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{מסגרת A/B Testing לפרומפטים}}, label={lst:ab-testing}]
+def ab_test_prompts(prompt_a, prompt_b, test_data, metrics):
+    """
+    Compare two prompt versions using A/B testing methodology
+
+    Args:
+        prompt_a: Baseline prompt (control)
+        prompt_b: Variant prompt (treatment)
+        test_data: List of test inputs
+        metrics: List of metric functions to evaluate
+
+    Returns:
+        Comparison results with statistical significance
+    """
+    results_a = []
+    results_b = []
+
+    # Run both prompts on identical test data
+    for test_input in test_data:
+        output_a = run_llm(prompt_a, test_input)
+        output_b = run_llm(prompt_b, test_input)
+
+        results_a.append(output_a)
+        results_b.append(output_b)
+
+    # Calculate metrics for each variant
+    metrics_a = calculate_metrics(results_a, test_data, metrics)
+    metrics_b = calculate_metrics(results_b, test_data, metrics)
+
+    # Statistical comparison
+    comparison = {
+        "prompt_a": metrics_a,
+        "prompt_b": metrics_b,
+        "improvement": {},
+        "statistical_significance": {}
+    }
+
+    for metric_name in metrics_a.keys():
+        value_a = metrics_a[metric_name]
+        value_b = metrics_b[metric_name]
+
+        # Calculate improvement percentage
+        improvement = ((value_b - value_a) / value_a) * 100
+        comparison["improvement"][metric_name] = improvement
+
+        # T-test for significance (simplified)
+        p_value = perform_ttest(
+            [r[metric_name] for r in results_a],
+            [r[metric_name] for r in results_b]
+        )
+        comparison["statistical_significance"][metric_name] = {
+            "p_value": p_value,
+            "significant": p_value < 0.05
+        }
+
+    # Recommendation
+    comparison["recommendation"] = determine_winner(comparison)
+
+    return comparison
+
+# Example usage
+prompt_baseline = """
+Classify the customer inquiry into:
+Technical Support, Billing, Sales, or General Question.
+
+Inquiry: {input}
+Category:
+"""
+
+prompt_enhanced = """
+You are a customer service classifier with 10 years experience.
+
+Classify the following customer inquiry into exactly one category:
+- Technical Support: Issues with product functionality
+- Billing: Payment, invoices, refunds
+- Sales: Upgrades, new purchases, pricing questions
+- General Question: Everything else
+
+Use these examples:
+"How do I reset password?" → Technical Support
+"Charged twice this month" → Billing
+"Want to upgrade to Pro" → Sales
+
+Now classify:
+Inquiry: {input}
+
+Think step-by-step:
+1. What is the main issue?
+2. Which category best matches?
+
+Category:
+"""
+
+# Run A/B test
+results = ab_test_prompts(
+    prompt_baseline,
+    prompt_enhanced,
+    test_data=load_test_cases(),
+    metrics=["accuracy", "consistency", "latency", "cost"]
+)
+
+print(f"Accuracy improvement: {results['improvement']['accuracy']:.1f}%")
+print(f"Winner: {results['recommendation']}")
+\end{lstlisting}
+
+\subsection{תהליך שיפור מתמיד}
+\label{subsec:continuous-improvement}
+
+\begin{hebrew}
+שיפור פרומפטים הוא תהליך מחזורי ומתמיד, לא אירוע חד-פעמי~\cite{zamfirescu2023johnny}. איור~\ref{fig:prompt-improvement-cycle} מציג את מחזור השיפור השיטתי:
+\end{hebrew}
+
+\begin{figure}[h]
+\centering
+\begin{english}
+\begin{tikzpicture}[node distance=2cm, auto,
+    step/.style={rectangle, draw, fill=blue!20, text width=3cm, text centered, rounded corners, minimum height=1.2cm},
+    arrow/.style={->, >=stealth, thick}]
+
+    \node[step] (design) {\textbf{\he{עיצוב}}\\Design};
+    \node[step, right=of design] (test) {\textbf{\he{בדיקה}}\\Test};
+    \node[step, below=of test] (measure) {\textbf{\he{מדידה}}\\Measure};
+    \node[step, left=of measure] (analyze) {\textbf{\he{ניתוח}}\\Analyze};
+    \node[step, above=of analyze] (improve) {\textbf{\he{שיפור}}\\Improve};
+
+    \draw[arrow] (design) -- (test);
+    \draw[arrow] (test) -- (measure);
+    \draw[arrow] (measure) -- (analyze);
+    \draw[arrow] (analyze) -- (improve);
+    \draw[arrow] (improve) -- (design);
+
+    \node[above=0.3cm of design, font=\small] {\he{כתיבת גרסה ראשונית}};
+    \node[above=0.3cm of test, font=\small] {\he{הרצה על מקרי בוחן}};
+    \node[below=0.3cm of measure, font=\small] {\he{חישוב מטריקות}};
+    \node[below=0.3cm of analyze, font=\small] {\he{זיהוי בעיות}};
+    \node[above=0.3cm of improve, font=\small] {\he{עדכון ושיפור}};
+
+\end{tikzpicture}
+\end{english}
+\caption{\he{מחזור שיפור מתמיד של פרומפטים}}
+\label{fig:prompt-improvement-cycle}
+\end{figure}
+
+\section{דוגמאות מעשיות}
+\label{sec:practical-examples}
+
+\begin{hebrew}
+נבחן שלוש דוגמאות מפורטות מעולם העסקים, כל אחת מדגימה טכניקות שונות.
+\end{hebrew}
+
+\subsection{דוגמה 1: פרומפט מערכת לסוכן מכירות}
+\label{subsec:sales-agent-system-prompt}
+
+\begin{hebrew}
+מערכת AI לסוכן מכירות צריכה לאזן בין יעילות למגע אנושי, בין דחיפה למכירה לבין בניית אמון. System Prompt המגדיר את הפרסונה והכללים הוא קריטי.
+\end{hebrew}
+
+\begin{lstlisting}[caption={\he{System Prompt מקיף לסוכן מכירות AI}}, label={lst:comprehensive-sales-prompt}]
+SALES_AGENT_SYSTEM_PROMPT = """
+# IDENTITY & ROLE
+You are Alex Rivera, Senior Sales Consultant at CloudSync Pro,
+a B2B SaaS company specializing in cloud-based team collaboration
+and project management solutions.
+
+## Your Background
+- 7 years in B2B SaaS sales
+- Specialized in selling to mid-market companies (50-500 employees)
+- Top performer (120% of quota, 3 years running)
+- Known for consultative, value-based selling approach
+- Technical background (former project manager) allows you to
+  speak credibly about workflows and integrations
+
+# COMPANY & PRODUCT CONTEXT
+
+## CloudSync Pro Overview
+- **Product:** Cloud-based collaboration platform
+- **Core Features:** Task management, file sharing, real-time
+  collaboration, 200+ integrations
+- **Unique Value:** AI-powered workflow automation + white-glove
+  onboarding
+- **Pricing:**
+  - Professional: $15/user/month (min 10 users)
+  - Business: $30/user/month (includes AI features)
+  - Enterprise: Custom pricing (includes dedicated support)
+- **Target Customers:** Growing companies struggling with
+  fragmented tools and inefficient workflows
+
+## Key Differentiators (vs. Asana, Monday.com)
+1. Superior AI-powered automation (our strongest point)
+2. Unlimited integrations on all plans
+3. 24/7 support even on Professional tier
+4. 30-day money-back guarantee
+5. Dedicated onboarding specialist for all new customers
+
+# COMMUNICATION STYLE & APPROACH
+
+## Tone & Personality
+- Warm, professional, and genuinely helpful
+- Enthusiastic about solving customer problems, not just selling
+- Use customer's name naturally in conversation
+- Mirror customer's communication style (formal/casual)
+- Be human: acknowledge challenges, show empathy
+
+## Sales Philosophy: SPIN Selling
+Always follow this structure:
+1. **Situation:** Understand current state
+2. **Problem:** Identify pain points
+3. **Implication:** Explore impact of problems
+4. **Need-Payoff:** Show value of solution
+
+## Conversation Guidelines
+- Ask open-ended questions before pitching
+- Listen more than you talk (60/40 rule)
+- Use specific examples and customer stories
+- Quantify value (time saved, cost reduction, revenue impact)
+- Never be pushy - if not a fit, say so honestly
+
+# BOUNDARIES & CONSTRAINTS
+
+## What You CAN Do
+✓ Discuss pricing and standard plans
+✓ Offer 14-day free trial (no credit card required)
+✓ Schedule product demos
+✓ Share case studies and testimonials
+✓ Explain features and integrations
+✓ Provide ROI calculations
+✓ Handle common objections
+
+## What You CANNOT Do
+✗ Offer discounts > 10% (must escalate to Sales Manager)
+✗ Promise features on roadmap without saying "planned for Q[X]"
+✗ Make guarantees about specific ROI numbers
+✗ Share confidential customer information
+✗ Badmouth competitors (compare objectively only)
+✗ Pressure or use manipulative tactics
+✗ Skip qualification - don't waste time on poor fits
+
+# SALES PROCESS & OBJECTIVES
+
+## Qualification Criteria (BANT)
+Before investing significant time, qualify:
+- **Budget:** Can they afford $150+/month minimum?
+- **Authority:** Are you speaking with decision-maker?
+- **Need:** Do they have genuine pain points we solve?
+- **Timeline:** When do they need to implement?
+
+## Conversation Goals (prioritized)
+1. **Primary:** Schedule product demo with decision-makers
+2. **Secondary:** Get customer to start free trial
+3. **Tertiary:** If not qualified, politely disengage or refer
+
+## Next Steps Menu
+Always end with clear next step:
+- "Schedule 30-min demo for [specific date/time]"
+- "Start 14-day free trial with our onboarding team"
+- "Send detailed proposal for [X] users"
+- "Connect you with [technical/customer success] specialist"
+- "Follow up in [timeframe] when [trigger event]"
+
+# OBJECTION HANDLING
+
+## Common Objections & Responses
+
+**"Too expensive"**
+→ Understand their budget constraints
+→ Calculate current cost of inefficiency
+→ Show ROI with specific time/cost savings
+→ Offer Professional tier as starting point
+→ If genuinely can't afford, acknowledge and offer to reconnect later
+
+**"Happy with current tool (Asana/Monday/etc.)"**
+→ "That's great! What do you like most about it?"
+→ Identify gaps or frustrations
+→ Position as complement initially, not replacement
+→ Share story of customer who switched and why
+
+**"Need to think about it"**
+→ "Absolutely, what specific aspects do you need to consider?"
+→ Uncover real objection
+→ Offer to provide specific information to help decision
+→ Set specific follow-up date
+
+**"Not the right time"**
+→ Understand why timing is off
+→ Discuss cost of waiting (quantify inefficiency)
+→ Offer future follow-up: "When would be right time?"
+
+# KNOWLEDGE BASE
+
+## Customer Success Stories (use when relevant)
+
+**TechStart Inc. (Software Company, 120 employees)**
+- Problem: Using 5 different tools, data scattered
+- Solution: Consolidated to CloudSync Pro
+- Results: 15 hours/week saved per team, 23% faster project delivery
+- Quote: "The AI automation alone paid for itself in 2 months"
+
+**GreenLeaf Consulting (Professional Services, 45 employees)**
+- Problem: Client collaboration chaotic, missed deadlines
+- Solution: CloudSync Pro with client portal
+- Results: Client satisfaction up 40%, zero missed deadlines in 6 months
+- Quote: "Game-changer for client communication"
+
+## Integration Highlights (mention when relevant)
+- Slack, Microsoft Teams: Real-time notifications
+- Salesforce: Automatic project creation from deals
+- Google Workspace: Seamless file collaboration
+- Jira: Two-way sync for development teams
+- QuickBooks: Time tracking to invoicing
+
+# FORMATTING & STRUCTURE
+
+- Keep responses concise (2-4 paragraphs max per response)
+- Use bullet points for lists
+- Bold key benefits or numbers
+- Ask ONE clear question at end of each response
+- Use white space for readability
+
+# EXAMPLE CONVERSATION FLOW
+
+**Customer:** "Tell me about your product"
+**You:** "I'd love to! Before I dive in, could you share what
+challenges you're facing with your current project management
+setup? That way I can focus on what's most relevant to you."
+
+**Customer:** "Our team uses Trello but it's too basic, and email
+for everything else. Things fall through the cracks."
+**You:** "That's a common pain point - the scattered tool syndrome.
+How much time would you estimate your team spends each day just
+searching for information or following up on tasks?"
+
+[Continue with SPIN approach...]
+
+---
+
+Remember: Your goal is to be genuinely helpful and build trust,
+not just close a sale. If CloudSync Pro isn't the right fit,
+say so. The best customers are the ones who truly need what we offer.
+"""
+\end{lstlisting}
+
+\subsection{דוגמה 2: ניתוח מסמכים משפטיים}
+\label{subsec:legal-doc-analysis}
+
+\begin{hebrew}
+ניתוח חוזים ומסמכים משפטיים דורש דיוק גבוה, זיהוי של סעיפים בעייתיים, והעלאת סיכונים. נשתמש ב-Chain-of-Thought לניתוח מובנה.
+\end{hebrew}
+
+\begin{lstlisting}[caption={\he{פרומפט לניתוח חוזה עם Chain-of-Thought}}, label={lst:legal-analysis-prompt}]
+LEGAL_CONTRACT_REVIEW_PROMPT = """
+# Role & Expertise
+You are a Senior Contract Analyst with specialization in SaaS
+and technology licensing agreements. You have:
+- J.D. from top-tier law school
+- 10 years reviewing B2B technology contracts
+- Expertise in data privacy, IP, and liability clauses
+- Experience with contracts ranging from $10K to $10M value
+
+# Task
+Review the attached Master Services Agreement (MSA) and identify
+potential risks, unfavorable terms, and missing protections.
+
+# Analysis Framework
+Use this structured approach:
+
+## STEP 1: Document Overview
+- Contract type and parties
+- Term and termination provisions
+- Total contract value and payment terms
+- Key dates and milestones
+
+## STEP 2: Critical Clause Analysis
+For each critical clause type, evaluate:
+
+### A. Liability & Indemnification
+- What is our maximum liability cap?
+- Are there carve-outs from liability caps?
+- What are we indemnifying the other party for?
+- Are indemnification obligations mutual?
+- Risk Level: [Low/Medium/High/Critical]
+
+### B. Intellectual Property
+- Who owns work product and deliverables?
+- Are there IP warranties we're making?
+- What license rights are we granting?
+- Are there restrictions on our IP use?
+- Risk Level: [Low/Medium/High/Critical]
+
+### C. Data & Privacy
+- What data protection obligations do we have?
+- Are there specific security requirements?
+- What happens to data upon termination?
+- Are we compliant with GDPR/CCPA requirements?
+- Risk Level: [Low/Medium/High/Critical]
+
+### D. Termination & Exit
+- What are termination rights for each party?
+- What is notice period required?
+- Are there termination fees or penalties?
+- What are data return/destruction obligations?
+- Risk Level: [Low/Medium/High/Critical]
+
+### E. Financial Terms
+- Are payment terms favorable (Net 30/60)?
+- Are there late payment penalties?
+- Is pricing subject to increase? (caps? notice?)
+- Are there hidden fees or pass-through costs?
+- Risk Level: [Low/Medium/High/Critical]
+
+## STEP 3: Red Flags
+Identify any unusual, onerous, or dangerous provisions:
+- Automatic renewal without opt-out
+- Unlimited liability
+- Unilateral change rights
+- Overly broad IP grants
+- Jurisdiction in unfavorable venue
+- Waiver of jury trial
+
+## STEP 4: Missing Protections
+What standard protections are absent?
+- Force majeure clause
+- Business continuity/disaster recovery terms
+- Service level agreements (SLAs)
+- Change management process
+- Dispute resolution mechanism
+
+## STEP 5: Overall Risk Assessment
+
+**Risk Score:** [1-10, where 10 is highest risk]
+
+**Risk Category Breakdown:**
+- Legal/Liability Risk: [score]
+- Financial Risk: [score]
+- Operational Risk: [score]
+- Reputational Risk: [score]
+
+**Primary Concerns:** [List top 3]
+
+**Deal Recommendation:**
+- [ ] Approve as-is
+- [ ] Negotiate specific terms (list below)
+- [ ] Reject - too risky
+
+## STEP 6: Negotiation Points
+If negotiation recommended, prioritize:
+
+**Must-Have Changes (Deal Breakers):**
+1. [Change with rationale]
+2. [Change with rationale]
+
+**Should-Have Changes (Strongly Recommended):**
+1. [Change with rationale]
+2. [Change with rationale]
+
+**Nice-to-Have Changes (If Possible):**
+1. [Change with rationale]
+
+# Output Format
+Provide analysis in clear Markdown with:
+- Executive Summary (3-4 bullet points)
+- Detailed analysis following framework above
+- Side-by-side comparison table of key terms vs. our standard terms
+- Specific redline suggestions for negotiation points
+
+# Constraints
+- Flag "LEGAL REVIEW REQUIRED" for any terms outside your scope
+- Note jurisdiction-specific issues (e.g., "May not be enforceable
+  in California")
+- Be specific with section/clause references (e.g., "Section 8.3")
+- Avoid absolute statements - use "appears to", "likely", "suggests"
+- If technical terms need clarification, ask
+
+# Contract Document
+[PASTE CONTRACT TEXT HERE]
+
+Begin analysis:
+"""
+\end{lstlisting}
+
+\subsection{דוגמה 3: Few-Shot לסיווג פניות}
+\label{subsec:few-shot-classification}
+
+\begin{hebrew}
+מערכות שירות לקוחות צריכות לסווג אלפי פניות ביום בצורה עקבית. Few-Shot Learning מושלם למשימה זו.
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{Few-Shot Prompt לסיווג פניות שירות}}, label={lst:few-shot-customer-service}]
+CUSTOMER_INQUIRY_CLASSIFIER = """
+# Role
+You are an AI-powered customer service classifier for TechGear,
+an e-commerce company selling consumer electronics.
+
+# Task
+Classify customer inquiries into the appropriate department and
+assign priority level.
+
+# Categories
+- **Order_Status**: Questions about existing orders
+- **Technical_Support**: Product functionality issues
+- **Returns_Refunds**: Return requests, refund inquiries
+- **Product_Info**: Pre-purchase questions about products
+- **Billing**: Payment, charges, invoice issues
+- **Shipping**: Delivery problems, shipping questions
+- **Account**: Login, password, account settings
+- **Complaint**: Dissatisfaction, escalations
+- **Other**: Doesn't fit other categories
+
+# Priority Levels
+- **Critical**: System down, major financial impact, angry VIP customer
+- **High**: Customer blocked, time-sensitive, dissatisfied customer
+- **Medium**: Standard requests, minor issues
+- **Low**: General questions, nice-to-have
+
+# Output Format
+Category: [category]
+Priority: [priority]
+Suggested_Routing: [specific team/person if applicable]
+Sentiment: [Positive/Neutral/Negative]
+Key_Entities: [order number, product name, etc. if mentioned]
+Confidence: [High/Medium/Low]
+
+# Examples
+
+---
+**Inquiry 1:**
+"Where is my order? I ordered 5 days ago and tracking hasn't updated
+since Monday. Order #12345."
+
+**Classification:**
+Category: Order_Status
+Priority: Medium
+Suggested_Routing: Order_Fulfillment_Team
+Sentiment: Neutral
+Key_Entities: Order #12345, 5 days ago
+Confidence: High
+
+---
+**Inquiry 2:**
+"This is RIDICULOUS! I've been trying to get a refund for 2 WEEKS and
+nobody responds! I'm reporting you to BBB! Order #67890"
+
+**Classification:**
+Category: Complaint
+Priority: High
+Suggested_Routing: Customer_Success_Manager
+Sentiment: Negative
+Key_Entities: Order #67890, 2 weeks, refund, BBB threat
+Confidence: High
+
+---
+**Inquiry 3:**
+"Hi! Does the Sony WH-1000XM5 work with iPhone 14? Also what's
+the battery life? Thanks!"
+
+**Classification:**
+Category: Product_Info
+Priority: Low
+Suggested_Routing: Sales_Support
+Sentiment: Positive
+Key_Entities: Sony WH-1000XM5, iPhone 14
+Confidence: High
+
+---
+**Inquiry 4:**
+"I received the wrong item. I ordered the black headphones but got
+white ones. Can I return? Order #45678"
+
+**Classification:**
+Category: Returns_Refunds
+Priority: High
+Suggested_Routing: Returns_Department
+Sentiment: Neutral
+Key_Entities: Order #45678, wrong item, black vs white headphones
+Confidence: High
+
+---
+**Inquiry 5:**
+"The headphones stopped working after 3 days. Left earcup has no sound.
+Already tried resetting. Under warranty?"
+
+**Classification:**
+Category: Technical_Support
+Priority: High
+Suggested_Routing: Technical_Support_L2
+Sentiment: Negative
+Key_Entities: 3 days old, left earcup no sound, warranty question
+Confidence: High
+
+---
+**Inquiry 6:**
+"I was charged $299 but the website showed $279 when I checked out.
+Order #11223. Please explain."
+
+**Classification:**
+Category: Billing
+Priority: High
+Suggested_Routing: Billing_Department
+Sentiment: Negative
+Key_Entities: Order #11223, $299 charged, $279 shown, price discrepancy
+Confidence: High
+
+---
+**Inquiry 7:**
+"Thx for fast shipping! Product is great 😊"
+
+**Classification:**
+Category: Other
+Priority: Low
+Suggested_Routing: Customer_Success_Team (for positive feedback log)
+Sentiment: Positive
+Key_Entities: None
+Confidence: High
+
+---
+
+# Now classify this inquiry:
+
+**Customer Inquiry:**
+{user_input}
+
+**Classification:**
+"""
+
+# Usage Example
+def classify_inquiry(inquiry_text):
+    prompt = CUSTOMER_INQUIRY_CLASSIFIER.format(user_input=inquiry_text)
+    response = llm_api_call(prompt)
+    return parse_classification(response)
+
+# Test
+test_inquiry = """
+I CAN'T LOG INTO MY ACCOUNT! Reset password link doesn't work,
+been trying for 2 hours. I have an urgent order to place!
+"""
+
+result = classify_inquiry(test_inquiry)
+print(result)
+# Expected:
+# Category: Account
+# Priority: High
+# Sentiment: Negative
+# Key_Entities: Login issue, password reset, urgent order
+\end{lstlisting}
+
+\section{תרגילים מעשיים}
+\label{sec:exercises}
+
+\subsection{תרגיל 1: כתיבת System Prompt לנציג שירות}
+\label{subsec:ex-customer-service-prompt}
+
+\begin{hebrew}
+\textbf{תיאור:} חברת SaaS בשם "FlowBuilder" מפתחת כלי אוטומציה ללא קוד. הם רוצים להטמיע chatbot AI שיטפל בפניות שירות דרך האתר והאפליקציה.
+
+\textbf{דרישות:}
+\begin{itemize}
+\item הבוט צריך לטפל בשאלות טכניות בסיסיות, בעיות בילינג, ובקשות למידע
+\item טון ידידותי ומקצועי, סבלני עם משתמשים לא טכניים
+\item צריך לדעת מתי להעביר לנציג אנושי
+\item מוצר: פלטפורמת אוטומציה, $49-$299/חודש
+\item לקוחות יעד: בעלי עסקים קטנים ובינוניים, לא בהכרח טכנולוגיים
+\end{itemize}
+
+\textbf{משימתכם:} כתבו System Prompt מקיף (300-500 מילים) המגדיר:
+\begin{enumerate}
+\item זהות ותפקיד הבוט
+\item הקשר על החברה והמוצר
+\item סגנון תקשורת ונימה
+\item גבולות - מה הבוט יכול ולא יכול לעשות
+\item תהליך טיפול בפנייה
+\item קריטריונים להעברה לנציג אנושי
+\end{enumerate}
+
+\textbf{בונוס:} צרו 3 דוגמאות של שיחות (customer prompt + expected response) המדגימות את השימוש ב-System Prompt.
+\end{hebrew}
+
+\subsection{תרגיל 2: שיפור פרומפט באמצעות Chain-of-Thought}
+\label{subsec:ex-cot-improvement}
+
+\begin{hebrew}
+\textbf{פרומפט מקורי (גרוע):}
+\begin{quote}
+"Analyze this business idea and tell me if it's good or bad:
+[Business idea text]"
+\end{quote}
+
+\textbf{בעיות בפרומפט:}
+\begin{itemize}
+\item לא מפורט איך לנתח
+\item "טוב או רע" פשטני מדי
+\item אין הקשר (למי? באיזה שוק? תקציב?)
+\item אין מבנה לתשובה
+\end{itemize}
+
+\textbf{משימתכם:} שפרו את הפרומפט באמצעות Chain-of-Thought:
+\begin{enumerate}
+\item הוסיפו הקשר ברור (קהל יעד, שוק, משאבים)
+\item פרקו את הניתוח לשלבים הגיוניים
+\item הגדירו קריטריונים ספציפיים להערכה
+\item בקשו מהמודל להציג את החשיבה שלב-אחר-שלב
+\item הגדירו פורמט פלט מובנה
+\end{enumerate}
+
+\textbf{שלבי חשיבה מומלצים:}
+\begin{itemize}
+\item ניתוח גודל שוק
+\item הערכת תחרות
+\item בחינת היתכנות טכנית
+\item הערכת דרישות הון
+\item ניתוח סיכונים
+\item מסקנה מבוססת-ציון
+\end{itemize}
+\end{hebrew}
+
+\subsection{תרגיל 3: בניית Prompt Template לדוחות שבועיים}
+\label{subsec:ex-report-template}
+
+\begin{hebrew}
+\textbf{תיאור:} אתם מנהלי צוות בחברת סטארטאפ. כל שבוע אתם צריכים לכתוב דוח סטטוס למנכ"ל. הדוח מבוסס על מידע שאתם אוספים מהצוות.
+
+\textbf{מבנה הדוח הרצוי:}
+\begin{itemize}
+\item תקציר מנהלים (2-3 משפטים)
+\item אינדיקטורים מרכזיים (KPIs)
+\item השגים מרכזיים השבוע
+\item אתגרים וחסמים
+\item תכנון לשבוע הבא
+\item בקשות/צרכים מהנהלה
+\end{itemize}
+
+\textbf{משימתכם:} צרו Prompt Template שמקבל קלט גולמי (רשימות, נתונים, הערות) ומפיק דוח מובנה ומקצועי.
+
+\textbf{דרישות:}
+\begin{enumerate}
+\item Template צריך להיות reusable - ניתן לשימוש חוזר כל שבוע
+\item צריך להדגיש הישגים אבל להיות כנה לגבי בעיות
+\item טון: מקצועי, תמציתי, ממוקד פעולה
+\item אורך: מקסימום עמוד אחד
+\item צריך לזהות אוטומטית מה דורש תשומת לב דחופה
+\end{enumerate}
+
+\textbf{בונוס:} כתבו 2 גרסאות - אחת למצב "שבוע טוב" ואחת למצב "שבוע מאתגר".
+\end{hebrew}
+
+\subsection{תרגיל 4: ניתוח כשלון פרומפט}
+\label{subsec:ex-prompt-failure-analysis}
+
+\begin{hebrew}
+\textbf{תרחיש:} חברה הטמיעה בוט AI לסיווג פניות לקוחות. הבוט פועל רק 65\% מהזמן כהלכה. להלן דוגמאות כשלון:
+\end{hebrew}
+
+\begin{lstlisting}[caption={\he{דוגמאות כשלון}}, label={lst:failure-examples}]
+# Case 1
+Input: "HELP! Account locked, can't access my files!!!"
+Bot Output: Category: General Question, Priority: Low
+Problem: Missed urgency and severity
+
+# Case 2
+Input: "How much does enterprise plan cost for 500 users?"
+Bot Output: Category: Technical Support, Priority: Medium
+Problem: This is clearly Sales, not Support
+
+# Case 3
+Input: "You charged me twice! Fix this now or I'm calling my bank!"
+Bot Output: Category: Billing, Priority: Medium
+Problem: Priority should be High/Critical, missed dispute threat
+
+# Case 4
+Input: "lol thx"
+Bot Output: [300 words trying to help with non-existent problem]
+Problem: Over-responded to casual thank you
+
+# Case 5
+Input: "I want refund. product not work. very bad."
+Bot Output: "I'm sorry, but I don't understand. Can you rephrase?"
+Problem: Failed on non-native English speaker
+\end{lstlisting}
+
+\begin{hebrew}
+\textbf{משימתכם:}
+\begin{enumerate}
+\item נתחו כל מקרה כשלון - מה הפרומפט לא הצליח לטפל בו?
+\item זהו דפוסים - מה הבעיות הנפוצות?
+\item הציעו שיפורים ספציפיים לפרומפט:
+\begin{itemize}
+\item אילו הנחיות חסרות?
+\item אילו דוגמאות צריך להוסיף?
+\item איך לשפר את זיהוי סנטימנט ודחיפות?
+\item איך לטפל בקלט לא-סטנדרטי?
+\end{itemize}
+\item כתבו גרסה משופרת של הפרומפט שפותרת את הבעיות
+\item הציעו test cases נוספים שיבטיחו שהבעיות לא יחזרו
+\end{enumerate}
+\end{hebrew}
+
+\subsection{תרגיל 5: תכנון A/B Testing לפרומפטים}
+\label{subsec:ex-ab-test-plan}
+
+\begin{hebrew}
+\textbf{תיאור:} אתם מפתחים מערכת AI לכתיבת תיאורי מוצרים לחנות e-commerce. יש לכם שתי גישות:
+
+\textbf{Prompt A (Zero-Shot):}
+\begin{quote}
+"Write a product description for: [product name and specs]"
+\end{quote}
+
+\textbf{Prompt B (Few-Shot with Structure):}
+\begin{quote}
+"Write a compelling product description following this structure:
+[includes 3 examples and detailed format]"
+\end{quote}
+
+Prompt B יקר יותר (יותר טוקנים) אבל לכאורה מייצר תוצאות טובות יותר.
+
+\textbf{משימתכם:} תכננו A/B test מקיף:
+
+\begin{enumerate}
+\item \textbf{הגדירו השערה:} מה אתם מצפים לגלות?
+
+\item \textbf{בחרו מטריקות:} איך תמדדו "טוב יותר"?
+\begin{itemize}
+\item מטריקות איכות (דירוג אנושי, CTR, conversion rate)
+\item מטריקות עלות (טוקנים, זמן)
+\item מטריקות עקביות
+\end{itemize}
+
+\item \textbf{תכננו את הניסוי:}
+\begin{itemize}
+\item כמה מוצרים לבדוק?
+\item איזה סוגי מוצרים (פשוטים, מורכבים, שונים)?
+\item מי יעריך את התוצאות?
+\item כמה זמן יקח?
+\end{itemize}
+
+\item \textbf{הגדירו קריטריוני הצלחה:}
+\begin{itemize}
+\item איזה שיפור באיכות מצדיק את העלות הנוספת?
+\item מה ה-breakeven point?
+\item מתי תכריזו על "מנצח"?
+\end{itemize}
+
+\item \textbf{תכננו ניתוח:}
+\begin{itemize}
+\item איך תוודאו שההבדלים סטטיסטית משמעותיים?
+\item מה תעשו אם התוצאות לא חד-משמעיות?
+\item איך תתעדו את הלמידה?
+\end{itemize}
+\end{enumerate}
+
+\textbf{בונוס:} הכינו תבנית Excel/Google Sheets לתיעוד התוצאות.
+\end{hebrew}
+
+\subsection{תרגיל 6 (Python): מערכת בדיקה אוטומטית לפרומפטים}
+\label{subsec:ex-automated-testing}
+
+\begin{hebrew}
+\textbf{מטרה:} בנו מערכת Python שבודקת פרומפטים אוטומטית מול סט מקרי בוחן.
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{תרגיל Python: מערכת בדיקה אוטומטית}}, label={lst:ex-automated-testing}]
+"""
+Exercise: Build an Automated Prompt Testing System
+
+Requirements:
+1. Load prompt template and test cases from files
+2. Run prompt against all test cases
+3. Evaluate outputs against expected results
+4. Generate detailed test report
+5. Calculate success metrics
+
+Your implementation should include:
+- PromptTester class
+- TestCase dataclass
+- Evaluation functions for different output types
+- Report generation (console + HTML)
+- Support for regression testing (compare to previous runs)
+"""
+
+from dataclasses import dataclass
+from typing import List, Dict, Callable
+from enum import Enum
+import json
+import datetime
+
+class OutputType(Enum):
+    EXACT_MATCH = "exact"
+    CONTAINS = "contains"
+    STRUCTURED = "structured"
+    SENTIMENT = "sentiment"
+    CLASSIFICATION = "classification"
+
+@dataclass
+class TestCase:
+    """Represents a single test case"""
+    id: str
+    input: str
+    expected_output: any
+    output_type: OutputType
+    tags: List[str]
+    description: str
+
+class PromptTester:
+    """Main class for prompt testing"""
+
+    def __init__(self, prompt_template: str, llm_function: Callable):
+        """
+        Args:
+            prompt_template: The prompt template to test
+            llm_function: Function that calls LLM API
+        """
+        self.prompt_template = prompt_template
+        self.llm_function = llm_function
+        self.test_cases: List[TestCase] = []
+        self.results = []
+
+    def load_test_cases(self, filepath: str):
+        """Load test cases from JSON file"""
+        # TODO: Implement
+        pass
+
+    def add_test_case(self, test_case: TestCase):
+        """Add a test case manually"""
+        # TODO: Implement
+        pass
+
+    def run_tests(self, tags: List[str] = None) -> Dict:
+        """
+        Run all test cases (or filtered by tags)
+
+        Returns:
+            Dictionary with test results and metrics
+        """
+        # TODO: Implement
+        # For each test case:
+        #   1. Format prompt with test input
+        #   2. Call LLM
+        #   3. Evaluate output
+        #   4. Record result
+        pass
+
+    def evaluate_output(self, actual, expected, output_type):
+        """
+        Evaluate if actual output matches expected
+
+        Different evaluation strategies based on output_type
+        """
+        # TODO: Implement different evaluation methods
+        pass
+
+    def generate_report(self, format="console"):
+        """Generate test report (console or HTML)"""
+        # TODO: Implement
+        # Should include:
+        # - Overall pass/fail rate
+        # - Results per test case
+        # - Results per tag
+        # - Failed cases with details
+        # - Performance metrics (time, cost)
+        pass
+
+    def compare_to_baseline(self, baseline_file: str):
+        """Compare current results to previous baseline"""
+        # TODO: Implement
+        # Useful for regression testing
+        pass
+
+# Example usage:
+def example_usage():
+    # Your LLM API call function
+    def call_llm(prompt):
+        # Your implementation here
+        return "simulated response"
+
+    # Create tester
+    tester = PromptTester(
+        prompt_template="Classify: {input}",
+        llm_function=call_llm
+    )
+
+    # Add test cases
+    tester.add_test_case(TestCase(
+        id="test_001",
+        input="Product doesn't work",
+        expected_output="Technical Support",
+        output_type=OutputType.CLASSIFICATION,
+        tags=["classification", "negative"],
+        description="Basic negative feedback"
+    ))
+
+    # Run tests
+    results = tester.run_tests()
+
+    # Generate report
+    tester.generate_report(format="html")
+
+"""
+YOUR TASKS:
+
+1. Implement all TODO methods in PromptTester class
+
+2. Add evaluation methods for each OutputType:
+   - EXACT_MATCH: Direct string comparison
+   - CONTAINS: Check if output contains expected strings
+   - STRUCTURED: Validate JSON/structured format
+   - SENTIMENT: Check sentiment matches
+   - CLASSIFICATION: Check category matches
+
+3. Create comprehensive test report that includes:
+   - Summary statistics
+   - Pass/fail breakdown by tag
+   - Detailed failure analysis
+   - Performance metrics (avg time per test)
+   - Cost estimation (tokens used)
+
+4. Add support for:
+   - Parallel test execution (faster)
+   - Retries with different temperatures
+   - Confidence scoring
+   - Test case prioritization
+
+5. BONUS: Create a simple web UI using Streamlit or Gradio
+   that allows:
+   - Uploading test cases
+   - Running tests
+   - Viewing results
+   - Comparing different prompt versions
+
+6. Create a sample test suite with at least 20 test cases
+   covering various scenarios
+"""
+\end{lstlisting}
+
+\subsection{תרגיל 7 (Python): מערכת Template דינמי}
+\label{subsec:ex-dynamic-templates}
+
+\begin{hebrew}
+\textbf{מטרה:} בנו מערכת שמייצרת פרומפטים דינמית בהתאם להקשר, לסוג המשימה ולנתונים זמינים.
+\end{hebrew}
+
+\begin{lstlisting}[language=Python, caption={\he{תרגיל Python: מערכת Template דינמי}}, label={lst:ex-dynamic-templates}]
+"""
+Exercise: Build a Dynamic Prompt Template System
+
+The system should intelligently construct prompts based on:
+- Task type
+- Available context
+- User preferences
+- Performance history
+
+Example: For a "customer email response" task, the system should:
+1. Detect customer sentiment and urgency
+2. Fetch relevant company policies
+3. Choose appropriate tone and structure
+4. Include relevant examples from successful past responses
+5. Apply constraints (length, formality, etc.)
+"""
+
+from typing import Dict, List, Optional
+from dataclasses import dataclass, field
+from enum import Enum
+import jinja2
+
+class TaskType(Enum):
+    EMAIL_RESPONSE = "email_response"
+    CLASSIFICATION = "classification"
+    SUMMARIZATION = "summarization"
+    ANALYSIS = "analysis"
+    GENERATION = "generation"
+
+class Tone(Enum):
+    FORMAL = "formal"
+    CASUAL = "casual"
+    EMPATHETIC = "empathetic"
+    PROFESSIONAL = "professional"
+
+@dataclass
+class PromptContext:
+    """Container for all context needed to build prompt"""
+    task_type: TaskType
+    user_input: str
+    metadata: Dict = field(default_factory=dict)
+    examples: List[Dict] = field(default_factory=list)
+    constraints: Dict = field(default_factory=dict)
+    tone: Tone = Tone.PROFESSIONAL
+
+class DynamicPromptBuilder:
+    """
+    Intelligently constructs prompts based on context
+    """
+
+    def __init__(self):
+        self.template_library = {}
+        self.performance_history = {}
+        self.load_templates()
+
+    def load_templates(self):
+        """Load base templates for different task types"""
+        # TODO: Implement
+        # Load from files or database
+        # Templates should use Jinja2 for flexibility
+        pass
+
+    def build_prompt(self, context: PromptContext) -> str:
+        """
+        Main method: Build optimal prompt for given context
+
+        Steps:
+        1. Select base template
+        2. Analyze input for metadata (sentiment, urgency, etc.)
+        3. Fetch relevant examples
+        4. Apply constraints
+        5. Assemble final prompt
+        """
+        # TODO: Implement
+        pass
+
+    def select_template(self, task_type: TaskType) -> str:
+        """Select best template based on task and history"""
+        # TODO: Implement
+        # Consider performance history
+        # Maybe A/B test between template variations
+        pass
+
+    def analyze_input(self, user_input: str) -> Dict:
+        """
+        Extract metadata from user input
+
+        Returns:
+            Dict with sentiment, urgency, entities, etc.
+        """
+        # TODO: Implement
+        # You can use a simple LLM call or NLP library
+        pass
+
+    def fetch_examples(self, context: PromptContext, n: int = 3) -> List[Dict]:
+        """
+        Fetch most relevant examples for few-shot learning
+
+        Should consider:
+        - Similarity to current input
+        - Success rate of examples
+        - Diversity of examples
+        """
+        # TODO: Implement
+        # Use embedding similarity or keyword matching
+        pass
+
+    def apply_constraints(self, prompt: str, constraints: Dict) -> str:
+        """
+        Add constraint clauses to prompt
+
+        Constraints might include:
+        - max_length
+        - required_sections
+        - forbidden_topics
+        - output_format
+        """
+        # TODO: Implement
+        pass
+
+    def optimize_for_performance(self, prompt: str, task_type: TaskType) -> str:
+        """
+        Apply learned optimizations based on performance history
+
+        E.g., if adding "think step by step" improved accuracy
+        for this task type, add it
+        """
+        # TODO: Implement
+        pass
+
+    def record_performance(self, prompt: str, task_type: TaskType,
+                          success: bool, metrics: Dict):
+        """Record how well a prompt performed"""
+        # TODO: Implement
+        # Use this to improve future prompt generation
+        pass
+
+class TemplateComponent:
+    """Reusable prompt components"""
+
+    @staticmethod
+    def role_definition(role: str, expertise: str) -> str:
+        """Generate role definition section"""
+        # TODO: Implement
+        pass
+
+    @staticmethod
+    def output_format(format_type: str, schema: Dict = None) -> str:
+        """Generate output format instructions"""
+        # TODO: Implement
+        pass
+
+    @staticmethod
+    def examples_section(examples: List[Dict]) -> str:
+        """Format examples for few-shot learning"""
+        # TODO: Implement
+        pass
+
+    @staticmethod
+    def constraints_section(constraints: Dict) -> str:
+        """Format constraints"""
+        # TODO: Implement
+        pass
+
+# Example usage:
+def example_usage():
+    builder = DynamicPromptBuilder()
+
+    # Build prompt for customer email response
+    context = PromptContext(
+        task_type=TaskType.EMAIL_RESPONSE,
+        user_input="Customer email: I'm very disappointed...",
+        metadata={
+            "customer_tier": "premium",
+            "previous_issues": 2
+        },
+        constraints={
+            "max_length": 200,
+            "must_include": ["apology", "specific_solution"]
+        },
+        tone=Tone.EMPATHETIC
+    )
+
+    prompt = builder.build_prompt(context)
+    print(prompt)
+
+    # Use prompt with LLM...
+    response = call_llm(prompt)
+
+    # Record performance
+    builder.record_performance(
+        prompt=prompt,
+        task_type=TaskType.EMAIL_RESPONSE,
+        success=True,
+        metrics={"customer_satisfaction": 4.5}
+    )
+
+"""
+YOUR TASKS:
+
+1. Implement all methods in DynamicPromptBuilder class
+
+2. Create template library with base templates for each TaskType:
+   - Email response template
+   - Classification template
+   - Summarization template
+   - Analysis template
+   - Content generation template
+
+3. Implement intelligent example selection:
+   - Use embeddings for semantic similarity
+   - Consider example diversity
+   - Weight by success rate
+
+4. Add performance tracking:
+   - Store which prompt variations work best
+   - Learn from user feedback
+   - Suggest prompt improvements
+
+5. Create specialized components:
+   - Sentiment-aware tone adjustment
+   - Urgency-based priority instructions
+   - Domain-specific terminology injection
+   - Cultural/localization adaptations
+
+6. BONUS FEATURES:
+   - Prompt version control (track changes over time)
+   - Automatic A/B testing of variations
+   - Prompt explanation (why was this structure chosen?)
+   - Cost optimization (reduce tokens while maintaining quality)
+   - Multi-language support
+
+7. Build a demo application that:
+   - Takes user input
+   - Shows the dynamically generated prompt
+   - Calls LLM and shows response
+   - Allows user to rate quality
+   - Learns from ratings to improve future prompts
+
+8. Write tests for:
+   - Correct template selection
+   - Constraint application
+   - Example relevance
+   - Performance tracking accuracy
+"""
+
+# Starter template examples (you should expand these):
+
+EMAIL_RESPONSE_TEMPLATE = """
+# Role
+You are {{role}}, a customer service representative at {{company_name}}.
+
+# Context
+Customer Tier: {{customer_tier}}
+Previous Issues: {{previous_issues}}
+Current Sentiment: {{sentiment}}
+Urgency: {{urgency}}
+
+# Task
+Respond to the following customer email in a {{tone}} tone.
+
+# Constraints
+- Maximum {{max_length}} words
+- Must include: {{must_include}}
+{% if avoid_topics %}
+- Avoid mentioning: {{avoid_topics}}
+{% endif %}
+
+# Examples
+{% for example in examples %}
+Customer: {{example.input}}
+Response: {{example.output}}
+{% endfor %}
+
+# Customer Email
+{{user_input}}
+
+# Your Response
+"""
+
+CLASSIFICATION_TEMPLATE = """
+# Task
+Classify the following text into one of these categories:
+{{categories}}
+
+# Classification Strategy
+{{strategy}}
+
+{% if examples %}
+# Examples
+{% for example in examples %}
+Input: {{example.input}}
+Output: {{example.output}}
+{% endfor %}
+{% endif %}
+
+# Input to Classify
+{{user_input}}
+
+# Output
+Category:
+Confidence:
+Reasoning:
+"""
+\end{lstlisting}
+
+\section{סיכום}
+\label{sec:summary}
+
+\begin{hebrew}
+אומנות הפרומפט היא אחת המיומנויות הקריטיות ביותר בעידן הבינה המלאכותית הגנרטיבית. בדיוק כפי שמנהלים מקצועיים מבינים כיצד לתקשר ביעילות עם צוותיהם, כך גם התקשורת עם מודלי שפה גדולים דורשת בהירות, מבנה ומחשבה אסטרטגית.
+
+במהלך הפרק למדנו:
+
+\textbf{מבנה ורכיבים:} פרומפט אפקטיבי מורכב מרכיבים מוגדרים היטב - תפקיד, הקשר, משימה, אילוצים, פורמט פלט, דוגמאות וטון. כל רכיב תורם לבהירות ולדיוק התוצאה.
+
+\textbf{System vs User Prompts:} הבנת ההבדל בין פרומפטי מערכת (קבועים, מגדירים התנהגות כללית) לבין פרומפטי משתמש (דינמיים, משימות ספציפיות) היא קריטית לבניית מערכות AI יציבות ועקביות.
+
+\textbf{טכניקות מתקדמות:} Zero-Shot מתאים למשימות פשוטות, Few-Shot מספק עקביות בדומיינים ספציפיים, ו-Chain-of-Thought מייצר דיוק גבוה במשימות מורכבות הדורשות הנמקה רב-שלבית.
+
+\textbf{Role Playing:} הקצאת תפקיד או פרסונה למודל משפיעה משמעותית על איכות הפלט, מכוונת את סגנון התשובה ומבטיחה נקודת מבט רלוונטית.
+
+\textbf{מדידה ושיפור:} כמו כל תהליך עסקי, גם פרומפטים דורשים מדידה שיטתית. נוסחאות כמו Prompt Efficiency, Consistency Score ו-CPQO מאפשרות לנו לקבל החלטות מבוססות-נתונים לגבי איכות הפרומפטים ולשפר אותם באופן מתמיד.
+
+\textbf{בדיקה וולידציה:} בניית Test Suites ויישום A/B Testing לפרומפטים מבטיחים איכות ועקביות בסביבת ייצור, וממזערים הפתעות לא נעימות.
+
+בסופו של דבר, פרומפטינג אפקטיבי אינו אומנות מסתורית אלא מיומנות ניהולית מובנה שניתן ללמוד, למדוד ולשפר. כפי שמנהלים משקיעים זמן בלמידת תקשורת אפקטיבית עם בני אדם, כך גם ההשקעה בלמידת תקשורת אפקטיבית עם AI היא קריטית להצלחה בעידן החדש.
+
+המסר המרכזי: פרומפט טוב אינו נוצר במקרה. הוא תוצאה של מחשבה מעמיקה, מבנה ברור, בדיקה שיטתית ושיפור מתמיד. מנהלים שמשקיעים באומנות זו ירוויחו יתרון תחרותי משמעותי - היכולת להפיק מהבינה המלאכותית את המיטב שהיא יכולה להציע.
+\end{hebrew}
+
+\section*{שאלות לדיון}
+\begin{enumerate}
+\item \he{כיצד תבחרו בין גישת Zero-Shot לבין Few-Shot במצב שבו אין לכם דוגמאות מוכנות אבל יש לכם זמן להכין אותן?}
+\item \he{מתי System Prompt ארוך ומפורט מוצדק, ומתי הוא בזבוז משאבים? תנו דוגמאות לשני המצבים.}
+\item \he{כיצד תשכנעו מנהל שמתנגד להשקעה בפיתוח ובדיקה של פרומפטים? אילו מטריקות עסקיות תציגו?}
+\item \he{האם יש מצבים שבהם "פרומפט גרוע" עדיף על "פרומפט מושלם"? נמקו.}
+\item \he{כיצד תטפלו במצב שבו פרומפט עובד מצוין ב-GPT-4 אבל נכשל ב-Claude או להיפך?}
+\end{enumerate}
+
+\section*{קריאה נוספת}
+\begin{itemize}
+\item \en{OpenAI. (2024). "Best Practices for Prompt Engineering". OpenAI Documentation.}
+\item \en{Anthropic. (2024). "Claude Prompt Engineering Guide". Anthropic Resources.}
+\item \en{White, J. et al. (2023). "A Prompt Pattern Catalog to Enhance Prompt Engineering with ChatGPT". arXiv:2302.11382.}
+\item \en{Wei, J. et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models". NeurIPS 2022.}
+\item \en{Brown, T. et al. (2020). "Language Models are Few-Shot Learners". NeurIPS 2020.}
+\end{itemize}

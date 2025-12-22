@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "skill_schema.json",
+  "title": "QA Skill Schema",
+  "description": "Schema for QA skill configuration",
+  "type": "object",
+  "required": ["name", "description", "version", "level", "skill_type"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^qa-",
+      "description": "Skill name (must start with 'qa-')"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of the skill"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version"
+    },
+    "level": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Skill hierarchy level (0=meta, 1=family, 2=worker)"
+    },
+    "skill_type": {
+      "type": "string",
+      "enum": ["orchestrator", "detection", "fix", "validation"],
+      "description": "Type of skill"
+    },
+    "family": {
+      "type": "string",
+      "description": "Parent family name (e.g., 'BiDi', 'code')"
+    },
+    "parent": {
+      "type": "string",
+      "description": "Parent skill ID"
+    },
+    "children": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "List of child skill IDs"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether skill is enabled"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Classification tags"
+    },
+    "tools": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "List of tool IDs used by this skill"
+    },
+    "resources": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "List of resource IDs used"
+    },
+    "rules": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/rule_config"
+      },
+      "description": "Rule configurations"
+    },
+    "auto_fix": {
+      "type": "boolean",
+      "default": false,
+      "description": "Global auto-fix setting"
+    },
+    "has_python_tool": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether skill has Python tool implementation"
+    },
+    "managed_families": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Families managed by orchestrator"
+    },
+    "coordination_mode": {
+      "type": "string",
+      "enum": ["parallel", "sequential"],
+      "default": "parallel",
+      "description": "Coordination mode for orchestrator"
+    },
+    "detection_rules": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Detection rule IDs"
+    },
+    "fix_patterns": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Fix pattern IDs"
+    }
+  },
+  "definitions": {
+    "rule_config": {
+      "type": "object",
+      "properties": {
+        "enabled": {"type": "boolean", "default": true},
+        "auto_fix": {"type": "boolean", "default": false},
+        "severity": {"type": "string", "enum": ["info", "warning", "critical"]}
+      }
+    }
+  }
+}

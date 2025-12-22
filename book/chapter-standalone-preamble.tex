@@ -1,0 +1,240 @@
+% chapter-standalone-preamble.tex
+% Standalone preamble for individual chapter compilation
+% UPDATED: Now uses hebrew-academic-template.cls for full Hebrew RTL support
+
+\documentclass{../hebrew-academic-template}
+
+%% ============================================
+%% Additional Packages (not in CLS)
+%% ============================================
+\usepackage{luatexbase}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{colortbl}
+
+%% ============================================
+%% TikZ Libraries (extend CLS tikz-cd)
+%% ============================================
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,fit,backgrounds,decorations.pathreplacing,mindmap,shadows}
+
+%% ============================================
+%% Book Colors
+%% ============================================
+\definecolor{chaptercolor}{RGB}{0,51,102}
+\definecolor{sectioncolor}{RGB}{0,76,153}
+\definecolor{examplecolor}{RGB}{230,242,255}
+\definecolor{exercisecolor}{RGB}{255,248,220}
+\definecolor{codebackground}{RGB}{245,245,245}
+\definecolor{formulacolor}{RGB}{240,255,240}
+
+%% ============================================
+%% Code Listings (extend CLS tcolorbox)
+%% ============================================
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebackground},
+  frame=single,
+  breaklines=true,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!60!black},
+  showstringspaces=false,
+  tabsize=4
+}
+
+% Python style
+\lstdefinestyle{python}{
+  language=Python,
+  morekeywords={self,True,False,None,as,with,async,await}
+}
+
+% JSON style
+\lstdefinestyle{json}{
+  basicstyle=\ttfamily\small,
+  stringstyle=\color{red!60!black},
+  morestring=[b]",
+  literate=
+    *{:}{{{\color{blue}:}}}{1}
+    {,}{{{\color{blue},}}}{1}
+    {\{}{{{\color{blue}\{}}}{1}
+    {\}}{{{\color{blue}\}}}}{1}
+    {[}{{{\color{blue}[}}}{1}
+    {]}{{{\color{blue}]}}}{1}
+}
+
+%% ============================================
+%% Custom Boxes (book-specific tcolorbox environments)
+%% BiDi-SAFE: Use wrapper pattern to prevent RTL background overflow
+%% ============================================
+\tcbuselibrary{skins,breakable,theorems}
+
+% ============== INTERNAL BOXES (with @inner suffix) ==============
+
+% Example Box - Internal
+\newtcolorbox{examplebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=examplecolor,
+  colframe=sectioncolor,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=3mm,
+  boxrule=1pt
+}
+
+% Exercise Box - Internal
+\newtcolorbox{exercisebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=exercisecolor,
+  colframe=orange!70!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=3mm,
+  boxrule=1pt
+}
+
+% Formula Box - Internal
+\newtcolorbox{formulabox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=formulacolor,
+  colframe=green!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=0.5pt
+}
+
+% Code Box - Internal
+\newtcolorbox{codebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=codebackground,
+  colframe=gray!50,
+  fonttitle=\bfseries\ttfamily,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=0.5pt
+}
+
+% Note Box - Internal
+\newtcolorbox{notebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=yellow!10,
+  colframe=yellow!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=1pt
+}
+
+% Warning Box - Internal
+\newtcolorbox{warningbox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=red!5,
+  colframe=red!70!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=1pt
+}
+
+% ============== BiDi-SAFE WRAPPER ENVIRONMENTS ==============
+% Force LTR for box drawing, RTL for content inside
+
+\newenvironment{examplebox}[1][]
+  {\begin{english}\begin{examplebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{examplebox@inner}\end{english}}
+
+\newenvironment{exercisebox}[1][]
+  {\begin{english}\begin{exercisebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{exercisebox@inner}\end{english}}
+
+\newenvironment{formulabox}[1][]
+  {\begin{english}\begin{formulabox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{formulabox@inner}\end{english}}
+
+\newenvironment{codebox}[1][]
+  {\begin{english}\begin{codebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{codebox@inner}\end{english}}
+
+\newenvironment{notebox}[1][]
+  {\begin{english}\begin{notebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{notebox@inner}\end{english}}
+
+\newenvironment{warningbox}[1][]
+  {\begin{english}\begin{warningbox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{warningbox@inner}\end{english}}
+
+%% ============================================
+%% Theorem Environments
+%% ============================================
+\theoremstyle{definition}
+\newtheorem{definition}{הגדרה}[section]
+\newtheorem{example}{דוגמה}[section]
+\newtheorem{exercise}{תרגיל}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{משפט}[section]
+\newtheorem{lemma}{למה}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{הערה}[section]
+\newtheorem{note}{הערה}[section]
+
+%% ============================================
+%% Hebrew Subsubsection Command (extends CLS)
+%% Pattern: qa-BiDi-fix-sections - LTR numbering with Hebrew title
+%% ============================================
+\newcounter{hebrewsubsubsection}[hebrewsubsection]
+\newcommand{\hebrewsubsubsection}[1]{%
+  \par\needspace{3\baselineskip}% Orphan prevention
+  \vspace{0.6em}%
+  \stepcounter{hebrewsubsubsection}%
+  \paragraph*{\textenglish{\thehebrewsection.\thehebrewsubsection.\arabic{hebrewsubsubsection}}\quad #1}%
+  \phantomsection%
+  \addcontentsline{toc}{paragraph}{\textenglish{\thehebrewsection.\thehebrewsubsection.\arabic{hebrewsubsubsection}}\quad #1}%
+  \vspace{0.2em}%
+}
+
+%% ============================================
+%% Additional Commands
+%% ============================================
+% Technical terms
+\newcommand{\term}[1]{\textbf{\textenglish{#1}}}
+\newcommand{\heterm}[2]{\textbf{#1} (\textenglish{#2})}
+
+% Short Hebrew command (alias for \heb from CLS)
+\providecommand{\he}[1]{\texthebrew{#1}}
+
+%% ============================================
+%% Bibliography
+%% ============================================
+\addbibresource{bibliography/references.bib}
+
+% URL breaking settings for long URLs in bibliography
+\setcounter{biburlnumpenalty}{100}
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+
+%% ============================================
+%% Book Metadata for Standalone
+%% ============================================
+\title{כלי בינה מלאכותית בעסקים}
+\author{דר' יורם סגל ופרופסור ערן שריף}
+\date{2025}

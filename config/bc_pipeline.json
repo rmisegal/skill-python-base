@@ -1,0 +1,206 @@
+{
+  "version": "1.0.0",
+  "description": "BC Pipeline Configuration - Maps BC skills to QA validators",
+  "stages": {
+    "research": {
+      "skills": [
+        "bc-source-research"
+      ],
+      "validators": [
+        "BCBibValidator"
+      ],
+      "parallel": true
+    },
+    "content": {
+      "skills": [
+        "bc-code",
+        "bc-math",
+        "bc-academic-source"
+      ],
+      "validators": [
+        "BCBiDiValidator",
+        "BCCodeValidator",
+        "BCTableValidator"
+      ],
+      "parallel": true,
+      "requires": [
+        "research"
+      ]
+    },
+    "review": {
+      "skills": [
+        "bc-architect",
+        "bc-hebrew"
+      ],
+      "validators": [
+        "BCBiDiValidator",
+        "BCTOCValidator"
+      ],
+      "parallel": false,
+      "requires": [
+        "content"
+      ]
+    }
+  },
+  "validators": {
+    "BCBiDiValidator": {
+      "enabled": true,
+      "rules": [
+        "bidi-numbers",
+        "bidi-english",
+        "bidi-acronym",
+        "bidi-tikz-rtl",
+        "bidi-tcolorbox"
+      ],
+      "auto_fix_rules": [
+        "bidi-numbers",
+        "bidi-english",
+        "bidi-acronym"
+      ],
+      "block_on_critical": true
+    },
+    "BCCodeValidator": {
+      "enabled": true,
+      "rules": [
+        "code-background-overflow",
+        "code-direction-hebrew",
+        "code-encoding-emoji"
+      ],
+      "auto_fix_rules": [
+        "code-background-overflow"
+      ],
+      "block_on_critical": true
+    },
+    "BCTableValidator": {
+      "enabled": true,
+      "rules": [
+        "table-no-rtl-env",
+        "table-not-hebrewtable",
+        "table-missing-header-color",
+        "table-overflow"
+      ],
+      "auto_fix_rules": [
+        "table-no-rtl-env",
+        "table-not-hebrewtable"
+      ],
+      "block_on_critical": true
+    },
+    "BCBibValidator": {
+      "enabled": true,
+      "rules": [
+        "bib-missing-english-wrapper",
+        "bib-invalid-cite-key",
+        "bib-missing-required-field"
+      ],
+      "auto_fix_rules": [
+        "bib-missing-english-wrapper"
+      ],
+      "block_on_critical": false
+    },
+    "BCImageValidator": {
+      "enabled": true,
+      "rules": [
+        "img-missing-file",
+        "img-invalid-path",
+        "img-missing-caption"
+      ],
+      "auto_fix_rules": [],
+      "block_on_critical": false
+    },
+    "BCTOCValidator": {
+      "enabled": true,
+      "rules": [
+        "toc-naked-english",
+        "toc-number-format"
+      ],
+      "auto_fix_rules": [
+        "toc-naked-english"
+      ],
+      "block_on_critical": false
+    }
+  },
+  "issue_mapping": {
+    "BIDI": {
+      "qa_family": "qa-BiDi",
+      "bc_skills": [
+        "bc-content",
+        "bc-math",
+        "bc-code",
+        "bc-hebrew"
+      ],
+      "validators": [
+        "BCBiDiValidator"
+      ]
+    },
+    "CODE": {
+      "qa_family": "qa-code",
+      "bc_skills": [
+        "bc-code"
+      ],
+      "validators": [
+        "BCCodeValidator"
+      ]
+    },
+    "TABLE": {
+      "qa_family": "qa-table",
+      "bc_skills": [
+        "bc-academic-source"
+      ],
+      "validators": [
+        "BCTableValidator"
+      ]
+    },
+    "BIB": {
+      "qa_family": "qa-bib",
+      "bc_skills": [
+        "bc-source-research",
+        "bc-academic-source"
+      ],
+      "validators": [
+        "BCBibValidator"
+      ]
+    },
+    "IMG": {
+      "qa_family": "qa-img",
+      "bc_skills": [
+        "bc-content"
+      ],
+      "validators": [
+        "BCImageValidator"
+      ]
+    },
+    "TYPE": {
+      "qa_family": "qa-typeset",
+      "bc_skills": [
+        "bc-content",
+        "bc-code",
+        "bc-math",
+        "bc-academic-source"
+      ],
+      "validators": [
+        "BCTypesetValidator"
+      ]
+    }
+  },
+  "output_gate": {
+    "require_zero_critical": true,
+    "require_zero_warning": false,
+    "max_retries_per_skill": 3
+  },
+  "orchestration": {
+    "max_workers": 4,
+    "batch_size": 50,
+    "heartbeat_interval": 30,
+    "stale_timeout": 120,
+    "lock_timeout": 60
+  },
+  "logging": {
+    "level": "INFO",
+    "json_format": true,
+    "log_dir": "bc-logs"
+  },
+  "performance": {
+    "parallel_validation": true,
+    "cache_compiled_patterns": true
+  }
+}

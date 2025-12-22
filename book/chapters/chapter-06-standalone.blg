@@ -1,0 +1,17 @@
+[0] Config.pm:328> INFO - This is Biber 2.21
+[0] Config.pm:331> INFO - Logfile is 'chapter-06-standalone.blg'
+[218] biber-MSWIN64:342> INFO - === 
+[294] Biber.pm:421> INFO - Reading 'chapter-06-standalone.bcf'
+[513] Biber.pm:1002> INFO - Found 15 citekeys in bib section 0
+[544] Biber.pm:4487> INFO - Processing section 0
+[566] Biber.pm:4678> INFO - Looking for bibtex file '../bibliography/references.bib' for section 0
+[635] bibtex.pm:1713> INFO - LaTeX decoding ...
+[775] bibtex.pm:1519> INFO - Found BibTeX data source '../bibliography/references.bib'
+[788] Biber.pm:4678> INFO - Looking for bibtex file 'chapter-06-sources.bib' for section 0
+[853] bibtex.pm:1713> INFO - LaTeX decoding ...
+[904] bibtex.pm:1519> INFO - Found BibTeX data source 'chapter-06-sources.bib'
+[1101] UCollate.pm:68> INFO - Overriding locale 'he-IL' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1101] UCollate.pm:68> INFO - Overriding locale 'he-IL' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1101] Biber.pm:4307> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'he-IL'
+[1123] bbl.pm:676> INFO - Writing 'chapter-06-standalone.bbl' with encoding 'UTF-8'
+[1137] bbl.pm:779> INFO - Output to chapter-06-standalone.bbl

@@ -1,0 +1,63 @@
+import time
+import statistics
+from openai import OpenAI
+import anthropic
+
+# Configuration
+MODELS = {
+    "gpt-3.5-turbo": "openai",
+    "gpt-4-turbo": "openai",
+    "claude-3-5-sonnet-20241022": "anthropic",
+}
+
+TEST_PROMPT = "What is the capital of France? Answer in one word."
+NUM_TESTS = 10
+
+def test_openai_latency(model_name, num_tests=10):
+    """Test latency for OpenAI model"""
+    client = OpenAI()  # API key from .env
+    latencies = []
+
+    for i in range(num_tests):
+        start = time.time()
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[{"role": "user", "content": TEST_PROMPT}],
+            max_tokens=10
+        )
+        end = time.time()
+        latencies.append((end - start) * 1000)  # Convert to ms
+        time.sleep(1)  # Prevent rate limiting
+
+    return latencies
+
+def test_anthropic_latency(model_name, num_tests=10):
+    """Test latency for Anthropic model"""
+    client = anthropic.Anthropic()  # API key from .env
+    latencies = []
+
+    for i in range(num_tests):
+        start = time.time()
+        message = client.messages.create(
+            model=model_name,
+            max_tokens=10,
+            messages=[{"role": "user", "content": TEST_PROMPT}]
+        )
+        end = time.time()
+        latencies.append((end - start) * 1000)
+        time.sleep(1)
+
+    return latencies
+
+def analyze_latencies(latencies, model_name):
+    """Statistical analysis of latencies"""
+    return {
+        "model": model_name,
+        "mean": statistics.mean(latencies),
+        "median": statistics.median(latencies),
+        "stdev": statistics.stdev(latencies),
+        "min": min(latencies),
+        "max": max(latencies)
+    }
+
+# TODO: Add main execution and graphical display

@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pipeline_schema.json",
+  "title": "QA Pipeline Schema",
+  "description": "Schema for QA pipeline configuration",
+  "type": "object",
+  "required": ["stages"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "default": "1.0.0"
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/pipeline_stage"
+      },
+      "description": "Ordered list of pipeline stages"
+    }
+  },
+  "definitions": {
+    "pipeline_stage": {
+      "type": "object",
+      "required": ["skill_id", "order"],
+      "properties": {
+        "skill_id": {
+          "type": "string",
+          "description": "ID of the skill for this stage"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Execution order"
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether stage is enabled"
+        },
+        "parallel_with": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Skill IDs to run in parallel with"
+        }
+      }
+    }
+  }
+}

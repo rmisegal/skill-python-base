@@ -1,0 +1,376 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{amershi2019guidelines}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=7098a2847ed504c65ef57236d3a25cc9}{%
+           family={Amershi},
+           familyi={A\bibinitperiod},
+           given={Saleema},
+           giveni={S\bibinitperiod}}}%
+        {{hash=778e8be2f3cd256f5150fc97dcb895d8}{%
+           family={Weld},
+           familyi={W\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=165361d691d4a5d98e02a777155e5441}{%
+           family={Vorvoreanu},
+           familyi={V\bibinitperiod},
+           given={Mihaela},
+           giveni={M\bibinitperiod}}}%
+        {{hash=7dd00ba501e8437370a57922cf53347c}{%
+           family={Fourney},
+           familyi={F\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d941a402863ff98390cb0dd78ee4ac3e}{%
+           family={Nushi},
+           familyi={N\bibinitperiod},
+           given={Besmira},
+           giveni={B\bibinitperiod}}}%
+        {{hash=b380b9bac92a419b3f3cabdd4e693947}{%
+           family={Collisson},
+           familyi={C\bibinitperiod},
+           given={Penny},
+           giveni={P\bibinitperiod}}}%
+        {{hash=026d72ec4254ccec451433809f403bea}{%
+           family={Suh},
+           familyi={S\bibinitperiod},
+           given={Jina},
+           giveni={J\bibinitperiod}}}%
+        {{hash=82520bbf113f3d3fb8b17746a891669f}{%
+           family={Iqbal},
+           familyi={I\bibinitperiod},
+           given={Shamsi},
+           giveni={S\bibinitperiod}}}%
+        {{hash=0dbb12d23afec11a5d82a2dc84df6a9d}{%
+           family={Bennett},
+           familyi={B\bibinitperiod},
+           given={Paul\bibnamedelima N},
+           giveni={P\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=0e3f2e4008eae58f045d17d431e2227c}{%
+           family={Inkpen},
+           familyi={I\bibinitperiod},
+           given={Kori},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{39cd4218b09c7c1d3953f7772678443d}
+      \strng{fullhash}{ec187b328020a393e8757af0f697ef4a}
+      \strng{fullhashraw}{ec187b328020a393e8757af0f697ef4a}
+      \strng{bibnamehash}{ec187b328020a393e8757af0f697ef4a}
+      \strng{authorbibnamehash}{ec187b328020a393e8757af0f697ef4a}
+      \strng{authornamehash}{39cd4218b09c7c1d3953f7772678443d}
+      \strng{authorfullhash}{ec187b328020a393e8757af0f697ef4a}
+      \strng{authorfullhashraw}{ec187b328020a393e8757af0f697ef4a}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems}
+      \field{title}{Guidelines for Human-AI Interaction}
+      \field{year}{2019}
+      \field{pages}{1\bibrangedash 13}
+      \range{pages}{13}
+    \endentry
+    \entry{electron2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=37ad480f97bed434bd748fcd4aa11d40}{%
+           family={Foundation},
+           familyi={F\bibinitperiod},
+           given={OpenJS},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{37ad480f97bed434bd748fcd4aa11d40}
+      \strng{fullhash}{37ad480f97bed434bd748fcd4aa11d40}
+      \strng{fullhashraw}{37ad480f97bed434bd748fcd4aa11d40}
+      \strng{bibnamehash}{37ad480f97bed434bd748fcd4aa11d40}
+      \strng{authorbibnamehash}{37ad480f97bed434bd748fcd4aa11d40}
+      \strng{authornamehash}{37ad480f97bed434bd748fcd4aa11d40}
+      \strng{authorfullhash}{37ad480f97bed434bd748fcd4aa11d40}
+      \strng{authorfullhashraw}{37ad480f97bed434bd748fcd4aa11d40}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Electron: Build Cross-Platform Desktop Apps with JavaScript, HTML, and CSS}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.electronjs.org/
+      \endverb
+      \verb{url}
+      \verb https://www.electronjs.org/
+      \endverb
+    \endentry
+    \entry{flutter2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=8b36e9207c24c76e6719268e49201d94}{%
+           family={Google},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \strng{bibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorbibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authornamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Flutter: Build Apps for Any Screen}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://flutter.dev/
+      \endverb
+      \verb{url}
+      \verb https://flutter.dev/
+      \endverb
+    \endentry
+    \entry{gradio2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=0b813ceaa83073474b29202cff94804d}{%
+           family={Inc.},
+           familyi={I\bibinitperiod},
+           given={Gradio},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{0b813ceaa83073474b29202cff94804d}
+      \strng{fullhash}{0b813ceaa83073474b29202cff94804d}
+      \strng{fullhashraw}{0b813ceaa83073474b29202cff94804d}
+      \strng{bibnamehash}{0b813ceaa83073474b29202cff94804d}
+      \strng{authorbibnamehash}{0b813ceaa83073474b29202cff94804d}
+      \strng{authornamehash}{0b813ceaa83073474b29202cff94804d}
+      \strng{authorfullhash}{0b813ceaa83073474b29202cff94804d}
+      \strng{authorfullhashraw}{0b813ceaa83073474b29202cff94804d}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Gradio: Build Machine Learning Web Apps in Python}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://gradio.app/
+      \endverb
+      \verb{url}
+      \verb https://gradio.app/
+      \endverb
+    \endentry
+    \entry{norman2013design}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=23f12bb124db5cb91003802eaee52457}{%
+           family={Norman},
+           familyi={N\bibinitperiod},
+           given={Don},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Basic Books}%
+      }
+      \strng{namehash}{23f12bb124db5cb91003802eaee52457}
+      \strng{fullhash}{23f12bb124db5cb91003802eaee52457}
+      \strng{fullhashraw}{23f12bb124db5cb91003802eaee52457}
+      \strng{bibnamehash}{23f12bb124db5cb91003802eaee52457}
+      \strng{authorbibnamehash}{23f12bb124db5cb91003802eaee52457}
+      \strng{authornamehash}{23f12bb124db5cb91003802eaee52457}
+      \strng{authorfullhash}{23f12bb124db5cb91003802eaee52457}
+      \strng{authorfullhashraw}{23f12bb124db5cb91003802eaee52457}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Design of Everyday Things: Revised and Expanded Edition}
+      \field{year}{2013}
+    \endentry
+    \entry{openaitts2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=0523b13262b12c215d8009938f5c14f1}{%
+           family={OpenAI},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{0523b13262b12c215d8009938f5c14f1}
+      \strng{fullhash}{0523b13262b12c215d8009938f5c14f1}
+      \strng{fullhashraw}{0523b13262b12c215d8009938f5c14f1}
+      \strng{bibnamehash}{0523b13262b12c215d8009938f5c14f1}
+      \strng{authorbibnamehash}{0523b13262b12c215d8009938f5c14f1}
+      \strng{authornamehash}{0523b13262b12c215d8009938f5c14f1}
+      \strng{authorfullhash}{0523b13262b12c215d8009938f5c14f1}
+      \strng{authorfullhashraw}{0523b13262b12c215d8009938f5c14f1}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{OpenAI Text-to-Speech API}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://platform.openai.com/docs/guides/text-to-speech
+      \endverb
+      \verb{url}
+      \verb https://platform.openai.com/docs/guides/text-to-speech
+      \endverb
+    \endentry
+    \entry{radford2023whisper}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=a812c46caad94fc8701be37871f303ba}{%
+           family={Radford},
+           familyi={R\bibinitperiod},
+           given={Alec},
+           giveni={A\bibinitperiod}}}%
+        {{hash=37a96525bc70870f8509160f7eccf4b7}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Jong\bibnamedelima Wook},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=1eed631dd35845a607a45dd35d948203}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Tao},
+           giveni={T\bibinitperiod}}}%
+        {{hash=7ae2a0efeaf9c031f9b420bcb1c19e54}{%
+           family={Brockman},
+           familyi={B\bibinitperiod},
+           given={Greg},
+           giveni={G\bibinitperiod}}}%
+        {{hash=6d3e5097d8af9c8bdf8388f00d5179ac}{%
+           family={McLeavey},
+           familyi={M\bibinitperiod},
+           given={Christine},
+           giveni={C\bibinitperiod}}}%
+        {{hash=8d569d1d5b8b5a7836017a98b430f959}{%
+           family={Sutskever},
+           familyi={S\bibinitperiod},
+           given={Ilya},
+           giveni={I\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{ca3baa5a22057195db1c71be39b4c922}
+      \strng{fullhash}{e202abc1ca19ec84987f68e0aec49fa3}
+      \strng{fullhashraw}{e202abc1ca19ec84987f68e0aec49fa3}
+      \strng{bibnamehash}{e202abc1ca19ec84987f68e0aec49fa3}
+      \strng{authorbibnamehash}{e202abc1ca19ec84987f68e0aec49fa3}
+      \strng{authornamehash}{ca3baa5a22057195db1c71be39b4c922}
+      \strng{authorfullhash}{e202abc1ca19ec84987f68e0aec49fa3}
+      \strng{authorfullhashraw}{e202abc1ca19ec84987f68e0aec49fa3}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the 40th International Conference on Machine Learning}
+      \field{title}{Robust Speech Recognition via Large-Scale Weak Supervision}
+      \field{year}{2023}
+      \field{pages}{28492\bibrangedash 28518}
+      \range{pages}{27}
+    \endentry
+    \entry{tan2021survey}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=88c58ea43b71cda8e83ddf1181a534ce}{%
+           family={Tan},
+           familyi={T\bibinitperiod},
+           given={Xu},
+           giveni={X\bibinitperiod}}}%
+        {{hash=5588f729660dbe4dbf5af3850f858ae3}{%
+           family={Qin},
+           familyi={Q\bibinitperiod},
+           given={Tao},
+           giveni={T\bibinitperiod}}}%
+        {{hash=ebf895beb0450e3fc945da756803bdca}{%
+           family={Soong},
+           familyi={S\bibinitperiod},
+           given={Frank},
+           giveni={F\bibinitperiod}}}%
+        {{hash=716b89cbb7332599ebb33cc58a52f648}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Tie-Yan},
+           giveni={T\bibinithyphendelim Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{aa5c7855deaec914bb57fa98e610353c}
+      \strng{fullhash}{317313bdf31f5c185585cfb8a95c8ed5}
+      \strng{fullhashraw}{317313bdf31f5c185585cfb8a95c8ed5}
+      \strng{bibnamehash}{317313bdf31f5c185585cfb8a95c8ed5}
+      \strng{authorbibnamehash}{317313bdf31f5c185585cfb8a95c8ed5}
+      \strng{authornamehash}{aa5c7855deaec914bb57fa98e610353c}
+      \strng{authorfullhash}{317313bdf31f5c185585cfb8a95c8ed5}
+      \strng{authorfullhashraw}{317313bdf31f5c185585cfb8a95c8ed5}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2106.15561}
+      \field{title}{A Survey on Neural Speech Synthesis}
+      \field{year}{2021}
+    \endentry
+    \entry{yang2020unremarkable}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=d16aa0879612f82c2aae3699ff89e232}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Qian},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=6da3f14e037d996322537f45973aa656}{%
+           family={Steinfeld},
+           familyi={S\bibinitperiod},
+           given={Aaron},
+           giveni={A\bibinitperiod}}}%
+        {{hash=7a5169e276b54aa3d8cd6ad8f8ff7ab0}{%
+           family={Rosé},
+           familyi={R\bibinitperiod},
+           given={Carolyn},
+           giveni={C\bibinitperiod}}}%
+        {{hash=c7816320068b1c0525a0cf4ed21668b5}{%
+           family={Zimmerman},
+           familyi={Z\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{ad559a256180d8c8a068587c63c5c9f5}
+      \strng{fullhash}{153a47d9b4c55a694a97ee2c171e0e37}
+      \strng{fullhashraw}{153a47d9b4c55a694a97ee2c171e0e37}
+      \strng{bibnamehash}{153a47d9b4c55a694a97ee2c171e0e37}
+      \strng{authorbibnamehash}{153a47d9b4c55a694a97ee2c171e0e37}
+      \strng{authornamehash}{ad559a256180d8c8a068587c63c5c9f5}
+      \strng{authorfullhash}{153a47d9b4c55a694a97ee2c171e0e37}
+      \strng{authorfullhashraw}{153a47d9b4c55a694a97ee2c171e0e37}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems}
+      \field{title}{Re-Examining Whether, Why, and How Human-AI Interaction Is Uniquely Difficult to Design}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 13}
+      \range{pages}{13}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

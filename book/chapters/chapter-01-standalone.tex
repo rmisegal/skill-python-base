@@ -1,0 +1,1711 @@
+% chapter-01-standalone.tex
+% Using hebrew-academic-template.cls v5.10.0
+% CLS provides: fontspec, polyglossia, amsmath, amssymb, graphicx, xcolor,
+%   tikz-cd, booktabs, tabularx, longtable, array, hyperref, fancyhdr,
+%   enumitem, float, caption, titlesec, tcolorbox, biblatex, etc.
+
+\documentclass{../hebrew-academic-template}
+
+%% ============================================
+%% Additional Packages (not in CLS)
+%% ============================================
+\usepackage{luatexbase}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{listings}
+
+%% ============================================
+%% TikZ and PGFPlots Extensions
+%% ============================================
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shapes,arrows,positioning,calc,fit,backgrounds,decorations.pathreplacing}
+
+%% ============================================
+%% Project-Specific Colors
+%% ============================================
+\definecolor{chaptercolor}{RGB}{0,51,102}
+\definecolor{sectioncolor}{RGB}{0,76,153}
+\definecolor{examplecolor}{RGB}{230,242,255}
+\definecolor{exercisecolor}{RGB}{255,248,220}
+\definecolor{codebackground}{RGB}{245,245,245}
+\definecolor{formulacolor}{RGB}{240,255,240}
+
+%% ============================================
+%% Code Listings Style
+%% ============================================
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebackground},
+  frame=single,
+  breaklines=true,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!60!black},
+  showstringspaces=false,
+  tabsize=4
+}
+
+% Python style
+\lstdefinestyle{python}{
+  language=Python,
+  morekeywords={self,True,False,None,as,with,async,await}
+}
+
+% JSON style
+\lstdefinestyle{json}{
+  basicstyle=\ttfamily\small,
+  stringstyle=\color{red!60!black},
+  morestring=[b]",
+  literate=
+    *{:}{{{\color{blue}:}}}{1}
+    {,}{{{\color{blue},}}}{1}
+    {\{}{{{\color{blue}\{}}}{1}
+    {\}}{{{\color{blue}\}}}}{1}
+    {[}{{{\color{blue}[}}}{1}
+    {]}{{{\color{blue}]}}}{1}
+}
+
+%% ============================================
+%% Project-Specific Boxes (BiDi-safe tcolorbox environments)
+%% Pattern: qa-BiDi-fix-tcolorbox - wrapper for RTL background overflow
+%% ============================================
+\tcbuselibrary{skins,breakable,theorems}
+
+% ============== INTERNAL BOXES (with @inner suffix) ==============
+
+% Example Box - Internal
+\newtcolorbox{examplebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=examplecolor,
+  colframe=sectioncolor,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=3mm,
+  boxrule=1pt
+}
+
+% Exercise Box - Internal
+\newtcolorbox{exercisebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=exercisecolor,
+  colframe=orange!70!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=3mm,
+  boxrule=1pt
+}
+
+% Formula Box - Internal
+\newtcolorbox{formulabox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=formulacolor,
+  colframe=green!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=0.5pt
+}
+
+% Code Box - Internal
+\newtcolorbox{codebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=codebackground,
+  colframe=gray!50,
+  fonttitle=\bfseries\ttfamily,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=0.5pt
+}
+
+% Note Box - Internal
+\newtcolorbox{notebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=yellow!10,
+  colframe=yellow!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=1pt
+}
+
+% ============== BiDi-SAFE WRAPPER ENVIRONMENTS ==============
+% Force LTR for box drawing, RTL for content inside
+
+\newenvironment{examplebox}[1][]
+  {\begin{english}\begin{examplebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{examplebox@inner}\end{english}}
+
+\newenvironment{exercisebox}[1][]
+  {\begin{english}\begin{exercisebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{exercisebox@inner}\end{english}}
+
+\newenvironment{formulabox}[1][]
+  {\begin{english}\begin{formulabox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{formulabox@inner}\end{english}}
+
+\newenvironment{codebox}[1][]
+  {\begin{english}\begin{codebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{codebox@inner}\end{english}}
+
+\newenvironment{notebox}[1][]
+  {\begin{english}\begin{notebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{notebox@inner}\end{english}}
+
+%% ============================================
+%% Chapter/Section Styling Override
+%% ============================================
+% Note: CLS uses article class which has no \chapter - use \hebrewchapter instead
+% \titleformat{\chapter} removed since article class doesn't define \chapter
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{sectioncolor}}
+  {\textenglish{\thesection}}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\textenglish{\thesubsection}}{1em}{}
+
+%% ============================================
+%% Custom Commands (project-specific)
+%% ============================================
+% Hebrew/English shortcuts (CLS provides \en, \heb already)
+\providecommand{\he}[1]{\texthebrew{#1}}
+
+% Technical terms
+\newcommand{\term}[1]{\textbf{\textenglish{#1}}}
+\newcommand{\heterm}[2]{\textbf{#1} (\textenglish{#2})}
+
+%% ============================================
+%% Theorem Environments
+%% ============================================
+\theoremstyle{definition}
+\newtheorem{definition}{הגדרה}[section]
+\newtheorem{example}{דוגמה}[section]
+\newtheorem{exercise}{תרגיל}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{משפט}[section]
+\newtheorem{lemma}{למה}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{הערה}[section]
+\newtheorem{note}{הערה}[section]
+
+%% ============================================
+%% Float Configuration
+%% ============================================
+\renewcommand{\floatpagefraction}{0.7}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.9}
+\renewcommand{\textfraction}{0.1}
+
+%% Allow more floats per page
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{3}
+\setcounter{totalnumber}{5}
+
+%% ============================================
+%% Page Layout - Fix underfull vbox warnings
+%% (qa-typeset-fix-vbox: Option B - Global)
+%% ============================================
+\raggedbottom  % Allow uneven page bottoms instead of stretching
+
+%% ============================================
+%% Bibliography
+%% ============================================
+\addbibresource{../bibliography/references.bib}
+
+%% ============================================
+%% Book Metadata for Standalone
+%% ============================================
+\title{כלי בינה מלאכותית בעסקים}
+\author{דר' יורם סגל ופרופסור ערן שריף}
+\date{2025}
+
+% Latin environment for LTR code blocks
+\newenvironment{latin}{\begin{english}}{\end{english}}
+
+% Abstract environment for book class (using renewenvironment since amsthm defines abstract)
+\renewenvironment{abstract}{%
+  \begin{center}%
+    \bfseries תקציר%
+  \end{center}%
+  \begin{quotation}%
+}{%
+  \end{quotation}%
+}
+
+\begin{document}
+% Chapter 1: המהפכה השקטה - מבוא למודלי שפה גדולים בעולם העסקי
+% Authors: דר' יורם סגל ופרופסור ערן שריף
+
+\hebrewchapter{המהפכה השקטה - מבוא למודלי שפה גדולים בעולם העסקי}
+\label{chap:llm_intro}
+
+\begin{abstract}
+\begin{hebrew}
+בעידן שבו טכנולוגיה משנה את עולם העסקים בקצב מסחרר, קמה מהפכה חדשה - שקטה אך עמוקה. מודלי שפה גדולים (\textenglish{Large Language Models, LLMs}) משנים את האופן שבו ארגונים מתקשרים, מנתחים מידע ומקבלים החלטות. פרק זה מציג את היסודות המנהליים להבנת הטכנולוגיה, פוטנציאלה ומגבלותיה, ומספק כלים מעשיים להערכת התועלת העסקית שלה.
+\end{hebrew}
+\end{abstract}
+
+\section*{מטרות הלמידה}
+\begin{hebrew}
+בסיום פרק זה, הקורא יוכל:
+\begin{itemize}
+    \item להבין את המהות והפוטנציאל של מודלי שפה גדולים עבור ארגונים
+    \item לזהות את שני התפקידים המרכזיים: אינטראקציה בשפה טבעית ועיבוד לוגיקה מורכבת
+    \item להכיר את נקודות החוזק והחולשה של \textenglish{LLMs} לצורך קבלת החלטות מושכלות
+    \item לחשב ולהעריך את התשואה על ההשקעה (\textenglish{ROI}) ביישום כלי \textenglish{AI}
+    \item לזהות תרחישי שימוש מתאימים ובלתי מתאימים למודלים אלו
+\end{itemize}
+\end{hebrew}
+
+\section{פרולוג: בוקר רגיל בעולם חדש}
+\label{sec:prologue}
+
+\begin{hebrew}
+שבע בבוקר. שרה, מנהלת שיווק בחברת \textenglish{SaaS} בינונית, מתיישבת מול המחשב עם כוס קפה. לפניה משימה מוכרת: כתיבת חמישה פוסטים לרשתות חברתיות לקמפיין החדש. בעבר, זה היה לוקח לה שעתיים לפחות. היום, היא פותחת את \textenglish{ChatGPT}, מקלידה הנחיה קצרה עם ההקשר והסגנון המבוקש, וכעבור דקה וחצי - חמשת הפוסטים מוכנים. היא משקיעה עוד עשר דקות בעריכה ועיצוב, ועוברת למשימה הבאה.
+
+באותו זמן, דן, סמנכ"ל הכספים, מעלה לממשק \textenglish{Claude} דוח כספי בן 50 עמודים ומבקש סיכום של המגמות העיקריות ונקודות החריגה. כעבור שתי דקות, הוא מקבל ניתוח מובנה שבעבר היה דורש מבקר פיננסי שעה שלמה. הוא לא מסתפק בכך - הוא ממשיך לשאול שאלות המשך, ו-\textenglish{Claude} עונה בהקשר מלא, כאילו הוא עמית שקרא את הדוח בעצמו.
+
+בקומה השלישית, רונית ממשאבי אנוש מעבירה ראיון ראשוני עם מועמד. היא לא לבד - לידה פועל סוכן \textenglish{AI} שמקליט, מתמלל ומנתח בזמן אמת את תשובות המועמד מול פרופיל התפקיד. כשהשיחה מסתיימת, רונית כבר רואה דוח מסכם עם המלצה ראשונית.
+
+זהו לא מדע בדיוני. זה לא עתיד רחוק. זה היום, עכשיו, בעשרות אלפי ארגונים ברחבי העולם.
+
+אבל מה באמת קורה כאן? מה הופך את הטכנולוגיה הזו לשונה מכל אוטומציה שראינו עד כה? ואיך מנהלים אמורים להבין, להעריך ולהטמיע אותה בארגון שלהם?
+\end{hebrew}
+
+\section{מהם מודלי שפה גדולים? הסבר אינטואיטיבי}
+\label{sec:what_are_llms}
+
+\subsection{המטאפורה: מכונת השלמת דפוסים}
+\label{subsec:completion_machine}
+
+\begin{hebrew}
+דמיינו לרגע ילד שגדל בסביבה שבה הוא שומע מיליוני שיחות, קורא מיליארדי משפטים, וחשוף לכמעט כל נושא אנושי אפשרי - היסטוריה, מדע, ספרות, עסקים, פילוסופיה. הילד הזה לא מבין בהכרח את העולם כמו שאנחנו מבינים אותו, אבל הוא מפתח יכולת מדהימה לזהות דפוסים: איך משפטים בנויים, איך רעיונות מתקשרים, איך בעיות נפתרות, איך אנשים מתקשרים בהקשרים שונים.
+
+כשאתם שואלים את הילד הזה שאלה, הוא לא מחפש תשובה במאגר מידע. במקום זאת, הוא משתמש בכל הדפוסים שהוא למד כדי \textbf{להשלים} את המשפט הכי הגיוני, הכי סביר, הכי מתאים להקשר. אם שאלתם על אסטרטגיית שיווק, הוא יזכור מיליוני שיחות על שיווק שהוא "שמע", וישלים את התשובה בצורה שמשקפת את הדפוסים האלה.
+
+זו, בקצרה, המהות של \textenglish{Large Language Model (LLM)}.
+
+\textenglish{LLM} הוא מודל מתמטי ענק שאומן על כמויות אדירות של טקסט - ספרים, מאמרים, אתרי אינטרנט, קוד תוכנה, ועוד. בתהליך האימון, המודל למד דפוסים סטטיסטיים מורכבים:
+\begin{itemize}
+    \item איזה מילים מופיעות לצד אילו מילים
+    \item איך משפטים בנויים בהקשרים שונים
+    \item איך רעיונות מתקשרים זה לזה
+    \item איך בעיות נפתרות בתחומים שונים
+\end{itemize}
+
+כשאתם כותבים \textenglish{prompt} (הנחיה) ל-\textenglish{LLM}, המודל "רואה" את הטקסט שלכם ומשתמש בכל הדפוסים שהוא למד כדי לחזות את ההמשך הכי סביר. הוא עושה זאת מילה אחר מילה, תוך התחשבות בכל ההקשר שלפניו.
+
+\textbf{נקודה קריטית למנהלים:} \textenglish{LLM} לא "יודע" דברים במובן האנושי. הוא לא מחפש מידע במסד נתונים. הוא יוצר טקסט חדש על בסיס דפוסים סטטיסטיים. זו גם החוזקה (יצירתיות, גמישות) וגם החולשה (אפשרות להזיות) שלו.
+\end{hebrew}
+
+\subsection{מתחת למכסה המנוע: ארכיטקטורה בסיסית}
+\label{subsec:basic_architecture}
+
+\begin{hebrew}
+בלי להיכנס לפרטים טכניים עמוקים מדי, חשוב להבין את המבנה הבסיסי של \textenglish{LLM}:
+\end{hebrew}
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[
+    node distance=2.5cm,
+    block/.style={rectangle, draw, fill=blue!20, text width=6em, text centered, rounded corners, minimum height=3em},
+    arrow/.style={->, >=stealth, thick}
+]
+    % Nodes - English only for proper TikZ rendering
+    \node[block] (input) {\textbf{Input}\\Textual Input};
+    \node[block, right of=input] (tokenize) {\textbf{Tokenization}\\Token Splitting};
+    \node[block, right of=tokenize] (embedding) {\textbf{Embedding}\\Numeric Vectors};
+    \node[block, below of=embedding] (transformer) {\textbf{Transformer}\\Deep Processing};
+    \node[block, left of=transformer] (predict) {\textbf{Prediction}\\Next Token};
+    \node[block, left of=predict] (output) {\textbf{Output}\\Textual Output};
+
+    % Arrows
+    \draw[arrow] (input) -- (tokenize);
+    \draw[arrow] (tokenize) -- (embedding);
+    \draw[arrow] (embedding) -- (transformer);
+    \draw[arrow] (transformer) -- (predict);
+    \draw[arrow] (predict) -- (output);
+\end{tikzpicture}
+\end{english}
+\caption{ארכיטקטורה בסיסית של \textenglish{LLM} - מקלט לפלט}
+\label{fig:llm_architecture}
+\end{figure}
+
+\begin{hebrew}
+\begin{enumerate}
+    \item \textbf{\textenglish{Input} (קלט):} המשתמש מזין טקסט - שאלה, בקשה, או הקשר.
+
+    \item \textbf{\textenglish{Tokenization} (טוקניזציה):} הטקסט מפורק ל"טוקנים" - יחידות בסיסיות שהמודל מבין. טוקן יכול להיות מילה, חלק ממילה, או סימן פיסוק. למשל, המשפט "שלום עולם" עשוי להיות \textenglish{2-3} טוקנים.
+
+    \item \textbf{\textenglish{Embedding} (הטמעה):} כל טוקן הופך לייצוג מתמטי - וקטור של מספרים שמייצג את משמעותו ביחס לטוקנים אחרים.
+
+    \item \textbf{\textenglish{Transformer} (טרנספורמר):} זוהי הלב של המודל \cite{vaswani2017attention}. רשת נוירונים עמוקה שמנתחת את היחסים בין הטוקנים, מבינה הקשר, ומחלצת משמעות. כאן קורה "הקסם" - המודל "מבין" מה נשאל וכיצד לענות.
+
+    \item \textbf{\textenglish{Prediction} (חיזוי):} המודל מחזה את הטוקן הבא הכי סביר, מוסיף אותו לרצף, וחוזר על התהליך עד שהתשובה שלמה.
+
+    \item \textbf{\textenglish{Output} (פלט):} הטוקנים הופכים בחזרה לטקסט קריא שהמשתמש רואה.
+\end{enumerate}
+
+\textbf{למה זה חשוב למנהלים?}
+\begin{itemize}
+    \item \textbf{טוקנים = עלות:} רוב שירותי ה-\textenglish{API} גובים תשלום לפי מספר הטוקנים שנשלחים (קלט) ומתקבלים (פלט). הבנת טוקנים חיונית לתכנון תקציב.
+    \item \textbf{הקשר מוגבל:} לכל מודל יש "חלון הקשר" (\textenglish{context window}) - מספר מקסימלי של טוקנים שהוא יכול לעבד בבת אחת. למשל, \textenglish{GPT-4 Turbo} תומך ב-\textenglish{128,000} טוקנים (~\textenglish{96,000} מילים), בעוד \textenglish{GPT-3.5} תומך רק ב-\textenglish{16,000}.
+    \item \textbf{מהירות תלויה בגודל:} מודלים גדולים יותר (יותר פרמטרים) בדרך כלל מדויקים יותר, אך איטיים ויקרים יותר.
+\end{itemize}
+\end{hebrew}
+
+\section{שני הכוחות העל של \textenglish{LLM}}
+\label{sec:two_superpowers}
+
+\subsection{כוח ראשון: תקשורת טבעית עם מכונה}
+\label{subsec:natural_communication}
+
+\begin{hebrew}
+במשך עשרות שנים, האינטראקציה שלנו עם מחשבים הייתה מוגבלת. רצינו שהמחשב יעשה משהו? היינו צריכים ללמוד את שפתו: לחצנים, תפריטים, שורות פקודה, שפות תכנות. המחשב לא הבין אותנו - אנחנו היינו צריכים להתאים את עצמנו אליו.
+
+\textenglish{LLMs} הופכים את המשוואה. לראשונה בתולדות המחשוב, אנחנו יכולים לתקשר עם מכונה \textbf{בשפה שלנו}, בדיוק כפי שהיינו מדברים עם עמית.
+
+\textbf{דוגמה מעולם העסקים:}
+
+\textbf{בעבר} (אינטראקציה מסורתית עם תוכנה):
+\begin{enumerate}
+    \item פתח תוכנת \textenglish{Excel}
+    \item בחר טווח תאים
+    \item לחץ על "נתונים" $\rightarrow$ "סינון" $\rightarrow$ "סינון מתקדם"
+    \item הגדר קריטריונים מורכבים
+    \item בחר "עותק למיקום אחר"
+    \item בחר תא יעד
+    \item לחץ "אישור"
+\end{enumerate}
+
+\textbf{היום} (אינטראקציה עם \textenglish{LLM}):
+\begin{quote}
+"תסנן את הטבלה הזו ותראה לי רק לקוחות מאזור המרכז שרכשו מעל \textenglish{10,000} ש"ח ברבעון האחרון"
+\end{quote}
+
+המודל מבין את הכוונה, מזהה את הנתונים הרלוונטיים, ומבצע את הפעולה - או אפילו כותב לכם את הנוסחה המתאימה.
+
+\textbf{ההשלכות העסקיות:}
+\begin{itemize}
+    \item \textbf{הפחתת מחסום הכניסה:} עובדים לא צריכים להיות מומחי תוכנה כדי לבצע משימות מורכבות.
+    \item \textbf{מהירות:} מה שלוקח \textenglish{10} דקות בממשק מסורתי, לוקח \textenglish{10} שניות בשפה טבעית.
+    \item \textbf{גמישות:} אפשר לשאול שאלות המשך, לשנות דרישות, לחקור כיוונים שונים - בדיוק כמו בשיחה אנושית.
+\end{itemize}
+\end{hebrew}
+
+\subsection{כוח שני: עיבוד לוגיקה מורכבת}
+\label{subsec:complex_logic}
+
+\begin{hebrew}
+אבל \textenglish{LLMs} הם הרבה יותר מסתם ממשק נוח. הם מסוגלים לבצע \textbf{חשיבה מורכבת} על נתונים ורעיונות.
+
+בואו נבחן כמה יכולות מרכזיות:
+
+\subsubsection{סיכום והפקת תובנות}
+
+ניתן להזין ל-\textenglish{LLM} דוח של \textenglish{100} עמודים ולבקש:
+\begin{itemize}
+    \item "סכם את הנקודות העיקריות ב-\textenglish{5} משפטים"
+    \item "מה הטרנדים המרכזיים שמופיעים פה?"
+    \item "איזה נושאים חוזרים על עצמם?"
+\end{itemize}
+
+המודל קורא, מזהה דפוסים, ומפיק תובנות - עבודה שעד לפני כמה שנים דרשה אנליסט אנושי.
+
+\subsubsection{השוואה וניתוח}
+
+"השווה בין שלוש הצעות המחיר האלה מבחינת עלות, זמן אספקה ושירות, והמלץ על הספק המתאים ביותר לארגון שלנו."
+
+המודל לא רק משווה - הוא \textbf{מנמק} את ההמלצה שלו על בסיס הקריטריונים שהגדרתם.
+
+\subsubsection{פתרון בעיות רב-שלבי}
+
+\textenglish{LLMs} מודרניים יכולים לפתור בעיות שדורשות מספר שלבי חשיבה:
+\begin{enumerate}
+    \item הבנת הבעיה
+    \item פירוק לתת-בעיות
+    \item פתרון כל תת-בעיה
+    \item שילוב התוצאות לפתרון כולל
+\end{enumerate}
+
+\textbf{דוגמה:}
+\begin{quote}
+"יש לנו \textenglish{5} נציגי מכירות, \textenglish{120} לידים חדשים החודש, וכל נציג יכול לטפל בממוצע ב-\textenglish{25} לידים בחודש. איך כדאי לחלק את הלידים בהתחשב בכך שנציג א' מתמחה בלקוחות ארגוניים, ב' ו-ג' בעסקים קטנים, ד' בסטארטאפים, וה' חדש ועדיין מתאמן?"
+\end{quote}
+
+המודל יבנה תוכנית חלוקה מפורטת, יסביר את ההיגיון מאחוריה, ואפילו יתריע על בעיות פוטנציאליות.
+
+\subsubsection{תכנות וכתיבת קוד}
+
+\textenglish{LLMs} כמו \textenglish{GPT-4} \cite{openai2023gpt4} ו-\textenglish{Claude} \cite{anthropic2024claude} מסוגלים לכתוב קוד תוכנה באיכות גבוהה. מנהל בלי רקע תכנותי יכול לבקש:
+
+\begin{quote}
+"תכתוב סקריפט \textenglish{Python} שקורא קובץ \textenglish{Excel}, מחשב את סכום המכירות לכל מוצר, ויוצר גרף עמודות"
+\end{quote}
+
+והמודל יכתוב קוד מלא, מתועד, ומוכן להרצה.
+
+\textbf{השלכה עסקית:} זה מוריד את המחסום לאוטומציה. משימות שבעבר דרשו מתכנת, היום יכולות להתבצע על ידי כל מנהל עם רעיון ברור.
+\end{hebrew}
+
+\subsection{המשמעות המשולבת: עובד דיגיטלי}
+\label{subsec:digital_worker}
+
+\begin{hebrew}
+כשמשלבים את שני הכוחות האלה - תקשורת טבעית ועיבוד לוגיקה מורכבת - מקבלים משהו חדש לחלוטין בעולם העסקים: \textbf{עובד דיגיטלי} שאפשר להדריך, לשאול שאלות, לתקן, ולשפר - בדיוק כמו עובד אנושי.
+
+זה לא עוד כלי שמבצע משימה אחת קבועה. זה ישות דיגיטלית שיכולה:
+\begin{itemize}
+    \item להבין הוראות מורכבות
+    \item להתאים את עצמה למצבים שונים
+    \item לשאול שאלות הבהרה
+    \item ללמוד מדוגמאות שאתם נותנים
+    \item להציע שיפורים
+\end{itemize}
+
+\textbf{זו המהפכה האמיתית של \textenglish{LLMs}.}
+\end{hebrew}
+
+\section{נקודות החוזק: מה \textenglish{LLMs} עושים טוב במיוחד}
+\label{sec:strengths}
+
+\subsection{יצירתיות והפקת רעיונות}
+\label{subsec:creativity}
+
+\begin{hebrew}
+\textenglish{LLMs} מצטיינים ביצירת תוכן חדש ומגוון:
+\begin{itemize}
+    \item \textbf{תוכן שיווקי:} מודעות, פוסטים, דפי נחיתה, מיילים
+    \item \textbf{תוכן טכני:} מסמכי דרישות, הצעות מחיר, תיעוד
+    \item \textbf{רעיונות:} סיעור מוחות אוטומטי, זוויות חדשות לבעיות קיימות
+\end{itemize}
+
+\textbf{דוגמה מעשית:}
+
+מנהלת שיווק בחברת \textenglish{B2B SaaS} צריכה \textenglish{10} כותרות שונות לקמפיין \textenglish{LinkedIn Ads} שמקדם כלי ניהול פרויקטים לצוותי פיתוח.
+
+היא כותבת ל-\textenglish{ChatGPT}:
+\begin{quote}
+"צור \textenglish{10} כותרות לקמפיין לינקדאין למוצר ניהול פרויקטים לצוותי פיתוח תוכנה. המוצר חוסך \textenglish{20}\% מזמן ההנהלה ומשפר שיתוף פעולה. קהל יעד: \textenglish{VP R\&D} וראשי צוותים. טון: מקצועי אך לא יבש, דגש על תוצאות עסקיות."
+\end{quote}
+
+תוך שניות, היא מקבלת \textenglish{10} אפשרויות, כל אחת בזווית שונה - \textenglish{ROI}, פריון, איכות חיים, תחרותיות. היא יכולה לבחור, לשלב, או לבקש עוד וריאציות.
+
+\textbf{זמן שנחסך:} שעה של סיעור מוחות ומחשבה $\rightarrow$ \textenglish{5} דקות.
+\end{hebrew}
+
+\subsection{הבנת הקשר ונואנסים}
+\label{subsec:context_understanding}
+
+\begin{hebrew}
+בניגוד לכלי אוטומציה מסורתיים שפועלים לפי כללים קשיחים, \textenglish{LLMs} מבינים הקשר:
+\begin{itemize}
+    \item הם "זוכרים" את כל השיחה ומתייחסים אליה
+    \item הם מבינים כוונות, לא רק מילים
+    \item הם מתאימים את התשובה לטון ולסגנון המבוקש
+\end{itemize}
+
+\textbf{דוגמה מתמיכת לקוחות:}
+
+לקוח כותב: "המערכת שוב קרסה לי באמצע פעולה חשובה"
+
+\textenglish{Chatbot} מסורתי (מבוסס כללים) יזהה את המילה "קרסה" ויחזיר:
+\begin{quote}
+"אנא נסה לאתחל את המערכת ולנקות את הזיכרון הזמני."
+\end{quote}
+
+סוכן \textenglish{LLM} מבין את ההקשר הרגשי והעסקי:
+\begin{quote}
+"אני מבין את התסכול - זה בוודאי מעצבן כשזה קורה בעיצומה של עבודה חשובה. בואו נפתור את זה מהר. האם הבעיה קרתה בפעולה ספציפית? זה יעזור לי לאבחן את הגורם ולוודא שזה לא יקרה שוב."
+\end{quote}
+
+ההבדל? אמפתיה, הקשר עסקי, וכוונה לפתרון ארוך טווח - לא רק טיפול תסמיני.
+\end{hebrew}
+
+\subsection{גמישות והתאמה}
+\label{subsec:flexibility}
+
+\begin{hebrew}
+\textenglish{LLMs} לא דורשים תכנות מראש לכל תרחיש. אפשר "ללמד" אותם "בדרך":
+\begin{itemize}
+    \item \textbf{\textenglish{Few-Shot Learning}} \cite{brown2020language}: תן כמה דוגמאות, והמודל יבין את הדפוס
+    \item \textbf{התאמה לסגנון:} "כתוב בסגנון פורמלי/חברי/טכני"
+    \item \textbf{שינוי כיוון באמצע:} "לא, תשנה את הגישה ל..."
+\end{itemize}
+
+\textbf{דוגמה - קטגוריזציה של פניות:}
+
+חברה מקבלת מאות פניות ביום לתמיכת לקוחות. היא רוצה לקטגר אותן אוטומטית ל-\textenglish{5} קטגוריות.
+
+\textbf{גישה מסורתית:} שכירת מתכנת שיבנה מודל \textenglish{ML} מותאם אישית, יאסוף נתוני אימון, ויקח שבועיים.
+
+\textbf{גישה \textenglish{LLM}:}
+\begin{quote}
+"קטגר את הפניות הבאות לאחת מחמש הקטגוריות: טכני, חיוב, שאלת מכירה, תלונה, בקשת פיצ'ר. הנה שלוש דוגמאות:
+
+[דוגמה 1...]
+[דוגמה 2...]
+[דוגמה 3...]
+
+עכשיו, קטגר את הפניות האלה:
+[רשימת פניות...]"
+\end{quote}
+
+המודל יבין את הדפוס מהדוגמאות ויקטגר נכון 90-95\% מהפניות.
+
+\textbf{זמן יישום:} שבועיים $\rightarrow$ \textenglish{30} דקות.
+\end{hebrew}
+
+\subsection{עבודה עם שפות מרובות}
+\label{subsec:multilingual}
+
+\begin{hebrew}
+\textenglish{LLMs} מודרניים כמו \textenglish{GPT-4}, \textenglish{Claude}, ו-\textenglish{Gemini} מדברים עשרות שפות בצורה שוטפת. זה פותח אפשרויות:
+\begin{itemize}
+    \item תרגום אוטומטי איכותי (מעבר לתרגום מילה במילה - הבנת הקשר תרבותי)
+    \item תמיכת לקוחות רב-לשונית בלי צוות עצום
+    \item יצירת תוכן בשפות מרובות באופן מיידי
+\end{itemize}
+
+\textbf{דוגמה:} חברה ישראלית שמוכרת לאירופה צריכה לתרגם מסמך טכני מעברית לגרמנית, צרפתית, וספרדית. במקום שלושה מתרגמנים מקצועיים ומספר ימים, \textenglish{Claude} מתרגם את שלושת הגרסאות תוך דקות, עם שמירה על טרמינולוגיה טכנית עקבית.
+\end{hebrew}
+
+\section{נקודות החולשה: מה \textenglish{LLMs} לא עושים טוב}
+\label{sec:weaknesses}
+
+\subsection{הזיות \textenglish{(Hallucinations)}}
+\label{subsec:hallucinations}
+
+\begin{hebrew}
+זוהי אולי החולשה הקריטית ביותר של \textenglish{LLMs}: הנטייה "להמציא" מידע \cite{huang2024hallucination}.
+
+זכרו - \textenglish{LLM} הוא מכונת השלמת דפוסים. הוא לא מחפש מידע במסד נתונים; הוא מחזה את המשך הסביר ביותר. לפעמים, אם המידע הנכון לא קיים בזיכרון הסטטיסטי שלו, המודל יייצר עובדות שנשמעות מהימנות - אבל שגויות לחלוטין.
+
+\textbf{דוגמה מסוכנת:}
+
+עורך דין ביקש מ-\textenglish{ChatGPT} לספק תקדימים משפטיים לתמיכה בתביעה. המודל מסר רשימה של שישה תקדימים, כולל שמות תיקים, מספרי תיק, ותאריכים. הכל נראה לגיטימי.
+
+הבעיה? \textbf{אף אחד מהתקדימים לא היה אמיתי.} \textenglish{ChatGPT} המציא אותם, כי הם נשמעו הגיוניים בהקשר.
+
+המשפט הסתיים בסנקציות חמורות על עורך הדין.
+
+\textbf{למה זה קורה?}
+
+\textenglish{LLM} נועד "להישמע" מהימן ורהוט. אין לו מנגנון פנימי שאומר "אני לא יודע". במקום זאת, הוא ממשיך לייצר את המשך הכי סביר, גם אם זה לא מבוסס עובדות.
+
+\textbf{השלכות עסקיות:}
+\begin{itemize}
+    \item \textbf{אין לסמוך על \textenglish{LLM} לעובדות ללא אימות.} תמיד יש לבדוק מידע קריטי.
+    \item \textbf{מתאים ליצירת רעיונות וטיוטות ראשוניות}, פחות מתאים לדוחות עובדתיים סופיים.
+    \item \textbf{חובה לשלב בקרה אנושית} במערכות קריטיות.
+\end{itemize}
+\end{hebrew}
+
+\subsection{חוסר עדכניות \textenglish{(Knowledge Cutoff)}}
+\label{subsec:knowledge_cutoff}
+
+\begin{hebrew}
+כל \textenglish{LLM} נאמן עד תאריך מסוים - ה"\textenglish{knowledge cutoff}" שלו. למשל:
+\begin{itemize}
+    \item \textenglish{GPT-4} (גרסה מ-2024): נתונים עד אפריל 2023
+    \item \textenglish{Claude 3.5 Sonnet}: נתונים עד אפריל 2024
+\end{itemize}
+
+המשמעות: המודל לא יודע כלום על אירועים, מוצרים, טכנולוגיות, או שינויים שקרו אחרי התאריך הזה.
+
+\textbf{דוגמה:}
+
+CFO שואל את \textenglish{GPT-4}:
+\begin{quote}
+"מה שער הדולר מול השקל היום?"
+\end{quote}
+
+התשובה תהיה מבוססת על נתונים ישנים, או לחלופין - הזיה.
+
+\textbf{פתרונות:}
+\begin{itemize}
+    \item שימוש במודלים עם גישה לאינטרנט (כמו \textenglish{ChatGPT Plus} עם \textenglish{browsing mode})
+    \item שילוב \textenglish{RAG (Retrieval-Augmented Generation)} \cite{lewis2020retrieval} - הזרקת מידע עדכני למודל
+    \item שימוש ב-\textenglish{APIs} חיצוניים שהסוכן יכול לקרוא להם
+\end{itemize}
+
+\textbf{הנפקות עסקיות:}
+בתחומים דינמיים (פיננסים, חדשות, נתונים תפעוליים), אין להסתמך על \textenglish{LLM} לבדו. יש לספק לו מידע עדכני או לשלב אותו עם מקורות מידע חיים.
+\end{hebrew}
+
+\subsection{עלויות - לא זניח}
+\label{subsec:costs}
+
+\begin{hebrew}
+שימוש ב-\textenglish{LLMs} דרך \textenglish{API} עולה כסף, והעלות יכולה להפתיע ארגונים שלא תכננו נכון.
+
+מודלים מתומחרים לפי \textbf{טוקנים}:
+\end{hebrew}
+
+\begin{table}[htbp]
+\centering
+\begin{latin}
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Model} & \textbf{Input (\$/1M tokens)} & \textbf{Output (\$/1M tokens)} \\
+\hline
+GPT-4 Turbo & 10.00 & 30.00 \\
+GPT-3.5 Turbo & 0.50 & 1.50 \\
+Claude 3.5 Sonnet & 3.00 & 15.00 \\
+Claude 3 Haiku & 0.25 & 1.25 \\
+Gemini 1.5 Pro & 1.25 & 5.00 \\
+\hline
+\end{tabular}
+\end{latin}
+\caption{\he{מחירי מודלים נפוצים (נכון למרץ 2024)}}
+\label{tab:model_pricing}
+\end{table}
+
+\begin{hebrew}
+\textbf{דוגמת חישוב:}
+
+נניח שחברה משתמשת ב-\textenglish{GPT-4 Turbo} לתמיכת לקוחות. כל שיחה:
+\begin{itemize}
+    \item קלט ממוצע: \textenglish{2,000} טוקנים (הקשר + שאלת הלקוח)
+    \item פלט ממוצע: \textenglish{800} טוקנים (תשובה)
+\end{itemize}
+
+עלות לשיחה:
+\begin{equation}
+\begin{split}
+\text{Cost} &= \left(\frac{2{,}000}{1{,}000{,}000} \times 10\right) + \left(\frac{800}{1{,}000{,}000} \times 30\right) \\
+&= 0.02 + 0.024 \\
+&= \$0.044
+\end{split}
+\end{equation}
+
+זה נשמע זניח, נכון? אבל אם יש \textenglish{10,000} שיחות בחודש:
+\begin{equation}
+\text{Monthly Cost} = 10{,}000 \times 0.044 = \$440
+\end{equation}
+
+ואם זה גדל ל-\textenglish{100,000} שיחות בחודש (חברה גדולה):
+\begin{equation}
+\text{Monthly Cost} = 100{,}000 \times 0.044 = \$4{,}400/\text{month} = \$52{,}800/\text{year}
+\end{equation}
+
+\textbf{אסטרטגיות חיסכון:}
+\begin{itemize}
+    \item שימוש במודלים זולים יותר למשימות פשוטות (\textenglish{GPT-3.5} במקום \textenglish{GPT-4})
+    \item אופטימיזציה של \textenglish{prompts} להיות קצרים וממוקדים
+    \item \textenglish{Caching} - שמירת תשובות לשאלות נפוצות
+    \item שימוש במודלים \textenglish{self-hosted} (למשל \textenglish{Llama 3}) לנפחים גדולים
+\end{itemize}
+\end{hebrew}
+
+\subsection{חוסר שקיפות \textenglish{(Black Box)}}
+\label{subsec:black_box}
+
+\begin{hebrew}
+\textenglish{LLMs} הם "קופסה שחורה". כשהם נותנים תשובה, אי אפשר לדעת בדיוק \textbf{למה} הם הגיעו למסקנה הזו. אין "שרשרת הוכחה".
+
+\textbf{בעיה עסקית:}
+\begin{itemize}
+    \item \textbf{רגולציה:} בתחומים מוסדרים (בנקאות, בריאות), לפעמים נדרש להסביר החלטות. "כי ה-\textenglish{AI} אמר" לא מספיק.
+    \item \textbf{אמון:} מנהלים מתקשים לסמוך על מערכת שלא יכולה להסביר את ההיגיון שלה.
+    \item \textbf{\textenglish{Bias}:} קשה לזהות ולתקן הטיות כשלא רואים את תהליך החשיבה.
+\end{itemize}
+
+\textbf{פתרונות חלקיים:}
+\begin{itemize}
+    \item שימוש ב-\textenglish{Chain-of-Thought prompting} \cite{wei2022chain} - לבקש מהמודל להסביר את הצעדים שלו
+    \item שילוב מערכות \textenglish{explainable AI} משלימות
+    \item בקרה אנושית במקרים קריטיים
+\end{itemize}
+\end{hebrew}
+
+\section{נוסחאות מנהליות להערכת \textenglish{LLMs}}
+\label{sec:formulas}
+
+\subsection{מדד \textenglish{ROI} של יישום \textenglish{AI}}
+\label{subsec:roi_formula}
+
+\begin{hebrew}
+לפני השקעה בכלי \textenglish{AI}, חשוב לחשב את התשואה הצפויה על ההשקעה \cite{brynjolfsson2023generative, almousa2024llmroi}.
+
+\textbf{נוסחת \textenglish{ROI} בסיסית:}
+\end{hebrew}
+
+\begin{equation}
+\text{ROI} = \frac{(\hebmath{שעות נחסכות} \times \hebmath{עלות שעת עבודה}) - \hebmath{עלות מנוי AI}}{\hebmath{עלות מנוי AI}} \times 100\%
+\label{eq:roi_basic}
+\end{equation}
+
+\begin{hebrew}
+\textbf{דוגמה מעשית:}
+
+צוות תמיכת לקוחות בן \textenglish{5} אנשים משתמש ב-\textenglish{Claude} לטיפול בפניות שגרתיות.
+
+\textbf{נתונים:}
+\begin{itemize}
+    \item כל נציג מטפל ב-\textenglish{30} פניות ביום
+    \item לפני \textenglish{AI}: זמן ממוצע לפנייה = \textenglish{15} דקות
+    \item עם \textenglish{AI} (סיוע בכתיבה, חיפוש מידע, תבניות): זמן ממוצע = \textenglish{10} דקות
+    \item חיסכון לפנייה: \textenglish{5} דקות
+    \item ימי עבודה בחודש: \textenglish{22}
+    \item עלות שעת עבודה ממוצעת: \textenglish{100} ש"ח
+    \item עלות מנוי \textenglish{Claude Pro} לכל נציג: \textenglish{\$20}/חודש = \textenglish{75} ש"ח
+\end{itemize}
+
+\textbf{חישוב:}
+
+שעות נחסכות בחודש:
+\begin{equation}
+\begin{split}
+\hebmath{שעות נחסכות} &= 5 \hebmath{ נציגים} \times 30 \hebmath{ פניות/יום} \times \frac{5}{60} \hebmath{ שעות} \times 22 \hebmath{ ימים} \\
+&= 5 \times 30 \times 0.0833 \times 22 \\
+&= 275 \hebmath{ שעות}
+\end{split}
+\end{equation}
+
+ערך החיסכון:
+\begin{equation}
+\hebmath{ערך} = 275 \times 100 = 27{,}500 \hebmath{ ש"ח}
+\end{equation}
+
+עלות מנוי:
+\begin{equation}
+\hebmath{עלות} = 5 \times 75 = 375 \hebmath{ ש"ח}
+\end{equation}
+
+\textenglish{ROI}:
+\begin{equation}
+\text{ROI} = \frac{27{,}500 - 375}{375} \times 100\% = 7{,}233\%
+\end{equation}
+
+\textbf{משמעות:} על כל שקל שהושקע ב-\textenglish{AI}, החברה חוסכת \textenglish{72} שקל. זו תשואה עצומה.
+
+\textbf{נוסחה מורחבת} (כוללת עלויות נוספות):
+\end{hebrew}
+
+\begin{equation}
+\text{ROI} = \frac{\hebmath{תועלת כוללת} - \hebmath{עלות כוללת}}{\hebmath{עלות כוללת}} \times 100\%
+\end{equation}
+
+\begin{hebrew}
+כאשר:
+\begin{itemize}
+    \item \textbf{תועלת כוללת} = חיסכון בשעות + הגדלת מכירות + שיפור שביעות רצון (בערך כסף)
+    \item \textbf{עלות כוללת} = מנויים + הטמעה + הדרכה + תחזוקה
+\end{itemize}
+\end{hebrew}
+
+\subsection{נוסחת עלות טוקנים}
+\label{subsec:token_cost}
+
+\begin{hebrew}
+להבנת העלות התפעולית של שימוש ב-\textenglish{API}:
+\end{hebrew}
+
+\begin{equation}
+\hebmath{עלות שיחה} = \left(\frac{\hebmath{טוקני קלט}}{1{,}000{,}000} \times \hebmath{מחיר קלט}\right) + \left(\frac{\hebmath{טוקני פלט}}{1{,}000{,}000} \times \hebmath{מחיר פלט}\right)
+\label{eq:token_cost}
+\end{equation}
+
+\begin{hebrew}
+\textbf{דוגמה:}
+
+סוכן \textenglish{AI} לניתוח משוב לקוחות משתמש ב-\textenglish{GPT-4 Turbo}:
+\begin{itemize}
+    \item מחיר קלט: \textenglish{\$10} למיליון טוקנים
+    \item מחיר פלט: \textenglish{\$30} למיליון טוקנים
+    \item כל ניתוח כולל: \textenglish{3,000} טוקני קלט + \textenglish{1,200} טוקני פלט
+    \item נפח: \textenglish{5,000} ניתוחים בחודש
+\end{itemize}
+
+עלות לניתוח בודד:
+\begin{equation}
+\begin{split}
+\text{Cost}_{\text{single}} &= \left(\frac{3{,}000}{1{,}000{,}000} \times 10\right) + \left(\frac{1{,}200}{1{,}000{,}000} \times 30\right) \\
+&= 0.03 + 0.036 \\
+&= \$0.066
+\end{split}
+\end{equation}
+
+עלות חודשית:
+\begin{equation}
+\text{Cost}_{\text{monthly}} = 5{,}000 \times 0.066 = \$330
+\end{equation}
+
+\textbf{שימוש מעשי:} נוסחה זו מאפשרת למנהלים לחזות עלויות על בסיס נפח העסקאות הצפוי ולהחליט בין מודלים שונים.
+\end{hebrew}
+
+\subsection{\textenglish{Break-Even Analysis}}
+\label{subsec:breakeven}
+
+\begin{hebrew}
+מתי כדאי לעבור משירות \textenglish{cloud} לפתרון \textenglish{self-hosted}?
+\end{hebrew}
+
+\begin{equation}
+\hebmath{נקודת איזון (חודשים)} = \frac{\hebmath{עלות הקמה חד-פעמית}}{\hebmath{חיסכון חודשי}}
+\end{equation}
+
+\begin{hebrew}
+\textbf{דוגמה:}
+
+חברה משתמשת ב-\textenglish{GPT-4 API} ומשלמת \textenglish{\$5,000}/חודש. היא שוקלת להקים שרת פנימי עם \textenglish{Llama 3 70B}.
+
+\textbf{עלויות \textenglish{self-hosted}:}
+\begin{itemize}
+    \item שרת + \textenglish{GPU}: \textenglish{\$15,000}
+    \item הקמה ותצורה: \textenglish{\$5,000}
+    \item עלות חודשית (חשמל, תחזוקה, כ"א): \textenglish{\$2,000}
+\end{itemize}
+
+חיסכון חודשי:
+\begin{equation}
+\hebmath{חיסכון} = 5{,}000 - 2{,}000 = \$3{,}000
+\end{equation}
+
+נקודת איזון:
+\begin{equation}
+\text{Break-even} = \frac{15{,}000 + 5{,}000}{3{,}000} = 6.67 \hebmath{ חודשים}
+\end{equation}
+
+\textbf{משמעות:} תוך כ-\textenglish{7} חודשים ההשקעה תשתלם, ומשם והלאה החברה תחסוך \textenglish{\$3,000}/חודש.
+\end{hebrew}
+
+\section{השוואת מודלים: תרשים עלות מול יכולות}
+\label{sec:model_comparison}
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}
+    \begin{axis}[
+        xlabel={\he{עלות יחסית (למיליון טוקנים)}},
+        ylabel={\he{יכולת (ציון ממוצע)}},
+        xmin=0, xmax=12,
+        ymin=60, ymax=100,
+        xtick={0,2,4,6,8,10,12},
+        ytick={60,70,80,90,100},
+        legend pos=north west,
+        ymajorgrids=true,
+        xmajorgrids=true,
+        grid style=dashed,
+        width=12cm,
+        height=8cm,
+    ]
+
+    % GPT-4 Turbo
+    \addplot[
+        color=blue,
+        mark=*,
+        mark size=3pt,
+    ]
+    coordinates {
+        (10,95)
+    };
+    \addlegendentry{\textenglish{GPT-4 Turbo}}
+
+    % GPT-3.5 Turbo
+    \addplot[
+        color=green,
+        mark=square*,
+        mark size=3pt,
+    ]
+    coordinates {
+        (0.5,78)
+    };
+    \addlegendentry{\textenglish{GPT-3.5 Turbo}}
+
+    % Claude 3.5 Sonnet
+    \addplot[
+        color=red,
+        mark=triangle*,
+        mark size=3pt,
+    ]
+    coordinates {
+        (3,92)
+    };
+    \addlegendentry{\textenglish{Claude 3.5 Sonnet}}
+
+    % Claude 3 Haiku
+    \addplot[
+        color=orange,
+        mark=diamond*,
+        mark size=3pt,
+    ]
+    coordinates {
+        (0.25,75)
+    };
+    \addlegendentry{\textenglish{Claude 3 Haiku}}
+
+    % Gemini 1.5 Pro
+    \addplot[
+        color=purple,
+        mark=pentagon*,
+        mark size=3pt,
+    ]
+    coordinates {
+        (1.25,88)
+    };
+    \addlegendentry{\textenglish{Gemini 1.5 Pro}}
+
+    \end{axis}
+\end{tikzpicture}
+\end{english}
+\caption{\he{השוואת מודלים מובילים - עלות מול יכולות}}
+\label{fig:model_comparison}
+\end{figure}
+
+\begin{hebrew}
+תרשים \ref{fig:model_comparison} מציג את הטרייד-אוף בין עלות ליכולות:
+\begin{itemize}
+    \item \textbf{\textenglish{GPT-4 Turbo}:} היקר והמסוגל ביותר - מתאים למשימות קריטיות ומורכבות
+    \item \textbf{\textenglish{Claude 3.5 Sonnet}:} איזון מצוין - 92\% מהיכולת ב-30\% מהמחיר
+    \item \textbf{\textenglish{Gemini 1.5 Pro}:} חלופה חזקה במחיר נוח
+    \item \textbf{\textenglish{GPT-3.5} ו-\textenglish{Haiku}:} למשימות פשוטות בנפח גבוה
+\end{itemize}
+
+\textbf{אסטרטגיה מומלצת:} שימוש במודלים שונים לצרכים שונים. משימות פשוטות (סיכום, עריכה) במודלים זולים; משימות מורכבות (ניתוח, החלטות) במודלים מתקדמים.
+\end{hebrew}
+
+\section{תרשים \textenglish{Venn}: חפיפה בין יכולות אנושיות ו-\textenglish{AI}}
+\label{sec:human_ai_venn}
+
+\begin{figure}[htbp]
+\centering
+\begin{english}
+\begin{tikzpicture}[scale=1.2]
+    % Left circle - Human (English only for TikZ)
+    \draw[thick, fill=blue!20, fill opacity=0.5] (0,0) circle (2.5cm);
+    \node at (-2,2) {\textbf{Human Only}};
+    \node[align=center, font=\small] at (-2,1.2) {Deep Empathy};
+    \node[align=center, font=\small] at (-2,0.6) {Intuition};
+    \node[align=center, font=\small] at (-2,0) {Revolutionary Creativity};
+    \node[align=center, font=\small] at (-2,-0.6) {Emotional Understanding};
+    \node[align=center, font=\small] at (-2,-1.2) {Ethical Judgment};
+
+    % Right circle - AI
+    \draw[thick, fill=green!20, fill opacity=0.5] (3,0) circle (2.5cm);
+    \node at (5,2) {\textbf{AI Only}};
+    \node[align=center, font=\small] at (5,1.2) {Massive Data Processing};
+    \node[align=center, font=\small] at (5,0.6) {24/7 Availability};
+    \node[align=center, font=\small] at (5,0) {Full Consistency};
+    \node[align=center, font=\small] at (5,-0.6) {Processing Speed};
+    \node[align=center, font=\small] at (5,-1.2) {Neutrality (No Fatigue)};
+
+    % Intersection
+    \node at (1.5,2.5) {\textbf{Overlap}};
+    \node[align=center, font=\small] at (1.5,1) {Text Analysis};
+    \node[align=center, font=\small] at (1.5,0.4) {Translation};
+    \node[align=center, font=\small] at (1.5,-0.2) {Summarization};
+    \node[align=center, font=\small] at (1.5,-0.8) {Content Writing};
+    \node[align=center, font=\small] at (1.5,-1.4) {Categorization};
+\end{tikzpicture}
+\end{english}
+\caption{\he{חפיפה בין יכולות אנושיות ויכולות AI}}
+\label{fig:venn_diagram}
+\end{figure}
+
+\begin{hebrew}
+תרשים \ref{fig:venn_diagram} ממחיש היכן כדאי להשתמש ב-\textenglish{AI}, והיכן האדם עדיין בלתי תחליפי:
+
+\textbf{אזור החפיפה} - משימות שבהן \textenglish{AI} יכול לסייע או אפילו להחליף אדם:
+\begin{itemize}
+    \item עיבוד ואנליזת טקסט
+    \item תרגום והתאמה לשונית
+    \item סיכום מסמכים ארוכים
+    \item כתיבת תוכן סטנדרטי
+    \item מיון וקטגוריזציה
+\end{itemize}
+
+\textbf{אזור אנושי בלבד} - משימות שבהן האדם עדיין חיוני:
+\begin{itemize}
+    \item החלטות אסטרטגיות מורכבות
+    \item מצבים הדורשים אמפתיה אמיתית
+    \item יצירתיות פורצת דרך (לא הרכבה של דפוסים)
+    \item שיקול דעת אתי ומוסרי
+    \item הבנה עמוקה של הקשר ארגוני ותרבותי
+\end{itemize}
+
+\textbf{אזור \textenglish{AI} בלבד} - משימות שבהן \textenglish{AI} עדיף על אדם:
+\begin{itemize}
+    \item עיבוד נפחי מידע עצומים
+    \item זמינות מתמדת ללא הפסקה
+    \item עקביות מוחלטת בביצוע
+    \item מהירות ותגובה מיידית
+    \item ניטרליות (אין השפעת עייפות, רגשות חולפים)
+\end{itemize}
+
+\textbf{המסקנה המנהלית:} הגישה האופטימלית היא \textbf{שיתוף פעולה}, לא תחרות. \textenglish{AI} כעוזר שמשחרר את האדם ממשימות שגרתיות, ומאפשר לו להתמקד ביתרונות הייחודיים שלו.
+\end{hebrew}
+
+\section{דוגמאות מעשיות: \textenglish{LLMs} בעבודה}
+\label{sec:practical_examples}
+
+\subsection{מנהלת שיווק: תכנון ויצירת קמפיין}
+\label{subsec:example_marketing}
+
+\begin{hebrew}
+\textbf{תרחיש:}
+
+רינה, מנהלת שיווק בחברת \textenglish{SaaS}, צריכה להשיק קמפיין למוצר חדש. לפניה:
+\begin{itemize}
+    \item בניית אסטרטגיה
+    \item כתיבת תוכן לערוצים שונים
+    \item יצירת וריאציות למבחני \textenglish{A/B}
+\end{itemize}
+
+\textbf{השימוש ב-\textenglish{ChatGPT}:}
+
+\textbf{שלב 1 - סיעור מוחות אסטרטגי:}
+\begin{quote}
+"אני משיקה מוצר \textenglish{SaaS} לניהול פרויקטים לצוותי שיווק. קהל יעד: מנהלי שיווק ב-\textenglish{B2B}. הערך המרכזי: חיסכון של \textenglish{10} שעות שבועיות באוטומציה. תן לי \textenglish{5} זוויות שונות לקמפיין."
+\end{quote}
+
+\textenglish{ChatGPT} מציע:
+\begin{enumerate}
+    \item "עשה יותר עם פחות" - דגש על יעילות
+    \item "מזמן לאסטרטגיה" - שחרור מדיווחים לחשיבה
+    \item "צוות קטן, תוצאות גדולות" - יתרון לסטארטאפים
+    \item "\textenglish{ROI} ברור מיום ראשון"
+    \item "כל הכלים במקום אחד" - פשטות
+\end{enumerate}
+
+\textbf{שלב 2 - פיתוח זווית נבחרת:}
+
+רינה בחרה בזווית \textenglish{2}. היא ממשיכה:
+\begin{quote}
+"תפתח את זווית 'מזמן לאסטרטגיה'. כתוב לי \textenglish{3} כותרות ל-\textenglish{LinkedIn Ads}, \textenglish{2} פוסטים קצרים, ודף נחיתה בסגנון חברי-מקצועי."
+\end{quote}
+
+תוך דקה וחצי, רינה מקבלת תוכן מלא. היא משקיעה עוד \textenglish{20} דקות בעריכה ובהתאמה למותג.
+
+\textbf{שלב 3 - וריאציות ל-\textenglish{A/B Testing}:}
+\begin{quote}
+"צור עוד \textenglish{5} וריאציות של הכותרת הראשונה - אחת עם מספרים, אחת עם שאלה, אחת עם אמוג'י, אחת קצרה מאוד, ואחת ארוכה ומפורטת."
+\end{quote}
+
+\textbf{תוצאה:}
+\begin{itemize}
+    \item זמן שנחסך: \textenglish{4-5} שעות של כתיבה וחשיבה
+    \item איכות: טובה מאוד (לאחר עריכה קלה)
+    \item יצירתיות: זוויות שרינה לא חשבה עליהן
+\end{itemize}
+\end{hebrew}
+
+\subsection{סמנכ"ל כספים: ניתוח דוחות מורכבים}
+\label{subsec:example_cfo}
+
+\begin{hebrew}
+\textbf{תרחיש:}
+
+יוסי, \textenglish{CFO} של חברה ציבורית, מקבל דוח רבעוני של \textenglish{80} עמודים מחברת ביקורת. הוא צריך:
+\begin{itemize}
+    \item להבין מגמות עיקריות
+    \item לזהות חריגות
+    \item להכין סיכום להנהלה
+\end{itemize}
+
+\textbf{השימוש ב-\textenglish{Claude} (יכולת העלאת קבצים):}
+
+יוסי מעלה את ה-\textenglish{PDF} ל-\textenglish{Claude} ושואל:
+\begin{quote}
+"נתח את הדוח הזה וספק:
+\textenglish{1}. \textenglish{3} המגמות החיוביות העיקריות
+\textenglish{2}. \textenglish{3} נקודות הדאגה העיקריות
+\textenglish{3}. חריגות משמעותיות מול רבעון קודם
+\textenglish{4}. המלצות ראשוניות"
+\end{quote}
+
+\textenglish{Claude} קורא את כל הדוח (למרות אורכו) ותוך \textenglish{2} דקות מספק:
+
+\textbf{מגמות חיוביות:}
+\begin{enumerate}
+    \item צמיחה של 12\% בהכנסות חוזרות (\textenglish{ARR})
+    \item שיפור של 5\% ב-\textenglish{Gross Margin}
+    \item ירידה של 18\% בעלויות רכישת לקוח (\textenglish{CAC})
+\end{enumerate}
+
+\textbf{נקודות דאגה:}
+\begin{enumerate}
+    \item עלייה של 22\% ב-\textenglish{churn rate} בסגמנט SMB
+    \item הארכת מחזור המכירה מ-\textenglish{45} ל-\textenglish{63} ימים
+    \item עלייה בהוצאות \textenglish{R\&D} ללא השקה מקבילה
+\end{enumerate}
+
+\textbf{חריגות:}
+\begin{itemize}
+    \item סעיף "הוצאות שונות" קפץ פי \textenglish{3} - דורש הבהרה
+    \item נכס בלתי מוחשי חדש בסכום חריג
+\end{itemize}
+
+\textbf{המלצות:}
+\begin{itemize}
+    \item לחקור את עליית ה-\textenglish{churn} - אפשרי שינוי בתחרות או בטיב שירות
+    \item לברר את הארכת מחזור המכירה - האם בעיה במכירות או בכלכלה הכללית
+    \item לדרוש פירוט על "הוצאות שונות"
+\end{itemize}
+
+יוסי עובר על הניתוח, משווה למסמכים נוספים, ומעמיק בנקודות הקריטיות. אבל הסינון הראשוני חסך לו שעה וחצי של קריאה צפופה.
+
+\textbf{שימוש נוסף - שאלות המשך:}
+
+יוסי ממשיך לשאול:
+\begin{quote}
+"על בסיס הדוח, האם נוכל לעמוד ביעדי ה-\textenglish{EBITDA} לסוף השנה?"
+\end{quote}
+
+\textenglish{Claude} מנתח את הנתונים ומספק תשובה מנומקת עם הנחות.
+\end{hebrew}
+
+\subsection{מנהלת משאבי אנוש: סינון קורות חיים}
+\label{subsec:example_hr}
+
+\begin{hebrew}
+\textbf{תרחיש:}
+
+מיכל, מנהלת גיוס, קיבלה \textenglish{150} קורות חיים לתפקיד \textenglish{Product Manager}. דרישות התפקיד:
+\begin{itemize}
+    \item ניסיון של \textenglish{3-5} שנים בניהול מוצר \textenglish{B2B SaaS}
+    \item רקע טכני - יתרון למי שעבד כמפתח
+    \item ניסיון בעבודה עם צוותים מבוזרים
+    \item אנגלית שוטפת
+\end{itemize}
+
+\textbf{גישה מסורתית:} מיכל הייתה צריכה לקרוא כל קו"ח ידנית - זמן: \textenglish{5-6} שעות.
+
+\textbf{גישה \textenglish{AI}:}
+
+מיכל כותבת סקריפט \textenglish{Python} פשוט (בעזרת \textenglish{ChatGPT}) שקורא את כל הקבצים ושולח כל קו"ח ל-\textenglish{GPT-4} עם ה-\textenglish{prompt}:
+
+\begin{quote}
+"דרג קורות חיים אלה לתפקיד Product Manager ב-B2B SaaS. דרישות:
+- \textenglish{3-5} שנות ניסיון \textenglish{PM}
+- רקע טכני (יתרון)
+- עבודה עם צוותים מבוזרים
+- אנגלית שוטפת
+
+דרג: STRONG FIT / GOOD FIT / MAYBE / NO FIT
+ונמק בקצרה."
+\end{quote}
+
+המערכת מעבדת את \textenglish{150} הקורות חיים תוך \textenglish{10} דקות ומחזירה:
+\begin{itemize}
+    \item \textenglish{12} מועמדים \textenglish{STRONG FIT}
+    \item \textenglish{28} מועמדים \textenglish{GOOD FIT}
+    \item \textenglish{45} מועמדים \textenglish{MAYBE}
+    \item \textenglish{65} מועמדים \textenglish{NO FIT}
+\end{itemize}
+
+מיכל קוראת רק את \textenglish{12} ה-\textenglish{STRONG FIT} ואת \textenglish{28} ה-\textenglish{GOOD FIT} - סך הכל \textenglish{40} קורות חיים - זמן: שעה.
+
+\textbf{תוצאה:} חיסכון של \textenglish{4-5} שעות, תוך שמירה על איכות הסינון.
+
+\textbf{הערה חשובה:} מיכל לא סומכת באופן עיוור על ה-\textenglish{AI}. היא עדיין קוראת בעצמה את הקורות חיים הרלוונטיים. ה-\textenglish{AI} משמש ככלי סינון ראשוני, לא כקובע סופי.
+\end{hebrew}
+
+\section{תרגילים}
+\label{sec:exercises}
+
+\subsection{תרגילים תיאורטיים}
+\label{subsec:theoretical_exercises}
+
+\begin{exercise}
+\textbf{חישוב \textenglish{ROI} של הטמעת כלי \textenglish{AI}}
+
+הנך מנהל/ת מחלקת תוכן בחברת \textenglish{e-commerce}. הצוות שלך (\textenglish{8} כותבים) מייצר \textenglish{40} מאמרים בחודש. כל מאמר לוקח כיום \textenglish{4} שעות עבודה.
+
+אתה שוקל להטמיע \textenglish{ChatGPT Plus} (\textenglish{\$20}/חודש לכל כותב) שלדעתך יקצר את הזמן ל-\textenglish{2.5} שעות למאמר.
+
+\textbf{נתונים:}
+\begin{itemize}
+    \item עלות שעת עבודה ממוצעת: \textenglish{120} ש"ח
+    \item ימי עבודה בחודש: \textenglish{22}
+\end{itemize}
+
+\textbf{שאלות:}
+\begin{enumerate}[label=\alph*)]
+    \item חשב את ה-\textenglish{ROI} החודשי
+    \item כמה זמן יעבור עד שההשקעה תשתלם (בהנחה שיש גם עלות הדרכה חד-פעמית של \textenglish{5,000} ש"ח)?
+    \item האם תמליץ על ההטמעה? נמק.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\textbf{זיהוי משימות מתאימות ובלתי מתאימות ל-\textenglish{LLM}}
+
+בחן את המשימות הבאות בארגון שלך וסווג כל אחת:
+\begin{itemize}
+    \item א. מתאימה מאוד ל-\textenglish{LLM} (יכול להחליף אדם לחלוטין)
+    \item ב. מתאימה חלקית (יכול לסייע לאדם)
+    \item ג. לא מתאימה (האדם חיוני)
+\end{itemize}
+
+\textbf{משימות:}
+\begin{enumerate}
+    \item כתיבת מדיניות פרטיות לאתר
+    \item קבלת החלטה על פיטורי עובד
+    \item תרגום חוזה מאנגלית לעברית
+    \item בניית אסטרטגיה עסקית ל-\textenglish{3} שנים
+    \item סיכום פרוטוקול ישיבה
+    \item ניהול משא ומתן עם לקוח כועס
+    \item ניתוח משוב לקוחות מסקר (\textenglish{NPS})
+    \item בחירת ספק אסטרטגי לטווח ארוך
+    \item יצירת תבניות מייל לתמיכת לקוחות
+    \item ראיון עומק עם מועמד לתפקיד בכיר
+\end{enumerate}
+
+\textbf{נמק את הבחירות שלך.}
+\end{exercise}
+
+\begin{exercise}
+\textbf{השוואה בין \textenglish{GPT-4} ל-\textenglish{Claude} לצורכי הארגון}
+
+הנך \textenglish{CTO} של חברת \textenglish{FinTech}. אתה צריך לבחור מודל \textenglish{LLM} מרכזי לארגון.
+
+\textbf{תרחישי שימוש מרכזיים:}
+\begin{itemize}
+    \item ניתוח מסמכים משפטיים ופיננסיים (דוחות, חוזים)
+    \item תמיכת לקוחות אוטומטית
+    \item סיוע למפתחים בכתיבת קוד
+    \item יצירת תוכן שיווקי
+\end{itemize}
+
+\textbf{קריטריונים:}
+\begin{itemize}
+    \item עלות (נפח גבוה - \textenglish{50} מיליון טוקנים/חודש)
+    \item דיוק במסמכים ארוכים
+    \item יכולת קוד
+    \item תמיכה בעברית
+    \item אבטחה ופרטיות
+\end{itemize}
+
+\textbf{בנה טבלת השוואה ובחר מודל. נמק.}
+\end{exercise}
+
+\begin{exercise}
+\textbf{ניתוח כישלון \textenglish{AI} - מה השתבש?}
+
+חברת ביטוח הטמיעה סוכן \textenglish{AI} לתמיכת לקוחות. אחרי חודש, היא גילתה שהסוכן:
+\begin{itemize}
+    \item נתן מידע שגוי על כיסוי ביטוחי ב-15\% מהמקרים
+    \item "המציא" פוליסות שלא קיימות
+    \item לא הצליח להבין שאלות בעברית עם מונחים ביטוחיים
+\end{itemize}
+
+\textbf{שאלות:}
+\begin{enumerate}[label=\alph*)]
+    \item מה הסיבות האפשריות לכישלון?
+    \item איזה חולשות של \textenglish{LLMs} באו לידי ביטוי?
+    \item איך היית ממליץ לתקן את המערכת?
+    \item האם היית ממליץ להפסיק את הפרויקט לחלוטין? למה?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\textbf{בניית \textenglish{Business Case} ליישום \textenglish{LLM}}
+
+הנך מנהל/ת מחלקת מכירות עם \textenglish{20} נציגי מכירות. אתה רוצה להטמיע סוכן \textenglish{AI} שיסייע להם במשימות הבאות:
+\begin{itemize}
+    \item כתיבת הצעות מחיר מותאמות אישית
+    \item מענה על שאלות טכניות של לקוחות (באמצעות \textenglish{RAG} על מסמכי המוצר)
+    \item סיכום שיחות עם לקוחות ומעקב אוטומטי
+\end{itemize}
+
+\textbf{כתוב \textenglish{Business Case} שכולל:}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{בעיה עסקית:} מה הכאב הנוכחי?
+    \item \textbf{פתרון מוצע:} מה בדיוק תטמיע?
+    \item \textbf{תועלת:} מה יהיו היתרונות המדידים?
+    \item \textbf{עלויות:} כמה זה יעלה? (כולל טכנולוגיה, הטמעה, הדרכה)
+    \item \textbf{\textenglish{ROI}:} תוך כמה זמן ההשקעה תשתלם?
+    \item \textbf{סיכונים:} מה עלול להשתבש?
+    \item \textbf{המלצה:} האם כדאי להתקדם?
+\end{enumerate}
+\end{exercise}
+
+\subsection{תרגילי קוד \textenglish{Python}}
+\label{subsec:coding_exercises}
+
+\begin{exercise}
+\textbf{חישוב עלות שימוש חודשית ב-\textenglish{API}}
+
+כתוב תוכנית \textenglish{Python} שמקבלת:
+\begin{itemize}
+    \item מספר שיחות/פעולות חודשיות
+    \item ממוצע טוקני קלט לפעולה
+    \item ממוצע טוקני פלט לפעולה
+    \item מחיר קלט למיליון טוקנים
+    \item מחיר פלט למיליון טוקנים
+\end{itemize}
+
+\textbf{התוכנית צריכה לחשב ולהדפיס:}
+\begin{enumerate}[label=\alph*)]
+    \item עלות לפעולה בודדת
+    \item עלות חודשית כוללת
+    \item עלות שנתית
+    \item השוואה: כמה היה עולה באותו נפח עם מודל אחר (שהמשתמש מזין מחירים שלו)
+\end{enumerate}
+
+\textbf{דוגמת הרצה:}
+\begin{latin}
+\begin{verbatim}
+Enter monthly operations: 50000
+Enter avg input tokens: 2000
+Enter avg output tokens: 800
+Enter input price ($/1M tokens): 10
+Enter output price ($/1M tokens): 30
+
+=== Cost Analysis ===
+Cost per operation: $0.044
+Monthly cost: $2,200.00
+Annual cost: $26,400.00
+
+Compare with another model? (y/n): y
+Enter input price ($/1M tokens): 0.5
+Enter output price ($/1M tokens): 1.5
+
+Alternative model monthly cost: $112.00
+You would save: $2,088.00/month (94.9%)
+\end{verbatim}
+\end{latin}
+\end{exercise}
+
+\section{סיכום הפרק}
+\label{sec:chapter_summary}
+
+\begin{hebrew}
+במהלך פרק זה עברנו מסע מקיף בעולם מודלי השפה הגדולים:
+
+\textbf{למדנו מהם \textenglish{LLMs}:}
+\begin{itemize}
+    \item מכונות השלמת דפוסים שאומנו על כמויות עצומות של טקסט
+    \item לא מסדי נתונים, אלא מודלים סטטיסטיים מורכבים שיוצרים תוכן חדש
+\end{itemize}
+
+\textbf{הכרנו את שני הכוחות העל:}
+\begin{itemize}
+    \item \textbf{תקשורת טבעית:} סוף סוף, מכונות שמבינות אותנו
+    \item \textbf{עיבוד לוגיקה מורכבת:} לא רק ממשק נוח, אלא חשיבה אמיתית
+\end{itemize}
+
+\textbf{זיהינו נקודות חוזק:}
+\begin{itemize}
+    \item יצירתיות והפקת רעיונות
+    \item הבנת הקשר ונואנסים
+    \item גמישות והתאמה
+    \item יכולת רב-לשונית
+\end{itemize}
+
+\textbf{למדנו על נקודות חולשה קריטיות:}
+\begin{itemize}
+    \item הזיות - המצאת מידע שנשמע מהימן
+    \item חוסר עדכניות - מוגבל לתאריך אימון
+    \item עלויות - לא זניח בקנה מידה
+    \item חוסר שקיפות - קופסה שחורה
+\end{itemize}
+
+\textbf{רכשנו כלים מנהליים:}
+\begin{itemize}
+    \item נוסחת \textenglish{ROI} להערכת השקעה
+    \item נוסחת עלות טוקנים לתכנון תקציב
+    \item ניתוח \textenglish{break-even} להשוואת אלטרנטיבות
+\end{itemize}
+
+\textbf{ראינו דוגמאות מהשטח:}
+\begin{itemize}
+    \item מנהלת שיווק שחוסכת שעות ביצירת תוכן
+    \item \textenglish{CFO} שמנתח דוחות מורכבים במהירות
+    \item מנהלת \textenglish{HR} שמסננת קורות חיים ביעילות
+\end{itemize}
+
+\textbf{המסר המרכזי:}
+
+\textenglish{LLMs} הם לא קסם, והם לא מושלמים. אבל כשמבינים את היכולות והמגבלות שלהם, ומיישמים אותם בצורה מושכלת - הם כלי עסקי עוצמתי שמשנה משחק.
+
+ההצלחה לא תלויה בטכנולוגיה בלבד, אלא באופן שבו מנהלים מבינים, מתכננים ומיישמים אותה. פרק זה סיפק לכם את היסודות - בפרקים הבאים נצלול עמוק יותר לאקוסיסטם, לארכיטקטורה, וליישום מעשי.
+\end{hebrew}
+
+\section*{מקורות והמלצות לקריאה נוספת}
+\begin{hebrew}
+\begin{enumerate}
+    \item \textenglish{Attention Is All You Need} - מאמר היסוד על ארכיטקטורת \textenglish{Transformer}
+    \item \textenglish{OpenAI GPT-4 Technical Report} - תיעוד רשמי של \textenglish{GPT-4}
+    \item \textenglish{Anthropic Claude Documentation} - מדריך מקיף למודלי \textenglish{Claude}
+    \item \textenglish{The Economics of Large Language Models} - ניתוח עלויות ו-\textenglish{ROI}
+    \item \textenglish{Prompt Engineering Guide} - מדריך מעמיק לכתיבת \textenglish{prompts}
+\end{enumerate}
+\end{hebrew}
+
+\section*{פתרונות מלאים לתרגילים}
+\label{sec:solutions}
+
+\subsection*{פתרון תרגיל 1: חישוב \textenglish{ROI}}
+\begin{hebrew}
+\textbf{נתונים:}
+\begin{itemize}
+    \item \textenglish{8} כותבים
+    \item \textenglish{40} מאמרים/חודש
+    \item זמן נוכחי: \textenglish{4} שעות/מאמר
+    \item זמן עתידי: \textenglish{2.5} שעות/מאמר
+    \item עלות שעה: \textenglish{120} ש"ח
+    \item עלות \textenglish{ChatGPT Plus}: \textenglish{\$20}/חודש = ~\textenglish{75} ש"ח
+\end{itemize}
+
+\textbf{חישוב:}
+
+סך שעות נוכחי:
+\begin{equation}
+40 \times 4 = 160 \hebmath{ שעות/חודש}
+\end{equation}
+
+סך שעות עתידי:
+\begin{equation}
+40 \times 2.5 = 100 \hebmath{ שעות/חודש}
+\end{equation}
+
+שעות נחסכות:
+\begin{equation}
+160 - 100 = 60 \hebmath{ שעות/חודש}
+\end{equation}
+
+ערך החיסכון:
+\begin{equation}
+60 \times 120 = 7{,}200 \hebmath{ ש"ח/חודש}
+\end{equation}
+
+עלות מנוי:
+\begin{equation}
+8 \times 75 = 600 \hebmath{ ש"ח/חודש}
+\end{equation}
+
+\textenglish{ROI} חודשי:
+\begin{equation}
+\frac{7{,}200 - 600}{600} \times 100\% = 1{,}100\%
+\end{equation}
+
+\textbf{זמן החזר השקעה:}
+
+חיסכון נטו חודשי:
+\begin{equation}
+7{,}200 - 600 = 6{,}600 \hebmath{ ש"ח}
+\end{equation}
+
+עלות הדרכה:
+\begin{equation}
+5{,}000 \hebmath{ ש"ח}
+\end{equation}
+
+זמן החזר:
+\begin{equation}
+\frac{5{,}000}{6{,}600} = 0.76 \hebmath{ חודשים} \approx 23 \hebmath{ ימים}
+\end{equation}
+
+\textbf{המלצה:} בהחלט כדאי! ה-\textenglish{ROI} עצום, וההשקעה מתשלמת תוך פחות מחודש.
+\end{hebrew}
+
+\subsection*{פתרון תרגיל 2: זיהוי משימות}
+\begin{hebrew}
+\begin{enumerate}
+    \item \textbf{כתיבת מדיניות פרטיות:} ב' (מתאים חלקית) - \textenglish{AI} יכול לכתוב טיוטה מצוינת, אבל עורך דין צריך לאשר.
+
+    \item \textbf{החלטה על פיטורים:} ג' (לא מתאים) - דורש שיקול דעת אנושי, אמפתיה, הבנה של הקשר ארגוני.
+
+    \item \textbf{תרגום חוזה:} ב' (מתאים חלקית) - תרגום ראשוני מצוין, אבל חוזה דורש עריכה משפטית אנושית.
+
+    \item \textbf{אסטרטגיה ל-\textenglish{3} שנים:} ב'-ג' - \textenglish{AI} יכול לסייע בניתוח וברעיונות, אבל החלטה סופית דורשת אדם.
+
+    \item \textbf{סיכום פרוטוקול:} א' (מתאים מאוד) - משימה מובנית שה-\textenglish{AI} עושה מצוין.
+
+    \item \textbf{משא ומתן עם לקוח כועס:} ג' (לא מתאים) - דורש אמפתיה אמיתית ושיקול דעת דינמי.
+
+    \item \textbf{ניתוח סקר \textenglish{NPS}:} א'-ב' (מתאים מאוד) - \textenglish{AI} מצוין בזיהוי דפוסים ומגמות.
+
+    \item \textbf{בחירת ספק אסטרטגי:} ב'-ג' - \textenglish{AI} יכול לנתח, אבל החלטה כזו דורשת שיקולים רבים שאדם מבין טוב יותר.
+
+    \item \textbf{תבניות מייל:} א' (מתאים מאוד) - משימה שה-\textenglish{AI} עושה מצוין.
+
+    \item \textbf{ראיון לתפקיד בכיר:} ג' (לא מתאים) - דורש הבנה עמוקה של תרבות ארגונית ושיקול דעת אנושי.
+\end{enumerate}
+\end{hebrew}
+
+\subsection*{פתרון תרגיל 6: קוד Python לחישוב עלויות}
+\begin{hebrew}
+להלן קוד מלא ומתועד:
+\end{hebrew}
+
+\begin{latin}
+\begin{lstlisting}[language=Python, caption={מחשבון עלויות API למודלי LLM}]
+"""
+LLM API Cost Calculator
+Calculates monthly and annual costs for LLM API usage
+"""
+
+def calculate_cost(operations, input_tokens, output_tokens,
+                   input_price, output_price):
+    """
+    Calculate cost per operation and total costs
+
+    Args:
+        operations: Number of monthly operations
+        input_tokens: Average input tokens per operation
+        output_tokens: Average output tokens per operation
+        input_price: Price per 1M input tokens ($)
+        output_price: Price per 1M output tokens ($)
+
+    Returns:
+        dict: Cost breakdown
+    """
+    # Cost per operation
+    cost_per_op = (
+        (input_tokens / 1_000_000) * input_price +
+        (output_tokens / 1_000_000) * output_price
+    )
+
+    # Total costs
+    monthly_cost = operations * cost_per_op
+    annual_cost = monthly_cost * 12
+
+    return {
+        'cost_per_operation': cost_per_op,
+        'monthly_cost': monthly_cost,
+        'annual_cost': annual_cost
+    }
+
+def compare_models(operations, input_tokens, output_tokens,
+                   model1_prices, model2_prices):
+    """
+    Compare costs between two models
+
+    Args:
+        operations: Number of monthly operations
+        input_tokens: Average input tokens
+        output_tokens: Average output tokens
+        model1_prices: (input_price, output_price) for model 1
+        model2_prices: (input_price, output_price) for model 2
+
+    Returns:
+        dict: Comparison results
+    """
+    cost1 = calculate_cost(operations, input_tokens, output_tokens,
+                          model1_prices[0], model1_prices[1])
+    cost2 = calculate_cost(operations, input_tokens, output_tokens,
+                          model2_prices[0], model2_prices[1])
+
+    savings = cost1['monthly_cost'] - cost2['monthly_cost']
+    savings_pct = (savings / cost1['monthly_cost']) * 100
+
+    return {
+        'model1_monthly': cost1['monthly_cost'],
+        'model2_monthly': cost2['monthly_cost'],
+        'monthly_savings': savings,
+        'savings_percentage': savings_pct
+    }
+
+def main():
+    """Main interactive calculator"""
+    print("=== LLM API Cost Calculator ===\n")
+
+    # Get user input
+    operations = int(input("Enter monthly operations: "))
+    input_tokens = int(input("Enter avg input tokens: "))
+    output_tokens = int(input("Enter avg output tokens: "))
+    input_price = float(input("Enter input price ($/1M tokens): "))
+    output_price = float(input("Enter output price ($/1M tokens): "))
+
+    # Calculate costs
+    costs = calculate_cost(operations, input_tokens, output_tokens,
+                          input_price, output_price)
+
+    # Display results
+    print("\n=== Cost Analysis ===")
+    print(f"Cost per operation: ${costs['cost_per_operation']:.4f}")
+    print(f"Monthly cost: ${costs['monthly_cost']:,.2f}")
+    print(f"Annual cost: ${costs['annual_cost']:,.2f}")
+
+    # Compare with another model?
+    compare = input("\nCompare with another model? (y/n): ")
+    if compare.lower() == 'y':
+        alt_input_price = float(
+            input("Enter input price ($/1M tokens): ")
+        )
+        alt_output_price = float(
+            input("Enter output price ($/1M tokens): ")
+        )
+
+        comparison = compare_models(
+            operations, input_tokens, output_tokens,
+            (input_price, output_price),
+            (alt_input_price, alt_output_price)
+        )
+
+        print(f"\nAlternative model monthly cost: "
+              f"${comparison['model2_monthly']:,.2f}")
+        print(f"You would save: "
+              f"${comparison['monthly_savings']:,.2f}/month "
+              f"({comparison['savings_percentage']:.1f}%)")
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+\end{latin}
+
+\begin{hebrew}
+\textbf{הרצת הקוד:}
+\begin{itemize}
+    \item שמור את הקוד בקובץ \texttt{llm\_cost\_calculator.py}
+    \item הרץ: \texttt{python llm\_cost\_calculator.py}
+    \item עקוב אחר ההנחיות האינטראקטיביות
+\end{itemize}
+
+\textbf{תרגיל מורחב:}
+הרחב את הקוד כך שיתמוך ב:
+\begin{enumerate}
+    \item שמירת תוצאות לקובץ \textenglish{CSV}
+    \item ויזואליזציה של השוואת עלויות (גרף)
+    \item חישוב \textenglish{break-even} עבור מעבר בין מודלים
+    \item תמיכה בהשוואה של יותר משני מודלים
+\end{enumerate}
+\end{hebrew}
+
+\vspace{1cm}
+\begin{center}
+\rule{0.5\textwidth}{0.4pt}
+
+\vspace{0.5cm}
+\begin{hebrew}
+\textbf{סוף הפרק הראשון}
+
+בפרק הבא נצלול לאקוסיסטם הבינה המלאכותית - מפת הכלים, הספקים והטכנולוגיות שמנהל מודרני צריך להכיר.
+\end{hebrew}
+\end{center}
+
+%% ============================================
+%% Bibliography
+%% ============================================
+\begin{english}
+\setlength{\bibitemsep}{0.5\baselineskip}
+\printbibliography[title={\texthebrew{מקורות}}]
+\end{english}
+
+\end{document}

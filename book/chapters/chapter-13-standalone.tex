@@ -1,0 +1,359 @@
+% chapter-13-standalone.tex
+% Standalone compilation for Chapter 13: From Project to Product
+% Use with: \documentclass[../main.tex]{subfiles} for subfile mode
+% Or include this preamble directly for standalone mode
+
+\documentclass[12pt,a4paper]{book}
+
+%% ============================================
+%% Engine and Encoding
+%% ============================================
+\usepackage{fontspec}
+\usepackage{luatexbase}
+
+%% ============================================
+%% Language Support (Hebrew RTL + English LTR)
+%% ============================================
+\usepackage{polyglossia}
+\setmainlanguage{hebrew}
+\setotherlanguage{english}
+
+% Hebrew Fonts
+\newfontfamily\hebrewfont{David CLM}[Script=Hebrew]
+\newfontfamily\hebrewfontsf{Miriam CLM}[Script=Hebrew]
+\newfontfamily\hebrewfonttt{Miriam Mono CLM}[Script=Hebrew]
+
+% English Fonts
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Courier New}
+
+%% ============================================
+%% Page Layout
+%% ============================================
+\usepackage[
+  a4paper,
+  inner=3cm,
+  outer=2.5cm,
+  top=2.5cm,
+  bottom=2.5cm,
+  headheight=15pt
+]{geometry}
+
+%% ============================================
+%% Graphics and Colors
+%% ============================================
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shapes,arrows,positioning,calc,fit,backgrounds,decorations.pathreplacing}
+
+% Define book colors
+\definecolor{chaptercolor}{RGB}{0,51,102}
+\definecolor{sectioncolor}{RGB}{0,76,153}
+\definecolor{examplecolor}{RGB}{230,242,255}
+\definecolor{exercisecolor}{RGB}{255,248,220}
+\definecolor{codebackground}{RGB}{245,245,245}
+\definecolor{formulacolor}{RGB}{240,255,240}
+
+%% ============================================
+%% Math Packages
+%% ============================================
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+%% ============================================
+%% Tables
+%% ============================================
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{array}
+
+%% ============================================
+%% Code Listings
+%% ============================================
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebackground},
+  frame=single,
+  breaklines=true,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!60!black},
+  showstringspaces=false,
+  tabsize=4
+}
+
+% Python style
+\lstdefinestyle{python}{
+  language=Python,
+  morekeywords={self,True,False,None,as,with,async,await}
+}
+
+% JSON style
+\lstdefinestyle{json}{
+  basicstyle=\ttfamily\small,
+  stringstyle=\color{red!60!black},
+  morestring=[b]",
+  literate=
+    *{:}{{{\color{blue}:}}}{1}
+    {,}{{{\color{blue},}}}{1}
+    {\{}{{{\color{blue}\{}}}{1}
+    {\}}{{{\color{blue}\}}}}{1}
+    {[}{{{\color{blue}[}}}{1}
+    {]}{{{\color{blue}]}}}{1}
+}
+
+%% ============================================
+%% Boxes and Environments (BiDi-safe tcolorbox)
+%% Pattern: qa-BiDi-fix-tcolorbox - wrapper for RTL background overflow
+%% ============================================
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,theorems,listings}
+
+% ============== INTERNAL BOXES (with @inner suffix) ==============
+
+% Example Box - Internal
+\newtcolorbox{examplebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=examplecolor,
+  colframe=sectioncolor,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=3mm,
+  boxrule=1pt
+}
+
+% Exercise Box - Internal
+\newtcolorbox{exercisebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=exercisecolor,
+  colframe=orange!70!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=3mm,
+  boxrule=1pt
+}
+
+% Formula Box - Internal
+\newtcolorbox{formulabox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=formulacolor,
+  colframe=green!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=0.5pt
+}
+
+% Code Box - Internal
+\newtcolorbox{codebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=codebackground,
+  colframe=gray!50,
+  fonttitle=\bfseries\ttfamily,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=0.5pt
+}
+
+% Note Box - Internal
+\newtcolorbox{notebox@inner}[1][]{
+  enhanced,
+  breakable,
+  colback=yellow!10,
+  colframe=yellow!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{#1}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=1pt
+}
+
+% ============== BiDi-SAFE WRAPPER ENVIRONMENTS ==============
+% Force LTR for box drawing, RTL for content inside
+
+\newenvironment{examplebox}[1][]
+  {\begin{english}\begin{examplebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{examplebox@inner}\end{english}}
+
+\newenvironment{exercisebox}[1][]
+  {\begin{english}\begin{exercisebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{exercisebox@inner}\end{english}}
+
+\newenvironment{formulabox}[1][]
+  {\begin{english}\begin{formulabox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{formulabox@inner}\end{english}}
+
+\newenvironment{codebox}[1][]
+  {\begin{english}\begin{codebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{codebox@inner}\end{english}}
+
+\newenvironment{notebox}[1][]
+  {\begin{english}\begin{notebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{notebox@inner}\end{english}}
+
+%% ============================================
+%% Chapter and Section Styling
+%% ============================================
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{chaptercolor}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{sectioncolor}}
+  {\textenglish{\thesection}}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\textenglish{\thesubsection}}{1em}{}
+
+%% ============================================
+%% Headers and Footers
+%% ============================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RO]{\leftmark}
+\fancyhead[LE]{\rightmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+%% ============================================
+%% Hyperlinks
+%% ============================================
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=chaptercolor,
+  citecolor=green!50!black,
+  urlcolor=blue!70!black
+}
+
+%% ============================================
+%% Custom Commands
+%% ============================================
+% Hebrew/English shortcuts
+\newcommand{\he}[1]{\texthebrew{#1}}
+\newcommand{\en}[1]{\textenglish{#1}}
+
+% Technical terms
+\newcommand{\term}[1]{\textbf{\textenglish{#1}}}
+\newcommand{\heterm}[2]{\textbf{#1} (\textenglish{#2})}
+
+% Code inline
+\newcommand{\code}[1]{\texttt{\textenglish{#1}}}
+
+% Math in Hebrew context
+%% ============================================
+%% Theorem Environments
+%% ============================================
+\theoremstyle{definition}
+\newtheorem{definition}{הגדרה}[chapter]
+\newtheorem{example}{דוגמה}[chapter]
+\newtheorem{exercise}{תרגיל}[chapter]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{משפט}[chapter]
+\newtheorem{lemma}{למה}[chapter]
+
+\theoremstyle{remark}
+\newtheorem{remark}{הערה}[chapter]
+\newtheorem{note}{הערה}[chapter]
+
+%% ============================================
+%% Miscellaneous
+%% ============================================
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Set Hebrew list labels
+\setlist[itemize]{label=\textbullet}
+\setlist[enumerate]{label=\arabic*.}
+
+% Float placement
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.9}
+
+%% ============================================
+%% Bibliography
+%% ============================================
+\usepackage[
+  backend=biber,
+  style=ieee,
+  sorting=nyt,
+  maxbibnames=99
+]{biblatex}
+\addbibresource{../bibliography/references.bib}
+\addbibresource{chapter-13-sources.bib}
+
+% URL breaking settings for long URLs in bibliography
+\setcounter{biburlnumpenalty}{100}
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+
+%% ============================================
+%% Book Metadata for Standalone
+%% ============================================
+\title{כלי בינה מלאכותית בעסקים}
+\author{דר' יורם סגל ופרופסור ערן שריף}
+\date{2025}
+
+% Latin environment for LTR code blocks
+\newenvironment{latin}{\begin{english}}{\end{english}}
+
+% Abstract environment for book class
+\newenvironment{abstract}{%
+  \begin{center}%
+    \bfseries תקציר%
+  \end{center}%
+  \begin{quotation}%
+}{%
+  \end{quotation}%
+}
+
+\begin{document}
+
+\chapter{מפרויקט לפרודקט -- מסע הפיתוח המלא}
+\label{ch:project-to-product}
+
+\section*{מטרות הלמידה}
+
+בתום פרק זה, תוכלו:
+
+\begin{itemize}
+  \item להבין את מחזור החיים המלא של פרויקט AI מרגע הרעיון ועד לתוצר בייצור
+  \item לתכנן ולהוציא לפועל פרויקט AI מקצה לקצה
+  \item להרכיב ולנהל צוות AI אפקטיבי
+  \item ליישם עקרונות Agile לניהול פרויקטי AI
+  \item להבין יסודות MLOps לתחזוקה ושיפור מתמיד
+  \item למדוד הצלחה באמצעות KPIs מתאימים למערכות AI
+\end{itemize}
+
+\input{chapter-13-content}
+
+\end{document}

@@ -1,0 +1,47 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textenglish {1}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces ארכיטקטורה בסיסית של \textenglish {LLM} - מקלט לפלט}}{3}{figure.caption.5}%
+\contentsline {figure}{\numberline {\textenglish {2}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces השוואת מודלים מובילים -- עלות מול יכולות}}{12}{figure.caption.11}%
+\contentsline {figure}{\numberline {\textenglish {3}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces \texthebrew {חפיפה בין יכולות אנושיות ויכולות AI}}}{13}{figure.caption.12}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textenglish {4}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces מטריצת החלטה: ענן מול \LRE {\textenglish {On-Premise}}}}{33}{figure.caption.25}%
+\contentsline {figure}{\numberline {\textenglish {5}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces ארכיטקטורת אקוסיסטם \LRE {\textenglish {AI}} מלאה -- 5 שכבות}}{44}{figure.caption.27}%
+\contentsline {figure}{\numberline {\textenglish {6}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces השוואת מחירים ממוצעים בין מודלים מובילים}}{44}{figure.caption.28}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textenglish {7}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces ארכיטקטורת \textenglish {MCP} - מודל תקשורת מבוסס הקשר}}{65}{figure.caption.36}%
+\contentsline {figure}{\numberline {\textenglish {8}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces פתרון בעיית $N \times M$ באמצעות \textenglish {MCP}}}{67}{figure.caption.41}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textenglish {13}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces מערכת \LRE {\textenglish {Multi-Agent}} עם מתזמר מרכזי}}{113}{figure.caption.141}%
+\contentsline {figure}{\numberline {\textenglish {14}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces ארכיטקטורת \LRE {\textenglish {Hub-and-Spoke}} -- סוכן מרכזי מתאם את כולם}}{116}{figure.caption.142}%
+\contentsline {figure}{\numberline {\textenglish {15}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces ארכיטקטורת \LRE {\textenglish {Mesh}} -- כל סוכן מתקשר ישירות עם כולם}}{116}{figure.caption.143}%
+\contentsline {figure}{\numberline {\textenglish {16}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces ארכיטקטורה היררכית -- סוכן ראשי מנהל מנהלי ביניים}}{117}{figure.caption.144}%
+\contentsline {figure}{\numberline {\textenglish {17}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces תיאום סידרתי -- כל סוכן ממתין לקודמו}}{118}{figure.caption.149}%
+\contentsline {figure}{\numberline {\textenglish {18}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces תיאום מקבילי -- סוכנים עובדים בו-זמנית}}{119}{figure.caption.151}%
+\contentsline {figure}{\numberline {\textenglish {19}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces תיאום מותנה -- הנתיב נקבע לפי תוצאת הבדיקה}}{119}{figure.caption.153}%
+\contentsline {figure}{\numberline {\textenglish {20}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces זרימת עבודה ב-\LRE {\textenglish {LangGraph}} לעיבוד הזמנות}}{126}{figure.caption.163}%
+\contentsline {figure}{\numberline {\textenglish {21}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces מערכת אישור הלוואות בארכיטקטורת \LRE {\textenglish {Hub-and-Spoke}}}}{139}{figure.caption.170}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textenglish {22}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces \texthebrew {מבנה פרומפט מושלם - רכיבים והיררכיה}}}{177}{figure.caption.173}%
+\contentsline {figure}{\numberline {\textenglish {23}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces \texthebrew {השוואת טכניקות \textenglish {Prompting}}}}{184}{figure.caption.175}%
+\contentsline {figure}{\numberline {\textenglish {24}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces \texthebrew {מחזור שיפור מתמיד של פרומפטים}}}{197}{figure.caption.176}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textenglish {25}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces גרף \textenglish {Scatter}: ביצועים מול עלות}}{271}{figure.caption.199}%
+\contentsline {figure}{\numberline {\textenglish {26}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces \textenglish {Decision Tree} לבחירת \textenglish {LLM}}}{272}{figure.caption.200}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textenglish {27}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces \textenglish {Wireframe} של ממשק \textenglish {AI} צ'אט אידיאלי}}{312}{figure.caption.219}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textenglish {28}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces תהליך ציות ל-\LRE {\textenglish {GDPR}} במערכת \LRE {\textenglish {AI}}}}{329}{figure.caption.226}%
+\contentsline {figure}{\numberline {\textenglish {29}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces פירמידת הסיכון של \LRE {\textenglish {EU AI Act}}}}{332}{figure.caption.228}%
+\contentsline {figure}{\numberline {\textenglish {30}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces מפת איומי אבטחה על מערכות \LRE {\textenglish {AI}}}}{335}{figure.caption.230}%
+\contentsline {figure}{\numberline {\textenglish {31}}{\ignorespaces \xpg@aux {numerals=arabic}{hebrew}\ignorespaces מפת חום לסיכוני \LRE {\textenglish {AI}}}}{341}{figure.caption.231}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

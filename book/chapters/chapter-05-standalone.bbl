@@ -1,0 +1,595 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{wang2023survey}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=1f647bb6da8304b7be380ec58eb6373a}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Lei},
+           giveni={L\bibinitperiod}}}%
+        {{hash=0b13d29cc629ce6345c4d0376393515f}{%
+           family={Ma},
+           familyi={M\bibinitperiod},
+           given={Chen},
+           giveni={C\bibinitperiod}}}%
+        {{hash=cb0567e0086199a1bf82bfb31ab309b9}{%
+           family={Feng},
+           familyi={F\bibinitperiod},
+           given={Xueyang},
+           giveni={X\bibinitperiod}}}%
+        {{hash=d57f37a2329e84dd83135d60ac91a7e7}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Zeyu},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=ffc6e98cdb5fcaae9b79cd4ce7d15efa}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Hao},
+           giveni={H\bibinitperiod}}}%
+        {{hash=fae408610645f341cff586d4ecbc6e2d}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Jingsen},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d376ecd15da60042b75c35acc608cc86}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Zhiyuan},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=25b94cc0aeaeddf37e136d7c71abb11c}{%
+           family={Tang},
+           familyi={T\bibinitperiod},
+           given={Jiakai},
+           giveni={J\bibinitperiod}}}%
+        {{hash=4f4900cae2c11cda82284d85107e92ae}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Xu},
+           giveni={X\bibinitperiod}}}%
+        {{hash=e2994df0daa7033ced5356a51eed0321}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Yankai},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{10814f16ce9673476ec6de14dc6cea6e}
+      \strng{fullhash}{b22461cffebd5e19538dbd455c8bacd5}
+      \strng{fullhashraw}{b22461cffebd5e19538dbd455c8bacd5}
+      \strng{bibnamehash}{10814f16ce9673476ec6de14dc6cea6e}
+      \strng{authorbibnamehash}{10814f16ce9673476ec6de14dc6cea6e}
+      \strng{authornamehash}{10814f16ce9673476ec6de14dc6cea6e}
+      \strng{authorfullhash}{b22461cffebd5e19538dbd455c8bacd5}
+      \strng{authorfullhashraw}{b22461cffebd5e19538dbd455c8bacd5}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2308.11432}
+      \field{title}{A Survey on Large Language Model based Autonomous Agents}
+      \field{year}{2023}
+    \endentry
+    \entry{xi2023rise}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=06459fedf50e092e97038ab0c1178a30}{%
+           family={Xi},
+           familyi={X\bibinitperiod},
+           given={Zhiheng},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=4a528bb3d4c833da97a59bd3c5c80196}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Wenxiang},
+           giveni={W\bibinitperiod}}}%
+        {{hash=b10fcfadf669bd48a908e04f32864424}{%
+           family={Guo},
+           familyi={G\bibinitperiod},
+           given={Xin},
+           giveni={X\bibinitperiod}}}%
+        {{hash=01f0db4a278a227b9e648b692c8841bc}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Wei},
+           giveni={W\bibinitperiod}}}%
+        {{hash=b35e48c6f464425950dac9939849c8bc}{%
+           family={Ding},
+           familyi={D\bibinitperiod},
+           given={Yiwen},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=e16962e61be569e8bc3cd578a671909a}{%
+           family={Hong},
+           familyi={H\bibinitperiod},
+           given={Boyang},
+           giveni={B\bibinitperiod}}}%
+        {{hash=7a56aedb5f6ad175a5340edc7bf6267e}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Ming},
+           giveni={M\bibinitperiod}}}%
+        {{hash=14863a722fc491cf3d30d178312383ff}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Junzhe},
+           giveni={J\bibinitperiod}}}%
+        {{hash=983f21b2479df68760e3ef3582036dd0}{%
+           family={Jin},
+           familyi={J\bibinitperiod},
+           given={Senjie},
+           giveni={S\bibinitperiod}}}%
+        {{hash=dc16e7a4cfcbebc1062423614fe0c7a8}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Enyu},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{0e423dc8697bf2e388c1f1182149c0a6}
+      \strng{fullhash}{f52f07305b963b41c6060528582c739e}
+      \strng{fullhashraw}{f52f07305b963b41c6060528582c739e}
+      \strng{bibnamehash}{0e423dc8697bf2e388c1f1182149c0a6}
+      \strng{authorbibnamehash}{0e423dc8697bf2e388c1f1182149c0a6}
+      \strng{authornamehash}{0e423dc8697bf2e388c1f1182149c0a6}
+      \strng{authorfullhash}{f52f07305b963b41c6060528582c739e}
+      \strng{authorfullhashraw}{f52f07305b963b41c6060528582c739e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2309.07864}
+      \field{title}{The Rise and Potential of Large Language Model Based Agents: A Survey}
+      \field{year}{2023}
+    \endentry
+    \entry{mialon2023augmented}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=283d29472bacedfbd4123cb1ddc4ff97}{%
+           family={Mialon},
+           familyi={M\bibinitperiod},
+           given={Grégoire},
+           giveni={G\bibinitperiod}}}%
+        {{hash=d7d39f837de6903c9086c744e8c09544}{%
+           family={Dessı̀},
+           familyi={D\bibinitperiod},
+           given={Roberto},
+           giveni={R\bibinitperiod}}}%
+        {{hash=bf1c252caab6616dc5c18fee05edd006}{%
+           family={Lomeli},
+           familyi={L\bibinitperiod},
+           given={Maria},
+           giveni={M\bibinitperiod}}}%
+        {{hash=97009ec00b1c93cc1bd2e6c819bd88d8}{%
+           family={Nalmpantis},
+           familyi={N\bibinitperiod},
+           given={Christoforos},
+           giveni={C\bibinitperiod}}}%
+        {{hash=78823c7c4c8b113a71c7d84ef290bef8}{%
+           family={Pasunuru},
+           familyi={P\bibinitperiod},
+           given={Ram},
+           giveni={R\bibinitperiod}}}%
+        {{hash=09e1b7281b7dae9d49e3c47570c30a84}{%
+           family={Raber},
+           familyi={R\bibinitperiod},
+           given={Roberta},
+           giveni={R\bibinitperiod}}}%
+        {{hash=d7c945886090692f313b34089c00cb2b}{%
+           family={Kambadur},
+           familyi={K\bibinitperiod},
+           given={Prabhu},
+           giveni={P\bibinitperiod}}}%
+        {{hash=bdefb89722434b540cb6c8f2b61a466d}{%
+           family={Sreedhar},
+           familyi={S\bibinitperiod},
+           given={Sainbayar},
+           giveni={S\bibinitperiod}}}%
+        {{hash=df5703e3c8c751bf93a95b7b91cfa230}{%
+           family={Lomeli},
+           familyi={L\bibinitperiod},
+           given={Roberta},
+           giveni={R\bibinitperiod}}}%
+        {{hash=3669dc61c228df3d7b95b1306107fa82}{%
+           family={Scialom},
+           familyi={S\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{7be41ec173e745201e6f3bc0847033b4}
+      \strng{fullhash}{b1f3ca891016868191f59acc9f290911}
+      \strng{fullhashraw}{b1f3ca891016868191f59acc9f290911}
+      \strng{bibnamehash}{7be41ec173e745201e6f3bc0847033b4}
+      \strng{authorbibnamehash}{7be41ec173e745201e6f3bc0847033b4}
+      \strng{authornamehash}{7be41ec173e745201e6f3bc0847033b4}
+      \strng{authorfullhash}{b1f3ca891016868191f59acc9f290911}
+      \strng{authorfullhashraw}{b1f3ca891016868191f59acc9f290911}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transactions on Machine Learning Research}
+      \field{title}{Augmented Language Models: A Survey}
+      \field{year}{2023}
+    \endentry
+    \entry{yao2022react}{article}{}{}
+      \name{author}{7}{}{%
+        {{hash=5c1b62cbd4e181d818b927549813cf73}{%
+           family={Yao},
+           familyi={Y\bibinitperiod},
+           given={Shunyu},
+           giveni={S\bibinitperiod}}}%
+        {{hash=4fc64f0dbaf7cb8f21c7c85d580cdb15}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Jeffrey},
+           giveni={J\bibinitperiod}}}%
+        {{hash=2cb7d2d6e42d109fa2c5086d6c8f6a63}{%
+           family={Yu},
+           familyi={Y\bibinitperiod},
+           given={Dian},
+           giveni={D\bibinitperiod}}}%
+        {{hash=a926c34a0eebdaaa30da36b46bd2192c}{%
+           family={Du},
+           familyi={D\bibinitperiod},
+           given={Nan},
+           giveni={N\bibinitperiod}}}%
+        {{hash=20b3779bbd037bbfdd1ffd3967624997}{%
+           family={Shafran},
+           familyi={S\bibinitperiod},
+           given={Izhak},
+           giveni={I\bibinitperiod}}}%
+        {{hash=997c3143c2e5d593e816d2ff704fbf98}{%
+           family={Narasimhan},
+           familyi={N\bibinitperiod},
+           given={Karthik},
+           giveni={K\bibinitperiod}}}%
+        {{hash=2923de2da7f9b32b957552e414b6bc16}{%
+           family={Cao},
+           familyi={C\bibinitperiod},
+           given={Yuan},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{4ae4be538df04cfc1571685175562cad}
+      \strng{fullhash}{6f22c9f891fbcfb7465b1c3157b57023}
+      \strng{fullhashraw}{6f22c9f891fbcfb7465b1c3157b57023}
+      \strng{bibnamehash}{4ae4be538df04cfc1571685175562cad}
+      \strng{authorbibnamehash}{4ae4be538df04cfc1571685175562cad}
+      \strng{authornamehash}{4ae4be538df04cfc1571685175562cad}
+      \strng{authorfullhash}{6f22c9f891fbcfb7465b1c3157b57023}
+      \strng{authorfullhashraw}{6f22c9f891fbcfb7465b1c3157b57023}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2210.03629}
+      \field{title}{ReAct: Synergizing Reasoning and Acting in Language Models}
+      \field{year}{2022}
+    \endentry
+    \entry{sumers2024cognitive}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=080694cd747e5f022275c47d3ccbc676}{%
+           family={Sumers},
+           familyi={S\bibinitperiod},
+           given={Theodore\bibnamedelima R},
+           giveni={T\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=5c1b62cbd4e181d818b927549813cf73}{%
+           family={Yao},
+           familyi={Y\bibinitperiod},
+           given={Shunyu},
+           giveni={S\bibinitperiod}}}%
+        {{hash=997c3143c2e5d593e816d2ff704fbf98}{%
+           family={Narasimhan},
+           familyi={N\bibinitperiod},
+           given={Karthik},
+           giveni={K\bibinitperiod}}}%
+        {{hash=15f19cfb916ba0b8afb494f250ea80a2}{%
+           family={Griffiths},
+           familyi={G\bibinitperiod},
+           given={Thomas\bibnamedelima L},
+           giveni={T\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \strng{namehash}{2e998874b30883c10105048ca4dcba6d}
+      \strng{fullhash}{a7bab634bcb49ec4552260fe928b3d04}
+      \strng{fullhashraw}{a7bab634bcb49ec4552260fe928b3d04}
+      \strng{bibnamehash}{a7bab634bcb49ec4552260fe928b3d04}
+      \strng{authorbibnamehash}{a7bab634bcb49ec4552260fe928b3d04}
+      \strng{authornamehash}{2e998874b30883c10105048ca4dcba6d}
+      \strng{authorfullhash}{a7bab634bcb49ec4552260fe928b3d04}
+      \strng{authorfullhashraw}{a7bab634bcb49ec4552260fe928b3d04}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transactions on Machine Learning Research}
+      \field{title}{Cognitive Architectures for Language Agents}
+      \field{year}{2024}
+    \endentry
+    \entry{langgraph2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=8de59538e5206b848891f2b0e1898dfb}{%
+           family={LangChain},
+           familyi={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{fullhash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{fullhashraw}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{bibnamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorbibnamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authornamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorfullhash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorfullhashraw}{8de59538e5206b848891f2b0e1898dfb}
+      \field{extraname}{1}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{LangGraph: Build Stateful Agents}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.langchain.com/langgraph
+      \endverb
+      \verb{url}
+      \verb https://www.langchain.com/langgraph
+      \endverb
+    \endentry
+    \entry{langchain2023}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=8de59538e5206b848891f2b0e1898dfb}{%
+           family={LangChain},
+           familyi={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{fullhash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{fullhashraw}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{bibnamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorbibnamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authornamehash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorfullhash}{8de59538e5206b848891f2b0e1898dfb}
+      \strng{authorfullhashraw}{8de59538e5206b848891f2b0e1898dfb}
+      \field{extraname}{2}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{LangChain: Building Applications with LLMs}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.langchain.com/
+      \endverb
+      \verb{url}
+      \verb https://www.langchain.com/
+      \endverb
+    \endentry
+    \entry{wu2023autogen}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=6154e8b767a07e53ba059e3ac7df5d83}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Qingyun},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=6751ff8ce679fd345d66a156462f1915}{%
+           family={Bansal},
+           familyi={B\bibinitperiod},
+           given={Gagan},
+           giveni={G\bibinitperiod}}}%
+        {{hash=212f2ffa62575655103450499c26678d}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Jieyu},
+           giveni={J\bibinitperiod}}}%
+        {{hash=b8a163828804bc78bf30d6151252ce5f}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Yiran},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=4c57851806a4078dfd1b4e8d429b9a9f}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Beibin},
+           giveni={B\bibinitperiod}}}%
+        {{hash=ff3f3d040319c6441a541a662718d7d5}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Erkang},
+           giveni={E\bibinitperiod}}}%
+        {{hash=357b0b769575e7caa1fa1e98ea04a1fe}{%
+           family={Jiang},
+           familyi={J\bibinitperiod},
+           given={Li},
+           giveni={L\bibinitperiod}}}%
+        {{hash=7cf81b111784e6b097bc8fc66643e33c}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Xiaoyun},
+           giveni={X\bibinitperiod}}}%
+        {{hash=d95bd570217b62424a544dcb057c3ede}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Shaokun},
+           giveni={S\bibinitperiod}}}%
+        {{hash=a30bd94c8f427bff99361e9d32e2e0f0}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Jiale},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{14eae4f2249e69b15441e755c93a566f}
+      \strng{fullhash}{f877e9435a5a5104ca1d8e4102bdc21b}
+      \strng{fullhashraw}{f877e9435a5a5104ca1d8e4102bdc21b}
+      \strng{bibnamehash}{14eae4f2249e69b15441e755c93a566f}
+      \strng{authorbibnamehash}{14eae4f2249e69b15441e755c93a566f}
+      \strng{authornamehash}{14eae4f2249e69b15441e755c93a566f}
+      \strng{authorfullhash}{f877e9435a5a5104ca1d8e4102bdc21b}
+      \strng{authorfullhashraw}{f877e9435a5a5104ca1d8e4102bdc21b}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2308.08155}
+      \field{title}{AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation}
+      \field{year}{2023}
+    \endentry
+    \entry{autogen2023}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=140864078aeca1c7c35b4beb33c53c34}{%
+           family={Microsoft},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{140864078aeca1c7c35b4beb33c53c34}
+      \strng{fullhash}{140864078aeca1c7c35b4beb33c53c34}
+      \strng{fullhashraw}{140864078aeca1c7c35b4beb33c53c34}
+      \strng{bibnamehash}{140864078aeca1c7c35b4beb33c53c34}
+      \strng{authorbibnamehash}{140864078aeca1c7c35b4beb33c53c34}
+      \strng{authornamehash}{140864078aeca1c7c35b4beb33c53c34}
+      \strng{authorfullhash}{140864078aeca1c7c35b4beb33c53c34}
+      \strng{authorfullhashraw}{140864078aeca1c7c35b4beb33c53c34}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{AutoGen: Enabling Next-Gen LLM Applications}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://microsoft.github.io/autogen/
+      \endverb
+      \verb{url}
+      \verb https://microsoft.github.io/autogen/
+      \endverb
+    \endentry
+    \entry{n8n2024workflow}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=acd3b2db1e89848341fdb6e92bac5377}{%
+           family={{n8n GmbH}},
+           familyi={n\bibinitperiod}}}%
+      }
+      \strng{namehash}{acd3b2db1e89848341fdb6e92bac5377}
+      \strng{fullhash}{acd3b2db1e89848341fdb6e92bac5377}
+      \strng{fullhashraw}{acd3b2db1e89848341fdb6e92bac5377}
+      \strng{bibnamehash}{acd3b2db1e89848341fdb6e92bac5377}
+      \strng{authorbibnamehash}{acd3b2db1e89848341fdb6e92bac5377}
+      \strng{authornamehash}{acd3b2db1e89848341fdb6e92bac5377}
+      \strng{authorfullhash}{acd3b2db1e89848341fdb6e92bac5377}
+      \strng{authorfullhashraw}{acd3b2db1e89848341fdb6e92bac5377}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{n8n: Fair-Code Workflow Automation}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://n8n.io/
+      \endverb
+      \verb{url}
+      \verb https://n8n.io/
+      \endverb
+    \endentry
+    \entry{zapier2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=8d1b523eb7656364afa9a991514c46c1}{%
+           family={Inc.},
+           familyi={I\bibinitperiod},
+           given={Zapier},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{8d1b523eb7656364afa9a991514c46c1}
+      \strng{fullhash}{8d1b523eb7656364afa9a991514c46c1}
+      \strng{fullhashraw}{8d1b523eb7656364afa9a991514c46c1}
+      \strng{bibnamehash}{8d1b523eb7656364afa9a991514c46c1}
+      \strng{authorbibnamehash}{8d1b523eb7656364afa9a991514c46c1}
+      \strng{authornamehash}{8d1b523eb7656364afa9a991514c46c1}
+      \strng{authorfullhash}{8d1b523eb7656364afa9a991514c46c1}
+      \strng{authorfullhashraw}{8d1b523eb7656364afa9a991514c46c1}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Zapier: Automate Your Work}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://zapier.com/
+      \endverb
+      \verb{url}
+      \verb https://zapier.com/
+      \endverb
+    \endentry
+    \entry{make2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=566c7b59ac927b4b9d8ee0d028c1bbfa}{%
+           family={Celonis},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{566c7b59ac927b4b9d8ee0d028c1bbfa}
+      \strng{fullhash}{566c7b59ac927b4b9d8ee0d028c1bbfa}
+      \strng{fullhashraw}{566c7b59ac927b4b9d8ee0d028c1bbfa}
+      \strng{bibnamehash}{566c7b59ac927b4b9d8ee0d028c1bbfa}
+      \strng{authorbibnamehash}{566c7b59ac927b4b9d8ee0d028c1bbfa}
+      \strng{authornamehash}{566c7b59ac927b4b9d8ee0d028c1bbfa}
+      \strng{authorfullhash}{566c7b59ac927b4b9d8ee0d028c1bbfa}
+      \strng{authorfullhashraw}{566c7b59ac927b4b9d8ee0d028c1bbfa}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Make: From Tasks to Workflows}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.make.com/
+      \endverb
+      \verb{url}
+      \verb https://www.make.com/
+      \endverb
+    \endentry
+    \entry{relevanceai2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=6d5f5866f87b22e683ca437aca0363ee}{%
+           family={{Relevance AI}},
+           familyi={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{6d5f5866f87b22e683ca437aca0363ee}
+      \strng{fullhash}{6d5f5866f87b22e683ca437aca0363ee}
+      \strng{fullhashraw}{6d5f5866f87b22e683ca437aca0363ee}
+      \strng{bibnamehash}{6d5f5866f87b22e683ca437aca0363ee}
+      \strng{authorbibnamehash}{6d5f5866f87b22e683ca437aca0363ee}
+      \strng{authornamehash}{6d5f5866f87b22e683ca437aca0363ee}
+      \strng{authorfullhash}{6d5f5866f87b22e683ca437aca0363ee}
+      \strng{authorfullhashraw}{6d5f5866f87b22e683ca437aca0363ee}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{RelevanceAI: Build and Deploy AI Agents}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://relevanceai.com/
+      \endverb
+      \verb{url}
+      \verb https://relevanceai.com/
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
