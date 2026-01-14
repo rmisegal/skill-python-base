@@ -49,6 +49,9 @@ qa-logs/
 .DS_Store
 Thumbs.db
 
+# Claude CLI temp files
+tmpclaude-*-cwd
+
 # Backup files
 *.bak
 *-backup-*/

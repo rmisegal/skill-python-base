@@ -49,9 +49,35 @@ Key features:
 - Windows 11 or Linux
 - UV package manager (recommended) or pip
 
-### Option 1: Using UV (Recommended for Windows)
+### Option 1: Direct UV Usage (Recommended - No Manual venv)
 
-UV is a fast Python package installer and resolver.
+UV can run Python scripts directly without manually creating a virtual environment:
+
+```powershell
+# Install UV (Windows PowerShell) - one-time setup
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Navigate to project directory
+cd C:\path\to\skill-python-base
+
+# Run any Python script directly (UV auto-manages venv)
+uv run python -c "from qa_engine import api; print('Ready!')"
+
+# Run tests directly
+uv run pytest tests/ -v
+
+# Run the QA CLI
+uv run python -m qa_engine.cli.main run --project ./book
+
+# Sync dependencies (creates .venv if needed)
+uv sync
+```
+
+UV automatically creates and manages `.venv/` when you use `uv run` or `uv sync`.
+
+### Option 2: Using UV with Manual venv
+
+If you prefer explicit virtual environment control:
 
 ```powershell
 # Install UV (Windows PowerShell)
@@ -73,7 +99,7 @@ uv pip install -e .
 uv pip install -e ".[dev]"
 ```
 
-### Option 2: Using Python venv (Standard)
+### Option 3: Using Python venv (Standard)
 
 ```powershell
 # Navigate to project directory
@@ -109,7 +135,7 @@ python -c "from qa_engine import api; print('Installation successful!')"
 
 ## Project Architecture
 
-**CLS Version:** v6.3.4 | [BC Mechanism](docs/BC-MECHANISM.md) | [UV Environment](docs/UV-ENVIRONMENT.md) | [When to Use](docs/WHEN-TO-USE.md)
+**CLS Version:** v6.3.4 | [BC Mechanism](docs/BC-MECHANISM.md) | [UV Environment](docs/UV-ENVIRONMENT.md) | [When to Use](docs/WHEN-TO-USE.md) | [Book Creation Guide](docs/How-to-create-Academic-Book-with-this-project.md)
 
 ```
 skill-python-base/
