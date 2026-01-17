@@ -14,6 +14,7 @@ from .image_orchestrator import ImageOrchestrator
 from .table_orchestrator import TableOrchestrator
 from .infra_orchestrator import InfraOrchestrator
 from .typeset_orchestrator import TypesetOrchestrator
+from .execution_logger import ExecutionLogger
 from .family_handlers import HANDLERS
 
 
@@ -69,6 +70,7 @@ class SuperOrchestrator:
         elif (self.project_path / "qa_setup.json").exists():
             self.config.load(self.project_path / "qa_setup.json")
         self.analyzer = DocumentAnalyzer()
+        self._logger = ExecutionLogger.get_instance()
         self._orchestrators = {
             "BiDi": BiDiOrchestrator(), "bib": BibOrchestrator(project_root=self.project_path),
             "code": CodeOrchestrator(), "img": ImageOrchestrator(project_root=self.project_path),
@@ -82,6 +84,7 @@ class SuperOrchestrator:
         """Run full QA pipeline on content or project."""
         result = SuperOrchestratorResult(run_id=f"run-{uuid.uuid4().hex[:8]}",
                                          project_path=str(self.project_path), started_at=datetime.now())
+        self._logger.start_run(result.run_id)
         enabled = families or self.config.get("enabled_families", ["BiDi", "img"])
         result.families_run = [f for f in enabled if f in self._orchestrators]
         if self.project_path.exists():
@@ -89,12 +92,14 @@ class SuperOrchestrator:
         for family in result.families_run:
             result.family_results[family] = self._run_family(family, content, file_path, apply_fixes)
         result.completed_at = datetime.now()
+        self._logger.end_run()
         return result
 
     def run_on_project(self, families: List[str] = None, apply_fixes: bool = True) -> SuperOrchestratorResult:
         """Run QA on all .tex files in project."""
         result = SuperOrchestratorResult(run_id=f"run-{uuid.uuid4().hex[:8]}",
                                          project_path=str(self.project_path), started_at=datetime.now())
+        self._logger.start_run(result.run_id)
         enabled = families or self.config.get("enabled_families", ["BiDi", "img"])
         result.families_run = [f for f in enabled if f in self._orchestrators]
         result.document_metrics = self.analyzer.analyze(self.project_path)
@@ -113,11 +118,14 @@ class SuperOrchestrator:
                     agg.error = str(e)
             result.family_results[family] = agg
         result.completed_at = datetime.now()
+        self._logger.end_run()
         return result
 
     def _run_family(self, family: str, content: str, file_path: str, apply_fixes: bool) -> FamilyResult:
         """Run a single family orchestrator."""
         result = FamilyResult(family=family)
+        self._logger.log_family(family)
+        self._logger.log_skill(f"qa-{family}-detect", family, 2)
         orchestrator = self._orchestrators.get(family)
         if not orchestrator:
             result.status = "SKIP"
@@ -126,21 +134,45 @@ class SuperOrchestrator:
             handler = HANDLERS.get(family)
             if handler:
                 handler(orchestrator, content, file_path, apply_fixes, result)
+            self._log_rules(family, orchestrator)
         except Exception as e:
             result.status, result.verdict, result.error = "ERROR", "FAIL", str(e)
         return result
 
+    def _log_rules(self, family: str, orchestrator) -> None:
+        """Log rules executed by orchestrator's detector."""
+        detector = getattr(orchestrator, "_detector", None) or getattr(orchestrator, "detector", None)
+        if detector and hasattr(detector, "get_rules"):
+            for rule in detector.get_rules():
+                self._logger.log_rule(rule, family, f"qa-{family}-detect")
+
+    def get_verification(self, expected_rules: Dict[str, List[str]] = None) -> Dict:
+        """Get execution verification report."""
+        families = self.config.get("enabled_families", [])
+        return self._logger.get_verification_report(families, expected_rules or {})
+
+    def save_execution_log(self, log_dir: Path = None) -> Optional[Path]:
+        """Save execution log to versioned file with FIFO rotation (max 10)."""
+        return self._logger.save_log(log_dir or self.project_path / "qa-logs")
+
+    def clear_logs(self, log_dir: Path = None) -> int:
+        """Clear all execution logs. Returns count of deleted files."""
+        return ExecutionLogger.clear_logs(log_dir or self.project_path / "qa-logs")
+
     def to_dict(self, result: SuperOrchestratorResult) -> Dict[str, Any]:
         """Convert to dictionary matching qa-super skill.md output format."""
+        log = self._logger.get_execution_log()
         return {
             "run_id": result.run_id, "status": result.status, "verdict": result.verdict,
-            "project_path": result.project_path,
+            "version": log.version if log else 0, "project_path": result.project_path,
             "started_at": result.started_at.isoformat() if result.started_at else None,
             "completed_at": result.completed_at.isoformat() if result.completed_at else None,
             "families_run": result.families_run, "total_issues": result.total_issues,
             "issues_by_family": {f: r.issues_found for f, r in result.family_results.items()},
             "fixes_by_family": {f: r.issues_fixed for f, r in result.family_results.items()},
             "family_verdicts": {f: r.verdict for f, r in result.family_results.items()},
+            "rules_executed": len(log.rules_executed) if log else 0,
+            "skills_executed": len(log.skills_executed) if log else 0,
             "document_metrics": {"total_lines": result.document_metrics.total_lines,
                                 "total_files": result.document_metrics.total_files,
                                 "strategy": result.document_metrics.recommended_strategy.value,

@@ -64,6 +64,25 @@ C:\25D\CLS-examples\hebrew-academic-template.cls
 
 This is the authoritative source for the latest CLS version.
 
+## CRITICAL WARNING: Reference Path
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  ALWAYS USE: C:\25D\CLS-examples\hebrew-academic-template.cls       │
+│                                                                      │
+│  NEVER USE:                                                          │
+│    - test-data/CLS-examples/ (outdated test copies)                 │
+│    - test-data/CLS-examples-old/ (archived versions)                │
+│    - Any other CLS-examples directory in the project                │
+│                                                                      │
+│  The reference path is HARDCODED in Python:                         │
+│    src/qa_engine/infrastructure/detection/cls_detector.py:20        │
+│    REFERENCE_CLS_DIR = Path(r"C:\25D\CLS-examples")                 │
+│                                                                      │
+│  If you use the wrong path, version comparison will be INCORRECT!   │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
 ## Python Tool Integration
 
 ```python

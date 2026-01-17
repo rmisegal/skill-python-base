@@ -40,6 +40,13 @@ Detect CLS version mismatches between project and reference directory. This skil
 C:\25D\CLS-examples\hebrew-academic-template.cls
 ```
 
+### CRITICAL: Use ONLY This Path
+```
+ALWAYS: C:\25D\CLS-examples\hebrew-academic-template.cls
+NEVER:  test-data/CLS-examples/ (outdated copies!)
+NEVER:  test-data/CLS-examples-old/ (archived!)
+```
+
 ## Detection Rules
 
 ### Rule: cls-version-mismatch

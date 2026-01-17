@@ -1,0 +1,58 @@
+{
+  "version": "1.0.0",
+  "description": "BC Dedup Configuration - Chapter Deduplication & Balancing",
+
+  "chunk_size": 50,
+  "min_chunk_words": 20,
+  "similarity_threshold": 0.75,
+  "max_workers": 4,
+
+  "chapter_pattern": "chapters/chapter*.tex",
+
+  "excluded_environments": [
+    "pythonbox",
+    "pythonbox*",
+    "lstlisting",
+    "verbatim",
+    "equation",
+    "equation*",
+    "align",
+    "align*",
+    "figure",
+    "table"
+  ],
+
+  "balance_threshold": 2.0,
+
+  "llm_prompt_template": "Compare these two text segments for semantic similarity.\n\n## Source (Chapter {source_chapter}):\n{source_text}\n\n## Target (Chapter {target_chapter}):\n{target_text}\n\n## Task:\n1. Determine if these segments convey the SAME information (not just similar topics)\n2. Return JSON: {\"is_duplicate\": true/false, \"similarity_score\": 0.0-1.0, \"duplicate_segments\": [\"segment1\", ...]}\n3. Only mark as duplicate if they say the SAME thing, not just related topics",
+
+  "rewrite_prompt_template": "Rewrite this text to reference an earlier chapter instead of repeating content.\n\n## Original Text:\n{original_text}\n\n## Reference Chapter: {source_chapter}\n## Reference Content Summary:\n{source_summary}\n\n## Task:\nRewrite the original text to use \\chapterref{chapter{source_chapter}} to reference the earlier explanation.\nKeep any UNIQUE information that isn't duplicated.\nReturn ONLY the rewritten LaTeX text, nothing else.",
+
+  "rules": {
+    "dedup-semantic-duplicate": {
+      "enabled": true,
+      "severity": "WARNING",
+      "description": "Semantic duplication detected - content repeats earlier chapter"
+    },
+    "dedup-imbalanced-chapter": {
+      "enabled": true,
+      "severity": "INFO",
+      "description": "Chapter significantly larger than average - consider splitting"
+    },
+    "dedup-missing-reference": {
+      "enabled": true,
+      "severity": "WARNING",
+      "description": "Content should reference earlier chapter with chapterref"
+    }
+  },
+
+  "logging": {
+    "level": "INFO",
+    "log_dir": "bc-logs/dedup"
+  },
+
+  "output": {
+    "report_file": "DEDUP-REPORT.md",
+    "issues_file": "dedup-issues.json"
+  }
+}

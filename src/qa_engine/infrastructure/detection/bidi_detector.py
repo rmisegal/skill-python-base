@@ -3,6 +3,8 @@ BiDi (Bidirectional text) detector.
 
 Implements FR-401 from PRD - detects BiDi issues in Hebrew-English LaTeX.
 All 15 rules as specified in QA-CLAUDE-MECHANISM-ARCHITECTURE-REPORT.md.
+
+v1.1.0: Added TikZ environment exclusion to prevent corrupting TikZ code
 """
 
 from __future__ import annotations
@@ -13,6 +15,15 @@ from typing import Dict, List
 from ...domain.interfaces import DetectorInterface
 from ...domain.models.issue import Issue
 from .bidi_rules import BIDI_RULES
+
+# Environments where BiDi fixes should NOT be applied
+SKIP_ENVIRONMENTS = [
+    "tikzpicture",
+    "pgfpicture",
+    "axis",          # pgfplots
+    "semilogyaxis",  # pgfplots
+    "loglogaxis",    # pgfplots
+]
 
 
 class BiDiDetector(DetectorInterface):
@@ -63,9 +74,21 @@ class BiDiDetector(DetectorInterface):
 
             skip_math = rule_def.get("skip_math_mode", False)
             skip_cite = rule_def.get("skip_cite_context", False)
+            skip_tikz = rule_def.get("skip_tikz_env", False)
+            skip_color = rule_def.get("skip_color_context", False)
+
+            # Track TikZ environment state across lines
+            tikz_depth = 0
 
             for line_num, line in enumerate(lines, start=1):
                 if line.strip().startswith("%"):
+                    continue
+
+                # Track TikZ environment depth
+                tikz_depth = self._update_tikz_depth(line, tikz_depth)
+
+                # Skip entire line if inside TikZ and rule says to skip
+                if skip_tikz and tikz_depth > 0:
                     continue
 
                 # Line-level context check (skip for document_context rules)
@@ -79,6 +102,12 @@ class BiDiDetector(DetectorInterface):
                         continue
                     # Skip if inside \cite{} command
                     if skip_cite and self._is_inside_cite(line, match.start()):
+                        continue
+                    # Skip if inside TikZ on this specific line (for rules without skip_tikz)
+                    if self._is_inside_tikz_on_line(line, match.start()):
+                        continue
+                    # Skip if inside color context (colback=purple!5, \textcolor{green})
+                    if skip_color and self._is_inside_color_context(line, match.start()):
                         continue
                     # Check exclude_pattern - skip if match is inside a wrapper
                     if exclude_pattern:
@@ -141,6 +170,102 @@ class BiDiDetector(DetectorInterface):
         before = line[:pos]
         if r"\[" in before and r"\]" not in before:
             return True
+        return False
+
+    def _update_tikz_depth(self, line: str, current_depth: int) -> int:
+        """Update TikZ environment depth based on begin/end commands in line."""
+        depth = current_depth
+        for env in SKIP_ENVIRONMENTS:
+            # Count opens and closes
+            opens = len(re.findall(rf"\\begin\{{{env}\}}", line))
+            closes = len(re.findall(rf"\\end\{{{env}\}}", line))
+            depth += opens - closes
+        return max(0, depth)
+
+    def _is_inside_tikz_on_line(self, line: str, pos: int) -> bool:
+        """Check if position is inside a TikZ command on the same line."""
+        # Check for TikZ-specific commands that shouldn't be wrapped
+        tikz_commands = [
+            r"\\draw\[",
+            r"\\fill\[",
+            r"\\node\[",
+            r"\\path\[",
+            r"\\coordinate",
+            r"\\tikzset",
+            r"\\foreach",
+            r"\\addplot",
+        ]
+        for cmd in tikz_commands:
+            for match in re.finditer(cmd, line):
+                # If the command starts before our position and we haven't
+                # seen a semicolon (TikZ statement terminator), we're inside
+                if match.start() < pos:
+                    # Check if there's a semicolon between command and pos
+                    between = line[match.start():pos]
+                    if ";" not in between:
+                        return True
+        return False
+
+    def _is_inside_color_context(self, line: str, pos: int) -> bool:
+        """Check if position is inside a color specification context.
+
+        Detects color contexts like:
+        - colback=purple!5 (tcolorbox options)
+        - colframe=green!60!black
+        - coltitle=white
+        - \\textcolor{red!50}
+        - \\color{blue}
+        - \\definecolor{mycolor}{RGB}{255,0,0}
+        """
+        # Pattern 1: tcolorbox color options (colback=, colframe=, coltitle=, etc.)
+        # Match from option name through ! separated color specs until , or ]
+        tcolorbox_color_opts = [
+            r"colback\s*=",
+            r"colframe\s*=",
+            r"coltitle\s*=",
+            r"colbacktitle\s*=",
+            r"coltext\s*=",
+        ]
+        for opt_pattern in tcolorbox_color_opts:
+            for match in re.finditer(opt_pattern, line):
+                opt_end = match.end()
+                if opt_end <= pos:
+                    # Find the end of this color spec (next , or ] or end of line)
+                    rest = line[opt_end:]
+                    spec_end = len(rest)
+                    for i, char in enumerate(rest):
+                        if char in ",]}\n":
+                            spec_end = i
+                            break
+                    # Check if pos falls within this color spec
+                    if pos < opt_end + spec_end:
+                        return True
+
+        # Pattern 2: LaTeX color commands (\textcolor{...}, \color{...})
+        color_commands = [
+            r"\\textcolor\{",
+            r"\\color\{",
+            r"\\definecolor\{",
+            r"\\colorlet\{",
+        ]
+        for cmd_pattern in color_commands:
+            for match in re.finditer(cmd_pattern, line):
+                cmd_start = match.start()
+                if cmd_start < pos:
+                    # Find matching closing brace
+                    brace_start = match.end() - 1  # Position of {
+                    depth = 1
+                    i = match.end()
+                    while i < len(line) and depth > 0:
+                        if line[i] == "{":
+                            depth += 1
+                        elif line[i] == "}":
+                            depth -= 1
+                        i += 1
+                    # i is now just after the closing }
+                    if pos < i:
+                        return True
+
         return False
 
     def _is_inside_wrapper(self, line: str, pos: int, exclude_pattern: str) -> bool:

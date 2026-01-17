@@ -1,11 +1,85 @@
 % hebrew-academic-template.cls
-% Version 6.3.4 - TOC Page Numbers LTR Fix
-% Date: 2025-12-21
+% Version 7.1.0 - Cover Page Enhancements
+% Date: 2026-01-15
 %
 % A comprehensive LaTeX class for Hebrew academic documents with English integration
 % Copyright (c) 2025 Dr. Segal Yoram. All rights reserved.
 %
 % CHANGELOG:
+% v7.1.0 (2026-01-15) - Cover Page Enhancements
+%   - NEW: \coverimage{path} - Add cover image with faded edges to title page
+%   - NEW: \hebrewsignature{name} - Hebrew name in handwriting font (Guttman Yad)
+%   - NEW: \signatureimage{path} - Signature image below handwriting name
+%   - NEW: \makesignature - Renders signature block (name + image, left-aligned)
+%   - NEW: Decorative double frame on title page (outer 3pt + inner 1pt)
+%   - NEW: Cover image fading effect on all four edges using TikZ fadings
+%   - NEW: \usetikzlibrary{fadings} added for fade effects
+%   - Font fallback: If Guttman Yad not installed, uses bold italic text
+%   - Signature block aligned left with 5em offset from margin
+%
+% v7.0.6 (2026-01-02) - LOF/LOT Empty List Fix
+%   - FIXED: List of Figures and List of Tables were empty (not rendering entries)
+%   - Root cause: l@figure checked \c@lofdepth, l@table checked \c@lotdepth
+%   - These counters are NOT defined without tocloft package, causing \ifnum to fail
+%   - Solution: Removed the undefined counter checks from l@figure and l@table
+%
+% v7.0.5 (2026-01-02) - LOF/LOT BiDi Page Number Fix
+%   - FIXED: List of Figures (LOF) page numbers now render LTR instead of RTL
+%   - FIXED: List of Tables (LOT) page numbers now render LTR instead of RTL
+%   - NEW: Added l@figure redefinition with \textdir TLT for page numbers
+%   - NEW: Added l@table redefinition with \textdir TLT for page numbers
+%   - Both use \pardir TRT\textdir TRT for Hebrew caption text with LTR page numbers
+%
+% v7.0.4 (2026-01-02) - R{} Column Type Fix for RTL
+%   - FIXED: R{width} column type now uses Q[wd=width] instead of tabular-style definition
+%   - R{} now properly inherits cells={cmd=\raggedright} from themes for correct Hebrew alignment
+%   - Tables using R{3cm}R{4cm}R{4cm} now display right-aligned Hebrew text correctly
+%
+% v7.0.3 (2026-01-02) - Hebrew Table RTL Right-Alignment Fix
+%   - Added cells={cmd=\raggedright} to all tabularray themes for proper Hebrew right-alignment
+%   - Fixed: tblrfancy, tblrminimal, tblrstriped, tblracademic, fancytable
+%   - Note: Numbers in tables should be wrapped in \en{} for LTR display
+% v7.0.2 (2026-01-02) - Legacy rtltabular BiDi Fix
+%   - FIXED: rtltabular now renders Hebrew text correctly RTL (not reversed)
+%   - NEW: Column spec processing adds \textdir TRT to each c/l/r column
+%   - NEW: Added xstring package for column spec transformation
+%   - Legacy tables using rtltabular now work properly with Hebrew content
+%
+% v7.0.1 (2026-01-02) - Table Cell Alignment Fix
+%   - FIXED: Column specs now respected: c=center, l=left, r=right
+%   - NEW: R{width}, L{width}, C{width} - paragraph columns with alignment
+%   - Use R{width} for Hebrew paragraph columns (right-aligned)
+%   - Use L{width} for English paragraph columns (left-aligned)
+%   - Use c/l/r for simple columns (numbers: c, Hebrew: r, English: l)
+%   - FIXED: Removed broken fancytable*/themedtable environments
+%   - FIXED: Removed unused \SetTableTheme command
+%
+% v7.0.0 (2026-01-02) - MAJOR: Tabularray Fancy Tables Support
+%   - NEW: Added tabularray package for modern table support
+%   - NEW: \begin{fancytable}{colspec}{caption} - Simple fancy table environment
+%   - NEW: Multiple table themes: fancy, minimal, striped, academic
+%   - FIXED: \hebcell{} now works with all column types (removed \par that broke tables)
+%   - FIXED: \rowcolor{} no longer covers vertical borders (uses tabularray)
+%   - NEW: table_example.tex demonstrating all table layouts
+%   - Themes handle colors and borders properly (no overlap issues)
+%   - BREAKING: Legacy table commands simplified for compatibility
+%
+% v6.3.6 (2026-01-02) - Article Mode Compatibility Fix
+%   - FIXED: \renewcommand{\thechapter} caused "Command \thechapter undefined" in article mode
+%   - Root cause: Article class doesn't define \thechapter counter, only book class does
+%   - Solution: Wrap \thechapter definition in \if@bookmode conditional
+%   - FIXED: \thesubsubsection referenced \arabic{chapter} which fails in article mode
+%   - Solution: Use different format for article mode (section.subsection.subsubsection)
+%   - Detected by: Compilation failure when using \documentclass{hebrew-academic-template}
+%
+% v6.3.5 (2025-12-24) - Cross-Chapter Reference Commands
+%   - NEW: \chapterref{N} - Single chapter reference (e.g., "פרק 2")
+%   - NEW: \chapterrefrange{N}{M} - Chapter range (e.g., "פרקים 2-5")
+%   - NEW: \chapterreflist{N,M,O} - Chapter list (e.g., "פרקים 2, 5 ו-7")
+%   - NEW: \chapterrefforward{N} - Forward reference (e.g., "יוסבר בפרק 5")
+%   - All commands are standalone-safe (show "בספר המלא" suffix in standalone mode)
+%   - Uses \ifSubfilesClassLoaded for conditional standalone detection
+%
 % v6.3.4 (2025-12-21) - TOC Page Numbers LTR Fix
 %   - FIXED: TOC page numbers rendered RTL (e.g., "021" instead of "120")
 %   - Root cause: l@chapter/section/subsection used \textenglish{#2} for page numbers
@@ -359,11 +433,11 @@
 % - PDF bookmark support with proper hyperref integration
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{hebrew-academic-template}[2025/12/21 v5.14.0 Hebrew Academic Template - TOC Numbering & Hebrew Section Fix]
+\ProvidesClass{hebrew-academic-template}[2026/01/15 v7.1.0 Hebrew Academic Template - Cover Page Enhancements]
 
 % ==================== VERSION INFORMATION ====================
 % Version command - defined early for programmatic access
-\newcommand{\clsversion}{V5.14.0-2025-12-21}
+\newcommand{\clsversion}{V7.1.0-2026-01-15}
 
 % ==================== CLASS OPTIONS ====================
 % 'book' option - enables full book class with chapters, frontmatter, etc.
@@ -431,9 +505,21 @@
 \RequirePackage{tabularx}
 \RequirePackage{array}
 \RequirePackage{booktabs}
+\RequirePackage{ragged2e}    % v7.0.2: For proper ragged text in table cells
+\RequirePackage{xstring}     % v7.0.2: For rtltabular column spec processing
+
+% v7.0.2: RTL column types for standard tabular - defined immediately after array package
+% h - Hebrew centered, i - Hebrew left, j - Hebrew right
+\newcolumntype{h}{>{\textdir TRT\selectlanguage{hebrew}}c}
+\newcolumntype{i}{>{\textdir TRT\selectlanguage{hebrew}}l}
+\newcolumntype{j}{>{\textdir TRT\selectlanguage{hebrew}}r}
+
+\RequirePackage{tabularray}  % v6.4.0: Modern table package with themes
+\UseTblrLibrary{booktabs}    % Load booktabs-style rules for tabularray
 
 % TikZ packages for diagrams
 \RequirePackage{tikz-cd}
+\usetikzlibrary{fadings}  % v7.1.0: Required for cover image faded edges
 
 % Hyperref for PDF bookmarks and links
 \RequirePackage[unicode, pdfencoding=auto, bookmarks=true, colorlinks=true, linkcolor=blue, citecolor=red, urlcolor=blue]{hyperref}
@@ -534,12 +620,24 @@
 %% ==================== NUMBERING CONFIGURATION ====================
 
 % Chapter numbering - always LTR (v5.13.1: added for book mode TOC BiDi)
-\renewcommand{\thechapter}{\textenglish{\arabic{chapter}}}
+% v6.3.6: Wrap in \if@bookmode - article class doesn't have \thechapter
+\makeatletter
+\if@bookmode
+  \renewcommand{\thechapter}{\textenglish{\arabic{chapter}}}
+\fi
+\makeatother
 
 % Section numbering - always LTR (v5.13.0: wrapped in \textenglish{} for BiDi)
 \renewcommand{\thesection}{\textenglish{\arabic{section}}}
 \renewcommand{\thesubsection}{\textenglish{\arabic{section}.\arabic{subsection}}}
-\renewcommand{\thesubsubsection}{\textenglish{\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+% v6.3.6: Different format for book vs article mode (article has no chapter counter)
+\makeatletter
+\if@bookmode
+  \renewcommand{\thesubsubsection}{\textenglish{\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+\else
+  \renewcommand{\thesubsubsection}{\textenglish{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+\fi
+\makeatother
 
 % Page numbering - DO NOT override \thepage format
 % v6.3.3: Removed \renewcommand{\thepage} to preserve Roman numerals in frontmatter
@@ -976,6 +1074,46 @@
     \fi
   }
 
+  % v7.0.5: Redefine l@figure for proper BiDi handling in List of Figures
+  % Ensures page numbers render LTR and Hebrew captions render RTL
+  % v7.0.6: Removed \c@lofdepth check (counter not defined without tocloft)
+  \renewcommand*\l@figure[2]{%
+    \addpenalty{-\@highpenalty}%
+    \addvspace{1.0em \@plus\p@}%
+    \setlength{\@tempdima}{2.3em}%
+    \begingroup
+      \pardir TRT\textdir TRT
+      \parindent \z@ \leftskip \z@ \rightskip \@tocrmarg
+      \parfillskip -\rightskip
+      \leavevmode
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\leaders\hbox{$\m@th
+        \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+        mu$}\hfill\nobreak\hb@xt@\@pnumwidth{\hss {\textdir TLT #2}}\par
+    \endgroup
+  }
+
+  % v7.0.5: Redefine l@table for proper BiDi handling in List of Tables
+  % Ensures page numbers render LTR and Hebrew captions render RTL
+  % v7.0.6: Removed \c@lotdepth check (counter not defined without tocloft)
+  \renewcommand*\l@table[2]{%
+    \addpenalty{-\@highpenalty}%
+    \addvspace{1.0em \@plus\p@}%
+    \setlength{\@tempdima}{2.3em}%
+    \begingroup
+      \pardir TRT\textdir TRT
+      \parindent \z@ \leftskip \z@ \rightskip \@tocrmarg
+      \parfillskip -\rightskip
+      \leavevmode
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\leaders\hbox{$\m@th
+        \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+        mu$}\hfill\nobreak\hb@xt@\@pnumwidth{\hss {\textdir TLT #2}}\par
+    \endgroup
+  }
+
   % ---- Fix standard section commands for Hebrew TOC (v5.11.8, v5.13.1) ----
   % Problem: Standard \section{} and \subsection{} add raw Hebrew to TOC without \texthebrew{}
   % The TOC entry becomes: \contentsline{section}{\numberline{X}Hebrew text}{page}{}
@@ -1136,16 +1274,26 @@
 %   - All columns use m{} for vertical centering
 %   - Hebrew columns will be right-aligned via \hebcell{}
 %   - English columns will be left-aligned via \en{}
+% v7.0.2: rtltabular - legacy RTL table environment
+% NOTE: For proper Hebrew RTL in cells, wrap content with \hebcellc{}
+% Example: \hebcellc{טקסט עברי} & \hebcellc{עוד טקסט} \\
 \newenvironment{rtltabular}[1]{%
+  \begingroup%
+  \setlength{\tabcolsep}{8pt}%
+  \begin{hebrew}%
+  \pardir TRT%
+  \textdir TRT%
   \begin{tabular}{#1}%
 }{%
   \end{tabular}%
+  \end{hebrew}%
+  \endgroup%
 }
 
-% \hebcell{} - Hebrew RTL table cell with mixed language support
-% 
+% \hebcell{} - Hebrew RTL table cell with mixed language support (for m{} columns)
+%
 % PURPOSE: Creates right-aligned RTL cells that support mixed Hebrew/English content
-% 
+%
 % FEATURES:
 %   - Forces RTL (right-to-left) text direction for entire cell
 %   - Right-aligns Hebrew text automatically
@@ -1153,27 +1301,47 @@
 %   - Removes leading/trailing whitespace (no empty lines)
 %   - Adds vertical padding: 0.5ex top and bottom (~half font height)
 %   - Works with m{} column type for vertical centering
-% 
+%
 % USAGE:
 %   \hebcell{Hebrew text}                           % Pure Hebrew
 %   \hebcell{Hebrew \en{English} more Hebrew}       % Mixed content
 %   \hebcell{Hebrew \en{$formula$} explanation}     % With formulas
 %   \hebcell{\en{Symbol} Hebrew explanation}        % English symbol + Hebrew
-% 
+%
 % IMPORTANT:
-%   - Always use with m{width} column type (not p{width}) for vertical centering
+%   - ONLY use with m{width} or p{width} column types (multi-line cells)
+%   - For simple |c|c|c| tables, use \begin{english} wrapper instead
 %   - Never put spaces inside \en{}: use \en{text} not \en{ text }
 %   - For pure English cells, use \en{} directly without \hebcell{}
-% 
-\newcommand{\hebcell}[1]{%
+%
+% WARNING: Using \hebcell{} with |c|c|c| columns will BREAK the table!
+%   The \par command inside creates paragraph breaks that disconnect rows.
+%   For simple centered tables, wrap in \begin{english}...\end{english}
+%
+% v6.4.0: Simplified to work with ALL column types (c, l, r, m, p)
+% Removed \par that was breaking simple centered tables
+\newcommand{\hebcell}[1]{\texthebrew{#1}}
+
+% \hebcellc{} - Hebrew RTL table cell for CENTERED columns (c, l, r)
+%
+% PURPOSE: Simple RTL cell for |c|c|c| or |l|l|l| column types
+%
+% FEATURES:
+%   - Forces RTL text direction WITHOUT paragraph breaks
+%   - Works with simple column types (c, l, r)
+%   - No vertical padding (keeps table compact)
+%
+% USAGE:
+%   \begin{rtltabular}{|c|c|c|}
+%   \hebcellc{עברית} & \hebcellc{עברית} & \hebcellc{עברית} \\
+%
+% NOTE: For simple numeric/English tables, prefer \begin{english} wrapper
+%
+\newcommand{\hebcellc}[1]{%
   \bgroup%
-  \textdir TRT\pardir TRT%
-  \everypar{\textdir TRT\pardir TRT}%
+  \textdir TRT%
   \selectlanguage{hebrew}%
-  \rightskip=0pt\leftskip=0pt plus 1fil\relax%
-  \mbox{}\par\vspace{+0.2\baselineskip}\vspace{0.5ex}%
-  \ignorespaces#1\unskip%
-  \vspace*{0.5ex}%
+  #1%
   \egroup%
 }
 
@@ -1191,39 +1359,20 @@
 %   \encell{np.dot(u, v)}          % Function names
 %   \encell{$formula$}             % English formulas
 % 
-\newcommand{\encell}[1]{%
-  \bgroup%
-  \mbox{}\par\vspace{+0.2\baselineskip}\vspace{0.5ex}%
-  #1%
-  \vspace*{0.5ex}%
-  \egroup%
-}
+% v6.4.0: Simplified to work with ALL column types
+\newcommand{\encell}[1]{\textenglish{#1}}
 
 % \hebheader{} - Hebrew RTL table header cell (for single-line headers)
 % For use in table column headers - supports mixed Hebrew/English/formulas
 % Usage: \textbf{\hebheader{Hebrew title \en{English} more Hebrew}}
-% Fixed: Uses \par to activate \leftskip/\rightskip for proper RTL right-alignment
-\newcommand{\hebheader}[1]{%
-  \bgroup%
-  \textdir TRT\pardir TRT%
-  \everypar{\textdir TRT\pardir TRT}%
-  \selectlanguage{hebrew}%
-  \rightskip=0pt\leftskip=0pt plus 1fil\relax%
-  \mbox{}\par\vspace{-0.5\baselineskip}%
-  \ignorespaces#1\unskip%
-  \egroup%
-}
+% v6.4.0: Simplified to work with ALL column types
+\newcommand{\hebheader}[1]{\texthebrew{#1}}
 
 % \enheader{} - English LTR table header cell (for single-line headers)
 % For use in table column headers - pure English content
 % Usage: \textbf{\enheader{English Title}}
-\newcommand{\enheader}[1]{%
-  \bgroup%
-  \vspace*{0.5ex}%
-  #1%
-  \vspace*{0.5ex}%
-  \egroup%
-}
+% v7.0.0: Simplified to work with ALL column types
+\newcommand{\enheader}[1]{\textenglish{#1}}
 
 % \mixedcell{} - Deprecated, use \hebcell{} instead
 % Kept for backward compatibility with existing tables
@@ -1234,6 +1383,145 @@
 \newcommand{\rtlrow}[2][0]{%
   % Implementation would go here if included
   % Currently omitted as recommended by Agent B
+}
+
+%% ==================== TABULARRAY FANCY TABLES (v7.0.0) ====================
+%
+% Modern fancy table support using tabularray package.
+% Features: proper color/border handling, built-in themes, Hebrew/English support.
+%
+% AVAILABLE THEMES:
+%   fancy    - Blue header, all borders, bold headers (DEFAULT)
+%   minimal  - No vertical borders, booktabs-style horizontal rules
+%   striped  - Alternating row colors (gray), blue header
+%   academic - Clean academic style, thick top/bottom rules
+%
+% USAGE:
+%   \begin{fancytable}{colspec}{caption}
+%   Header1 & Header2 & Header3 \\
+%   data & data & data \\
+%   \end{fancytable}
+%
+% CHANGING THEME:
+%   \SetTableTheme{minimal}  % Changes default for all subsequent tables
+%
+% CUSTOMIZATION OPTIONS (in tblr key-value):
+%   colspec    - Column specification (c, l, r, or width like p{3cm})
+%   hlines     - Add all horizontal lines
+%   vlines     - Add all vertical lines
+%   row{N}     - Style for row N (bg=color, fg=color, font=\bfseries)
+%   column{N}  - Style for column N
+%   cell{R}{C} - Style for specific cell at row R, column C
+%   rowsep     - Vertical padding between rows
+%   colsep     - Horizontal padding between columns
+%
+
+% Custom column types for Hebrew/English tables
+% H - Hebrew column (right-aligned for Hebrew text using \hfill prefix)
+% E - English column (left-aligned for English text using \hfill suffix)
+% R{width} - Right-aligned paragraph column with fixed width (for Hebrew)
+%            v7.0.4: Changed to Q column - works with cells={cmd=\raggedright} for proper RTL
+% L{width} - Left-aligned paragraph column (for English text with width)
+% C{width} - Center-aligned paragraph column
+\NewColumnType{H}{Q[preto=\hfill]}
+\NewColumnType{E}{Q[appto=\hfill]}
+\NewColumnType{R}[1]{Q[wd=#1]}
+\NewColumnType{L}[1]{Q[wd=#1,halign=l]}
+\NewColumnType{C}[1]{Q[wd=#1,halign=c]}
+
+% Theme: fancy - Blue header, all borders, bold headers
+% Uses column specs as-is: c=center, l=left, r=right, R{w}/L{w}/C{w} for paragraphs
+% v7.0.3: Added cells={cmd=\raggedright} for proper Hebrew RTL right-alignment
+\NewTblrEnviron{tblrfancy}
+\SetTblrInner[tblrfancy]{
+  hlines,
+  vlines,
+  row{1} = {bg=blue!15, font=\bfseries},
+  rowsep = 2pt,
+  colsep = 5pt,
+  cells = {cmd=\raggedright},
+}
+
+% Theme: minimal - No vertical borders, booktabs-style
+% v7.0.3: Added cells={cmd=\raggedright} for proper Hebrew RTL right-alignment
+\NewTblrEnviron{tblrminimal}
+\SetTblrInner[tblrminimal]{
+  row{1} = {font=\bfseries},
+  rowsep = 3pt,
+  colsep = 8pt,
+  hline{1,2} = {0.8pt},
+  hline{Z} = {0.8pt},
+  cells = {cmd=\raggedright},
+}
+
+% Theme: striped - Alternating row colors
+% v7.0.3: Added cells={cmd=\raggedright} for proper Hebrew RTL right-alignment
+\NewTblrEnviron{tblrstriped}
+\SetTblrInner[tblrstriped]{
+  hlines,
+  vlines,
+  row{1} = {bg=blue!15, font=\bfseries},
+  row{even} = {bg=gray!10},
+  rowsep = 2pt,
+  colsep = 5pt,
+  cells = {cmd=\raggedright},
+}
+
+% Theme: academic - Clean academic style
+% v7.0.3: Added cells={cmd=\raggedright} for proper Hebrew RTL right-alignment
+\NewTblrEnviron{tblracademic}
+\SetTblrInner[tblracademic]{
+  row{1} = {font=\bfseries},
+  rowsep = 4pt,
+  colsep = 10pt,
+  hline{1} = {1pt},
+  hline{2} = {0.5pt},
+  hline{Z} = {1pt},
+  cells = {cmd=\raggedright},
+}
+
+% Main fancytable environment
+% Usage: \begin{fancytable}{colspec}{caption}
+% Column specs: c=center, l=left, r=right, R{w}=Hebrew paragraph, L{w}=English paragraph
+% v7.0.3: Added cells={cmd=\raggedright} for proper Hebrew RTL right-alignment
+\NewDocumentEnvironment{fancytable}{m m}{%
+  \begin{table}[H]
+  \centering
+  \captionsetup{justification=centering,singlelinecheck=false}
+  \caption{#2}
+  \begin{tblr}{
+    colspec = {#1},
+    hlines,
+    vlines,
+    row{1} = {bg=blue!15, font=\bfseries},
+    rowsep = 2pt,
+    colsep = 5pt,
+    cells = {cmd=\raggedright},
+  }
+}{%
+  \end{tblr}
+  \end{table}
+}
+
+% English table environment - for English-only content (same as fancytable, kept for clarity)
+% Usage: \begin{englishtable}{colspec}{caption}
+% Column specs: c=center, l=left, r=right, L{w}=English paragraph
+\NewDocumentEnvironment{englishtable}{m m}{%
+  \begin{table}[H]
+  \centering
+  \captionsetup{justification=centering,singlelinecheck=false}
+  \caption{#2}
+  \begin{tblr}{
+    colspec = {#1},
+    hlines,
+    vlines,
+    row{1} = {bg=blue!15, font=\bfseries},
+    rowsep = 2pt,
+    colsep = 5pt,
+  }
+}{%
+  \end{tblr}
+  \end{table}
 }
 
 %% ==================== BIBLIOGRAPHY SETUP ====================
@@ -1417,16 +1705,69 @@
 }
 
 %% ==================== TITLE PAGE COMMANDS ====================
+% v7.1.0: Enhanced cover page with decorative frame, cover image, and signature support
+%
+% USAGE - Metadata commands (in preamble):
+%   \hebrewtitle{כותרת בעברית}        - Hebrew title (required)
+%   \englishtitle{English Title}       - English title (required)
+%   \hebrewsubtitle{כותרת משנה}        - Hebrew subtitle (optional)
+%   \hebrewauthor{שם המחבר}            - Author name (optional)
+%   \hebrewversion{גרסה 1.0}           - Version string (optional)
+%   \coverimage{path/to/image.png}     - Cover image with faded edges (optional)
+%   \hebrewsignature{יורם}             - Hebrew name in handwriting font (optional)
+%   \signatureimage{path/to/sig.png}   - Signature image (optional)
+%
+% USAGE - Rendering commands:
+%   \maketitle                         - Renders full title page with frame
+%   \makesignature                     - Renders signature block (name + image)
 
 \newcommand{\hebrewtitle}[1]{\def\@hebrewtitle{#1}}
 \newcommand{\englishtitle}[1]{\def\@englishtitle{#1}}
 \newcommand{\hebrewsubtitle}[1]{\def\@hebrewsubtitle{#1}}
 \newcommand{\hebrewauthor}[1]{\def\@hebrewauthor{#1}}
 \newcommand{\hebrewversion}[1]{\def\@hebrewversion{#1}}
+\newcommand{\coverimage}[1]{\def\@coverimage{#1}}
+\newcommand{\hebrewsignature}[1]{\def\@hebrewsignature{#1}}
+\newcommand{\signatureimage}[1]{\def\@signatureimage{#1}}
 
-% Custom title page for Hebrew documents
+% Signature block command - renders Hebrew name in handwriting font + signature image
+% Aligned to left margin, Hebrew name centered above image
+% USAGE: \makesignature (after setting \hebrewsignature{} and/or \signatureimage{})
+\newcommand{\makesignature}{%
+  \begin{english}%
+  \raggedright%
+  \begin{minipage}{5cm}%
+    \centering%
+    \ifdefined\@hebrewsignature%
+      \IfFontExistsTF{Guttman Yad}{%
+        {\bgroup\textdir TRT\fontspec{Guttman Yad}[Script=Hebrew,Renderer=Harfbuzz]\Large\@hebrewsignature\egroup}%
+      }{%
+        {\bgroup\textdir TRT\Large\textit{\textbf{\@hebrewsignature}}\egroup}%
+      }\\[0.1cm]%
+    \fi%
+    \ifdefined\@signatureimage%
+      \includegraphics[width=5cm]{\@signatureimage}%
+    \fi%
+  \end{minipage}%
+  \end{english}%
+}
+
+% Custom title page for Hebrew documents with decorative frame
 \renewcommand{\maketitle}{%
   \begin{titlepage}%
+    % Decorative double page frame using TikZ overlay
+    \begin{tikzpicture}[remember picture, overlay, shift={(current page.center)}]
+      % Outer frame - thick (3pt, dark gray)
+      \draw[line width=3pt, color=black!60]
+        (-0.5\paperwidth+1.2cm, 0.5\paperheight-1.2cm)
+        rectangle
+        (0.5\paperwidth-1.2cm, -0.5\paperheight+1.2cm);
+      % Inner frame - thin (1pt, light gray)
+      \draw[line width=1pt, color=black!40]
+        (-0.5\paperwidth+1.5cm, 0.5\paperheight-1.5cm)
+        rectangle
+        (0.5\paperwidth-1.5cm, -0.5\paperheight+1.5cm);
+    \end{tikzpicture}
     \null\vfil%
     \begin{center}%
       \texthebrew{\LARGE\bfseries\@hebrewtitle}\par%
@@ -1439,7 +1780,25 @@
       \vskip 3em%
       \ifdefined\@hebrewauthor%
         {\large \texthebrew{\@hebrewauthor} \par}%
-        \vskip 0.5em%
+      \fi%
+      % Cover image with faded edges (v7.1.0)
+      \ifdefined\@coverimage%
+        \vskip 1em%
+        \begin{tikzpicture}
+          \node[inner sep=0] (img) {\includegraphics[width=0.7\textwidth]{\@coverimage}};
+          % Faded white overlay on edges
+          \fill[white, path fading=south, fading angle=90, opacity=0.9]
+            ([yshift=-0.5cm]img.south west) rectangle ([yshift=1cm]img.south east);
+          \fill[white, path fading=north, fading angle=90, opacity=0.9]
+            ([yshift=0.5cm]img.north west) rectangle ([yshift=-1cm]img.north east);
+          \fill[white, path fading=east, fading angle=0, opacity=0.7]
+            ([xshift=-0.5cm]img.west) rectangle ([xshift=1.5cm]img.east |- img.south);
+          \fill[white, path fading=west, fading angle=0, opacity=0.7]
+            ([xshift=0.5cm]img.east) rectangle ([xshift=-1.5cm]img.west |- img.north);
+        \end{tikzpicture}
+        \vskip 1em%
+      \fi%
+      \ifdefined\@hebrewauthor%
         {\large \hebfoot{כל הזכויות שמורות - \en{©} \@hebrewauthor} \par}%
       \else%
         {\large \@author \par}%
@@ -1750,6 +2109,38 @@
 
 % Subfiles support for modular book structure
 \RequirePackage{subfiles}
+
+%% ==================== CROSS-CHAPTER REFERENCE COMMANDS ====================
+%% v6.3.5 - Standalone-safe chapter reference commands
+%% Uses \ifSubfilesClassLoaded to detect standalone compilation
+
+% Single chapter reference: \chapterref{2} -> "פרק 2" or "פרק 2 בספר המלא"
+\newcommand{\chapterref}[1]{%
+  \ifSubfilesClassLoaded
+    {פרק~\en{#1} בספר המלא}%
+    {פרק~\en{#1}}%
+}
+
+% Chapter range: \chapterrefrange{2}{5} -> "פרקים 2-5" or "פרקים 2-5 בספר המלא"
+\newcommand{\chapterrefrange}[2]{%
+  \ifSubfilesClassLoaded
+    {פרקים~\en{#1--#2} בספר המלא}%
+    {פרקים~\en{#1--#2}}%
+}
+
+% Chapter list: \chapterreflist{2, 5 ו-7} -> "פרקים 2, 5 ו-7"
+\newcommand{\chapterreflist}[1]{%
+  \ifSubfilesClassLoaded
+    {פרקים~\en{#1} בספר המלא}%
+    {פרקים~\en{#1}}%
+}
+
+% Forward chapter reference: \chapterrefforward{5} -> "יוסבר בפרק 5"
+\newcommand{\chapterrefforward}[1]{%
+  \ifSubfilesClassLoaded
+    {יוסבר בפרק~\en{#1} בספר המלא}%
+    {יוסבר בפרק~\en{#1}}%
+}
 
 %% ==================== END OF CLASS ====================
 

@@ -1,9 +1,9 @@
 ---
 name: bc-super
-description: Level 0 Super Orchestrator - coordinates all BC stages with QA validation, manages BC-TASKS.md
-version: 1.1.0
+description: Level 0 Super Orchestrator - coordinates all 4 BC stages with QA validation, manages BC-TASKS.md
+version: 1.2.0
 author: BC Team
-tags: [bc, orchestrator, level-0, super, book-creator]
+tags: [bc, orchestrator, level-0, super, book-creator, dedup]
 has_python_tool: true
 tools: [Read, Write, Edit, Grep, Glob, Bash, Task]
 ---
@@ -25,6 +25,7 @@ tools: [Read, Write, Edit, Grep, Glob, Bash, Task]
 - bc-research (Stage 1: Source Collection)
 - bc-content (Stage 2: Content Drafting)
 - bc-review (Stage 3: Review & Polish)
+- bc-dedup (Stage 4: Deduplication & Balancing)
 
 ### Reads
 - bc_pipeline.json (configuration)
@@ -44,26 +45,26 @@ Coordinate all BC stage orchestrators to perform comprehensive book content crea
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                     BC SUPER ORCHESTRATOR (Level 0)             │
-│  - Coordinates 3 stages in sequence                             │
+│  - Coordinates 4 stages in sequence                             │
 │  - Manages BC-TASKS.md tracking                                 │
 │  - Runs QA validators via Python tools                          │
 └─────────────────────────────────────────────────────────────────┘
                               │
-        ┌─────────────────────┼─────────────────────┐
-        ▼                     ▼                     ▼
-┌───────────────┐     ┌───────────────┐     ┌───────────────┐
-│  bc-research  │     │  bc-content   │     │   bc-review   │
-│   (Stage 1)   │────▶│   (Stage 2)   │────▶│   (Stage 3)   │
-│   Level 1     │     │   Level 1     │     │   Level 1     │
-└───────────────┘     └───────────────┘     └───────────────┘
-        │                     │                     │
-        ▼                     ▼                     ▼
-┌───────────────┐     ┌───────────────┐     ┌───────────────┐
-│bc-source-     │     │bc-code        │     │bc-architect   │
-│research       │     │bc-math        │     │bc-hebrew      │
-│(Level 2)      │     │bc-academic-   │     │(Level 2)      │
-│               │     │source (L2)    │     │               │
-└───────────────┘     └───────────────┘     └───────────────┘
+        ┌─────────────────────┼─────────────────────┬─────────────────────┐
+        ▼                     ▼                     ▼                     ▼
+┌───────────────┐     ┌───────────────┐     ┌───────────────┐     ┌───────────────┐
+│  bc-research  │     │  bc-content   │     │   bc-review   │     │   bc-dedup    │
+│   (Stage 1)   │────▶│   (Stage 2)   │────▶│   (Stage 3)   │────▶│   (Stage 4)   │
+│   Level 1     │     │   Level 1     │     │   Level 1     │     │   Level 1     │
+└───────────────┘     └───────────────┘     └───────────────┘     └───────────────┘
+        │                     │                     │                     │
+        ▼                     ▼                     ▼                     ▼
+┌───────────────┐     ┌───────────────┐     ┌───────────────┐     ┌───────────────┐
+│bc-source-     │     │bc-code        │     │bc-architect   │     │bc-dedup-detect│
+│research       │     │bc-math        │     │bc-hebrew      │     │bc-dedup-fix   │
+│(Level 2)      │     │bc-academic-   │     │(Level 2)      │     │(Level 2)      │
+│               │     │source (L2)    │     │               │     │               │
+└───────────────┘     └───────────────┘     └───────────────┘     └───────────────┘
 ```
 
 ## Workflow
@@ -88,6 +89,11 @@ Coordinate all BC stage orchestrators to perform comprehensive book content crea
 3. **Stage 3 (Review):** Invoke bc-review
    - Run BCBiDiValidator, BCTOCValidator
    - Apply final polish
+4. **Stage 4 (Dedup):** Invoke bc-dedup
+   - Run BCDedupValidator, BCBiDiValidator
+   - Detect and fix semantic duplicates across chapters
+   - Replace duplicates with `\chapterref{}` references
+   - Check chapter balance
 
 ### Phase 3: Reporting
 1. Collect results from all stages
@@ -103,6 +109,7 @@ Coordinate all BC stage orchestrators to perform comprehensive book content crea
 | Research | BCBibValidator | Yes (cite keys) |
 | Content | BCBiDiValidator, BCCodeValidator, BCTableValidator | Yes (most rules) |
 | Review | BCBiDiValidator, BCTOCValidator | Yes (English wrappers) |
+| Dedup | BCDedupValidator, BCBiDiValidator | Yes (chapterref fixes) |
 
 ### CLS Version Requirements
 | Feature | Minimum CLS Version | Handler |
@@ -175,12 +182,23 @@ status = orchestrator.run(stages=["research", "content", "review"])
       "validators": ["BCBiDiValidator", "BCTOCValidator"],
       "parallel": false,
       "requires": ["content"]
+    },
+    "dedup": {
+      "skills": ["bc-dedup"],
+      "validators": ["BCDedupValidator", "BCBiDiValidator"],
+      "parallel": false,
+      "requires": ["review"]
     }
   }
 }
 ```
 
 ## Version History
+- **v1.2.0** (2025-12-28): Added Stage 4 - Deduplication
+  - NEW: bc-dedup stage orchestrator (Level 1)
+  - NEW: bc-dedup-detect, bc-dedup-fix workers (Level 2)
+  - NEW: BCDedupValidator for semantic duplicate detection
+  - FIX: Architecture now shows 4 stages instead of 3
 - **v1.1.0** (2025-12-22): Added CLS version prerequisite check
   - NEW: BCCLSVersionValidator in Pre-Start phase
   - NEW: CLS version requirements table (v6.2.2+ for English References TOC)
@@ -191,5 +209,5 @@ status = orchestrator.run(stages=["research", "content", "review"])
 ---
 
 **Parent:** None
-**Children:** bc-research, bc-content, bc-review
+**Children:** bc-research, bc-content, bc-review, bc-dedup
 **Coordination:** BC-TASKS.md

@@ -13,6 +13,8 @@
     },
     "content": {
       "skills": [
+        "bc-content-drafting",
+        "bc-drawing",
         "bc-code",
         "bc-math",
         "bc-academic-source"
@@ -20,7 +22,10 @@
       "validators": [
         "BCBiDiValidator",
         "BCCodeValidator",
-        "BCTableValidator"
+        "BCTableValidator",
+        "BCTikZSyntaxValidator",
+        "BCCaptionValidator",
+        "BCCoverpageValidator"
       ],
       "parallel": true,
       "requires": [
@@ -34,11 +39,25 @@
       ],
       "validators": [
         "BCBiDiValidator",
-        "BCTOCValidator"
+        "BCTOCValidator",
+        "BCCoverpageValidator"
       ],
       "parallel": false,
       "requires": [
         "content"
+      ]
+    },
+    "dedup": {
+      "skills": [
+        "bc-dedup"
+      ],
+      "validators": [
+        "BCDedupValidator",
+        "BCBiDiValidator"
+      ],
+      "parallel": false,
+      "requires": [
+        "review"
       ]
     }
   },
@@ -117,18 +136,88 @@
         "toc-naked-english"
       ],
       "block_on_critical": false
+    },
+    "BCDedupValidator": {
+      "enabled": true,
+      "rules": [
+        "dedup-semantic-duplicate",
+        "dedup-imbalanced-chapter",
+        "dedup-missing-reference"
+      ],
+      "auto_fix_rules": [
+        "dedup-semantic-duplicate",
+        "dedup-missing-reference"
+      ],
+      "block_on_critical": false
+    },
+    "BCTikZSyntaxValidator": {
+      "enabled": true,
+      "rules": [
+        "tikz-en-wrapper",
+        "tikz-num-wrapper",
+        "tikz-textenglish",
+        "tikz-node-name-wrapper"
+      ],
+      "auto_fix_rules": [
+        "tikz-en-wrapper",
+        "tikz-num-wrapper",
+        "tikz-textenglish"
+      ],
+      "block_on_critical": true
+    },
+    "BCCaptionValidator": {
+      "enabled": true,
+      "rules": [
+        "caption-too-long",
+        "caption-missing-label",
+        "caption-hebrew-required"
+      ],
+      "auto_fix_rules": [],
+      "block_on_critical": false
+    },
+    "BCCoverpageValidator": {
+      "enabled": true,
+      "rules": [
+        "cover-hebrew-title",
+        "cover-hebrew-subtitle",
+        "cover-english-in-hebrew",
+        "cover-numbers-unwrapped",
+        "cover-version-num-wrong",
+        "cover-version-partial-wrap",
+        "cover-acronym-unwrapped",
+        "cover-date-format",
+        "cover-copyright-missing"
+      ],
+      "auto_fix_rules": [
+        "cover-numbers-unwrapped",
+        "cover-acronym-unwrapped",
+        "cover-english-in-hebrew"
+      ],
+      "block_on_critical": true
     }
   },
   "issue_mapping": {
     "BIDI": {
       "qa_family": "qa-BiDi",
       "bc_skills": [
+        "bc-content-drafting",
+        "bc-drawing",
         "bc-content",
         "bc-math",
         "bc-code",
         "bc-hebrew"
       ],
       "validators": [
+        "BCBiDiValidator"
+      ]
+    },
+    "TIKZ": {
+      "qa_family": "qa-BiDi",
+      "bc_skills": [
+        "bc-drawing"
+      ],
+      "validators": [
+        "BCTikZSyntaxValidator",
         "BCBiDiValidator"
       ]
     },
@@ -163,15 +252,20 @@
     "IMG": {
       "qa_family": "qa-img",
       "bc_skills": [
+        "bc-content-drafting",
+        "bc-drawing",
         "bc-content"
       ],
       "validators": [
-        "BCImageValidator"
+        "BCImageValidator",
+        "BCCaptionValidator"
       ]
     },
     "TYPE": {
       "qa_family": "qa-typeset",
       "bc_skills": [
+        "bc-content-drafting",
+        "bc-drawing",
         "bc-content",
         "bc-code",
         "bc-math",
@@ -179,6 +273,25 @@
       ],
       "validators": [
         "BCTypesetValidator"
+      ]
+    },
+    "DEDUP": {
+      "qa_family": "qa-dedup",
+      "bc_skills": [
+        "bc-dedup"
+      ],
+      "validators": [
+        "BCDedupValidator"
+      ]
+    },
+    "COVERPAGE": {
+      "qa_family": "qa-coverpage",
+      "bc_skills": [
+        "bc-content-drafting",
+        "bc-content"
+      ],
+      "validators": [
+        "BCCoverpageValidator"
       ]
     }
   },

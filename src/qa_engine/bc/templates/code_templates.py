@@ -6,9 +6,13 @@ All templates pass these QA rules:
 - code-direction-hebrew: No Hebrew in code
 - code-encoding-emoji: No emoji characters
 - code-syntax: Uses [title] not {title} for pythonbox
+- bidi-tcolorbox: importantbox/notebox wrapped in english environment
 
 CRITICAL: pythonbox uses SQUARE BRACKETS for title: \\begin{pythonbox}[Title]
          NOT curly braces: \\begin{pythonbox}{Title} <- WRONG!
+
+CRITICAL: tcolorbox-based environments (importantbox, notebox, etc.) must be
+         wrapped in \\begin{english}...\\end{english} for RTL documents.
 """
 
 
@@ -155,3 +159,109 @@ class CodeTemplates:
 {ops_code}'''
 
         return CodeTemplates.python_code(title_eng, code)
+
+    # =========================================================================
+    # Callout Box Templates (tcolorbox-based)
+    # =========================================================================
+
+    @staticmethod
+    def importantbox(content_heb: str) -> str:
+        """
+        Generate a QA-compliant importantbox for highlighting important content.
+
+        CRITICAL: Must be wrapped in english environment for RTL documents
+        to prevent background overflow issues.
+
+        Args:
+            content_heb: Hebrew content for the important box
+
+        Returns:
+            LaTeX code for importantbox wrapped in english environment
+        """
+        return f"""\\begin{{english}}
+\\begin{{importantbox}}
+{content_heb}
+\\end{{importantbox}}
+\\end{{english}}"""
+
+    @staticmethod
+    def notebox(content_heb: str) -> str:
+        """
+        Generate a QA-compliant notebox for notes/remarks.
+
+        Args:
+            content_heb: Hebrew content for the note box
+
+        Returns:
+            LaTeX code for notebox wrapped in english environment
+        """
+        return f"""\\begin{{english}}
+\\begin{{notebox}}
+{content_heb}
+\\end{{notebox}}
+\\end{{english}}"""
+
+    @staticmethod
+    def examplebox(content_heb: str) -> str:
+        """
+        Generate a QA-compliant examplebox for examples.
+
+        Args:
+            content_heb: Hebrew content for the example box
+
+        Returns:
+            LaTeX code for examplebox wrapped in english environment
+        """
+        return f"""\\begin{{english}}
+\\begin{{examplebox}}
+{content_heb}
+\\end{{examplebox}}
+\\end{{english}}"""
+
+    @staticmethod
+    def summarybox(content_heb: str) -> str:
+        """
+        Generate a QA-compliant summarybox for chapter/section summaries.
+
+        Args:
+            content_heb: Hebrew content for the summary box
+
+        Returns:
+            LaTeX code for summarybox wrapped in english environment
+        """
+        return f"""\\begin{{english}}
+\\begin{{summarybox}}
+{content_heb}
+\\end{{summarybox}}
+\\end{{english}}"""
+
+    @staticmethod
+    def callout_box(
+        box_type: str,
+        content_heb: str,
+    ) -> str:
+        """
+        Generate a generic QA-compliant callout box.
+
+        Supported box types: importantbox, notebox, examplebox, summarybox,
+        questionbox, answerbox, tcolorbox
+
+        Args:
+            box_type: Type of box environment
+            content_heb: Hebrew content for the box
+
+        Returns:
+            LaTeX code for the box wrapped in english environment
+        """
+        valid_types = [
+            "importantbox", "notebox", "examplebox", "summarybox",
+            "questionbox", "answerbox", "tcolorbox"
+        ]
+        if box_type not in valid_types:
+            raise ValueError(f"Invalid box_type: {box_type}. Must be one of {valid_types}")
+
+        return f"""\\begin{{english}}
+\\begin{{{box_type}}}
+{content_heb}
+\\end{{{box_type}}}
+\\end{{english}}"""

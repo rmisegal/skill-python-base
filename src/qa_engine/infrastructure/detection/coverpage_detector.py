@@ -62,6 +62,10 @@ class CoverpageDetector(DetectorInterface):
                 continue
 
             for rule_name, rule_def in self._rules.items():
+                # Skip require_presence rules in line-by-line scan
+                if rule_def.get("require_presence"):
+                    continue
+
                 pattern = re.compile(rule_def["pattern"])
                 matches = pattern.finditer(line)
 
@@ -89,6 +93,41 @@ class CoverpageDetector(DetectorInterface):
                                 rule_name, rule_def, match, file_path,
                                 line_num + offset
                             ))
+
+        # Check require_presence rules (document-level)
+        issues.extend(self._check_presence_rules(content, file_path, offset))
+
+        return issues
+
+    def _check_presence_rules(
+        self, content: str, file_path: str, offset: int
+    ) -> List[Issue]:
+        """Check rules that require presence of certain content."""
+        issues: List[Issue] = []
+        scan_content = "\n".join(content.split("\n")[:100])
+
+        for rule_name, rule_def in self._rules.items():
+            require = rule_def.get("require_presence")
+            if not require:
+                continue
+
+            # Check if trigger pattern exists
+            trigger = re.compile(rule_def["pattern"])
+            if not trigger.search(scan_content):
+                continue  # No cover page found
+
+            # Check if required content is present
+            required = re.compile(require)
+            if not required.search(scan_content):
+                issues.append(Issue(
+                    rule=rule_name,
+                    file=file_path,
+                    line=1 + offset,
+                    content="Missing required content",
+                    severity=rule_def["severity"],
+                    fix=rule_def.get("fix_template", ""),
+                    context={"mandatory": rule_def.get("mandatory", False)},
+                ))
 
         return issues
 

@@ -125,6 +125,58 @@ class TestBiDiDetector:
         year_issues = [i for i in issues if i.rule == "bidi-year-range"]
         assert len(year_issues) == 0
 
+    # Rule 6c: Partial Year Range - first wrapped, second not
+    def test_rule6c_partial_year_range_hebyear(self):
+        """Test detection of partial year range with hebyear wrapper."""
+        content = r"\section{גרף גידול: \hebyear{2012}–2025}"
+        issues = self.detector.detect(content, "test.tex")
+        partial_issues = [i for i in issues if i.rule == "bidi-partial-year-range"]
+        assert len(partial_issues) > 0
+        assert partial_issues[0].severity == Severity.CRITICAL
+
+    def test_rule6c_partial_year_range_en(self):
+        """Test detection of partial year range with en wrapper."""
+        content = r"השנים \en{2020}–2025 היו"
+        issues = self.detector.detect(content, "test.tex")
+        partial_issues = [i for i in issues if i.rule == "bidi-partial-year-range"]
+        assert len(partial_issues) > 0
+
+    def test_rule6c_partial_year_range_textenglish(self):
+        """Test detection of partial year range with textenglish wrapper."""
+        content = r"השנים \textenglish{2018}-2024 היו"
+        issues = self.detector.detect(content, "test.tex")
+        partial_issues = [i for i in issues if i.rule == "bidi-partial-year-range"]
+        assert len(partial_issues) > 0
+
+    def test_rule6c_no_issue_when_fully_wrapped(self):
+        """Test no issue when full range is wrapped."""
+        content = r"השנים \en{2020–2025} היו"
+        issues = self.detector.detect(content, "test.tex")
+        partial_issues = [i for i in issues if i.rule == "bidi-partial-year-range"]
+        assert len(partial_issues) == 0
+
+    # Rule 6d: Dash followed by year in Hebrew context
+    def test_rule6d_dash_year_in_hebrew(self):
+        """Test detection of dash followed by year without wrapper."""
+        content = "תחזיות –2025 בעברית"
+        issues = self.detector.detect(content, "test.tex")
+        dash_issues = [i for i in issues if i.rule == "bidi-dash-year"]
+        assert len(dash_issues) > 0
+
+    def test_rule6d_dash_year_hyphen(self):
+        """Test detection with regular hyphen."""
+        content = "תחזיות -2024 בעברית"
+        issues = self.detector.detect(content, "test.tex")
+        dash_issues = [i for i in issues if i.rule == "bidi-dash-year"]
+        assert len(dash_issues) > 0
+
+    def test_rule6d_no_issue_when_wrapped(self):
+        """Test no issue when dash-year is wrapped."""
+        content = r"תחזיות \en{–2025} בעברית"
+        issues = self.detector.detect(content, "test.tex")
+        dash_issues = [i for i in issues if i.rule == "bidi-dash-year"]
+        assert len(dash_issues) == 0
+
     # Rule 7: English Without LTR
     def test_rule7_english_in_hebrew(self):
         """Test detection of English words without wrapper."""

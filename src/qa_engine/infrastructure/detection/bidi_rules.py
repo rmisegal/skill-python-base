@@ -50,6 +50,8 @@ BIDI_RULES = {
         "fix_template": "\\en{{{}}}",
         "skip_math_mode": True,
         "skip_cite_context": True,
+        "skip_tikz_env": True,  # Don't wrap numbers in TikZ (coordinates, dimensions)
+        "skip_color_context": True,  # Don't wrap numbers in color specs (purple!5)
     },
     # Rule 6b: Year Ranges (2025-2026) Without LTR
     "bidi-year-range": {
@@ -62,6 +64,25 @@ BIDI_RULES = {
         "skip_math_mode": True,
         "skip_cite_context": True,
     },
+    # Rule 6c: Partial Year Range - wrapped year followed by unwrapped year
+    "bidi-partial-year-range": {
+        "description": "Year range with first year wrapped but second unwrapped",
+        # Match wrapped-year DASH bare-year - captures the unwrapped second year
+        "pattern": r"\\(?:hebyear|en|textenglish)\{(?:19|20)\d{2}\}[–\-]((?:19|20)\d{2})",
+        "severity": Severity.CRITICAL,
+        "context_pattern": r"[א-ת]",
+        "fix_template": "Wrap full range with \\en{{XXXX–{}}}",
+        "note": "Causes reversed rendering like 2025– becoming –5202 in RTL",
+    },
+    # Rule 6d: Dash followed by unwrapped year in Hebrew context
+    "bidi-dash-year": {
+        "description": "Dash followed by year without wrapper in Hebrew context",
+        "pattern": r"[–\-]((?:19|20)\d{2})(?![}\d])",
+        "severity": Severity.WARNING,
+        "context_pattern": r"[א-ת]",
+        "exclude_pattern": r"\\en\{|\\hebyear\{|\\textenglish\{",
+        "fix_template": "Wrap with preceding content: \\en{{XXXX–{}}}",
+    },
     # Rule 7: English Without LTR
     "bidi-english": {
         "description": "English words without LTR wrapper in Hebrew",
@@ -72,16 +93,19 @@ BIDI_RULES = {
         "exclude_pattern": r"\\en\{|\\textenglish\{|\\texttt\{|\\cite\{|\\cite\[|\\ref\{|\\label\{|\\hebtitle\{|\\entoc\{|\\ilm\{|\\url\{|\\href\{|\\includegraphics|\\bibliographystyle|\\addbibresource|\\newtcolorbox|\\newenvironment",
         "skip_math_mode": True,
         "skip_cite_context": True,
+        "skip_tikz_env": True,  # Don't wrap TikZ commands (node, draw, at, of, etc.)
+        "skip_color_context": True,  # Don't wrap color names (purple, green, black)
     },
-    # Rule 8: tcolorbox BiDi-Safe
+    # Rule 8: tcolorbox BiDi-Safe (includes custom tcolorbox environments)
     "bidi-tcolorbox": {
-        "description": "tcolorbox without BiDi-safe wrapper in RTL context",
-        "pattern": r"\\begin\{tcolorbox\}",
+        "description": "tcolorbox/custom box without BiDi-safe wrapper in RTL context",
+        "pattern": r"\\begin\{(tcolorbox|importantbox|notebox|examplebox|summarybox|questionbox|answerbox|codebox|pythonbox)\}",
         "severity": Severity.WARNING,
         "context_pattern": r"[א-ת]",
         "document_context": True,
         "exclude_pattern": r"\\begin\{english\}",
         "fix_template": "Wrap in \\begin{{english}}...\\end{{english}}",
+        "note": "Custom boxes defined via \\newtcolorbox inherit BiDi issues from tcolorbox",
     },
     # Rule 9: Section Titles with English
     "bidi-section-english": {
@@ -98,6 +122,8 @@ BIDI_RULES = {
         "context_pattern": r"[א-ת]",
         "exclude_pattern": r"\\en\{|\\textenglish\{",
         "fix_template": "\\en{{{}}}",
+        "skip_tikz_env": True,  # Don't wrap TikZ style names (RGB, etc.)
+        "skip_color_context": True,  # Don't wrap color acronyms (RGB, HSB, etc.)
     },
     # Rule 12: Chapter Labels
     "bidi-chapter-label": {

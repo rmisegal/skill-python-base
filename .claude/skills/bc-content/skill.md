@@ -1,9 +1,9 @@
 ---
 name: bc-content
-description: Level 1 Stage Orchestrator - Stage 2 Content Drafting, coordinates bc-code, bc-math, bc-academic-source
-version: 1.0.0
+description: Level 1 Stage Orchestrator - Stage 2 Content Drafting, coordinates bc-content-drafting, bc-drawing, bc-code, bc-math, bc-academic-source
+version: 1.1.0
 author: BC Team
-tags: [bc, orchestrator, level-1, stage-2, content, drafting]
+tags: [bc, orchestrator, level-1, stage-2, content, drafting, drawing]
 has_python_tool: true
 tools: [Read, Write, Edit, Grep, Glob, Bash, Task]
 ---
@@ -22,6 +22,8 @@ tools: [Read, Write, Edit, Grep, Glob, Bash, Task]
 - bc-super (Level 0)
 
 ### Manages (Level 2 Workers)
+- bc-content-drafting (Harari - Narrative Content Writing)
+- bc-drawing (Da Vinci - TikZ Diagrams & Visuals)
 - bc-code (Levy - Code Implementation)
 - bc-math (Hinton - Technical Accuracy)
 - bc-academic-source (Segal - Citations & Tables)
@@ -40,25 +42,28 @@ Coordinate Stage 2 activities: parallel content drafting with **inline QA valida
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                   BC-CONTENT (Level 1)                          │
-│  Stage 2: Content Drafting with QA Validation                   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-        ┌─────────────────────┼─────────────────────┐
-        ▼                     ▼                     ▼
-┌───────────────┐     ┌───────────────┐     ┌───────────────┐
-│   bc-code     │     │   bc-math     │     │bc-academic-   │
-│   (Level 2)   │     │   (Level 2)   │     │source (L2)    │
-│   Levy        │     │   Hinton      │     │   Segal       │
-└───────────────┘     └───────────────┘     └───────────────┘
-        │                     │                     │
-        ▼                     ▼                     ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   QA VALIDATION GATE                            │
-│  BCBiDiValidator │ BCCodeValidator │ BCTableValidator           │
-│  VALIDATE → AUTO-FIX → VALIDATE → WRITE or RETRY               │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         BC-CONTENT (Level 1)                                 │
+│               Stage 2: Content Drafting with QA Validation                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+        ┌────────────┬────────────────┼────────────────┬────────────┐
+        ▼            ▼                ▼                ▼            ▼
+┌─────────────┐┌─────────────┐┌───────────────┐┌───────────────┐┌───────────────┐
+│bc-content-  ││ bc-drawing  ││   bc-code     ││   bc-math     ││bc-academic-   │
+│drafting     ││ (Level 2)   ││   (Level 2)   ││   (Level 2)   ││source (L2)    │
+│(Level 2)    ││ Da Vinci    ││   Levy        ││   Hinton      ││   Segal       │
+│ Harari      │└─────────────┘└───────────────┘└───────────────┘└───────────────┘
+└─────────────┘       │               │               │               │
+        │             │               │               │               │
+        └─────────────┴───────────────┴───────────────┴───────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         QA VALIDATION GATE                                   │
+│  BCBiDiValidator │ BCCodeValidator │ BCTableValidator │ BCTikZSyntaxValidator│
+│              VALIDATE → AUTO-FIX → VALIDATE → WRITE or RETRY                │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Workflow
@@ -96,6 +101,8 @@ For each content block:
 
 | Worker | Validators | Critical Rules |
 |--------|------------|----------------|
+| bc-content-drafting | BCBiDiValidator, BCCaptionValidator | bidi-*, caption-too-long |
+| bc-drawing | BCTikZSyntaxValidator, BCBiDiValidator | tikz-*, bidi-tikz-rtl |
 | bc-code | BCBiDiValidator, BCCodeValidator | code-background-overflow, bidi-tikz-rtl |
 | bc-math | BCBiDiValidator | bidi-numbers, bidi-english, bidi-acronym, heb-math-* |
 | bc-academic-source | BCBiDiValidator, BCTableValidator, BCBibValidator | table-*, bidi-*, bib-* |
@@ -172,11 +179,16 @@ For each content block:
 ```
 
 ## Version History
+- **v1.1.0** (2025-12-28): Added content drafting and drawing workers
+  - NEW: bc-content-drafting (Harari style narrative writer)
+  - NEW: bc-drawing (TikZ diagrams with Python templates)
+  - NEW: BCTikZSyntaxValidator integration
+  - Updated architecture to show 5 workers
 - **v1.0.0** (2025-12-21): Initial implementation with inline QA validation
 
 ---
 
 **Parent:** bc-super
-**Children:** bc-code, bc-math, bc-academic-source
+**Children:** bc-content-drafting, bc-drawing, bc-code, bc-math, bc-academic-source
 **Requires:** bc-research (Source_Collection_Complete)
 **Signals:** Content_Drafting_Complete

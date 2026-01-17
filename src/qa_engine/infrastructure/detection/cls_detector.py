@@ -20,6 +20,10 @@ from ...domain.models.issue import Issue, Severity
 REFERENCE_CLS_DIR = Path(r"C:\25D\CLS-examples")
 REFERENCE_CLS_FILE = REFERENCE_CLS_DIR / "hebrew-academic-template.cls"
 
+# Validate reference path at module load time (bc-super safety check)
+assert str(REFERENCE_CLS_FILE).startswith(r"C:\25D\CLS-examples"), \
+    f"Wrong CLS reference! Expected path starting with 'C:\\25D\\CLS-examples', got: {REFERENCE_CLS_FILE}"
+
 
 @dataclass
 class CLSVersionInfo:

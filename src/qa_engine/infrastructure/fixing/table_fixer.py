@@ -2,6 +2,9 @@
 Table fixer for Hebrew RTL LaTeX.
 
 Implements fixes for table issues in RTL context.
+
+v1.1.0: Fixed triple RTL wrapper bug - now checks for existing wrappers
+        before adding new ones.
 """
 
 from __future__ import annotations
@@ -75,11 +78,54 @@ class TableFixer(FixerInterface):
                 break
 
         if end_idx is not None:
+            # Check if already wrapped in RTL environment
+            if self._is_already_rtl_wrapped(lines, start_idx, end_idx):
+                return lines
+
             # Insert RTL wrapper
             lines.insert(end_idx + 1, "\\end{RTL}")
             lines.insert(start_idx, "\\begin{RTL}")
 
         return lines
+
+    def _is_already_rtl_wrapped(
+        self, lines: List[str], start_idx: int, end_idx: int
+    ) -> bool:
+        """Check if table region is already wrapped in RTL environment.
+
+        Checks for:
+        - \\begin{RTL} ... \\end{RTL}
+        - \\begin{hebrew} ... \\end{hebrew}
+        - \\begin{english} ... \\end{english} (for LTR tables in RTL doc)
+        """
+        rtl_envs = ["RTL", "hebrew", "english"]
+
+        # Check lines before start_idx for unclosed RTL begin
+        rtl_depth = {}
+        for env in rtl_envs:
+            rtl_depth[env] = 0
+
+        # Scan from document start to table start
+        for i in range(0, start_idx):
+            line = lines[i]
+            for env in rtl_envs:
+                opens = len(re.findall(rf"\\begin\{{{env}\}}", line))
+                closes = len(re.findall(rf"\\end\{{{env}\}}", line))
+                rtl_depth[env] += opens - closes
+
+        # If any RTL environment is open at table start, we're already wrapped
+        for env, depth in rtl_depth.items():
+            if depth > 0:
+                return True
+
+        # Also check if table is immediately preceded by RTL begin
+        if start_idx > 0:
+            prev_line = lines[start_idx - 1].strip()
+            for env in rtl_envs:
+                if f"\\begin{{{env}}}" in prev_line:
+                    return True
+
+        return False
 
     def _fix_overflow(self, lines: List[str], line_num: int) -> List[str]:
         """Wrap wide table in resizebox."""

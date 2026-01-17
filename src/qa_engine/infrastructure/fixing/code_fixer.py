@@ -47,10 +47,19 @@ class CodeFixer(FixerInterface):
         hebrew_lines: set = set()
 
         for issue in issues:
-            if issue.rule in ("code-background-overflow", "code-direction-hebrew"):
+            if issue.rule in ("code-background-overflow", "code-direction-hebrew", "bidi-tcolorbox"):
                 line_num = issue.line
                 if 1 <= line_num <= len(lines):
-                    code_env = issue.context.get("code_env", "pythonbox")
+                    # Extract env name from issue content or context
+                    code_env = "pythonbox"
+                    if issue.context and "code_env" in issue.context:
+                        code_env = issue.context.get("code_env", "pythonbox")
+                    elif issue.content:
+                        # Try to extract env name from content like "importantbox"
+                        for env in self.TCOLORBOX_ENVS:
+                            if env in issue.content:
+                                code_env = env
+                                break
                     start_line = self._find_env_start(lines, line_num - 1, code_env)
                     if start_line is not None:
                         needs_wrap[start_line + 1] = code_env
@@ -67,7 +76,15 @@ class CodeFixer(FixerInterface):
             env_name = needs_wrap[line_num]
             end_line = self._find_env_end(lines, line_num - 1, env_name)
             if end_line:
-                lines.insert(end_line, "\\end{english}")
+                # For content boxes with Hebrew, add RTL restoration inside
+                is_content_box = env_name in ("importantbox", "notebox", "examplebox",
+                                               "summarybox", "questionbox", "answerbox")
+                if is_content_box:
+                    # Insert \end{RTL} before \end{boxname}
+                    lines.insert(end_line - 1, "\\end{RTL}")
+                    # Insert \begin{RTL} after \begin{boxname}
+                    lines.insert(line_num, "\\begin{RTL}")
+                lines.insert(end_line + (2 if is_content_box else 0), "\\end{english}")
                 lines.insert(line_num - 1, "\\begin{english}")
 
         return "\n".join(lines)
@@ -85,6 +102,12 @@ class CodeFixer(FixerInterface):
             line = hebrew.sub('[HEB]', line)
         return line
 
+    # All tcolorbox-based environments that need english wrapper
+    TCOLORBOX_ENVS = (
+        "tcolorbox", "importantbox", "notebox", "examplebox",
+        "summarybox", "questionbox", "answerbox", "codebox", "pythonbox"
+    )
+
     def _find_env_start(
         self,
         lines: List[str],
@@ -92,7 +115,8 @@ class CodeFixer(FixerInterface):
         env_name: str,
     ) -> int | None:
         """Find the line index of environment start, searching backwards."""
-        start_pattern = re.compile(rf"\\begin\{{({env_name}|lstlisting|minted|verbatim|pythonbox\*?|tcolorbox|tcblisting)\}}")
+        all_envs = "|".join(self.TCOLORBOX_ENVS) + "|lstlisting|minted|verbatim|tcblisting"
+        start_pattern = re.compile(rf"\\begin\{{({env_name}|{all_envs})\}}")
         for i in range(line_idx, -1, -1):
             if start_pattern.search(lines[i]):
                 return i
@@ -105,7 +129,8 @@ class CodeFixer(FixerInterface):
         env_name: str,
     ) -> int | None:
         """Find the line index of environment end."""
-        end_pattern = re.compile(rf"\\end\{{({env_name}|lstlisting|minted|verbatim|pythonbox\*?|tcolorbox|tcblisting)\}}")
+        all_envs = "|".join(self.TCOLORBOX_ENVS) + "|lstlisting|minted|verbatim|tcblisting"
+        end_pattern = re.compile(rf"\\end\{{({env_name}|{all_envs})\}}")
         for i in range(start_idx, len(lines)):
             if end_pattern.search(lines[i]):
                 return i + 1  # Return 1-indexed position after end

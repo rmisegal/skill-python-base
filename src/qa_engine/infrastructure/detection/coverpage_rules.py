@@ -91,4 +91,13 @@ COVERPAGE_RULES = {
         "severity": Severity.INFO,
         "fix_template": "Use proper BiDi wrappers for copyright",
     },
+    # Rule 9: Missing copyright declaration (MANDATORY)
+    "cover-copyright-missing": {
+        "description": "Cover page MUST have copyright declaration",
+        "pattern": r"\\begin\{titlepage\}|\\maketitle",
+        "require_presence": r"©|\\copyright|כל הזכויות|All Rights Reserved",
+        "severity": Severity.CRITICAL,
+        "mandatory": True,
+        "fix_template": "Add copyright: © YYYY Author. כל הזכויות שמורות.",
+    },
 }
