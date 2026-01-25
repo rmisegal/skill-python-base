@@ -1,0 +1,203 @@
+% =============================================================================
+% Appendix H: League Manager Architecture Reference
+% עקרונות ארכיטקטוניים של מנהל הליגה
+% Reference material for the League Manager server architecture
+% =============================================================================
+
+\documentclass[../master/main.tex]{subfiles}
+
+\begin{document}
+
+\chapter*{נספח ח': עקרונות ארכיטקטוניים של מנהל הליגה}
+\addcontentsline{toc}{chapter}{נספח ח': עקרונות ארכיטקטוניים של מנהל הליגה}
+\renewcommand{\thehebrewsection}{ח.\arabic{hebrewsection}}
+\setcounter{hebrewsection}{0}
+
+\par\needspace{5\baselineskip}
+\hebrewsection{מבוא}
+
+נספח זה מתאר את העקרונות הארכיטקטוניים של שרת מנהל הליגה. חומר זה מיועד כרקע להבנת המערכת הכוללת, ומהווה בסיס להשוואה עם ארכיטקטורת הסוכנים (פרק~\ref{chap:architecture-principles}).
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{הפרדת נתונים סטטיים ודינמיים}
+\label{sec:lgm-static-dynamic}
+% =============================================================================
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{העיקרון המנחה}
+
+מנהל הליגה מפריד בין שני סוגי נתונים עיקריים:
+
+\begin{enumerate}
+    \item \textbf{נתונים סטטיים} --- מידע שאינו משתנה במהלך העונה
+    \item \textbf{נתונים דינמיים} --- מידע שמתעדכן בזמן אמת
+\end{enumerate}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{טבלת קבוצות סטודנטים (\en{student\_groups})}
+
+טבלת \en{student\_groups} מכילה את המידע הסטטי של כל קבוצה:
+
+\begin{fancytable}{lHH}{נתונים סטטיים בטבלת קבוצות}
+\label{tab:lgm-static-data-fields}
+שדה & סוג & תיאור \\
+\en{group\_id} & \en{VARCHAR} & מזהה קבוצה ייחודי (\en{G001}--\en{G030}) \\
+\en{group\_name} & \en{VARCHAR(8)} & שם הקבוצה (\num{8} תווים) \\
+\en{student\_emails} & \en{JSON} & רשימת כתובות אימייל של הסטודנטים \\
+\en{player\_github\_repo} & \en{URL} & קישור לריפוזיטורי השחקן \\
+\en{referee\_github\_repo} & \en{URL} & קישור לריפוזיטורי השופט \\
+\en{registered\_at} & \en{TIMESTAMP} & זמן הרשמה למערכת \\
+\end{fancytable}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{נתונים דינמיים --- שחקנים ושופטים}
+
+טבלאות השחקנים (\en{players}) והשופטים (\en{referees}) מכילות נתונים דינמיים:
+
+\begin{itemize}
+    \item \textbf{מצב נוכחי} --- האם הסוכן פעיל, מושהה, או כבוי
+    \item \textbf{סטטיסטיקות עונה} --- משחקים, ניצחונות, נקודות
+    \item \textbf{מזהה עונה נוכחית} --- לאיזו עונה הסוכן רשום
+\end{itemize}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{תבנית ה-\en{Gatekeeper} של מנהל הליגה}
+\label{sec:lgm-gatekeeper}
+% =============================================================================
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{הבעיה}
+
+\en{Gmail API} מטיל מגבלות קשיחות על כמות ההודעות והקריאות. חריגה מהמגבלות גורמת לחסימה זמנית של החשבון.
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{הפתרון --- שכבת הגנה}
+
+ה-\en{Gatekeeper} של מנהל הליגה הוא תבנית \en{Facade} עם שלושה רכיבים:
+
+\begin{fancytable}{lHH}{רכיבי ה-\en{Gatekeeper} של מנהל הליגה}
+\label{tab:lgm-gatekeeper-components}
+רכיב & תפקיד & פעולה בחריגה \\
+\en{QuotaManager} & מעקב אחר מכסה יומית & עצירת שליחות עד חידוש \\
+\en{DOSDetector} & זיהוי דפוסים חשודים & חסימה זמנית והתראה \\
+\en{RateLimiter} & הגבלת קצב שליחה & השהיה אוטומטית \\
+\end{fancytable}
+
+\needspace{10\baselineskip}
+\begin{notebox}[\hebtitle{מגבלה תפעולית}]
+מנהל הליגה מגדיר מגבלה תפעולית של \num{400} הודעות ליום (מתוך מכסת \num{500}) כדי לשמור על מרווח ביטחון.
+\end{notebox}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{מערכת השעונים של מנהל הליגה}
+\label{sec:lgm-clocks}
+% =============================================================================
+
+מנהל הליגה מנהל חמישה סוגי שעונים:
+
+\begin{fancytable}{lR{4cm}R{5.5cm}}{חמשת השעונים של מנהל הליגה}
+\label{tab:lgm-five-clocks}
+שעון & תפקיד & מצבים \\
+\en{SeasonClock} & ניהול עונת הליגה & \en{SETUP, ACTIVE, COMPLETED} \\
+\en{RegistrationClock} & חלון הרשמה & \en{CLOSED, OPEN, CLOSED} \\
+\en{RoundClock} & מחזור משחקים & \en{SCHEDULED, IN\_PROGRESS, COMPLETED} \\
+\en{MessageDeadline} & מועד תגובה להודעה & \en{PENDING, EXPIRED} \\
+\en{CalendarWindow} & חלון זמנים למשחקים & \en{OUTSIDE, ACTIVE, GRACE} \\
+\end{fancytable}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{איחוד שידורים (\en{Broadcast Consolidation})}
+\label{sec:lgm-broadcast-consolidation}
+% =============================================================================
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{הבעיה}
+
+שליחת הודעת שידור ל-\num{30} משתתפים כ-\num{30} אימיילים נפרדים צורכת \num{30} קריאות \en{API}.
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{הפתרון}
+
+במקום לשלוח הודעות נפרדות, מנהל הליגה שולח הודעה \textbf{אחת} עם כל הנמענים בשדה \en{TO}. זה מפחית את צריכת ה-\en{API} ב-\num{97}\%.
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מיפוי תגובות}
+
+כאשר נמען מגיב להודעת שידור, המערכת מזהה את ההודעה המקורית באמצעות:
+
+\begin{enumerate}
+    \item \textbf{\en{broadcast\_id}} --- מזהה ייחודי בנושא האימייל
+    \item \textbf{טבלת מיפוי} --- \en{broadcast\_transaction\_mapping}
+    \item \textbf{שדה \en{In-Reply-To}} --- קישור לכותרת ההודעה המקורית
+\end{enumerate}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{הורשת הקשר (\en{Context Inheritance})}
+\label{sec:lgm-context-inheritance}
+% =============================================================================
+
+כל הודעה במערכת נושאת שדות הקשר שמזהים את מיקומה בהיררכיה:
+
+\begin{fancytable}{lHH}{שדות הקשר}
+\label{tab:lgm-context-fields}
+שדה & דוגמה & תיאור \\
+\en{league\_id} & \en{Q21G\_2026} & מזהה הליגה \\
+\en{season\_id} & \en{S01} & מזהה העונה \\
+\en{round\_id} & \en{01} & מספר המחזור \\
+\en{game\_id} & \en{0101001} & מזהה משחק מורכב \\
+\end{fancytable}
+
+\needspace{10\baselineskip}
+\begin{protocolbox}[width=\textwidth]
+\textbf{כלל ההורשה:} תגובה להודעה חייבת לכלול את אותם שדות הקשר שהופיעו בהודעה המקורית.
+\end{protocolbox}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{מכונות מצבים}
+\label{sec:lgm-state-machines}
+% =============================================================================
+
+מנהל הליגה משתמש בתבניות מצב עקביות:
+
+\begin{enumerate}
+    \item \textbf{תבנית מחזור חיים} --- \en{PENDING → ACTIVE → COMPLETED}
+    \item \textbf{תבנית רישום} --- \en{UNREGISTERED → REGISTERED → ACTIVE}
+    \item \textbf{תבנית משחק} --- \en{SCHEDULED → IN\_PROGRESS → FINISHED}
+    \item \textbf{תבנית בקשה} --- \en{PENDING → APPROVED/REJECTED}
+\end{enumerate}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{עקרונות מעבר מצבים}
+
+\begin{itemize}
+    \item \textbf{חד-כיווניות} --- מעברים מתקדמים בלבד (למעט \en{PAUSED})
+    \item \textbf{אטומיות} --- מעבר מצב הוא פעולה אטומית
+    \item \textbf{תיעוד} --- כל מעבר מצב נרשם עם חותמת זמן
+    \item \textbf{טריגרים} --- כל מעבר מופעל על ידי אירוע מוגדר
+\end{itemize}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{סיכום}
+% =============================================================================
+
+נספח זה סיכם את העקרונות הארכיטקטוניים של מנהל הליגה:
+
+\begin{itemize}
+    \item \textbf{הפרדת נתונים} --- סטטיים מול דינמיים
+    \item \textbf{תבנית \en{Gatekeeper}} --- הגנה על \en{Gmail API}
+    \item \textbf{חמישה שעונים} --- ניהול זמנים ומועדים
+    \item \textbf{איחוד שידורים} --- הפחתת קריאות \en{API}
+    \item \textbf{הורשת הקשר} --- העברת שדות הקשר בתגובות
+    \item \textbf{מכונות מצבים} --- תבניות עקביות לניהול מצב
+\end{itemize}
+
+לפרטים על יישום עקרונות אלו בסוכן השחקן והשופט, ראו פרק~\ref{chap:architecture-principles}.
+
+\end{document}

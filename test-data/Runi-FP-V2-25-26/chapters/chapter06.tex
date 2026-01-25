@@ -1,0 +1,703 @@
+% =============================================================================
+% Chapter 6: Final Project Implementation
+% מימוש פרויקט הגמר
+% Based on original Chapter 8
+% =============================================================================
+
+\documentclass[../master/main.tex]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{5}
+\hebrewchapter{מימוש פרויקט הגמר}
+\hebrewchapterlabel{chap:implementation}
+
+\par\needspace{5\baselineskip}
+\hebrewsection{מבוא: מהתיאוריה למעשה}
+
+לאורך הספר עברנו מסע בעולם סוכני הבינה המלאכותית וליגת \qtwentyone{}. כעת הגיע הזמן לרכז את כל הידע לכדי מימוש מעשי. פרק זה מספק הנחיות מפורטות למימוש סוכן שחקן וסוכן שופט.
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מטרות הפרק}
+
+בסיום פרק זה, תבינו:
+\begin{itemize}
+    \item את הגדרת סביבת הפיתוח הנדרשת
+    \item את מבנה סוכן השחקן ואחריותו
+    \item את מבנה סוכן השופט ואחריותו
+    \item את קבצי התצורה הנדרשים
+    \item את אסטרטגיות הבדיקה המומלצות
+\end{itemize}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{סביבת הפיתוח}
+\label{sec:dev-environment}
+% =============================================================================
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{דרישות מערכת}
+
+\begin{fancytable}{lH}{דרישות סביבה}
+\label{tab:environment-requirements}
+רכיב & דרישה \\
+שפת תכנות & \en{Python} מומלץ, אך כל שפה אחרת מותרת \\
+\en{Gmail API} & \num{2} חשבונות \en{Gmail} עם הרשאות \en{OAuth 2.0} (ראו נספח~א' ונספח~ה') \\
+\en{CLI Terminal} & \en{Anthropic} או \en{Gemini} מומלץ, אך כל \en{LLM CLI} אחר אפשרי \\
+\en{Git} & לניהול גרסאות \\
+\en{PostgreSQL} & הקמת \num{2} מסדי נתונים, אחד לכל סוכן \en{AI} \\
+\end{fancytable}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{התקנת ספריות}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{התקנת ספריות נדרשות}]
+# requirements.txt
+google-api-python-client>=2.100.0
+google-auth-httplib2>=0.1.0
+google-auth-oauthlib>=1.0.0
+anthropic>=0.20.0  # or openai>=1.0.0
+python-dotenv>=1.0.0
+aiohttp>=3.9.0
+psycopg2-binary>=2.9.0  # optional, for PostgreSQL
+\end{pythonbox}
+\end{english}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מבנה הפרויקט המומלץ}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{מבנה ספריות הפרויקט}]
+q21g-agents/
+├── src/
+│   ├── player/
+│   │   ├── __init__.py
+│   │   ├── player_agent.py      # Main player logic
+│   │   ├── question_generator.py # Question generation
+│   │   └── guess_strategy.py    # Guessing strategy
+│   ├── referee/
+│   │   ├── __init__.py
+│   │   ├── referee_agent.py     # Main referee logic
+│   │   ├── paragraph_selector.py # Paragraph selection
+│   │   └── scorer.py            # Scoring logic
+│   ├── shared/
+│   │   ├── __init__.py
+│   │   ├── gmail_client.py      # Gmail API wrapper
+│   │   ├── protocol.py          # Message types
+│   │   └── config.py            # Configuration
+│   └── main.py                  # Entry point
+├── config/
+│   ├── credentials.json         # Gmail OAuth credentials
+│   ├── player.env               # Player configuration
+│   └── referee.env              # Referee configuration
+├── data/
+│   └── course_materials/        # Course materials PDFs
+├── tests/
+│   ├── test_player.py
+│   ├── test_referee.py
+│   └── test_protocol.py
+├── requirements.txt
+└── README.md
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{מימוש סוכן השחקן}
+\label{sec:player-implementation}
+% =============================================================================
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מחזור החיים של השחקן}
+
+\begin{enumerate}
+    \item \textbf{אתחול} --- טעינת תצורה וחיבור ל-\gmailapi{}
+    \item \textbf{רישום} --- שליחת \en{LEAGUE\_REGISTER\_REQUEST}
+    \item \textbf{המתנה} --- מעקב אחר הודעות נכנסות
+    \item \textbf{משחק} --- תגובה להזמנות וניהול שלבי המשחק
+    \item \textbf{סיום} --- סגירת חיבורים ושמירת לוגים
+\end{enumerate}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{רצף הודעות שחקן מלא}
+
+\begin{fancytable}{HlH}{הודעות שחקן - רישום ועונה}
+\label{tab:player-messages-registration}
+כיוון & סוג הודעה & תיאור \\
+שליחה & \en{LEAGUE\_REGISTER\_REQUEST} & רישום לליגה \\
+קבלה & \en{RESPONSE\_LEAGUE\_REGISTER} & אישור רישום + טבלת משתמשים \\
+קבלה & \en{BROADCAST\_SEASON\_START} & התחלת עונה \\
+שליחה & \en{SEASON\_REGISTRATION\_REQUEST} & רישום לעונה \\
+קבלה & \en{BROADCAST\_ASSIGNMENT\_TABLE} & טבלת הקצאות \\
+\end{fancytable}
+
+\begin{fancytable}{HlH}{הודעות שחקן - משחק}
+\label{tab:player-messages-game}
+כיוון & סוג הודעה & תיאור \\
+קבלה & \en{GAME\_INVITATION} & הזמנה למשחק \\
+שליחה & \en{GAME\_JOIN\_ACK} & אישור הצטרפות (תוך \en{120s}) \\
+קבלה & \en{Q21\_WARMUP\_CALL} & רמזים ראשוניים \\
+שליחה & \en{Q21\_WARMUP\_RESPONSE} & אישור קבלת רמזים \\
+קבלה & \en{Q21\_QUESTIONS\_CALL} & בקשת שאלות \\
+שליחה & \en{Q21\_QUESTIONS\_RESPONSE} & \num{20} שאלות (תוך \en{300s}) \\
+קבלה & \en{Q21\_ANSWERS\_CALL} & תשובות לשאלות \\
+שליחה & \en{Q21\_FINAL\_GUESS} & ניחוש סופי \\
+קבלה & \en{GAME\_OVER} & תוצאות המשחק \\
+\end{fancytable}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מודול יצירת שאלות}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{דוגמה ליצירת שאלות}]
+from anthropic import Anthropic
+
+class QuestionGenerator:
+    """Generates 20 multiple-choice questions based on hint."""
+
+    def __init__(self, model: str = "claude-sonnet-4-20250514"):
+        self.client = Anthropic()
+        self.model = model
+
+    async def generate_questions(
+        self,
+        description: str,
+        association_topic: str
+    ) -> list[dict]:
+        """Generate 20 questions based on hint."""
+        prompt = f"""
+        Based on this description: "{description}"
+        And association topic: "{association_topic}"
+
+        Generate 20 strategic multiple-choice questions
+        to identify the source paragraph.
+        Each question should have 4 options.
+        """
+
+        response = await self.client.messages.create(
+            model=self.model,
+            max_tokens=4096,
+            messages=[{"role": "user", "content": prompt}]
+        )
+
+        return self._parse_questions(response.content[0].text)
+\end{pythonbox}
+\end{english}
+
+\par\needspace{10\baselineskip}
+\hebrewsubsection{אסטרטגיית הניחוש}
+
+\needspace{8\baselineskip}
+\begin{implementationbox}
+\textbf{טיפים לאסטרטגיית ניחוש:}
+\begin{itemize}
+    \item נתחו את התשובות לזיהוי דפוסים
+    \item חפשו בחומרי הקורס פסקאות תואמות
+    \item שקללו את הביטחון בכל ניחוש
+    \item זכרו: המילה האסוציאטיבית שווה \num{30}\% מהציון!
+\end{itemize}
+\end{implementationbox}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{מימוש סוכן השופט}
+\label{sec:referee-implementation}
+% =============================================================================
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מחזור החיים של השופט}
+
+\begin{enumerate}
+    \item \textbf{אתחול} --- טעינת חומרי הקורס
+    \item \textbf{רישום} --- שליחת \en{REFEREE\_REGISTER\_REQUEST}
+    \item \textbf{הקצאה} --- קבלת טבלת הקצאות
+    \item \textbf{ניהול משחק} --- הזמנה, רמזים, תשובות, ציונים
+    \item \textbf{דיווח} --- שליחת \en{GAME\_RESULT}
+\end{enumerate}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{רצף הודעות שופט מלא}
+
+\begin{fancytable}{HlH}{הודעות שופט - רישום}
+\label{tab:referee-messages-registration}
+כיוון & סוג הודעה & תיאור \\
+שליחה & \en{REFEREE\_REGISTER\_REQUEST} & רישום כשופט \\
+קבלה & \en{RESPONSE\_REFEREE\_REGISTER} & אישור רישום \\
+קבלה & \en{BROADCAST\_ASSIGNMENT\_TABLE} & משחקים שהוקצו \\
+\end{fancytable}
+
+\begin{fancytable}{HlH}{הודעות שופט - ניהול משחק}
+\label{tab:referee-messages-game}
+כיוון & סוג הודעה & תיאור \\
+שליחה & \en{GAME\_INVITATION} & הזמנת שחקנים \\
+קבלה & \en{GAME\_JOIN\_ACK} & אישורי הצטרפות \\
+שליחה & \en{Q21\_WARMUP\_CALL} & שליחת רמזים \\
+קבלה & \en{Q21\_WARMUP\_RESPONSE} & אישור קבלה \\
+שליחה & \en{Q21\_QUESTIONS\_CALL} & בקשת שאלות \\
+קבלה & \en{Q21\_QUESTIONS\_RESPONSE} & קבלת שאלות \\
+שליחה & \en{Q21\_ANSWERS\_CALL} & שליחת תשובות \\
+קבלה & \en{Q21\_FINAL\_GUESS} & קבלת ניחושים \\
+שליחה & \en{GAME\_OVER} & תוצאות לשחקנים \\
+שליחה & \en{GAME\_RESULT} & דיווח למנהל \\
+\end{fancytable}
+
+\begin{fancytable}{HlH}{הודעות שופט - כוח עליון}
+\label{tab:referee-messages-fm}
+כיוון & סוג הודעה & תיאור \\
+שליחה & \en{FORCE\_MAJEURE\_REQUEST} & דיווח על אירוע חריג \\
+קבלה & \en{FORCE\_MAJEURE\_DECISION} & החלטת המנהל \\
+קבלה & \en{FORCE\_MAJEURE\_RESULT} & תוצאה סופית \\
+\end{fancytable}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{בחירת פסקה ויצירת רמזים}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{בחירת פסקה}]
+import random
+
+class ParagraphSelector:
+    """Selects paragraph and creates hints."""
+
+    def __init__(self, materials_path: str):
+        self.materials = self._load_materials(materials_path)
+
+    def select_paragraph(self) -> dict:
+        """Select a random paragraph from course materials."""
+        lecture = random.choice(self.materials)
+        paragraph = random.choice(lecture["paragraphs"])
+
+        return {
+            "lecture_id": lecture["id"],
+            "paragraph_id": paragraph["id"],
+            "text": paragraph["text"],
+            "opening_sentence": paragraph["text"].split(".")[0] + "."
+        }
+
+    def create_hints(self, paragraph: dict) -> dict:
+        """Create description and association for paragraph."""
+        # Use LLM to generate hints
+        # IMPORTANT: description must NOT contain words from paragraph!
+        return {
+            "secret_title": "...",  # Max 5 words
+            "description": "...",    # Max 15 words, no overlap
+            "association_word": "...",
+            "association_topic": "..."
+        }
+\end{pythonbox}
+\end{english}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{חישוב ציונים}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{חישוב ציון סיבוב}]
+class Scorer:
+    """Scores player guesses against original paragraph."""
+
+    def score_guess(
+        self,
+        original: dict,
+        guess: dict
+    ) -> dict:
+        """Calculate score (0-100) with breakdown."""
+
+        # 50% - Opening sentence accuracy
+        sentence_score = self._compare_sentences(
+            original["opening_sentence"],
+            guess["opening_sentence"]
+        )
+
+        # 20% - Sentence reasoning quality
+        reasoning_score = self._evaluate_reasoning(
+            guess["sentence_reasoning"]
+        )
+
+        # 20% - Association word accuracy
+        association_score = self._compare_association(
+            original["association_word"],
+            guess["association_word"],
+            guess["association_variations"]
+        )
+
+        # 10% - Association reasoning quality
+        assoc_reasoning_score = self._evaluate_reasoning(
+            guess["association_reasoning"]
+        )
+
+        total = (
+            sentence_score * 0.5 +
+            reasoning_score * 0.2 +
+            association_score * 0.2 +
+            assoc_reasoning_score * 0.1
+        )
+
+        return {
+            "total": round(total, 2),
+            "breakdown": {
+                "opening_sentence": sentence_score,
+                "sentence_reasoning": reasoning_score,
+                "association_word": association_score,
+                "association_reasoning": assoc_reasoning_score
+            }
+        }
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{קבצי תצורה}
+\label{sec:config-files}
+% =============================================================================
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{תצורת השחקן}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{player.env}]
+# Player Configuration
+PLAYER_EMAIL=MyGroup.player@gmail.com
+PLAYER_NAME=MyGroup Player
+LEAGUE_MANAGER_EMAIL=bitalevi100@gmail.com
+LOG_SERVER_EMAIL=beit.halevi.700@gmail.com
+
+# LLM Configuration
+LLM_PROVIDER=anthropic
+LLM_MODEL=claude-sonnet-4-20250514
+LLM_API_KEY=sk-ant-...
+
+# Gmail API
+GMAIL_CREDENTIALS_PATH=./config/credentials.json
+GMAIL_TOKEN_PATH=./config/token.json
+
+# Polling interval (seconds)
+POLL_INTERVAL=30
+\end{pythonbox}
+\end{english}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{תצורת השופט}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{referee.env}]
+# Referee Configuration
+REFEREE_EMAIL=MyGroup.referee@gmail.com
+REFEREE_NAME=MyGroup Referee
+LEAGUE_MANAGER_EMAIL=bitalevi100@gmail.com
+LOG_SERVER_EMAIL=beit.halevi.700@gmail.com
+
+# Course Materials
+MATERIALS_PATH=./data/course_materials/
+
+# LLM Configuration
+LLM_PROVIDER=anthropic
+LLM_MODEL=claude-sonnet-4-20250514
+LLM_API_KEY=sk-ant-...
+
+# Gmail API
+GMAIL_CREDENTIALS_PATH=./config/credentials.json
+GMAIL_TOKEN_PATH=./config/token.json
+
+# Polling interval (seconds)
+POLL_INTERVAL=30
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{בדיקות}
+\label{sec:testing}
+% =============================================================================
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{אסטרטגיות בדיקה}
+
+\begin{enumerate}
+    \item \textbf{בדיקות יחידה} --- בדיקת פונקציות בודדות
+    \item \textbf{בדיקות אינטגרציה} --- בדיקת תקשורת עם \gmailapi{}
+    \item \textbf{בדיקות קצה-לקצה} --- משחק מלא בין סוכנים
+    \item \textbf{בדיקות מול עצמכם} --- שחקו נגד השופט שלכם
+\end{enumerate}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{רשימת בדיקות חובה}
+
+\begin{fancytable}{lH}{רשימת בדיקות חובה}
+\label{tab:testing-checklist}
+בדיקה & תיאור \\
+רישום & הסוכן נרשם בהצלחה ומקבל מזהה \\
+תגובה להזמנה & השחקן מגיב להזמנת משחק בזמן \\
+יצירת שאלות & השחקן מייצר \num{20} שאלות תקינות \\
+ניחוש סופי & השחקן שולח ניחוש עם כל הרכיבים \\
+חישוב ציון & השופט מחזיר ציון תקין עם פירוט \\
+\en{CC} לשרת הלוג & כל הודעה כוללת \en{CC} \\
+עמידה במועדים & תגובות בתוך חלונות הזמן \\
+\en{GateKeeper} & מגבלות קצב ומכסות מיושמות \\
+טיפול בשידורים & תגובה לשידורים שדורשים תגובה \\
+בקשת הארכה & יכולת לבקש הארכה לפני דדליין \\
+מעקב הודעות & טבלת מעקב עם סטטוסים \\
+\end{fancytable}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{מימוש טבלת מעקב הודעות}
+\label{sec:user-message-table}
+% =============================================================================
+
+הסוכן חייב לעקוב אחר כל הודעה שנשלחה ושהתקבלה. הטבלה מאפשרת זיהוי תגובות חסרות ומניעת שליחה כפולה.
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מבנה הטבלה}
+
+\begin{fancytable}{llH}{מבנה טבלת מעקב הודעות}
+\label{tab:user-message-table}
+שדה & סוג & תיאור \\
+\en{message\_id} & \en{UUID} & מזהה ייחודי של ההודעה \\
+\en{correlation\_id} & \en{UUID} & מזהה לקישור בקשה-תגובה \\
+\en{message\_type} & \en{VARCHAR} & סוג ההודעה \\
+\en{direction} & \en{ENUM} & \en{SENT} או \en{RECEIVED} \\
+\en{status} & \en{ENUM} & \en{OPEN}, \en{CLOSED}, \en{REJECTED} \\
+\en{deadline} & \en{TIMESTAMP} & מועד אחרון לתגובה \\
+\en{created\_at} & \en{TIMESTAMP} & זמן יצירה \\
+\en{closed\_at} & \en{TIMESTAMP} & זמן סגירה (אם רלוונטי) \\
+\end{fancytable}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מימוש מעקב}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{מחלקת מעקב הודעות}]
+from datetime import datetime, timedelta
+from enum import Enum
+from dataclasses import dataclass
+from typing import Optional
+
+class MessageStatus(Enum):
+    OPEN = "OPEN"       # Waiting for response
+    CLOSED = "CLOSED"   # Response received
+    REJECTED = "REJECTED"  # Deadline passed
+
+@dataclass
+class TrackedMessage:
+    message_id: str
+    correlation_id: str
+    message_type: str
+    deadline: Optional[datetime]
+    status: MessageStatus = MessageStatus.OPEN
+
+class MessageTracker:
+    def __init__(self):
+        self.messages: dict[str, TrackedMessage] = {}
+
+    def track_sent(self, msg: dict, deadline_seconds: int = None):
+        """Track outgoing message with optional deadline."""
+        deadline = None
+        if deadline_seconds:
+            deadline = datetime.now() + timedelta(seconds=deadline_seconds)
+        tracked = TrackedMessage(
+            message_id=msg["message_id"],
+            correlation_id=msg.get("correlation_id"),
+            message_type=msg["message_type"],
+            deadline=deadline
+        )
+        self.messages[msg["correlation_id"]] = tracked
+
+    def close_by_correlation(self, correlation_id: str):
+        """Mark message as closed when response received."""
+        if correlation_id in self.messages:
+            self.messages[correlation_id].status = MessageStatus.CLOSED
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{מימוש מטפל שידורים}
+\label{sec:broadcast-handler-impl}
+% =============================================================================
+
+השרת שולח \num{11} סוגי שידורים שונים. חלקם דורשים תגובה ויש להם דדליין.
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{זיהוי שידורים}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{זיהוי סוג ההודעה}]
+# Broadcast types that require response
+RESPONSE_REQUIRED = {
+    "BROADCAST_CONNECTIVITY_TEST": 60,     # 60 seconds
+    "BROADCAST_KEEP_ALIVE": 300,           # 5 minutes
+    "BROADCAST_CRITICAL_SYSTEM": 120,      # 2 minutes
+    "BROADCAST_CRITICAL_SECURITY": 120,    # 2 minutes
+}
+
+# Broadcast types - no response needed
+NO_RESPONSE_NEEDED = {
+    "BROADCAST_SEASON_START",
+    "BROADCAST_ROUND_START",
+    "BROADCAST_ROUND_END",
+    "BROADCAST_SEASON_END",
+    "BROADCAST_ASSIGNMENT_TABLE",
+    "BROADCAST_STANDINGS_UPDATE",
+    "BROADCAST_MAINTENANCE_NOTICE",
+}
+
+def get_response_deadline(message_type: str) -> int | None:
+    """Get deadline in seconds, or None if no response needed."""
+    return RESPONSE_REQUIRED.get(message_type)
+\end{pythonbox}
+\end{english}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{טיפול בשידורים}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{מטפל שידורים}]
+class BroadcastHandler:
+    def __init__(self, email_client, tracker: MessageTracker):
+        self.email_client = email_client
+        self.tracker = tracker
+
+    async def handle_broadcast(self, msg: dict):
+        """Process incoming broadcast message."""
+        msg_type = msg["message_type"]
+        deadline_seconds = get_response_deadline(msg_type)
+
+        if deadline_seconds:
+            # Response required - track and respond
+            self.tracker.track_sent(msg, deadline_seconds)
+            await self._send_broadcast_response(msg, deadline_seconds)
+        else:
+            # Informational only - log and process
+            self._process_informational(msg)
+
+    async def _send_broadcast_response(self, msg: dict, deadline: int):
+        """Send acknowledgment response to broadcast."""
+        response = {
+            "message_type": f"RESPONSE_{msg['message_type']}",
+            "correlation_id": msg["message_id"],
+            "payload": {"status": "ACKNOWLEDGED"}
+        }
+        await self.email_client.send(response)
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{מימוש בקשת הארכה}
+\label{sec:extension-handler-impl}
+% =============================================================================
+
+כאשר הסוכן צופה שלא יספיק לעמוד בדדליין, הוא יכול לבקש הארכה.
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מתי לבקש הארכה}
+
+\begin{warningbox}[\hebtitle{כלל הזהב}]
+בקשת הארכה חייבת להישלח \textbf{לפני} שפג תוקף הדדליין. בקשה מאוחרת תידחה!
+\end{warningbox}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{מימוש מבקש הארכה}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{מנהל הארכות}]
+class ExtensionManager:
+    def __init__(self, email_client, tracker: MessageTracker):
+        self.email_client = email_client
+        self.tracker = tracker
+        self.pending_extensions: dict[str, bool] = {}
+
+    async def request_if_needed(
+        self,
+        original_msg: dict,
+        deadline: datetime,
+        estimated_processing: float
+    ) -> bool:
+        """Request extension if we won't make deadline."""
+        time_remaining = (deadline - datetime.now()).total_seconds()
+        buffer = 30  # Safety margin
+
+        if time_remaining < estimated_processing + buffer:
+            return await self._send_extension_request(original_msg)
+        return True  # No extension needed
+
+    async def _send_extension_request(self, original_msg: dict) -> bool:
+        """Send extension request and wait for response."""
+        request = {
+            "message_type": "EXTENSION_REQUEST",
+            "payload": {
+                "original_message_id": original_msg["message_id"],
+                "original_message_type": original_msg["message_type"],
+                "reason": "Processing requires additional time",
+                "requested_extension_seconds": 120
+            }
+        }
+        correlation_id = request.get("correlation_id")
+        self.pending_extensions[correlation_id] = None
+
+        await self.email_client.send(request)
+        # Wait for RESPONSE_EXTENSION...
+        return await self._wait_for_response(correlation_id)
+
+    def handle_extension_response(self, response: dict):
+        """Process extension response from server."""
+        correlation_id = response.get("correlation_id")
+        if correlation_id in self.pending_extensions:
+            status = response["payload"]["status"]
+            self.pending_extensions[correlation_id] = (status == "APPROVED")
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{הרצת הליגה}
+\label{sec:running-league}
+% =============================================================================
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{שלבי ההפעלה}
+
+\begin{enumerate}
+    \item הגדירו את קבצי התצורה
+    \item הפעילו את סוכן השופט: \en{\texttt{python main.py referee}}
+    \item הפעילו את סוכן השחקן: \en{\texttt{python main.py player}}
+    \item הסוכנים יירשמו אוטומטית ויחכו להודעות
+    \item בצעו בדיקות מול עצמכם לפני הליגה הרשמית
+\end{enumerate}
+
+\par\needspace{10\baselineskip}
+\hebrewsubsection{טיפים להצלחה}
+
+\needspace{10\baselineskip}
+\begin{implementationbox}
+\textbf{טיפים להצלחה בליגה:}
+\begin{itemize}
+    \item \textbf{לוגים} --- תעדו כל הודעה נכנסת ויוצאת
+    \item \textbf{מועדים} --- הוסיפו מרווח ביטחון (אל תחכו לשנייה האחרונה)
+    \item \textbf{טיפול בשגיאות} --- טפלו בכל חריגה, כולל שגיאת \num{429} (\en{Rate Limit})
+    \item \textbf{מצב יציב} --- שמרו מצב למקרה של הפעלה מחדש
+    \item \textbf{תרגול} --- שחקו מול עצמכם שוב ושוב
+    \item \textbf{מגבלות \en{API}} --- הכירו את מגבלות \en{Gmail API} (ראו נספח~ה')
+\end{itemize}
+\end{implementationbox}
+
+% =============================================================================
+\par\needspace{5\baselineskip}
+\hebrewsection{סיכום}
+% =============================================================================
+
+פרק זה סיפק הנחיות מעשיות למימוש:
+
+\begin{itemize}
+    \item הגדרת סביבת פיתוח עם \en{Python 3.10+} ו-\gmailapi{}
+    \item מבנה פרויקט מומלץ עם הפרדה לשחקן ושופט
+    \item מימוש סוכן שחקן עם יצירת שאלות ואסטרטגיית ניחוש
+    \item מימוש סוכן שופט עם בחירת פסקה וחישוב ציונים
+    \item קבצי תצורה לשני הסוכנים
+    \item אסטרטגיות בדיקה ורשימת בדיקות חובה
+\end{itemize}
+
+בהצלחה בפרויקט הגמר!
+
+\end{document}

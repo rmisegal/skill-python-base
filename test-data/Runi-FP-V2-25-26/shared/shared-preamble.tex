@@ -1,0 +1,136 @@
+% =============================================================================
+% Q21G League Book V2 - Shared Preamble
+% Hebrew-English Bilingual Academic Book
+% Using hebrew-academic-template.cls v7.2.0
+% =============================================================================
+
+\documentclass[book]{hebrew-academic-template}
+
+% Float positioning
+\usepackage{float}
+
+% Ensure colortbl is loaded for table row colors
+\usepackage{colortbl}
+
+% Global listings configuration
+\usepackage{listings}
+\lstset{
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  keepspaces=true,
+  columns=flexible
+}
+
+% =============================================================================
+% TikZ Libraries for Diagrams
+% =============================================================================
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta, calc, fit, backgrounds, shapes.multipart}
+
+% Graphics path - works from both master/ and standalone-chapterXX/
+\graphicspath{{../images/figures/}{images/figures/}{../images/}{images/}}
+
+% =============================================================================
+% Bibliography
+% =============================================================================
+\addbibresource{../bibliography/references.bib}
+
+% =============================================================================
+% Custom Commands for Q21G League Book
+% =============================================================================
+
+% Protocol-specific formatting
+\newcommand{\protocol}{\en{league.v2}}
+\newcommand{\messagetype}[1]{\texttt{\textenglish{#1}}}
+\newcommand{\jsonfield}[1]{\texttt{\textenglish{"#1"}}}
+
+% Agent types
+\newcommand{\agenttype}[1]{\textbf{\textenglish{#1}}}
+\newcommand{\playeragent}{\agenttype{Player Agent}}
+\newcommand{\refereeagent}{\agenttype{Referee Agent}}
+\newcommand{\leaguemanager}{\agenttype{League Manager}}
+
+% Gmail API formatting
+\newcommand{\gmailapi}{\en{Gmail API}}
+\newcommand{\emailfield}[1]{\texttt{\textenglish{#1}}}
+
+% Q21G Game specific
+\newcommand{\qtwentyone}{\en{Q21G}}
+
+% =============================================================================
+% Custom Boxes for Q21G League Book
+% =============================================================================
+
+% Protocol specification box
+\newtcolorbox{protocolbox}[1][]{%
+  enhanced,
+  breakable,
+  colback=blue!5,
+  colframe=blue!50!black,
+  fonttitle=\bfseries,
+  title={מפרט פרוטוקול},
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+
+% Game rules box
+\newtcolorbox{gamerulebox}[1][]{%
+  enhanced,
+  breakable,
+  colback=green!5,
+  colframe=green!50!black,
+  fonttitle=\bfseries,
+  title={חוקי המשחק},
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+
+% Scoring box
+\newtcolorbox{scoringbox}[1][]{%
+  enhanced,
+  breakable,
+  colback=orange!5,
+  colframe=orange!50!black,
+  fonttitle=\bfseries,
+  title={שיטת הניקוד},
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+
+% Implementation tip box
+\newtcolorbox{implementationbox}[1][]{%
+  enhanced,
+  breakable,
+  colback=purple!5,
+  colframe=purple!50!black,
+  fonttitle=\bfseries,
+  title={טיפ למימוש},
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+
+% Deadline/timing box
+\newtcolorbox{deadlinebox}[1][]{%
+  enhanced,
+  breakable,
+  colback=red!5,
+  colframe=red!50!black,
+  fonttitle=\bfseries,
+  title={מועדים ותזמון},
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+
+% =============================================================================
+% Page Layout
+% =============================================================================
+\raggedbottom
+
+% =============================================================================
+% End of Shared Preamble
+% =============================================================================

@@ -1,0 +1,427 @@
+% =============================================================================
+% Appendix E: Gmail Email Volume Analysis and API Restrictions
+% ניתוח נפח תעבורת הדואר האלקטרוני ומגבלות ה-API
+% Standalone chapter with subfiles support
+% =============================================================================
+\documentclass[../standalone-appendixE/main-appendixE]{subfiles}
+
+\begin{document}
+
+\chapter*{נספח ה': ניתוח נפח תעבורת הדואר האלקטרוני ומגבלות \en{Gmail API}}
+\addcontentsline{toc}{chapter}{נספח ה': ניתוח נפח תעבורת הדואר האלקטרוני ומגבלות \en{Gmail API}}
+\renewcommand{\thehebrewsection}{ה.\arabic{hebrewsection}}
+\setcounter{hebrewsection}{0}
+
+\hebrewsection{מבוא}
+
+ליגת \qtwentyone{} מבוססת על תקשורת באמצעות \en{Gmail API}, ולכן הבנת מגבלות השירות והתאמת הארכיטקטורה אליהן היא קריטית להצלחת הפרויקט. נספח זה מציג ניתוח מקיף של נפח התעבורה הצפוי במהלך עונת ליגה שלמה, לצד סקירה מעמיקה של מגבלות \en{Gmail API} והשלכותיהן על תכנון המערכת.
+
+\hebrewsubsection{חשיבות הנושא}
+
+תכנון מערכת מבוססת אימייל מחייב התייחסות לשלושה ממדים:
+
+\begin{enumerate}
+    \item \textbf{מגבלות מכסה (\en{Quota})} --- מספר ההודעות המותר ליום
+    \item \textbf{מגבלות קצב (\en{Rate Limiting})} --- מספר הבקשות לדקה
+    \item \textbf{מדיניות ספאם} --- סיכון לחסימה בשל דפוסי שליחה חריגים
+\end{enumerate}
+
+ניתוח זה מבוסס על תיעוד \en{Google} הרשמי ועל חישובים מפורטים של תעבורת הליגה בתרחישים שונים.
+
+% =============================================================================
+\hebrewsection{הנחות התכנון}
+\label{sec:planning-assumptions}
+% =============================================================================
+
+טבלה~\ref{tab:league-parameters} מציגה את פרמטרי הליגה המשמשים לחישוב נפח התעבורה.
+
+\begin{fancytable}{Hc}{פרמטרי ליגה לחישוב תעבורה}
+\label{tab:league-parameters}
+פרמטר & ערך \\
+מספר קבוצות בליגה & \num{30} \\
+קבוצות למשחק בודד & \num{3} (שופט אחד + שני שחקנים) \\
+משחקים במחזור & \num{10} \\
+מחזורים בעונה & \num{6} \\
+סה``כ משחקים בעונה & \num{60} \\
+שאלות למשחק (\en{Q21}) & \num{21} \\
+\end{fancytable}
+
+\needspace{6\baselineskip}
+\begin{notebox}[\hebtitle{הנחה מרכזית}]
+הודעות שידור (\en{Broadcast}) נשלחות כהודעה בודדת עם כל המשתתפים בשדה \en{CC}, ולא כהודעות נפרדות. הנחה זו מפחיתה משמעותית את עומס השליחה על מנהל הליגה.
+\end{notebox}
+
+% =============================================================================
+\hebrewsection{ניתוח תעבורת מנהל הליגה}
+\label{sec:lgm-traffic}
+% =============================================================================
+
+\hebrewsubsection{הודעות מחזור חיים של העונה}
+
+טבלה~\ref{tab:season-lifecycle-emails} מפרטת את הודעות השידור במהלך עונה שלמה.
+
+\begin{fancytable}{Hc}{הודעות מחזור חיים --- עונה שלמה}
+\label{tab:season-lifecycle-emails}
+סוג הודעה & כמות בעונה \\
+פתיחת הרשמה & \num{1} \\
+סגירת הרשמה & \num{1} \\
+תחילת עונה & \num{1} \\
+סיום עונה + טבלת ניקוד סופית & \num{1} \\
+\textbf{סה``כ} & \textbf{\num{4}} \\
+\end{fancytable}
+
+\hebrewsubsection{הודעות מחזור חיים של מחזורים}
+
+\begin{fancytable}{Hccc}{הודעות מחזורים --- עונה שלמה}
+\label{tab:round-lifecycle-emails}
+סוג הודעה & למחזור & מחזורים & סה``כ \\
+תחילת מחזור + שיבוצים & \num{1} & \num{6} & \num{6} \\
+סיום מחזור + טבלת ניקוד & \num{1} & \num{6} & \num{6} \\
+\textbf{סה``כ} & & & \textbf{\num{12}} \\
+\end{fancytable}
+
+\hebrewsubsection{הודעות ברמת המשחק}
+
+\begin{fancytable}{Hccc}{הודעות לשופטים --- כל המשחקים}
+\label{tab:game-level-emails}
+סוג הודעה & למשחק & משחקים & סה``כ \\
+אישור שיבוץ משחק & \num{1} & \num{60} & \num{60} \\
+אישור קבלת תוצאות & \num{1} & \num{60} & \num{60} \\
+\textbf{סה``כ} & & & \textbf{\num{120}} \\
+\end{fancytable}
+
+\hebrewsubsection{סיכום תעבורת מנהל הליגה}
+
+\begin{fancytable}{Hc}{סיכום הודעות מנהל הליגה}
+\label{tab:lgm-summary}
+קטגוריה & כמות \\
+שידורי עונה & \num{4} \\
+שידורי מחזורים & \num{12} \\
+הודעות לשופטים & \num{120} \\
+\textbf{סה``כ נשלח} & \textbf{\num{136}} \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{ניתוח תעבורת המשתתפים}
+\label{sec:participant-traffic}
+% =============================================================================
+
+\hebrewsubsection{הודעות רישום}
+
+\begin{fancytable}{Hcc}{הודעות רישום}
+\label{tab:registration-emails}
+סוג הודעה & שולחים & סה``כ \\
+אישור רישום & \num{30} & \num{30} \\
+\end{fancytable}
+
+\hebrewsubsection{דיווחי תוצאות משחקים}
+
+\begin{fancytable}{Hccc}{דיווחי תוצאות מהשופטים}
+\label{tab:result-reports}
+סוג הודעה & למשחק & משחקים & סה``כ \\
+דוח תוצאות משחק & \num{1} & \num{60} & \num{60} \\
+\end{fancytable}
+
+\hebrewsubsection{סיכום תעבורה למנהל הליגה}
+
+\begin{fancytable}{Hc}{הודעות שהתקבלו אצל מנהל הליגה}
+\label{tab:lgm-received}
+קטגוריה & כמות \\
+אישורי רישום & \num{30} \\
+דוחות תוצאות & \num{60} \\
+\textbf{סה``כ התקבל} & \textbf{\num{90}} \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{ניתוח תעבורה תוך-משחקית}
+\label{sec:in-game-traffic}
+% =============================================================================
+
+חלק זה מנתח את התעבורה הפנימית בין השופט לשחקנים במהלך המשחקים עצמם.
+
+\hebrewsubsection{חלוקת תפקידים לאורך העונה}
+
+\begin{fancytable}{Hc}{חלוקת תפקידים למשתתף בודד}
+\label{tab:role-distribution}
+תפקיד & משחקים בעונה \\
+שופט & \num{2} \\
+שחקן & \num{4} \\
+\textbf{סה``כ} & \textbf{\num{6}} \\
+\end{fancytable}
+
+\hebrewsubsection{הודעות השופט --- משחק בודד}
+
+\begin{fancytable}{HHc}{הודעות שופט למשחק בודד}
+\label{tab:referee-per-game}
+נמען & סוג הודעה & כמות \\
+מנהל הליגה & אישור שיבוץ & \num{1} \\
+מנהל הליגה & דוח תוצאות & \num{1} \\
+\textbf{סה``כ למנהל} & & \textbf{\num{2}} \\
+שחקן א' & הזמנה למשחק & \num{1} \\
+שחקן א' & שאלות (\en{Q21}) & \num{21} \\
+שחקן א' & הודעת תוצאה & \num{1} \\
+\textbf{סה``כ לשחקן א'} & & \textbf{\num{23}} \\
+שחקן ב' & הזמנה למשחק & \num{1} \\
+שחקן ב' & שאלות (\en{Q21}) & \num{21} \\
+שחקן ב' & הודעת תוצאה & \num{1} \\
+\textbf{סה``כ לשחקן ב'} & & \textbf{\num{23}} \\
+\textbf{סה``כ למשחק} & & \textbf{\num{48}} \\
+\end{fancytable}
+
+\hebrewsubsection{הודעות השחקן --- משחק בודד}
+
+\begin{fancytable}{HHc}{הודעות שחקן למשחק בודד}
+\label{tab:player-per-game}
+נמען & סוג הודעה & כמות \\
+מנהל הליגה & אישור שיבוץ & \num{1} \\
+\textbf{סה``כ למנהל} & & \textbf{\num{1}} \\
+שופט & אישור הצטרפות & \num{1} \\
+שופט & תשובות (\en{Q21}) & \num{21} \\
+\textbf{סה``כ לשופט} & & \textbf{\num{22}} \\
+\textbf{סה``כ למשחק} & & \textbf{\num{23}} \\
+\end{fancytable}
+
+\hebrewsubsection{סיכום תעבורה למשתתף בודד לעונה}
+
+\begin{fancytable}{Hccc}{סיכום הודעות משתתף בודד}
+\label{tab:single-participant-summary}
+תפקיד & משחקים & הודעות למשחק & סה``כ לעונה \\
+כשופט & \num{2} & \num{48} & \num{96} \\
+כשחקן & \num{4} & \num{23} & \num{92} \\
+\textbf{סה``כ} & \num{6} & & \textbf{\num{188}} \\
+\end{fancytable}
+
+\hebrewsubsection{אימות --- כל המשתתפים}
+
+\begin{fancytable}{Hccc}{אימות תעבורה כוללת}
+\label{tab:total-verification}
+מדד & למשתתף & משתתפים & סה``כ \\
+הודעות נשלחות & \num{188} & \num{30} & \num{5,640} \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{סיכום תעבורה כולל}
+\label{sec:total-traffic-summary}
+% =============================================================================
+
+\begin{fancytable}{Hcc}{סיכום תעבורה כולל --- עונה שלמה}
+\label{tab:grand-summary}
+כיוון & כמות הודעות & אחוז \\
+מנהל הליגה $\rightarrow$ משתתפים & \num{136} & \num{2.4}\% \\
+משתתפים $\rightarrow$ מנהל הליגה & \num{90} & \num{1.6}\% \\
+תעבורה תוך-משחקית & \num{5,640} & \num{96.0}\% \\
+\textbf{סה``כ} & \textbf{\num{5,866}} & \textbf{\num{100}\%} \\
+\end{fancytable}
+
+\needspace{8\baselineskip}
+\begin{warningbox}[\hebtitle{תובנה מפתח}]
+\textbf{\num{96}\% מהתעבורה היא תוך-משחקית} --- בין שופטים לשחקנים. מנהל הליגה מטפל רק ב-\num{226} הודעות לאורך כל העונה, בעוד שכל משתתף שולח \num{188} הודעות בממוצע.
+\end{warningbox}
+
+% =============================================================================
+\hebrewsection{חיסכון מאיחוד שידורים}
+\label{sec:consolidation-savings}
+% =============================================================================
+
+רכיב \en{Broadcast Consolidation} ב-\en{Gatekeeper} מאחד הודעות שידור למספר נמענים להודעה בודדת עם כל הנמענים בשדה \en{TO}. חיסכון זה קריטי לעמידה במגבלות \en{Gmail API}.
+
+\hebrewsubsection{חישוב החיסכון}
+
+\begin{fancytable}{Hcc}{השוואה לפני ואחרי איחוד שידורים}
+\label{tab:consolidation-comparison}
+מדד & ללא איחוד & עם איחוד \\
+הודעת \en{BROADCAST\_KEEP\_ALIVE} & \num{30} קריאות & \num{1} קריאה \\
+הודעת \en{BROADCAST\_ROUND\_START} & \num{30} קריאות & \num{1} קריאה \\
+שידורי עונה (\num{16} סוגים) & \num{480} קריאות & \num{16} קריאות \\
+\textbf{חיסכון לשידור בודד} & --- & \textbf{\num{97}\%} \\
+\end{fancytable}
+
+\hebrewsubsection{השפעה על מכסה יומית}
+
+\begin{fancytable}{Hcc}{צריכת מכסה יומית --- יום שיא}
+\label{tab:quota-daily-impact}
+פעולה & ללא איחוד & עם איחוד \\
+שידורי \en{Keep Alive} (כל \num{30} דק') & \num{1,440} & \num{48} \\
+שידורי מחזור (התחלה + סיום) & \num{60} & \num{2} \\
+הודעות לשופטים & \num{10} & \num{10} \\
+\textbf{סה``כ קריאות \en{API}} & \textbf{\num{1,510}} & \textbf{\num{60}} \\
+\textbf{אחוז חיסכון} & --- & \textbf{\num{96}\%} \\
+\end{fancytable}
+
+\begin{warningbox}[\hebtitle{חשיבות האיחוד}]
+ללא איחוד שידורים, המערכת הייתה חורגת ממגבלת \num{500} ההודעות היומיות של \en{Gmail} תוך \num{8} שעות בלבד. עם האיחוד, המערכת צורכת רק \num{60} קריאות ביום שיא --- \num{15}\% מהמכסה התפעולית (\num{400}).
+\end{warningbox}
+
+% =============================================================================
+\hebrewsection{מגבלות \en{Gmail API}}
+\label{sec:gmail-api-limits}
+% =============================================================================
+
+\hebrewsubsection{מגבלות לפי סוג חשבון}
+
+טבלה~\ref{tab:gmail-limits} מסכמת את מגבלות השליחה לפי סוג חשבון \en{Gmail}.
+
+\begin{fancytable}{HHH}{מגבלות שליחת \en{Gmail} לפי סוג חשבון}
+\label{tab:gmail-limits}
+סוג חשבון & מגבלה יומית & הערות \\
+\en{Gmail} חינמי & \num{500} הודעות & \num{100} דרך \en{SMTP} אוטומטי \\
+\en{Google Workspace} & \num{2,000} הודעות & עד \num{10,000} נמענים \\
+\en{SMTP Relay} (עסקי) & \num{10,000} הודעות & דורש תצורה מיוחדת \\
+\end{fancytable}
+
+\begin{notebox}[\hebtitle{מגבלה תפעולית}]
+למרות שמגבלת \en{Gmail} היא \num{500} הודעות ליום, מערכת \en{Gatekeeper} מגדירה מגבלה תפעולית של \textbf{\num{400} הודעות ליום} (\num{80}\%) כדי להשאיר מרווח ביטחון. כאשר מגיעים ל-\num{400}, המערכת עוברת למצב ``מופחת'' ומשהה שידורים לא קריטיים.
+\end{notebox}
+
+\hebrewsubsection{מגבלות קצב (\en{Rate Limiting})}
+
+\begin{fancytable}{HH}{מגבלות קצב \en{Gmail API}}
+\label{tab:rate-limits}
+פרמטר & ערך \\
+בקשות לשנייה (למשתמש) & \num{250} יחידות מכסה \\
+בקשות לשנייה (לפרויקט) & \num{25,000} יחידות מכסה \\
+גודל \en{Batch} מומלץ & עד \num{50} בקשות \\
+\en{Timeout} לתגובה & \num{429} \en{Too Many Requests} \\
+\end{fancytable}
+
+\hebrewsubsection{יחידות מכסה לפעולות נפוצות}
+
+\begin{fancytable}{Hc}{עלות יחידות מכסה לפעולה}
+\label{tab:quota-units}
+פעולה & יחידות מכסה \\
+\en{messages.send} & \num{100} \\
+\en{messages.get} & \num{5} \\
+\en{messages.list} & \num{5} \\
+\en{messages.modify} & \num{5} \\
+\en{labels.list} & \num{1} \\
+\end{fancytable}
+
+\needspace{8\baselineskip}
+\begin{english}
+\begin{implementationbox}
+\texthebrew{\textbf{המלצות למימוש:}}
+\begin{itemize}
+    \item \texthebrew{השתמשו ב-}Exponential Backoff\texthebrew{ בעת קבלת שגיאת }\num{429}
+    \item \texthebrew{הגבילו שליחת הודעות ל-}\num{20}\texthebrew{ לשעה בחשבון חינמי}
+    \item \texthebrew{שמרו מרווח של }\num{3}\texthebrew{ שניות לפחות בין הודעות}
+    \item \texthebrew{הימנעו משליחת יותר מ-}\num{50}\texthebrew{ בקשות ב-}Batch\texthebrew{ יחיד}
+\end{itemize}
+\end{implementationbox}
+\end{english}
+
+% =============================================================================
+\hebrewsection{ניתוח התאמה למגבלות}
+\label{sec:limits-analysis}
+% =============================================================================
+
+\hebrewsubsection{תרחיש מנהל הליגה}
+
+\begin{fancytable}{Hcc}{ניתוח מגבלות --- מנהל הליגה}
+\label{tab:lgm-limits-analysis}
+מדד & ערך & מגבלה \\
+הודעות לעונה & \num{136} & --- \\
+הודעות ביום שיא (מחזור) & $\sim$\num{30} & \num{500}/\num{2,000} \\
+מרווח ביטחון & $>\num{90}\%$ & תקין \\
+\end{fancytable}
+
+\hebrewsubsection{תרחיש משתתף בודד}
+
+\begin{fancytable}{Hcc}{ניתוח מגבלות --- משתתף בודד}
+\label{tab:participant-limits-analysis}
+מדד & ערך & מגבלה \\
+הודעות לעונה & \num{188} & --- \\
+הודעות למשחק (כשופט) & \num{48} & \num{500}/יום \\
+הודעות למשחק (כשחקן) & \num{23} & \num{500}/יום \\
+מרווח ביטחון & $>\num{80}\%$ & תקין \\
+\end{fancytable}
+
+\needspace{6\baselineskip}
+\begin{notebox}[\hebtitle{מסקנה}]
+עם חשבון \en{Gmail} חינמי סטנדרטי (\num{500} הודעות ליום), משתתף יכול לשחק עד \textbf{\num{10} משחקים ביום כשופט} או \textbf{\num{21} משחקים ביום כשחקן} מבלי לחרוג מהמכסה. בפועל, הליגה מתירה משחק אחד ליום לכל היותר, כך שהמערכת פועלת בגבולות בטוחים.
+\end{notebox}
+
+% =============================================================================
+\hebrewsection{סיכוני ספאם וחסימה}
+\label{sec:spam-risks}
+% =============================================================================
+
+\hebrewsubsection{גורמי סיכון}
+
+\begin{enumerate}
+    \item \textbf{דפוסי שליחה אוטומטיים} --- \en{Google} מזהה שליחה ממוכנת ועלול להגביל את החשבון
+    \item \textbf{חשבונות חדשים} --- חשבונות בני פחות מ-\num{30} יום מוגבלים ל-\num{100} הודעות ליום
+    \item \textbf{שליחה לנמענים לא מוכרים} --- עלולה להפעיל סינון ספאם
+    \item \textbf{תוכן חוזר} --- הודעות זהות לנמענים שונים מסומנות כספאם פוטנציאלי
+\end{enumerate}
+
+\hebrewsubsection{אסטרטגיות מיתון}
+
+\begin{fancytable}{HH}{אסטרטגיות למניעת חסימה}
+\label{tab:mitigation-strategies}
+סיכון & אסטרטגיית מיתון \\
+חשבון חדש & פתחו חשבונות \num{30}+ יום לפני תחילת הליגה \\
+דפוסי שליחה & הוסיפו השהיות אקראיות בין הודעות \\
+נמענים לא מוכרים & הוסיפו לאנשי קשר לפני שליחה ראשונה \\
+תוכן חוזר & השתמשו בתבניות עם וריאציות קלות \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{המלצות ארכיטקטוניות}
+\label{sec:architectural-recommendations}
+% =============================================================================
+
+\needspace{10\baselineskip}
+\begin{english}
+\begin{implementationbox}
+\texthebrew{\textbf{המלצות לתכנון מערכת עמידה:}}
+
+\begin{enumerate}
+    \item \texthebrew{\textbf{תור הודעות (}Message Queue\textbf{)}} --- \texthebrew{השתמשו בתור פנימי עם קצב שליחה מבוקר}
+
+    \item \texthebrew{\textbf{ניטור מכסה}} --- \texthebrew{עקבו אחר צריכת המכסה היומית ועצרו שליחה בהתקרבות למגבלה}
+
+    \item \textbf{Graceful Degradation} --- \texthebrew{במקרה של חסימה, עברו למצב ``קריאה בלבד'' והתריעו למפעיל}
+
+    \item \texthebrew{\textbf{לוגים מפורטים}} --- \texthebrew{תעדו כל בקשת }API\texthebrew{ לצורך ניתוח בעיות}
+
+    \item \texthebrew{\textbf{חשבון גיבוי}} --- \texthebrew{שקלו הכנת חשבון חלופי למקרה חירום}
+\end{enumerate}
+\end{implementationbox}
+\end{english}
+
+% =============================================================================
+\hebrewsection{סיכום}
+\label{sec:email-summary}
+% =============================================================================
+
+נספח זה הציג ניתוח מקיף של תעבורת הדואר האלקטרוני בליגת \qtwentyone{}:
+
+\begin{itemize}
+    \item \textbf{נפח כולל} --- כ-\num{5,866} הודעות בעונה שלמה עם \num{30} קבוצות
+    \item \textbf{פילוח התעבורה} --- \num{96}\% תוך-משחקית, \num{4}\% ניהולית
+    \item \textbf{איחוד שידורים} --- חיסכון של \num{96}\% בקריאות \en{API} ביום שיא
+    \item \textbf{מגבלה תפעולית} --- \num{400} הודעות ליום (\num{80}\% מהמכסה) למרווח ביטחון
+    \item \textbf{התאמה למגבלות} --- המערכת פועלת בגבולות בטוחים עם חשבונות \en{Gmail} חינמיים
+    \item \textbf{סיכונים עיקריים} --- חשבונות חדשים ודפוסי שליחה אוטומטיים
+    \item \textbf{המלצות} --- השתמשו בתור הודעות, ניטור מכסה, והשהיות בין הודעות
+\end{itemize}
+
+הבנת מגבלות אלו חיונית לתכנון סוכני \en{AI} אמינים שיפעלו לאורך כל עונת הליגה ללא הפרעות.
+
+% =============================================================================
+\hebrewsection{מקורות}
+\label{sec:email-sources}
+% =============================================================================
+
+\begin{enumerate}
+    \item \en{Google Developers} --- \en{Gmail API Usage Limits}\\
+    \url{https://developers.google.com/workspace/gmail/api/reference/quota}
+
+    \item \en{Google Workspace Admin Help} --- \en{Gmail Sending Limits}\\
+    \url{https://support.google.com/a/answer/166852}
+
+    \item \en{Google Developers} --- \en{Gmail API Error Handling}\\
+    \url{https://developers.google.com/workspace/gmail/api/guides/handle-errors}
+\end{enumerate}
+
+\end{document}

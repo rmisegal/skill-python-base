@@ -1,0 +1,654 @@
+% =============================================================================
+% Appendix C: Database Schema Reference
+% =============================================================================
+\documentclass[../standalone-appendixC/main-appendixC]{subfiles}
+
+\begin{document}
+
+\hebrewchapter{נספח ג': מודל הנתונים של המערכת}
+\hebrewchapterlabel{chap:database-schema}
+
+% =============================================================================
+\hebrewsection{סקירה כללית}
+% =============================================================================
+
+מסד הנתונים של מערכת \en{GmailAsServer} מבוסס על \en{PostgreSQL} ומאורגן בארבע קבוצות לוגיות. הארכיטקטורה תוכננה לתמוך במעקב מקיף אחר כל פעולות המערכת, ניהול ליגות ומשחקים, ותיעוד תקשורת אישית לכל משתמש.
+
+\hebrewsubsection{ארבע קבוצות הטבלאות}
+
+המערכת כוללת \num{16} טבלאות (\num{15} קבועות ותבנית דינמית אחת), המחולקות לקבוצות הבאות:
+
+\begin{enumerate}
+    \item \textbf{טבלאות ליבת המערכת} (\en{Core System Tables}) --- ניהול משתמשים, תיעוד אימיילים ומעקב ביקורת
+    \item \textbf{טבלאות ניהול הליגה} (\en{League Management Tables}) --- ליגות, שחקנים, שופטים ומשחקים
+    \item \textbf{טבלאות מצב המשחק} (\en{Game State Tables}) --- שמירת מצב משחק, זמני המתנה ומעברי מצב
+    \item \textbf{טבלאות דינמיות למשתמש} (\en{Dynamic Per-User Tables}) --- טבלת מעקב הודעות אישית לכל משתמש
+\end{enumerate}
+
+% =============================================================================
+% Schema Diagram - Full page with decorative frame (using CLS command v7.2.0)
+% =============================================================================
+\framedschemapage{C:/25D/Richman/Studies-25-26-A/Works/Final-Work/GmailAsServer/docs/database_schema.png}
+
+% =============================================================================
+\hebrewsection{דיאגרמת הסכמה}
+% =============================================================================
+
+איור~\ref{fig:database-schema} מציג את מבנה מסד הנתונים המלא, כולל הקשרים בין הטבלאות.
+\label{fig:database-schema}
+
+\noindent\textbf{איור \refstepcounter{figure}\thefigure:} מודל הנתונים של מערכת \en{GmailAsServer} --- \num{16} טבלאות בארבע קבוצות לוגיות
+
+\textbf{מקרא הצבעים:}
+\begin{itemize}
+    \item \textbf{כחול} --- טבלאות ליבת המערכת
+    \item \textbf{ירוק} --- טבלאות ניהול הליגה
+    \item \textbf{צהוב} --- טבלאות מצב המשחק
+    \item \textbf{אדום} --- טבלה דינמית למשתמש
+    \item \textbf{צהוב בהיר} --- מפתח ראשי (\en{PK})
+    \item \textbf{כחול בהיר} --- מפתח זר (\en{FK})
+\end{itemize}
+
+% =============================================================================
+\hebrewsection{טבלאות ליבת המערכת}
+\label{sec:core-tables}
+% =============================================================================
+
+קבוצה זו מכילה שבע טבלאות המהוות את התשתית הבסיסית של המערכת.
+
+\hebrewsubsection{טבלת \en{users}}
+
+טבלת המשתמשים מאחסנת את כל חשבונות המשתמשים במערכת.
+
+{\footnotesize
+\begin{fancytable}{lHH}{מבנה טבלת \en{users}}
+\label{tab:users-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PK} & מזהה ייחודי \\
+\en{email} & \en{VARCHAR(255) UNIQUE} & אימייל \\
+\en{display\_name} & \en{VARCHAR(255)} & שם תצוגה \\
+\en{role} & \en{VARCHAR(50)} & \en{MANAGER/REFEREE/PLAYER} \\
+\en{logical\_id} & \en{VARCHAR(50) UNIQUE} & מזהה קריא \\
+\en{auth\_token} & \en{VARCHAR(255)} & אסימון אימות \\
+\en{status} & \en{VARCHAR(50)} & \en{ACTIVE/INACTIVE/DELETED} \\
+\en{message\_table\_name} & \en{VARCHAR(255)} & שם טבלת הודעות \\
+\end{fancytable}
+}
+
+\hebrewsubsection{טבלת \en{email\_log}}
+
+טבלה זו מתעדת את כל האימיילים שעובדו במערכת.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{email\_log}}
+\label{tab:email-log-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{user\_id} & \en{INTEGER FK} & קישור לטבלת \en{users} \\
+\en{transaction\_id} & \en{VARCHAR(100) UNIQUE} & מזהה טרנזקציה \\
+\en{message\_id} & \en{VARCHAR(255)} & מזהה הודעת \en{Gmail} \\
+\en{direction} & \en{VARCHAR(20)} & \en{sent} או \en{received} \\
+\en{status} & \en{VARCHAR(50)} & סטטוס עיבוד \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{transactions}}
+
+טבלה זו מאחסנת טרנזקציות הודעות לפני עיבודן.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{transactions}}
+\label{tab:transactions-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{transaction\_id} & \en{VARCHAR(100) UNIQUE} & מזהה טרנזקציה \\
+\en{user\_email} & \en{VARCHAR(255)} & אימייל המשתמש \\
+\en{message\_type} & \en{VARCHAR(100)} & סוג ההודעה \\
+\en{payload} & \en{JSONB} & תוכן ההודעה ב-\en{JSON} \\
+\en{status} & \en{VARCHAR(50)} & סטטוס: \en{PENDING}, \en{PROCESSED} \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{attachments}}
+
+טבלה זו מנהלת קבצים מצורפים לאימיילים.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{attachments}}
+\label{tab:attachments-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{email\_log\_id} & \en{INTEGER FK} & קישור ל-\en{email\_log} \\
+\en{original\_filename} & \en{VARCHAR(500)} & שם הקובץ המקורי \\
+\en{internal\_filename} & \en{VARCHAR(500) UNIQUE} & שם פנימי לאחסון \\
+\en{file\_path} & \en{TEXT} & נתיב מלא לקובץ \\
+\en{file\_size} & \en{INTEGER} & גודל הקובץ בבתים \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{audit\_trail}}
+
+טבלת הביקורת מתעדת את כל הפעולות המשמעותיות במערכת.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{audit\_trail}}
+\label{tab:audit-trail-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{timestamp} & \en{TIMESTAMP} & זמן הפעולה \\
+\en{operation} & \en{VARCHAR(50)} & סוג הפעולה \\
+\en{entity\_type} & \en{VARCHAR(100)} & סוג הישות המושפעת \\
+\en{entity\_id} & \en{VARCHAR(255)} & מזהה הישות \\
+\en{details} & \en{JSONB} & פרטים נוספים \\
+\en{status} & \en{VARCHAR(50)} & \en{SUCCESS} או \en{FAILURE} \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{broadcasts}}
+
+טבלה זו מנהלת הודעות שידור לכלל המשתתפים.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{broadcasts}}
+\label{tab:broadcasts-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{broadcast\_id} & \en{VARCHAR(100) UNIQUE} & מזהה השידור \\
+\en{message\_type} & \en{VARCHAR(100)} & סוג ההודעה \\
+\en{league\_id} & \en{VARCHAR(100)} & ליגת היעד \\
+\en{payload} & \en{JSONB} & תוכן ההודעה \\
+\en{response\_deadline} & \en{TIMESTAMP} & מועד אחרון לתגובה \\
+\en{status} & \en{VARCHAR(50)} & \en{PENDING}, \en{SENT}, \en{COMPLETED} \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{broadcast\_responses}}
+
+טבלה זו מאחסנת תגובות לשידורים.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{broadcast\_responses}}
+\label{tab:broadcast-responses-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{broadcast\_id} & \en{VARCHAR(100)} & קישור לשידור \\
+\en{responder\_email} & \en{VARCHAR(255)} & אימייל המגיב \\
+\en{response\_type} & \en{VARCHAR(100)} & סוג התגובה \\
+\en{payload} & \en{JSONB} & תוכן התגובה \\
+\en{received\_at} & \en{TIMESTAMP} & זמן קבלת התגובה \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{טבלאות רישום וקבוצות}
+\label{sec:registration-tables}
+% =============================================================================
+
+קבוצה זו מכילה טבלאות לניהול רישום סטודנטים וקבוצות.
+
+\hebrewsubsection{טבלת \en{student\_groups}}
+
+טבלה זו מאחסנת את המידע הסטטי על קבוצות הסטודנטים (נתונים שאינם משתנים במהלך העונה).
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{student\_groups}}
+\label{tab:student-groups-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{group\_id} & \en{VARCHAR(10) UNIQUE} & מזהה קבוצה (\en{G001}--\en{G030}) \\
+\en{student\_a\_name} & \en{VARCHAR(255)} & שם סטודנט א' \\
+\en{student\_a\_email} & \en{VARCHAR(255)} & אימייל סטודנט א' \\
+\en{student\_b\_name} & \en{VARCHAR(255)} & שם סטודנט ב' \\
+\en{student\_b\_email} & \en{VARCHAR(255)} & אימייל סטודנט ב' \\
+\en{github\_repo} & \en{VARCHAR(500)} & כתובת מאגר \en{GitHub} \\
+\en{created\_at} & \en{TIMESTAMP} & זמן יצירה \\
+\end{fancytable}
+
+\begin{notebox}[\hebtitle{הפרדת נתונים סטטיים ודינמיים}]
+טבלת \en{student\_groups} מכילה מידע סטטי בלבד (שמות, אימיילים, \en{GitHub}). נתונים דינמיים כמו מצב במשחק, ניקוד ותפקיד נשמרים בטבלאות \en{players} ו-\en{referees} לפי עונה.
+\end{notebox}
+
+% =============================================================================
+\hebrewsection{טבלאות ניהול עונה}
+\label{sec:season-tables}
+% =============================================================================
+
+קבוצה זו מכילה טבלאות לניהול עונות ודירוג.
+
+\hebrewsubsection{טבלת \en{seasons}}
+
+טבלה זו מנהלת את העונות בליגה.
+
+\begin{fancytable}{lR{4.5cm}R{5cm}}{מבנה טבלת \en{seasons}}
+\label{tab:seasons-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{season\_id} & \en{VARCHAR(10) UNIQUE} & מזהה עונה (\en{S01}, \en{W01}) \\
+\en{name} & \en{VARCHAR(100)} & שם העונה \\
+\en{state} & \en{VARCHAR(30)} & \en{SETUP}, \en{REGISTRATION}, \en{ACTIVE}, \en{COMPLETED} \\
+\en{registration\_open} & \en{TIMESTAMP} & פתיחת רישום \\
+\en{registration\_close} & \en{TIMESTAMP} & סגירת רישום \\
+\en{start\_date} & \en{TIMESTAMP} & תאריך התחלה \\
+\en{end\_date} & \en{TIMESTAMP} & תאריך סיום \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{season\_standings}}
+
+טבלה זו מאחסנת את טבלת הדירוג לכל עונה.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{season\_standings}}
+\label{tab:season-standings-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{season\_id} & \en{VARCHAR(10)} & מזהה העונה \\
+\en{group\_id} & \en{VARCHAR(10)} & מזהה הקבוצה \\
+\en{rank} & \en{INTEGER} & דירוג בעונה \\
+\en{total\_points} & \en{INTEGER} & סה``כ נקודות \\
+\en{games\_played} & \en{INTEGER} & משחקים ששוחקו \\
+\en{games\_won} & \en{INTEGER} & ניצחונות \\
+\en{games\_drawn} & \en{INTEGER} & תיקו \\
+\en{games\_lost} & \en{INTEGER} & הפסדים \\
+\en{updated\_at} & \en{TIMESTAMP} & עדכון אחרון \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{טבלאות ניהול הליגה}
+\label{sec:league-tables}
+% =============================================================================
+
+קבוצה זו מכילה חמש טבלאות לניהול תחרויות הליגה.
+
+\hebrewsubsection{טבלת \en{leagues}}
+
+טבלה זו מאחסנת את הגדרות הליגות.
+
+{\footnotesize
+\begin{fancytable}{lHH}{מבנה טבלת \en{leagues}}
+\label{tab:leagues-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PK} & מזהה ייחודי \\
+\en{league\_id} & \en{VARCHAR(100) UNIQUE} & מזהה הליגה \\
+\en{name} & \en{VARCHAR(255)} & שם הליגה \\
+\en{current\_state} & \en{VARCHAR(50)} & מצב ליגה \\
+\en{min\_players} & \en{INTEGER} & מינימום שחקנים \\
+\en{config} & \en{JSONB} & קונפיגורציה \\
+\end{fancytable}
+}
+
+\hebrewsubsection{טבלת \en{players}}
+
+טבלה זו מנהלת רישומי שחקנים וסטטיסטיקות דינמיות לפי עונה.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{players}}
+\label{tab:players-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{player\_id} & \en{VARCHAR(20) UNIQUE} & מזהה השחקן (\en{P-Q21G-xxx}) \\
+\en{group\_id} & \en{VARCHAR(10)} & קישור לטבלת \en{student\_groups} \\
+\en{user\_id} & \en{INTEGER FK} & קישור לטבלת \en{users} \\
+\en{season\_id} & \en{VARCHAR(10)} & מזהה העונה \\
+\en{league\_id} & \en{VARCHAR(100)} & מזהה הליגה \\
+\en{email} & \en{VARCHAR(255)} & אימייל השחקן \\
+\en{current\_state} & \en{VARCHAR(50)} & \en{REGISTERED}, \en{ACTIVE}, \en{WAITING} \\
+\en{matches\_won} & \en{INTEGER} & מספר ניצחונות בעונה \\
+\en{total\_score} & \en{FLOAT} & ציון מצטבר בעונה \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{referees}}
+
+טבלה זו מנהלת שופטים בליגה וסטטיסטיקות דינמיות לפי עונה.
+
+{\footnotesize
+\begin{fancytable}{lHH}{מבנה טבלת \en{referees}}
+\label{tab:referees-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PK} & מזהה ייחודי \\
+\en{referee\_id} & \en{VARCHAR(20) UNIQUE} & מזהה השופט (\en{R-Q21G-xxx}) \\
+\en{group\_id} & \en{VARCHAR(10)} & קישור לטבלת \en{student\_groups} \\
+\en{user\_id} & \en{INTEGER FK} & קישור ל-\en{users} \\
+\en{season\_id} & \en{VARCHAR(10)} & מזהה העונה \\
+\en{league\_id} & \en{VARCHAR(100)} & מזהה הליגה \\
+\en{current\_state} & \en{VARCHAR(50)} & מצב שופט \\
+\en{matches\_refereed} & \en{INTEGER} & משחקים ששפט בעונה \\
+\end{fancytable}
+}
+
+\hebrewsubsection{טבלת \en{rounds}}
+
+טבלה זו מנהלת מחזורים בליגה.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{rounds}}
+\label{tab:rounds-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{round\_id} & \en{VARCHAR(100) UNIQUE} & מזהה המחזור \\
+\en{league\_id} & \en{VARCHAR(100)} & מזהה הליגה \\
+\en{round\_number} & \en{INTEGER} & מספר סידורי של המחזור \\
+\en{current\_state} & \en{VARCHAR(50)} & \en{SCHEDULED}, \en{ACTIVE}, \en{COMPLETED} \\
+\en{total\_matches} & \en{INTEGER} & סך המשחקים במחזור \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{matches}}
+
+טבלה זו מאחסנת פרטי משחקים בודדים.
+
+{\small
+\begin{fancytable}{lHH}{מבנה טבלת \en{matches}}
+\label{tab:matches-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PK} & מזהה ייחודי \\
+\en{match\_id} & \en{VARCHAR(100) UNIQUE} & מזהה המשחק \\
+\en{round\_id} & \en{VARCHAR(100)} & מזהה המחזור \\
+\en{player\_a\_id} & \en{VARCHAR(100)} & מזהה שחקן א' \\
+\en{player\_b\_id} & \en{VARCHAR(100)} & מזהה שחקן ב' \\
+\en{referee\_id} & \en{VARCHAR(100)} & מזהה השופט \\
+\en{current\_state} & \en{VARCHAR(50)} & \en{WAITING}, \en{ACTIVE}, \en{COMPLETED} \\
+\en{winner\_id} & \en{VARCHAR(100)} & מזהה המנצח \\
+\end{fancytable}
+}
+
+% =============================================================================
+\hebrewsection{טבלת הקצאת קבוצות משחק}
+\label{sec:game-group-assignment-table}
+% =============================================================================
+
+טבלה זו מנהלת את הקצאת קבוצות המשחק (שופט + שני שחקנים) לכל מחזור. מכילה \num{180} שורות לעונה (\num{60} משחקים $\times$ \num{3} משתתפים).
+
+\hebrewsubsection{טבלת \en{season\_assignments}}
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{season\_assignments}}
+\label{tab:season-assignments-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{season\_id} & \en{VARCHAR(10)} & מזהה העונה (\en{S01}, \en{W01}) \\
+\en{round\_id} & \en{VARCHAR(10)} & מספר המחזור (\en{01}--\en{06}) \\
+\en{game\_id} & \en{VARCHAR(7) UNIQUE} & מזהה מורכב \en{SSRRGGG} (למשל \en{0101001}) \\
+\en{referee\_id} & \en{VARCHAR(20)} & מזהה השופט (\en{R-Q21G-xxx}) \\
+\en{player\_a\_id} & \en{VARCHAR(20)} & מזהה שחקן א' (\en{P-Q21G-xxx}) \\
+\en{player\_b\_id} & \en{VARCHAR(20)} & מזהה שחקן ב' (\en{P-Q21G-xxx}) \\
+\en{game\_status} & \en{VARCHAR(50)} & מצב המשחק (ראו להלן) \\
+\en{failure\_type} & \en{VARCHAR(30)} & סוג כשל אם רלוונטי \\
+\en{created\_at} & \en{TIMESTAMP} & זמן יצירת ההקצאה \\
+\en{updated\_at} & \en{TIMESTAMP} & זמן עדכון אחרון \\
+\end{fancytable}
+
+\begin{notebox}[\hebtitle{מפתח מורכב \en{game\_id}}]
+מזהה המשחק בפורמט \en{SSRRGGG} מורכב משבע ספרות:
+\begin{itemize}
+    \item \en{SS} --- מספר עונה (\en{01}--\en{99})
+    \item \en{RR} --- מספר מחזור (\en{01}--\en{06})
+    \item \en{GGG} --- מספר משחק במחזור (\en{001}--\en{010})
+\end{itemize}
+\textbf{דוגמה:} \en{0103005} = עונה 1, מחזור 3, משחק 5
+\end{notebox}
+
+\hebrewsubsection{ערכי \en{game\_status} אפשריים}
+
+\begin{fancytable}{lH}{מצבי קבוצת משחק}
+\label{tab:game-status-values-appendix}
+ערך & תיאור \\
+\en{assigned\_and\_waiting} & הודעת הקצאה נשלחה, ממתינים לתגובות משלושת המשתתפים \\
+\en{referee\_responsibility} & כל המשתתפים אישרו, השופט מנהל את המשחק \\
+\en{malfunction} & השופט דיווח על תקלה טכנית \\
+\en{no\_response} & השופט לא הגיב עד סוף המחזור \\
+\en{game\_end} & המשחק הסתיים ותוצאות נשלחו \\
+\end{fancytable}
+
+\hebrewsubsection{אינדקסים מומלצים}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{אינדקסים לטבלת \en{season\_assignments}}]
+CREATE INDEX idx_season_assign_season ON season_assignments(season_id);
+CREATE INDEX idx_season_assign_round ON season_assignments(round_id);
+CREATE INDEX idx_season_assign_status ON season_assignments(game_status);
+CREATE INDEX idx_season_assign_referee ON season_assignments(referee_id);
+-- game_id is already UNIQUE (7-digit SSRRGGG composite key)
+CREATE INDEX idx_season_assign_failure ON season_assignments(failure_type)
+    WHERE failure_type IS NOT NULL;
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\hebrewsection{טבלאות \en{Gatekeeper}}
+\label{sec:gatekeeper-tables}
+% =============================================================================
+
+קבוצה זו מכילה טבלאות לתמיכה ברכיב \en{Gatekeeper} המנהל את התקשורת עם \en{Gmail API}.
+
+\hebrewsubsection{טבלת \en{broadcast\_transaction\_mapping}}
+
+טבלה זו מקשרת בין שידורים מאוחדים לתגובות בודדות.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{broadcast\_transaction\_mapping}}
+\label{tab:broadcast-mapping-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{broadcast\_id} & \en{VARCHAR(20)} & מזהה השידור (\en{BC001}--\en{BC999}) \\
+\en{original\_recipient} & \en{VARCHAR(255)} & נמען מקורי \\
+\en{message\_type} & \en{VARCHAR(100)} & סוג ההודעה \\
+\en{sent\_at} & \en{TIMESTAMP} & זמן שליחה \\
+\en{response\_received} & \en{BOOLEAN} & האם התקבלה תגובה \\
+\en{response\_at} & \en{TIMESTAMP} & זמן קבלת תגובה \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{gatekeeper\_state}}
+
+טבלה זו שומרת את מצב רכיב \en{Gatekeeper}.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{gatekeeper\_state}}
+\label{tab:gatekeeper-state-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{daily\_quota\_used} & \en{INTEGER} & מכסה יומית שנוצלה \\
+\en{daily\_quota\_limit} & \en{INTEGER} & מגבלת מכסה יומית (\en{400}) \\
+\en{dos\_detection\_active} & \en{BOOLEAN} & האם זיהוי \en{DoS} פעיל \\
+\en{rate\_limit\_window\_start} & \en{TIMESTAMP} & תחילת חלון הגבלת קצב \\
+\en{requests\_in\_window} & \en{INTEGER} & בקשות בחלון הנוכחי \\
+\en{last\_reset} & \en{TIMESTAMP} & איפוס אחרון של מכסה \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{gatekeeper\_log}}
+
+טבלה זו מתעדת פעולות \en{Gatekeeper} לצורכי ביקורת.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{gatekeeper\_log}}
+\label{tab:gatekeeper-log-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{timestamp} & \en{TIMESTAMP} & זמן הפעולה \\
+\en{action} & \en{VARCHAR(50)} & סוג פעולה (\en{SEND}, \en{BLOCK}, \en{CONSOLIDATE}) \\
+\en{details} & \en{JSONB} & פרטי הפעולה \\
+\en{quota\_before} & \en{INTEGER} & מכסה לפני הפעולה \\
+\en{quota\_after} & \en{INTEGER} & מכסה אחרי הפעולה \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{טבלאות מצב המשחק}
+\label{sec:game-state-tables}
+% =============================================================================
+
+קבוצה זו מכילה שלוש טבלאות לניהול מצב משחקים פעילים.
+
+\hebrewsubsection{טבלת \en{game\_state}}
+
+טבלה זו שומרת את מצב המשחק בין תורות.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{game\_state}}
+\label{tab:game-state-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{match\_id} & \en{VARCHAR(100) UNIQUE} & מזהה המשחק \\
+\en{game\_type} & \en{VARCHAR(50)} & סוג המשחק (\en{Q21}) \\
+\en{phase} & \en{VARCHAR(50)} & שלב נוכחי במשחק \\
+\en{state\_data} & \en{JSONB} & מצב המשחק המלא \\
+\end{fancytable}
+
+\hebrewsubsection{טבלת \en{pending\_timeouts}}
+
+טבלה זו מנהלת זמני המתנה פעילים.
+
+{\small
+\begin{fancytable}{lHH}{מבנה טבלת \en{pending\_timeouts}}
+\label{tab:timeouts-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PK} & מזהה ייחודי \\
+\en{timeout\_id} & \en{VARCHAR(100) UNIQUE} & מזהה ה-\en{timeout} \\
+\en{timeout\_type} & \en{VARCHAR(50)} & \en{MOVE}, \en{SUBMISSION}, \en{CONN\_TEST} \\
+\en{target\_email} & \en{VARCHAR(255)} & אימייל היעד \\
+\en{expires\_at} & \en{TIMESTAMP} & זמן תפוגה \\
+\en{expired} & \en{BOOLEAN} & האם פג תוקף \\
+\end{fancytable}
+}
+
+\hebrewsubsection{טבלת \en{state\_transitions}}
+
+טבלה זו מתעדת מעברי מצב במערכת.
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{state\_transitions}}
+\label{tab:transitions-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{entity\_type} & \en{VARCHAR(50)} & \en{MATCH}, \en{LEAGUE}, \en{PLAYER}, \en{ROUND} \\
+\en{entity\_id} & \en{VARCHAR(100)} & מזהה הישות \\
+\en{from\_state} & \en{VARCHAR(50)} & מצב קודם \\
+\en{to\_state} & \en{VARCHAR(50)} & מצב חדש \\
+\en{event} & \en{VARCHAR(50)} & האירוע שגרם למעבר \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{טבלה דינמית למשתמש}
+\label{sec:user-messages-table}
+% =============================================================================
+
+לכל משתמש רשום נוצרת טבלה אישית המתעדת את כל ההודעות שלו עם מנהל הליגה.
+
+\hebrewsubsection{קונבנציית שמות}
+
+שם הטבלה נגזר מכתובת האימייל:
+\begin{itemize}
+    \item תבנית: \en{user\_messages\_\{email\_sanitized\}}
+    \item \en{@} מוחלף ב-\en{\_at\_}
+    \item נקודות מוחלפות בקו תחתון
+\end{itemize}
+
+\textbf{דוגמה:} \en{user@example.com} $\rightarrow$ \en{user\_messages\_user\_at\_example\_com}
+
+\hebrewsubsection{מבנה הטבלה}
+
+\begin{fancytable}{lHH}{מבנה טבלת \en{user\_messages\_\{email\}}}
+\label{tab:user-messages-schema}
+עמודה & סוג & תיאור \\
+\en{id} & \en{SERIAL PRIMARY KEY} & מזהה ייחודי \\
+\en{request\_message\_id} & \en{VARCHAR(100)} & מזהה הודעת הבקשה \\
+\en{request\_message\_type} & \en{VARCHAR(50)} & סוג הבקשה \\
+\en{request\_correlation\_id} & \en{VARCHAR(100)} & מזהה לקישור בקשה-תגובה \\
+\en{request\_payload} & \en{JSONB} & תוכן הבקשה \\
+\en{response\_message\_id} & \en{VARCHAR(100)} & מזהה התגובה \\
+\en{response\_payload} & \en{JSONB} & תוכן התגובה \\
+\en{status} & \en{VARCHAR(20)} & \en{OPEN}, \en{CLOSED}, \en{REJECTED} \\
+\en{response\_deadline} & \en{TIMESTAMP} & מועד אחרון לתגובה \\
+\en{rejected\_response\_payload} & \en{JSONB} & תגובה מאוחרת שנדחתה \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{קשרים בין טבלאות}
+\label{sec:relationships}
+% =============================================================================
+
+\hebrewsubsection{מפתחות זרים מפורשים}
+
+טבלה~\ref{tab:explicit-fk} מציגה את המפתחות הזרים המאוכפים על ידי מסד הנתונים.
+
+\begin{fancytable}{HHHH}{מפתחות זרים מפורשים}
+\label{tab:explicit-fk}
+טבלת מקור & עמודה & טבלת יעד & עמודת יעד \\
+\en{email\_log} & \en{user\_id} & \en{users} & \en{id} \\
+\en{attachments} & \en{email\_log\_id} & \en{email\_log} & \en{id} \\
+\en{players} & \en{user\_id} & \en{users} & \en{id} \\
+\en{referees} & \en{user\_id} & \en{users} & \en{id} \\
+\end{fancytable}
+
+\hebrewsubsection{קשרים לוגיים}
+
+קשרים אלו נאכפים ברמת האפליקציה:
+
+\begin{itemize}
+    \item \en{broadcast\_responses.broadcast\_id} $\rightarrow$ \en{broadcasts.broadcast\_id}
+    \item \en{matches.round\_id} $\rightarrow$ \en{rounds.round\_id}
+    \item \en{matches.player\_a\_id} $\rightarrow$ \en{players.player\_id}
+    \item \en{matches.player\_b\_id} $\rightarrow$ \en{players.player\_id}
+    \item \en{matches.referee\_id} $\rightarrow$ \en{referees.referee\_id}
+    \item \en{game\_state.match\_id} $\rightarrow$ \en{matches.match\_id}
+\end{itemize}
+
+% =============================================================================
+\hebrewsection{סטטיסטיקות הסכמה}
+\label{sec:schema-stats}
+% =============================================================================
+
+\begin{fancytable}{Hc}{סטטיסטיקות מסד הנתונים}
+\label{tab:schema-stats}
+מדד & ערך \\
+טבלאות קבועות & \num{22} \\
+טבלאות דינמיות & \num{1} למשתמש \\
+מפתחות זרים מפורשים & \num{6} \\
+סך אינדקסים & \num{50}+ \\
+עמודות \en{JSONB} & \num{14} \\
+טבלאות \en{Gatekeeper} & \num{3} \\
+טבלאות רישום ועונה & \num{3} \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{קוד יצירת הדיאגרמה}
+\label{sec:diagram-code}
+% =============================================================================
+
+הדיאגרמה נוצרה באמצעות סקריפט \en{Python} המייצר דיאגרמה גרפית ב-\en{LaTeX}. להלן החלק המרכזי של הסקריפט:
+
+\begin{english}
+\begin{pythonbox}
+"""Generate LaTeX diagram of GmailAsServer database schema."""
+import subprocess
+import tempfile
+from pathlib import Path
+
+TIKZ_DOCUMENT = r"""
+\documentclass[tikz,border=15pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.multipart,arrows.meta}
+
+\definecolor{corecolor}{RGB}{66,133,244}
+\definecolor{leaguecolor}{RGB}{52,168,83}
+\definecolor{gamecolor}{RGB}{251,188,5}
+\definecolor{dynamiccolor}{RGB}{234,67,53}
+
+\tikzset{
+    table/.style={
+        rectangle split,
+        rectangle split parts=#1,
+        draw, anchor=north,
+        font=\small\ttfamily,
+        minimum width=3.5cm
+    }
+}
+"""
+
+def main():
+    """Generate the database schema diagram."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tex_file = Path(tmpdir) / "schema.tex"
+        tex_file.write_text(TIKZ_DOCUMENT)
+        subprocess.run(
+            ["lualatex", tex_file.name],
+            cwd=tmpdir
+        )
+\end{pythonbox}
+\end{english}
+
+הסקריפט המלא זמין בקובץ:
+
+\begin{center}
+\en{scripts/generate\_schema\_diagram.py}
+\end{center}
+
+% =============================================================================
+\hebrewsection{סיכום}
+% =============================================================================
+
+מסד הנתונים של \en{GmailAsServer} מספק תשתית מקיפה לניהול מערכת ליגה מבוססת אימייל. הארכיטקטורה המודולרית מאפשרת:
+
+\begin{itemize}
+    \item \textbf{מעקב מלא} --- כל הודעה ותגובה נשמרות לצורכי ביקורת
+    \item \textbf{בידוד נתונים} --- כל משתמש מקבל טבלה אישית
+    \item \textbf{גמישות} --- שימוש ב-\en{JSONB} לנתונים משתנים
+    \item \textbf{מדרגיות} --- תמיכה במספר ליגות ומשחקים במקביל
+\end{itemize}
+
+\end{document}

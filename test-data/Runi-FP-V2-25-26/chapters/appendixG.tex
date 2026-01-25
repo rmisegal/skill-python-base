@@ -1,0 +1,275 @@
+% =============================================================================
+% Appendix G: Configuration Reference
+% תצורת המערכת
+% NEW APPENDIX - Complete configuration reference for all system components
+% =============================================================================
+
+\documentclass[../master/main.tex]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{6} % G is the 7th appendix
+\hebrewchapter{תצורת המערכת}
+\hebrewchapterlabel{app:configuration}
+
+\hebrewsection{מבוא}
+
+נספח זה מרכז את כל הגדרות התצורה (\en{Configuration}) של מערכת הליגה. ההגדרות מחולקות לפי רכיב: \en{Gatekeeper}, שעונים, מועדים, ושרת הלוג.
+
+% =============================================================================
+\hebrewsection{תצורת ה-\en{Gatekeeper}}
+\label{sec:gatekeeper-config}
+% =============================================================================
+
+\hebrewsubsection{הגדרות מכסה (\en{Quota})}
+
+\begin{fancytable}{lHc}{הגדרות מכסה}
+\label{tab:quota-config}
+הגדרה & תיאור & ברירת מחדל \\
+\en{daily\_limit} & מכסה יומית מקסימלית & \num{500} \\
+\en{operational\_limit} & מגבלה תפעולית (מרווח ביטחון) & \num{400} \\
+\en{warning\_threshold} & סף התראה (אחוז) & \num{80}\% \\
+\en{reset\_hour\_utc} & שעת איפוס (\en{UTC}) & \en{00:00} \\
+\end{fancytable}
+
+\hebrewsubsection{הגדרות זיהוי \en{DOS}}
+
+\begin{fancytable}{lHc}{הגדרות זיהוי \en{DOS}}
+\label{tab:dos-config}
+הגדרה & תיאור & ברירת מחדל \\
+\en{max\_requests\_per\_minute} & מקסימום בקשות לדקה & \num{60} \\
+\en{max\_requests\_per\_second} & מקסימום בקשות לשנייה & \num{5} \\
+\en{block\_duration\_seconds} & משך חסימה (שניות) & \num{300} \\
+\en{alert\_admin} & שליחת התראה למנהל & \en{true} \\
+\end{fancytable}
+
+\hebrewsubsection{הגדרות הגבלת קצב (\en{Rate Limiting})}
+
+\begin{fancytable}{lHc}{הגדרות הגבלת קצב}
+\label{tab:rate-limit-config}
+הגדרה & תיאור & ברירת מחדל \\
+\en{min\_interval\_ms} & מרווח מינימלי בין בקשות (מילישניות) & \num{200} \\
+\en{burst\_size} & גודל \en{burst} מותר & \num{10} \\
+\en{backoff\_multiplier} & מכפיל \en{backoff} & \num{2.0} \\
+\en{max\_backoff\_seconds} & \en{backoff} מקסימלי (שניות) & \num{60} \\
+\end{fancytable}
+
+\hebrewsubsection{הגדרות איחוד שידורים}
+
+\begin{fancytable}{lHc}{הגדרות איחוד שידורים}
+\label{tab:broadcast-config}
+הגדרה & תיאור & ברירת מחדל \\
+\en{consolidation\_enabled} & איחוד שידורים מופעל & \en{true} \\
+\en{max\_recipients\_per\_email} & מקסימום נמענים בהודעה & \num{50} \\
+\en{subject\_format} & פורמט נושא עם \en{broadcast\_id} & כולל \\
+\end{fancytable}
+
+\hebrewsubsection{דוגמת תצורה מלאה}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{תצורת \en{Gatekeeper} --- \en{JSON}}]
+{
+  "gatekeeper": {
+    "quota": {
+      "daily_limit": 500,
+      "operational_limit": 400,
+      "warning_threshold": 0.8,
+      "reset_hour_utc": 0
+    },
+    "dos_detection": {
+      "max_requests_per_minute": 60,
+      "max_requests_per_second": 5,
+      "block_duration_seconds": 300,
+      "alert_admin": true
+    },
+    "rate_limiting": {
+      "min_interval_ms": 200,
+      "burst_size": 10,
+      "backoff_multiplier": 2.0,
+      "max_backoff_seconds": 60
+    },
+    "broadcast_consolidation": {
+      "enabled": true,
+      "max_recipients_per_email": 50
+    }
+  }
+}
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\hebrewsection{תצורת שעונים}
+\label{sec:clock-config}
+% =============================================================================
+
+\hebrewsubsection{הגדרות עונה (\en{Season})}
+
+\begin{fancytable}{lHc}{הגדרות עונה}
+\label{tab:season-config}
+הגדרה & תיאור & ברירת מחדל \\
+\en{total\_rounds} & מספר מחזורים בעונה & \num{6} \\
+\en{games\_per\_round} & משחקים למחזור & \num{10} \\
+\en{warmup\_rounds} & מחזורי חימום לפני הליגה & \num{3} \\
+\end{fancytable}
+
+\hebrewsubsection{הגדרות הרשמה (\en{Registration})}
+
+\begin{fancytable}{lHc}{הגדרות הרשמה}
+\label{tab:registration-config}
+הגדרה & תיאור & ברירת מחדל \\
+\en{open\_days\_before\_season} & ימים לפני תחילת עונה & \num{14} \\
+\en{close\_hours\_before\_start} & שעות לפני תחילת מחזור \num{1} & \num{24} \\
+\en{late\_registration\_allowed} & אפשר הרשמה מאוחרת & \en{false} \\
+\end{fancytable}
+
+\hebrewsubsection{הגדרות מחזור (\en{Round})}
+
+\begin{fancytable}{lHc}{הגדרות מחזור}
+\label{tab:round-config}
+הגדרה & תיאור & ברירת מחדל \\
+\en{duration\_hours} & משך מחזור (שעות) & \num{3} \\
+\en{game\_max\_duration\_minutes} & משך משחק מקסימלי (דקות) & \num{30} \\
+\en{interval\_between\_rounds\_days} & ימים בין מחזורים & \num{7} \\
+\end{fancytable}
+
+\hebrewsubsection{הגדרות חלונות זמן (\en{Calendar Windows})}
+
+\begin{fancytable}{lHc}{הגדרות חלונות זמן}
+\label{tab:calendar-window-config}
+הגדרה & תיאור & ברירת מחדל \\
+\en{allowed\_days} & ימים מותרים & שלישי, חמישי \\
+\en{start\_time\_gmt} & שעת פתיחה (\en{GMT}) & \en{18:30} \\
+\en{end\_time\_gmt} & שעת סגירה (\en{GMT}) & \en{22:00} \\
+\en{grace\_period\_minutes} & תקופת חסד (דקות) & \num{15} \\
+\end{fancytable}
+
+\hebrewsubsection{דוגמת תצורה מלאה}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{תצורת שעונים --- \en{JSON}}]
+{
+  "clocks": {
+    "season": {
+      "total_rounds": 6,
+      "games_per_round": 10,
+      "warmup_rounds": 3
+    },
+    "registration": {
+      "open_days_before_season": 14,
+      "close_hours_before_start": 24,
+      "late_registration_allowed": false
+    },
+    "round": {
+      "duration_hours": 3.5,
+      "game_max_duration_minutes": 30,
+      "interval_between_rounds_days": 7
+    },
+    "calendar_windows": {
+      "allowed_days": ["tuesday", "thursday"],
+      "start_time_gmt": "18:30",
+      "end_time_gmt": "22:00",
+      "grace_period_minutes": 15
+    }
+  }
+}
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\hebrewsection{תצורת מועדים (\en{Timeouts})}
+\label{sec:timeout-config}
+% =============================================================================
+
+\hebrewsubsection{קטגוריות מועדים}
+
+\begin{fancytable}{lcH}{קטגוריות מועדים}
+\label{tab:timeout-categories}
+קטגוריה & ברירת מחדל & סוגי הודעות \\
+\en{keep\_alive} & \num{30} שניות & בדיקות זמינות \\
+\en{critical} & \num{2} דקות & הודעות בקרה \\
+\en{game\_flow} & \num{5} דקות & הזמנות, שאלות, ניחושים \\
+\en{registration} & \num{10} דקות & הודעות רישום \\
+\en{announcement} & \num{24} שעות & שידורים \\
+\en{default} & \num{60} דקות & הודעות אחרות \\
+\end{fancytable}
+
+\hebrewsubsection{דוגמת תצורה}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{תצורת מועדים --- \en{JSON}}]
+{
+  "timeouts": {
+    "keep_alive_seconds": 30,
+    "critical_seconds": 120,
+    "game_flow_seconds": 300,
+    "registration_seconds": 600,
+    "announcement_seconds": 86400,
+    "default_seconds": 3600
+  }
+}
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\hebrewsection{תצורת שרת הלוג}
+\label{sec:log-server-config}
+% =============================================================================
+
+\hebrewsubsection{הגדרות בסיסיות}
+
+\begin{fancytable}{lHc}{הגדרות שרת לוג}
+\label{tab:log-server-config}
+הגדרה & תיאור & ברירת מחדל \\
+\en{enabled} & שרת לוג מופעל & \en{true} \\
+\en{email} & כתובת שרת הלוג & \en{beit.halevi.700@gmail.com} \\
+\en{cc\_policy} & מדיניות \en{CC} & \en{all\_game\_messages} \\
+\end{fancytable}
+
+\hebrewsubsection{מדיניות \en{CC}}
+
+\begin{fancytable}{lH}{אפשרויות מדיניות \en{CC}}
+\label{tab:cc-policy-options}
+אפשרות & תיאור \\
+\en{all\_messages} & \en{CC} בכל ההודעות (כולל רישום) \\
+\en{all\_game\_messages} & \en{CC} רק בהודעות משחק \\
+\en{critical\_only} & \en{CC} רק בהודעות קריטיות (תקלות, כוח עליון) \\
+\en{disabled} & ללא \en{CC} (לא מומלץ) \\
+\end{fancytable}
+
+\hebrewsubsection{דוגמת תצורה}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{תצורת שרת לוג --- \en{JSON}}]
+{
+  "log_server": {
+    "enabled": true,
+    "email": "beit.halevi.700@gmail.com",
+    "cc_policy": "all_game_messages"
+  }
+}
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\hebrewsection{טבלת ערכי ברירת מחדל}
+\label{sec:default-values-table}
+% =============================================================================
+
+\begin{fancytable}{lHc}{ערכי ברירת מחדל --- סיכום}
+\label{tab:all-defaults}
+קטגוריה & הגדרה & ערך \\
+מכסה & מגבלה תפעולית & \num{400}/יום \\
+מכסה & סף התראה & \num{80}\% \\
+קצב & מרווח מינימלי & \num{200} מילישניות \\
+\en{DOS} & חסימה & \num{300} שניות \\
+עונה & מחזורים & \num{6} \\
+עונה & משחקים למחזור & \num{10} \\
+מחזור & משך מקסימלי & \num{30} דקות \\
+חלון זמן & ימים & שלישי, חמישי \\
+חלון זמן & שעות & \en{18:30-22:00 GMT} \\
+מועד & \en{game\_flow} & \num{5} דקות \\
+מועד & \en{default} & \num{60} דקות \\
+לוג & כתובת & \en{beit.halevi.700@gmail.com} \\
+\end{fancytable}
+
+\end{document}

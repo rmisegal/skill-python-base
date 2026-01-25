@@ -1,0 +1,265 @@
+% =============================================================================
+% Q21G League Book V2 - Master Document
+% Complete Book Compilation
+% =============================================================================
+% Compiler: LuaLaTeX
+% CLS Version: 7.2.0
+% Date: January 2026
+% =============================================================================
+
+\documentclass[book]{../shared/hebrew-academic-template}
+
+% Float positioning
+\usepackage{float}
+\usepackage{subfiles}
+
+% TikZ libraries for diagrams
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta, calc, fit, backgrounds, shapes.multipart}
+
+% Graphics path
+\graphicspath{{../images/figures/}{../images/}}
+
+% Bibliography
+\addbibresource{../bibliography/references.bib}
+
+% Landscape pages for wide tables
+\usepackage{pdflscape}
+
+% =============================================================================
+% Custom Commands
+% =============================================================================
+\newcommand{\protocol}{\en{league.v2}}
+\newcommand{\qtwentyone}{\en{Q21G}}
+\newcommand{\gmailapi}{\en{Gmail API}}
+
+% =============================================================================
+% Custom Boxes with BiDi-safe wrapper pattern
+% In RTL context, boxes draw from right and extend left, causing overflow
+% Solution: Wrap box in LTR context (english), restore RTL for content inside
+% =============================================================================
+
+% Protocol specification box
+\newtcolorbox{protocolbox@inner}[1][]{%
+  enhanced,
+  breakable,
+  colback=blue!5,
+  colframe=blue!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{מפרט פרוטוקול}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+\newenvironment{protocolbox}[1][]
+  {\begin{english}\begin{protocolbox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{protocolbox@inner}\end{english}}
+
+% Game rules box
+\newtcolorbox{gamerulebox@inner}[1][]{%
+  enhanced,
+  breakable,
+  colback=green!5,
+  colframe=green!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{חוקי המשחק}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+\newenvironment{gamerulebox}[1][]
+  {\begin{english}\begin{gamerulebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{gamerulebox@inner}\end{english}}
+
+% Scoring box
+\newtcolorbox{scoringbox@inner}[1][]{%
+  enhanced,
+  breakable,
+  colback=orange!5,
+  colframe=orange!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{שיטת הניקוד}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+\newenvironment{scoringbox}[1][]
+  {\begin{english}\begin{scoringbox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{scoringbox@inner}\end{english}}
+
+% Implementation tip box
+\newtcolorbox{implementationbox@inner}[1][]{%
+  enhanced,
+  breakable,
+  colback=purple!5,
+  colframe=purple!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{טיפ למימוש}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+\newenvironment{implementationbox}[1][]
+  {\begin{english}\begin{implementationbox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{implementationbox@inner}\end{english}}
+
+% Deadline/timing box
+\newtcolorbox{deadlinebox@inner}[1][]{%
+  enhanced,
+  breakable,
+  colback=red!5,
+  colframe=red!50!black,
+  fonttitle=\bfseries,
+  title={\texthebrew{מועדים ותזמון}},
+  halign title=flush right,
+  arc=2mm,
+  boxrule=1pt,
+  #1
+}
+\newenvironment{deadlinebox}[1][]
+  {\begin{english}\begin{deadlinebox@inner}[#1]\selectlanguage{hebrew}}
+  {\end{deadlinebox@inner}\end{english}}
+
+% =============================================================================
+% Book Metadata
+% =============================================================================
+\hebrewtitle{ליגת \en{Q21G} --- פרויקט גמר}
+\englishtitle{Q21G League - Final Project}
+\hebrewsubtitle{מדריך מקיף למערכת הליגה ופרוטוקול התקשורת}
+\hebrewauthor{ד"ר יורם סגל}
+\coverimage{../images/ai-agent-orcstration-via-emails.png}
+\hebrewversion{גרסה \textenglish{4.00}}
+\date{\textenglish{January 2026}}
+
+\begin{document}
+
+% =============================================================================
+% Front Matter
+% =============================================================================
+\frontmatter
+
+% Title Page
+\maketitle
+
+% =============================================================================
+% Abstract
+% =============================================================================
+\clearpage
+\thispagestyle{empty}
+
+{\LARGE\bfseries תקציר}
+\addcontentsline{toc}{chapter}{תקציר}
+
+\bigskip
+
+\textbf{ליגת \qtwentyone{} --- פרויקט גמר}
+
+\medskip
+
+חוברת זו מהווה מדריך מקיף לפרויקט הגמר של הקורס ``סוכני בינה מלאכותית''. הפרויקט מדגים תקשורת רב-סוכנית באמצעות ליגת משחקים תחרותית המבוססת על משחק ``עשרים ואחת שאלות'' (\qtwentyone{}).
+
+המדריך מציג את ארכיטקטורת שלוש השכבות של המערכת --- ליגה, שיפוט וחוקי משחק --- ואת פרוטוקול התקשורת \protocol{} המאפשר לסוכני \en{AI} עצמאיים לתקשר באמצעות \en{Gmail API}. הספר כולל הנחיות מפורטות למימוש סוכן שחקן וסוכן שופט, כולל דוגמאות קוד, דיאגרמות ארכיטקטורה, וסכמות מסד נתונים.
+
+\vspace{2cm}
+
+{\LARGE\bfseries מילה אישית}
+\addcontentsline{toc}{chapter}{מילה אישית}
+
+\bigskip
+
+אני פונה אליכם, דור העתיד של מובילי הטכנולוגיה, אלו שעומדים לרתום את כוחם של סוכני ה-\en{AI} ולהפוך ל``מכפלי כוח'' אנושיים בשוק העבודה המודרני. אנחנו לא כאן רק כדי ללמוד תיאוריה; אנחנו כאן כדי לבנות אימפריות של אינטליגנציה מבוזרת.
+
+הפרויקט הזה הוא כרטיס הכניסה שלכם לליגה של הגדולים. המטרה שלי היא להביא כל אחד ואחת מכם ליכולת מינוף של פי \num{16}. אתם הברק שראיתי בעיניים לאורך הסמסטר, ואני מאמין בכל ליבי שמהקבוצה הזו יצמח ה``יוניקורן'' הבא. כדי להבטיח את הניצחון שלכם, עלינו לפעול לפי חוקי ברזל. אלו לא רק דרישות טכניות, אלא התשתית למצוינות וליושרה שלכם.
+
+הפרויקט הזה נבנה ביצירתיות כדי להעניק לכם חוויה שתמנף אתכם לרמות שטרם הכרתם. הדרישות הללו נועדו עבורכם --- כדי להגן על העבודה הקשה שלכם ולהבטיח שתצאו מכאן עם תוצר שתתגאו בו לאורך כל הדרך המקצועית שלכם. זכרו תמיד: בלב הרעיון עומדת הגישה החיובית והאופטימית שלכם לפרויקט. אני מכיר את המיומנות שלכם, ראיתי את הידע שהפגנתם, ואני יודע שאתם מסוגלים להוביל. אם תעשו את הנדרש ותשמרו על רוח של ניצחון, ההצלחה מחכה לכם מעבר לפינה.
+
+לכו ותראו לעולם מה סוכן \en{AI} מנוהל היטב מסוגל לעשות!
+
+\vspace{0.5cm}
+\begin{english}
+\raggedright
+\hspace{5em}%
+\IfFontExistsTF{Guttman Yad}{%
+  {\bgroup\textdir TRT\fontspec{Guttman Yad}[Script=Hebrew,Renderer=Harfbuzz]\Large יורם\egroup}%
+}{%
+  {\bgroup\textdir TRT\Large\textit{\textbf{יורם}}\egroup}%
+}\\[0.1cm]
+\includegraphics[width=5cm]{../images/yoram-signature.png}
+\end{english}
+
+% Table of Contents
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+
+% =============================================================================
+% Main Matter - All Chapters (7 Chapters)
+% =============================================================================
+\mainmatter
+
+% Chapter 1: Q21G League - Complete Game Overview
+\subfile{../chapters/chapter01}
+
+% Chapter 2: Architecture Principles (NEW)
+\subfile{../chapters/chapter02}
+
+% Chapter 3: League Game - Multi-Agent Architecture
+\subfile{../chapters/chapter03}
+
+% Chapter 4: Agent Communication Protocol
+\subfile{../chapters/chapter04}
+
+% Chapter 5: Game Mechanisms (NEW)
+\subfile{../chapters/chapter05}
+
+% Chapter 6: Final Project Implementation
+\subfile{../chapters/chapter06}
+
+% Chapter 7: Administration and Registration
+\subfile{../chapters/chapter07}
+
+% =============================================================================
+% Appendices (10 Appendices)
+% =============================================================================
+\appendix
+
+% Appendix A: Gmail API Credentials Setup
+\subfile{../chapters/appendixA}
+
+% Appendix B: Protocol Messages Reference
+\subfile{../chapters/appendixB}
+
+% Appendix C: Server Database Schema
+\subfile{../chapters/appendixC}
+
+% Appendix D: Player Database Schema
+\subfile{../chapters/appendixD}
+
+% Appendix E: Gmail Email Volume Analysis and API Restrictions
+\subfile{../chapters/appendixE}
+
+% Appendix F: ID Conventions (NEW)
+\subfile{../chapters/appendixF}
+
+% Appendix G: Configuration Reference (NEW)
+\subfile{../chapters/appendixG}
+
+% Appendix H: League Manager Architecture Reference (NEW)
+\subfile{../chapters/appendixH}
+
+% Appendix I: GateKeeper Implementation Guide (NEW)
+\subfile{../chapters/appendixI}
+
+% Appendix J: Message Sequence Diagrams (NEW)
+\subfile{../chapters/appendixJ}
+
+% =============================================================================
+% Back Matter
+% =============================================================================
+\backmatter
+
+\end{document}

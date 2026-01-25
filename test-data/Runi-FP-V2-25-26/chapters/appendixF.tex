@@ -1,0 +1,221 @@
+% =============================================================================
+% Appendix F: ID Conventions
+% מוסכמות מזהים
+% NEW APPENDIX - Complete reference for all ID formats in the system
+% =============================================================================
+
+\documentclass[../master/main.tex]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{5} % F is the 6th appendix
+\hebrewchapter{מוסכמות מזהים}
+\hebrewchapterlabel{app:id-conventions}
+
+\hebrewsection{מבוא}
+
+נספח זה מרכז את כל פורמטי המזהים (\en{IDs}) המשמשים במערכת הליגה. הבנת מבנה המזהים חיונית לפירוק הודעות, שאילתות מסד נתונים, ודיבאג.
+
+% =============================================================================
+\hebrewsection{מזהי קבוצות ומשתמשים}
+\label{sec:group-user-ids}
+% =============================================================================
+
+\hebrewsubsection{מזהה קבוצה (\en{group\_id})}
+
+\begin{fancytable}{lHl}{פורמט מזהה קבוצה}
+\label{tab:group-id-format}
+רכיב & תיאור & דוגמה \\
+\en{G} & קידומת קבועה & \en{G} \\
+\en{\#\#\#} & מספר סידורי (\num{3} ספרות) & \en{001}--\en{030} \\
+\textbf{סה"כ} & \textbf{4 תווים} & \en{G001}, \en{G015}, \en{G030} \\
+\end{fancytable}
+
+\hebrewsubsection{מזהה משתמש (\en{user\_id})}
+
+\begin{fancytable}{lHl}{פורמט מזהה משתמש}
+\label{tab:user-id-format}
+רכיב & תיאור & דוגמה \\
+\en{U-Q21G-} & קידומת קבועה & \en{U-Q21G-} \\
+\en{\#\#\#} & מספר סידורי (\num{3} ספרות) & \en{001}--\en{060} \\
+\textbf{סה"כ} & \textbf{10 תווים} & \en{U-Q21G-001} \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{מזהי שחקנים ושופטים}
+\label{sec:player-referee-ids}
+% =============================================================================
+
+\hebrewsubsection{מזהה שחקן (\en{player\_id})}
+
+\begin{fancytable}{lHl}{פורמט מזהה שחקן}
+\label{tab:player-id-format}
+רכיב & תיאור & דוגמה \\
+\en{P-Q21G-} & קידומת קבועה & \en{P-Q21G-} \\
+\en{\#\#\#} & מספר סידורי (\num{3} ספרות) & \en{001}--\en{030} \\
+\textbf{סה"כ} & \textbf{10 תווים} & \en{P-Q21G-001} \\
+\end{fancytable}
+
+\hebrewsubsection{מזהה שופט (\en{referee\_id})}
+
+\begin{fancytable}{lHl}{פורמט מזהה שופט}
+\label{tab:referee-id-format}
+רכיב & תיאור & דוגמה \\
+\en{R-Q21G-} & קידומת קבועה & \en{R-Q21G-} \\
+\en{\#\#\#} & מספר סידורי (\num{3} ספרות) & \en{001}--\en{030} \\
+\textbf{סה"כ} & \textbf{10 תווים} & \en{R-Q21G-001} \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{מזהי עונות ומחזורים}
+\label{sec:season-round-ids}
+% =============================================================================
+
+\hebrewsubsection{מזהה עונה (\en{season\_id})}
+
+\begin{fancytable}{lHl}{פורמט מזהה עונה}
+\label{tab:season-id-format}
+רכיב & תיאור & דוגמה \\
+\en{S} או \en{W} & סוג עונה (\en{S}=רגילה, \en{W}=חורף) & \en{S} \\
+\en{\#\#} & מספר עונה (\num{2} ספרות) & \en{01}, \en{02} \\
+\textbf{סה"כ} & \textbf{3 תווים} & \en{S01}, \en{S02}, \en{W01} \\
+\end{fancytable}
+
+\hebrewsubsection{מזהה מחזור (\en{round\_id})}
+
+\begin{fancytable}{lHl}{פורמט מזהה מחזור}
+\label{tab:round-id-format}
+רכיב & תיאור & דוגמה \\
+\en{\#\#} & מספר מחזור (\num{2} ספרות) & \en{01}--\en{06} \\
+\textbf{סה"כ} & \textbf{2 ספרות} & \en{01}, \en{03}, \en{06} \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{מזהה משחק מורכב (\en{SSRRGGG})}
+\label{sec:game-id-composite-appendix}
+% =============================================================================
+
+\hebrewsubsection{מבנה המזהה}
+
+מזהה המשחק הוא מחרוזת בת \num{7} ספרות המכילה את כל המידע ההיררכי:
+
+\begin{fancytable}{cclH}{מבנה מזהה משחק מורכב}
+\label{tab:game-id-composite-format}
+מיקום & תווים & שדה & תיאור \\
+\en{1-2} & \en{SS} & עונה & מספר העונה (\en{01}--\en{99}) \\
+\en{3-4} & \en{RR} & מחזור & מספר המחזור (\en{01}--\en{06}) \\
+\en{5-7} & \en{GGG} & משחק & מספר המשחק במחזור (\en{001}--\en{010}) \\
+\end{fancytable}
+
+\hebrewsubsection{דוגמאות מלאות}
+
+\begin{fancytable}{lHHHH}{דוגמאות לפירוק מזהה משחק}
+\label{tab:game-id-examples-full}
+מזהה & עונה & מחזור & משחק & משמעות \\
+\en{0101001} & \en{S01} & \en{01} & \en{001} & עונה א', מחזור \num{1}, משחק \num{1} \\
+\en{0103007} & \en{S01} & \en{03} & \en{007} & עונה א', מחזור \num{3}, משחק \num{7} \\
+\en{0206010} & \en{S02} & \en{06} & \en{010} & עונה ב', מחזור \num{6}, משחק \num{10} \\
+\end{fancytable}
+
+\hebrewsubsection{קוד פירוק}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{פירוק והרכבת מזהה משחק}]
+def parse_game_id(game_id: str) -> dict:
+    """Parse SSRRGGG format into components."""
+    if len(game_id) != 7 or not game_id.isdigit():
+        raise ValueError(f"Invalid game_id: {game_id}")
+
+    return {
+        "season_id": f"S{game_id[0:2]}",
+        "round_id": int(game_id[2:4]),
+        "game_num": int(game_id[4:7])
+    }
+
+def build_game_id(season: int, round: int, game: int) -> str:
+    """Build SSRRGGG from components."""
+    return f"{season:02d}{round:02d}{game:03d}"
+
+# Examples:
+# parse_game_id("0103007") -> {"season_id": "S01", "round_id": 3, "game_num": 7}
+# build_game_id(1, 3, 7) -> "0103007"
+\end{pythonbox}
+\end{english}
+
+% =============================================================================
+\hebrewsection{מזהי שידור והודעות}
+\label{sec:broadcast-message-ids}
+% =============================================================================
+
+\hebrewsubsection{מזהה שידור (\en{broadcast\_id})}
+
+\begin{fancytable}{lHl}{פורמט מזהה שידור}
+\label{tab:broadcast-id-format}
+רכיב & תיאור & דוגמה \\
+\en{BC} & קידומת קבועה & \en{BC} \\
+\en{\#\#\#} & מספר סידורי (\num{3} ספרות) & \en{001}--\en{999} \\
+\textbf{סה"כ} & \textbf{5 תווים} & \en{BC001}, \en{BC123} \\
+\end{fancytable}
+
+\hebrewsubsection{מזהה הודעה (\en{message\_id})}
+
+מזהה ההודעה הוא \en{UUID} בפורמט סטנדרטי:
+
+\begin{fancytable}{lH}{פורמט מזהה הודעה}
+\label{tab:message-id-format}
+רכיב & דוגמה \\
+פורמט & \en{UUID v4} \\
+אורך & \num{36} תווים \\
+דוגמה & \en{550e8400-e29b-41d4-a716-446655440000} \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{טבלת עיון מרוכזת}
+\label{sec:id-reference-table}
+% =============================================================================
+
+\begin{fancytable}{lllH}{טבלת עיון מלאה --- כל סוגי המזהים}
+\label{tab:all-ids-reference}
+סוג מזהה & פורמט & אורך & דוגמה \\
+\en{group\_id} & \en{G\#\#\#} & \num{4} & \en{G001} \\
+\en{user\_id} & \en{U-Q21G-\#\#\#} & \num{10} & \en{U-Q21G-001} \\
+\en{player\_id} & \en{P-Q21G-\#\#\#} & \num{10} & \en{P-Q21G-001} \\
+\en{referee\_id} & \en{R-Q21G-\#\#\#} & \num{10} & \en{R-Q21G-001} \\
+\en{season\_id} & \en{S\#\#} או \en{W\#\#} & \num{3} & \en{S01} \\
+\en{round\_id} & \en{\#\#} & \num{2} & \en{01} \\
+\en{game\_id} & \en{SSRRGGG} & \num{7} & \en{0101001} \\
+\en{broadcast\_id} & \en{BC\#\#\#} & \num{5} & \en{BC001} \\
+\en{message\_id} & \en{UUID v4} & \num{36} & \en{550e8400-...} \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{ביטויים רגולריים לאימות}
+\label{sec:id-regex-patterns}
+% =============================================================================
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{ביטויים רגולריים לאימות מזהים}]
+import re
+
+ID_PATTERNS = {
+    "group_id": r"^G\d{3}$",
+    "user_id": r"^U-Q21G-\d{3}$",
+    "player_id": r"^P-Q21G-\d{3}$",
+    "referee_id": r"^R-Q21G-\d{3}$",
+    "season_id": r"^[SW]\d{2}$",
+    "round_id": r"^\d{2}$",
+    "game_id": r"^\d{7}$",
+    "broadcast_id": r"^BC\d{3}$",
+    "message_id": r"^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+}
+
+def validate_id(id_type: str, value: str) -> bool:
+    """Validate ID against its pattern."""
+    pattern = ID_PATTERNS.get(id_type)
+    if not pattern:
+        raise ValueError(f"Unknown ID type: {id_type}")
+    return bool(re.match(pattern, value, re.IGNORECASE))
+\end{pythonbox}
+\end{english}
+
+\end{document}

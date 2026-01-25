@@ -1,0 +1,147 @@
+% =============================================================================
+% Appendix A: Gmail API Credentials Setup Guide
+% Standalone chapter with subfiles support
+% =============================================================================
+\documentclass[../master/main.tex]{subfiles}
+
+\begin{document}
+
+\chapter*{נספח א': הגדרת הרשאות להתחברות לחשבון ג'ימייל באמצעות קוד תוכנה}
+\addcontentsline{toc}{chapter}{נספח א': הגדרת הרשאות להתחברות לחשבון ג'ימייל באמצעות קוד תוכנה}
+\renewcommand{\thehebrewsection}{א.\arabic{hebrewsection}}
+\setcounter{hebrewsection}{0}
+
+\hebrewsection{מבוא}
+
+כדי להפעיל את הפרויקט, יש להגדיר תחילה חשבון \en{Gmail} שבבעלותכם או שיש לכם הרשאה להשתמש בו לצורכי בדיקות. מדריך זה מפרט את כל השלבים הנדרשים להגדרת \en{Gmail API} דרך \en{Google Cloud Console}.
+
+% =============================================================================
+\hebrewsection{שלב \en{1}: אתחול הפרויקט}
+% =============================================================================
+
+\hebrewsubsection{יצירת פרויקט חדש}
+
+\begin{enumerate}
+    \item גשו אל \en{Google Cloud Console} בכתובת \texttt{\en{console.cloud.google.com}}.
+    \item לחצו על תפריט הפרויקטים בסרגל העליון ובחרו \en{New Project}.
+    \item הזינו שם פרויקט בפורמט: \texttt{\en{api-XXX-q21gb}} כאשר \en{XXX} הוא תיאור ייחודי משלכם.
+    \item לחצו על \en{Create}.
+\end{enumerate}
+
+\needspace{6\baselineskip}
+\begin{notebox}[\hebtitle{הערה חשובה}]
+שם הפרויקט משמש את \en{Google} לזיהוי החיוב ומכסות ה-\en{API} שלכם, אך אינו נראה למשתמשי הקצה.
+\end{notebox}
+
+\hebrewsubsection{הפעלת \en{Gmail API}}
+
+\begin{enumerate}
+    \item בחרו את הפרויקט שיצרתם: \texttt{\en{api-XXX-q21gb}}.
+    \item בשורת החיפוש הקלידו: \en{Gmail API}.
+    \item נווטו אל \en{APIs \& Services} $\rightarrow$ \en{Library}.
+    \item חפשו \en{Gmail API} ולחצו על \en{Enable}.
+    \item לחצו על \en{Create credentials}.
+\end{enumerate}
+
+% =============================================================================
+\hebrewsection{שלב \en{2}: הגדרת מסך הסכמת \en{OAuth}}
+% =============================================================================
+
+\hebrewsubsection{מסך המיתוג (\en{Branding})}
+
+נווטו אל \en{APIs \& Services} $\rightarrow$ \en{Google Auth Platform} והגדירו לפי טבלה~\ref{tab:branding-settings}.
+
+\begin{fancytable}{R{4cm}R{8cm}}{הגדרות מסך המיתוג}
+\label{tab:branding-settings}
+\textbf{\hebcellc{שדה}} & \textbf{\hebcellc{ערך והסבר}} \\
+\en{App name} & \texttt{\en{gtai-XXX-final-project}} --- שם זה מופיע למשתמש במסך הכניסה \\
+\en{User support email} & כתובת ה-\en{Gmail} שלכם --- לפניות משתמשים בנושא הרשאות \\
+\en{Developer contact} & כתובת הדוא``ל שלכם --- לקבלת עדכוני אבטחה מ-\en{Google} \\
+\end{fancytable}
+
+לחצו על \en{Save and Continue}.
+
+\hebrewsubsection{הגדרת הרשאות גישה (\en{Scopes})}
+
+\begin{enumerate}
+    \item לחצו על \en{Add or Remove Scopes}.
+    \item חפשו ובחרו את ההרשאות הבאות:
+    \begin{itemize}
+        \item \texttt{\en{https://www.googleapis.com/auth/gmail.labels}}
+        \item \texttt{\en{https://www.googleapis.com/auth/gmail.readonly}}
+    \end{itemize}
+    \item לחצו על \en{Update}.
+    \item לחצו על \en{Save and Continue}.
+\end{enumerate}
+
+\needspace{6\baselineskip}
+\begin{notebox}[\hebtitle{למה הרשאות אלו?}]
+הרשאות אלו מאפשרות לאפליקציה לקרוא את התוויות (\en{labels}) שלכם וליצור חדשות במידת הצורך. אם מדובר בכתובת דוא``ל ייעודית לפרויקט, ניתן לשקול בחירת כל האפשרויות.
+\end{notebox}
+
+% =============================================================================
+\hebrewsection{שלב \en{3}: יצירת אישורי \en{Desktop}}
+% =============================================================================
+
+\hebrewsubsection{יצירת לקוח \en{OAuth}}
+
+נווטו ללשונית \en{Clients} (או \en{Credentials}) בסרגל הצד:
+
+\begin{enumerate}
+    \item לחצו על \en{Create Client}.
+    \item בחרו \en{Desktop app} כסוג האפליקציה.
+    \item הזינו שם: \texttt{\en{desktop-gtai-XXX-2526b}} --- שם זה לשימוש פנימי בלבד.
+    \item לחצו על \en{Create}.
+\end{enumerate}
+
+\hebrewsubsection{הורדה ושמירת קובץ האישורים}
+
+\begin{enumerate}
+    \item לחצו על \en{Download} להורדת קובץ ה-\en{JSON}.
+    \item שמרו את הקובץ בתיקייה ייעודית.
+    \item שנו את שם הקובץ ל: \texttt{\en{gtai-XXX-2526b-gmail-client\_secret.json}}.
+\end{enumerate}
+
+\needspace{6\baselineskip}
+\begin{warningbox}[\hebtitle{אזהרת אבטחה}]
+וודאו להוסיף את הקובץ לרשימת ההחרגות ב-\texttt{\en{.gitignore}} כדי למנוע העלאה בטעות ל-\en{GitHub}!
+\end{warningbox}
+
+% =============================================================================
+\hebrewsection{שלב \en{4}: הוספת משתמשי בדיקה}
+% =============================================================================
+
+מכיוון שהאפליקציה במצב ``בדיקה'' (\en{Testing}), \en{Google} יחסום כל משתמש שאינו ברשימת משתמשי הבדיקה.
+
+\hebrewsubsection{הוספת משתמשים מורשים}
+
+\begin{enumerate}
+    \item נווטו אל: \en{OAuth consent screen} $\rightarrow$ \en{Audience} $\rightarrow$ \en{Test users}.
+    \item לחצו על \en{Add users}.
+    \item הזינו את כתובת ה-\en{Gmail} שתתחבר דרך ה-\en{API} לקריאה ושליחת הודעות.
+    \item שמרו את השינויים.
+\end{enumerate}
+
+\needspace{6\baselineskip}
+\begin{notebox}[\hebtitle{סיום}]
+לאחר השלמת כל השלבים, חשבון ה-\en{Gmail API} שלכם מוכן לשימוש בפרויקט! לניתוח מפורט של מגבלות ה-\en{API}, מכסות שליחה, וסיכוני ספאם שכדאי להכיר לפני תחילת הפיתוח, ראו נספח~ה'.
+\end{notebox}
+
+% =============================================================================
+\hebrewsection{סיכום השלבים}
+% =============================================================================
+
+טבלה~\ref{tab:gmail-api-checklist} מסכמת את כל השלבים להגדרת \en{Gmail API}.
+
+\begin{fancytable}{cR{10cm}}{רשימת תיוג להגדרת \en{Gmail API}}
+\label{tab:gmail-api-checklist}
+\textbf{\hebcellc{שלב}} & \textbf{\hebcellc{פעולה}} \\
+\en{1} & יצירת פרויקט חדש ב-\en{Google Cloud Console} \\
+\en{2} & הפעלת \en{Gmail API} \\
+\en{3} & הגדרת מסך הסכמת \en{OAuth} (מיתוג והרשאות) \\
+\en{4} & יצירת אישורי \en{Desktop Client} \\
+\en{5} & הורדה ושמירת קובץ \en{JSON} (עם הגנת \en{.gitignore}) \\
+\en{6} & הוספת משתמשי בדיקה מורשים \\
+\end{fancytable}
+
+\end{document}

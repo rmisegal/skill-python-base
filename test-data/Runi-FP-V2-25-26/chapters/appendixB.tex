@@ -1,0 +1,250 @@
+% =============================================================================
+% Appendix B: Protocol Messages Reference
+% Standalone chapter with subfiles support
+% =============================================================================
+\documentclass[../master/main.tex]{subfiles}
+
+\begin{document}
+
+\chapter*{נספח ב': מאגר הודעות הפרוטוקול}
+\addcontentsline{toc}{chapter}{נספח ב': מאגר הודעות הפרוטוקול}
+\renewcommand{\thehebrewsection}{ב.\arabic{hebrewsection}}
+\setcounter{hebrewsection}{0}
+
+\hebrewsection{מבוא}
+
+נספח זה מרכז את כל סוגי ההודעות בפרוטוקול \en{league.v2}, כולל קטגוריות המועדים המוגדרות במערכת. הטבלאות מתבססות על שלושת מקורות התיעוד הרשמיים: \en{message-protocol-reference.md} (מנהל הליגה), \en{PROTOCOL\_MESSAGES.md} (השופט), ו-\en{MESSAGE-TYPES.md} (השחקן).
+
+% =============================================================================
+\hebrewsection{קטגוריות מועדי תגובה}
+\label{sec:deadline-categories}
+% =============================================================================
+
+המערכת מגדירה שש קטגוריות מועדים לתגובה, המותאמות לתקשורת מבוססת אימייל. טבלה~\ref{tab:deadline-categories} מסכמת את הקטגוריות ומשמעותן.
+
+\begin{fancytable}{clH}{קטגוריות מועדי תגובה בפרוטוקול}
+\label{tab:deadline-categories}
+מועד & קטגוריה & תיאור \\
+\en{30 seconds} & \en{keep\_alive} & בדיקות זמינות וקישוריות \\
+\en{2 minutes} & \en{critical} & הודעות בקרה קריטיות (איפוס, השהיה, המשך) \\
+\en{5 minutes} & \en{game\_flow} & הזמנות למשחק ופעולות במהלך המשחק \\
+\en{10 minutes} & \en{registration} & רישום שחקנים ושופטים \\
+\en{1 hour} & \en{default} & שאילתות ובקשות מידע \\
+\en{24 hours} & \en{announcement} & הודעות כלליות והקצאות קבוצות \\
+\end{fancytable}
+
+% =============================================================================
+\hebrewsection{טבלת הודעות הפרוטוקול המלאה}
+\label{sec:full-messages-table}
+% =============================================================================
+
+טבלה~\ref{tab:all-messages-part1} וטבלה~\ref{tab:all-messages-part2} מציגות את כל \num{56} סוגי ההודעות בפרוטוקול, כולל שולח, מקבל, תגובה צפויה, ומועד תגובה.
+
+\hebrewsubsection{הודעות רישום וקישוריות}
+
+\begin{fancytable}{lllc}{הודעות רישום וקישוריות}
+\label{tab:all-messages-part1}
+סוג הודעה & מאת & אל & מועד \\
+\en{LEAGUE\_REGISTER\_REQUEST} & \en{Player} & \en{League Manager} & \en{10m} \\
+\en{RESPONSE\_LEAGUE\_REGISTER} & \en{League Manager} & \en{Player} & \en{N/A} \\
+\en{REFEREE\_REGISTER\_REQUEST} & \en{Referee} & \en{League Manager} & \en{10m} \\
+\en{RESPONSE\_REFEREE\_REGISTER} & \en{League Manager} & \en{Referee} & \en{N/A} \\
+\en{SEASON\_REGISTRATION\_REQUEST} & \en{Player/Referee} & \en{League Manager} & \en{10m} \\
+\en{CONNECTIVITY\_TEST\_CALL} & \en{League Manager} & \en{Player/Referee} & \en{60s} \\
+\en{RESPONSE\_CONNECTIVITY\_TEST} & \en{Player/Referee} & \en{League Manager} & \en{N/A} \\
+\en{REQUEST\_USER\_TABLE} & \en{Player/Referee} & \en{League Manager} & \en{1h} \\
+\en{RESPONSE\_USER\_TABLE} & \en{League Manager} & \en{Player/Referee} & \en{N/A} \\
+\end{fancytable}
+
+\par\needspace{4\baselineskip}
+\hebrewsubsection{דוגמאות \en{JSON} להודעות רישום}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{\en{LEAGUE\_REGISTER\_REQUEST}}]
+{
+  "message_type": "LEAGUE_REGISTER_REQUEST",
+  "payload": {
+    "agent_name": "bibi0707.player",
+    "agent_type": "PLAYER",
+    "email": "bibi0707.player@strudel.gmail.com",
+    "group_name": "bibi0707"
+  },
+  "message_id": "550e8400-e29b-41d4-a716-446655440000",
+  "timestamp": "2026-02-01T10:00:00Z",
+  "version": "1.0"
+}
+\end{pythonbox}
+\end{english}
+
+\begin{english}
+\begin{pythonbox}[\hebtitle{\en{RESPONSE\_LEAGUE\_REGISTER}}]
+{
+  "message_type": "RESPONSE_LEAGUE_REGISTER",
+  "payload": {
+    "status": "REGISTERED",
+    "agent_id": "P-bibi0707",
+    "user_table": [
+      {"agent_id": "P-bibi0707", "email": "bibi0707.player@strudel.gmail.com", "type": "PLAYER"},
+      {"agent_id": "R-bibi0707", "email": "bibi0707.referee@strudel.gmail.com", "type": "REFEREE"}
+    ]
+  },
+  "correlation_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+\end{pythonbox}
+\end{english}
+
+\hebrewsubsection{הודעות זרימת משחק}
+
+\begin{fancytable}{lllc}{הודעות זרימת משחק}
+\label{tab:game-flow-messages}
+סוג הודעה & מאת & אל & מועד \\
+\en{ROUND\_ANNOUNCEMENT} & \en{League Manager} & \en{All Players} & \en{N/A} \\
+\en{MATCH\_ASSIGNMENT} & \en{League Manager} & \en{Player/Referee} & \en{N/A} \\
+\en{GAME\_INVITATION} & \en{Referee} & \en{Player} & \en{5m} \\
+\en{GAME\_JOIN\_ACK} & \en{Player} & \en{Referee} & \en{N/A} \\
+\en{GAME\_OVER} & \en{Referee} & \en{Player} & \en{N/A} \\
+\en{ROUND\_COMPLETED} & \en{League Manager} & \en{All Players} & \en{N/A} \\
+\en{LEAGUE\_COMPLETED} & \en{League Manager} & \en{All Players} & \en{N/A} \\
+\end{fancytable}
+
+\hebrewsubsection{הודעות משחק \en{Q21}}
+
+\begin{fancytable}{lllc}{הודעות משחק \en{Q21}}
+\label{tab:q21-messages}
+סוג הודעה & מאת & אל & מועד \\
+\en{Q21\_ROUND\_START} & \en{Referee} & \en{Player} & \en{N/A} \\
+\en{Q21\_WARMUP\_CALL} & \en{Referee} & \en{Player} & \en{5m} \\
+\en{Q21\_WARMUP\_RESPONSE} & \en{Player} & \en{Referee} & \en{N/A} \\
+\en{Q21\_QUESTIONS\_CALL} & \en{Referee} & \en{Player} & \en{5m} \\
+\en{Q21\_QUESTIONS\_BATCH} & \en{Player} & \en{Referee} & \en{N/A} \\
+\en{Q21\_ANSWERS\_BATCH} & \en{Referee} & \en{Player} & \en{N/A} \\
+\en{Q21\_GUESS\_CALL} & \en{Referee} & \en{Player} & \en{5m} \\
+\en{Q21\_GUESS\_SUBMISSION} & \en{Player} & \en{Referee} & \en{N/A} \\
+\en{Q21\_GUESS\_RESULT} & \en{Referee} & \en{Player} & \en{N/A} \\
+\end{fancytable}
+
+\hebrewsubsection{הודעות שידור (\en{11} סוגים)}
+
+המערכת מגדירה \num{11} סוגי שידור. חלקם דורשים תגובה (עם מועד) וחלקם הודעות מידע בלבד.
+
+\begin{fancytable}{lHcc}{הודעות שידור הדורשות תגובה}
+\label{tab:broadcast-response-required}
+סוג הודעה & היקף & מועד & תגובה נדרשת \\
+\en{BROADCAST\_CONNECTIVITY\_TEST} & ליגה & \en{60s} & \en{RESPONSE\_CONNECTIVITY\_TEST} \\
+\en{BROADCAST\_KEEP\_ALIVE} & עונה & \en{300s} & \en{RESPONSE\_KEEP\_ALIVE} \\
+\en{BROADCAST\_CRITICAL\_SYSTEM} & עונה & \en{120s} & \en{RESPONSE\_CRITICAL\_SYSTEM} \\
+\en{BROADCAST\_CRITICAL\_SECURITY} & עונה & \en{120s} & \en{RESPONSE\_CRITICAL\_SECURITY} \\
+\end{fancytable}
+
+\begin{fancytable}{lHH}{הודעות שידור ללא צורך בתגובה}
+\label{tab:broadcast-no-response}
+סוג הודעה & היקף & תיאור \\
+\en{BROADCAST\_SEASON\_START} & עונה & פתיחת עונה חדשה \\
+\en{BROADCAST\_ROUND\_START} & מחזור & התחלת מחזור \\
+\en{BROADCAST\_ROUND\_END} & מחזור & סיום מחזור \\
+\en{BROADCAST\_SEASON\_END} & עונה & סיום עונה \\
+\en{BROADCAST\_ASSIGNMENT\_TABLE} & עונה & טבלת הקצאות \\
+\en{BROADCAST\_STANDINGS\_UPDATE} & עונה & עדכון טבלת דירוג \\
+\en{BROADCAST\_MAINTENANCE\_NOTICE} & ליגה & הודעת תחזוקה \\
+\end{fancytable}
+
+\begin{notebox}[\hebtitle{מנגנון שליחת שידורים}]
+הודעות שידור נשלחות כהודעה בודדת עם כל המשתתפים בשדה \en{CC}. שדה \en{scope} בהודעה מציין את ההיקף: \en{LEAGUE}, \en{SEASON}, או \en{ROUND}.
+\end{notebox}
+
+\begin{warningbox}[\hebtitle{חובת תגובה}]
+שידורים מסוג \en{CONNECTIVITY\_TEST}, \en{KEEP\_ALIVE}, \en{CRITICAL\_SYSTEM}, ו-\en{CRITICAL\_SECURITY} \textbf{דורשים תגובה} תוך מועד מוגדר. אי-תגובה תוביל להודעת \en{REJECTION\_NOTIFICATION}.
+\end{warningbox}
+
+\hebrewsubsection{הודעות מחזור חיים}
+
+\begin{fancytable}{lllc}{הודעות מחזור חיים}
+\label{tab:lifecycle-messages}
+סוג הודעה & מאת & אל & מועד \\
+\en{BROADCAST\_ROUND\_START} & \en{League Manager} & \en{All} & \en{N/A} \\
+\en{BROADCAST\_ROUND\_END} & \en{League Manager} & \en{All} & \en{N/A} \\
+\en{BROADCAST\_SEASON\_STANDINGS} & \en{League Manager} & \en{All} & \en{N/A} \\
+\en{BROADCAST\_START\_SEASON} & \en{League Manager} & \en{All} & \en{N/A} \\
+\en{BROADCAST\_END\_SEASON} & \en{League Manager} & \en{All} & \en{N/A} \\
+\en{BROADCAST\_ROUND\_RESULTS} & \en{League Manager} & \en{All} & \en{N/A} \\
+\end{fancytable}
+
+\hebrewsubsection{הודעות טבלת הקצאות}
+
+\begin{fancytable}{lllc}{הודעות טבלת הקצאות}
+\label{tab:assignment-table-messages}
+סוג הודעה & מאת & אל & מועד \\
+\en{BROADCAST\_ASSIGNMENT\_TABLE} & \en{League Manager} & \en{All} & \en{N/A} \\
+\en{REQUEST\_ASSIGNMENT\_TABLE} & \en{Participant} & \en{League Manager} & \en{1h} \\
+\en{RESPONSE\_ASSIGNMENT\_TABLE} & \en{League Manager} & \en{Participant} & \en{N/A} \\
+\end{fancytable}
+
+\begin{notebox}[\hebtitle{מנגנון טבלת הקצאות}]
+טבלת ההקצאות (\en{Assignment Table}) נוצרת אוטומטית בסגירת הרשמה ומכילה \num{180} שורות (\num{60} משחקים $\times$ \num{3} משתתפים). הודעת \en{BROADCAST\_ASSIGNMENT\_TABLE} נשלחת אוטומטית לכל המשתתפים. משתתף שלא קיבל את הטבלה יכול לבקש אותה באמצעות \en{REQUEST\_ASSIGNMENT\_TABLE}.
+\end{notebox}
+
+\hebrewsubsection{הודעות שאילתות ושגיאות}
+
+\begin{fancytable}{lllc}{הודעות שאילתות ושגיאות}
+\label{tab:query-error-messages}
+סוג הודעה & מאת & אל & מועד \\
+\en{QUERY\_STANDINGS\_REQUEST} & \en{Player} & \en{League Manager} & \en{1h} \\
+\en{QUERY\_STANDINGS\_RESPONSE} & \en{League Manager} & \en{Player} & \en{N/A} \\
+\en{LEAGUE\_QUERY} & \en{Referee} & \en{League Manager} & \en{1h} \\
+\en{LEAGUE\_QUERY\_RESPONSE} & \en{League Manager} & \en{Referee} & \en{N/A} \\
+\en{LEAGUE\_STANDINGS\_UPDATE} & \en{League Manager} & \en{All Players} & \en{N/A} \\
+\en{MATCH\_RESULT\_REPORT} & \en{Referee} & \en{League Manager} & \en{10m} \\
+\en{LEAGUE\_ERROR} & \en{League Manager} & \en{Player/Referee} & \en{N/A} \\
+\en{GAME\_ERROR} & \en{Referee/Player} & \en{Player/LM} & \en{N/A} \\
+\end{fancytable}
+
+\hebrewsubsection{הודעות הארכת מועדים}
+
+\begin{fancytable}{lllc}{הודעות הארכת מועדים}
+\label{tab:extension-messages}
+סוג הודעה & מאת & אל & מועד \\
+\en{EXTENSION\_REQUEST} & \en{Player} & \en{Referee} & \en{5m} \\
+\en{EXTENSION\_RESPONSE} & \en{Referee} & \en{Player} & \en{N/A} \\
+\en{EXTENSION\_APPEAL} & \en{Player} & \en{Administrator} & \en{5m} \\
+\en{EXTENSION\_APPEAL\_RESPONSE} & \en{Administrator} & \en{Player} & \en{N/A} \\
+\en{REJECTION\_NOTIFICATION} & \en{League Manager} & \en{Participant} & \en{N/A} \\
+\en{ALREADY\_REJECTED\_NOTIFICATION} & \en{League Manager} & \en{Participant} & \en{N/A} \\
+\end{fancytable}
+
+\hebrewsubsection{הודעות תקלה טכנית}
+
+\begin{fancytable}{lllc}{הודעות תקלה טכנית}
+\label{tab:technical-failure-messages}
+סוג הודעה & מאת & אל & מועד \\
+\en{MALFUNCTION\_REPORT} & \en{Referee} & \en{League Manager} & \en{N/A} \\
+\en{MALFUNCTION\_ACKNOWLEDGED} & \en{League Manager} & \en{Referee} & \en{N/A} \\
+\en{GAME\_RESTART} & \en{League Manager} & \en{Game Group} & \en{N/A} \\
+\en{GAME\_CANCELLED} & \en{League Manager} & \en{Game Group} & \en{N/A} \\
+\en{GAME\_FAILURE\_NOTIFICATION} & \en{League Manager} & \en{Game Group} & \en{N/A} \\
+\end{fancytable}
+
+\begin{notebox}[\hebtitle{כלל \en{2-2-0} לכישלון טכני}]
+הודעת \en{GAME\_FAILURE\_NOTIFICATION} נשלחת כאשר משחק נכשל עקב תקלה טכנית (אי-הופעת שופט, נטישת שופט, אי-הופעת שחקן, או \en{timeout}). במקרה זה, המשחק מסתיים בתוצאה אוטומטית של \en{2-2-0}: שני השחקנים מקבלים 2 נקודות (תיקו) והשופט מקבל 0 נקודות.
+\end{notebox}
+
+\hebrewsubsection{הודעות כוח עליון}
+
+\begin{fancytable}{lllc}{הודעות כוח עליון (\en{Force Majeure})}
+\label{tab:force-majeure-messages}
+סוג הודעה & מאת & אל & מועד \\
+\en{FORCE\_MAJEURE\_REQUEST} & \en{Participant} & \en{Administrator} & \en{N/A} \\
+\en{FORCE\_MAJEURE\_DECISION} & \en{Administrator} & \en{Participant} & \en{N/A} \\
+\en{FORCE\_MAJEURE\_RESULT} & \en{Administrator} & \en{Game Group} & \en{N/A} \\
+\end{fancytable}
+
+\begin{notebox}[\hebtitle{תהליך כוח עליון}]
+בקשת כוח עליון מאפשרת למשתתף לבקש ביטול או דחייה של משחק עקב נסיבות חריגות. התהליך: (1) משתתף שולח \en{FORCE\_MAJEURE\_REQUEST}, (2) מנהל מערכת בוחן ושולח \en{FORCE\_MAJEURE\_DECISION}, (3) אם מאושר, נשלח \en{FORCE\_MAJEURE\_RESULT} לכל קבוצת המשחק.
+\end{notebox}
+
+% =============================================================================
+\hebrewsection{סיכום}
+% =============================================================================
+
+נספח זה מהווה מקור ייחוס מקיף לכל הודעות הפרוטוקול. קובץ ה-\en{CSV} המלא (\en{all\_protocol\_messages.csv}) זמין בתיקיית הנספח לשימוש תכנותי.
+
+\end{document}
